@@ -1,6 +1,6 @@
 <center>
 
-# ENCE260 Notes
+# ENCE260 Notes - Computer Systems
 
 </center> 
 
@@ -21,7 +21,7 @@ Recommended text to read (C programming)
 
 #### Grading
 - 10% C Programming Assignment
-  - (this is a two part super quiz)
+  - (this is a three part super quiz)
 - 10% Embedded Systems Assignment (Term 4)
 - 10% Weekly Quiz's
   - There will be around 13 of these (1% each)
@@ -35,4 +35,12 @@ Recommended text to read (C programming)
 - [C Refrence](https://en.cppreference.com/w/c)
 
 ### Introduction and C Basics
+
+#### Memory Organisation
+- C programs should be structured as follows:
+  - Program code (text)
+  - Global and static data (data)
+  - Uninitilized global data (bss)
+  - Dynamic memory (heap)
+  - scratch pad memory (stack)
 
