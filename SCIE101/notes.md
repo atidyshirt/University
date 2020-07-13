@@ -28,3 +28,4 @@ Late work should be accompanied with a detailed explanation of why the work is l
 - [Assessments](https://learn.canterbury.ac.nz/course/view.php?id=9301&section=2)
 
 ### What is scientific thinking?
+
