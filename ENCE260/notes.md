@@ -44,3 +44,45 @@ Recommended text to read (C programming)
   - Dynamic memory (heap)
   - scratch pad memory (stack)
 
+#### Basic Hello World!
+```c
+// This line is including the header which contains a vast amount of C
+#include <stdio.h>
+// sepcifies the return type, main body function, and takes in void perameters
+int main(void) {
+  // Despite printing a string, this function will return 0, if return != 0 --> error
+  printf("Hello World\n");
+  return 0;
+}
+```
+
+#### Declaring Variables
+```c
+#include <stdio.h>
+
+int main(void) {
+//Declorations are as follows
+  int number1; // int means dedicate 4 bits to a number
+  int number2;
+  int total;
+
+//Manipulation of variables
+  number1 = 10;
+  number2 = 20;
+  total = number1 + number2;
+  printf("The sum of %d and %d is %d\n", number1, number2, total);
+  return 0
+}
+```
+
+#### Using #define
+```c
+// These are known as Macro's
+#define SECOND_NUMBER 20
+#define FIRST_NUMBER 20 this is still legal 2020
+```
+
+This line is defining second number as 20, this means that every time we call the perameter
+second number it means 20, As we can see by the FIRST_NUMBER definition, this is not the
+same as assigning an integer within the body of the function, this is defining a term as a 
+replacement for the symbol.
