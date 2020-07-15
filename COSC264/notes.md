@@ -59,6 +59,8 @@ Note that although a number of assessments are closed-book, we will be permitted
 | Network      | A loose term used in many ways, but essentially is a path for information flow                                    |
 | Router       | Connects networks together so data can flow from one network to another                                           |
 
+#### First look at the internet
+
 **Where do routers send traffic?** 
 > Routers do not normally generate any traffic of their own, they are there to connect
 > networks from point to point, they make routing decisions in order to indicate where
@@ -71,6 +73,5 @@ Note that although a number of assessments are closed-book, we will be permitted
 > access from the largest providers, the top level service providers tend to provide to
 > each other, however this tends to not be paid for as it is a mutual benefit for both
 > companies to be more connected.
-
 
 

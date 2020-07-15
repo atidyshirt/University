@@ -23,9 +23,12 @@ Recommended text to read (C programming)
 - 10% C Programming Assignment
   - (this is a three part super quiz)
 - 10% Embedded Systems Assignment (Term 4)
+    - Date: Monday 12th October
 - 10% Weekly Quiz's
-  - There will be around 13 of these (1% each)
-- 20% Test (Friday 13 September, 6pm)
+    - Dates: Each one will be on quiz server
+    - There will be around 13 of these (0.8% each)
+- 20% Test
+    - Date: Monday 7th September 7pm
 - 50% Final Exam (does not include C programming)
 
 #### Resources
@@ -60,6 +63,8 @@ int main(void) {
 ```c
 #include <stdio.h>
 
+# define A_CONSTANT 30 //this is how to define constants
+
 int main(void) {
 //Declorations are as follows
   int number1; // int means dedicate 4 bits to a number
@@ -76,13 +81,83 @@ int main(void) {
 ```
 
 #### Using #define
+
 ```c
 // These are known as Macro's
 #define SECOND_NUMBER 20
 #define FIRST_NUMBER 20 this is still legal 2020
 ```
 
-This line is defining second number as 20, this means that every time we call the perameter
+This line is defining second number as 20, this means that every time we call the parameter
 second number it means 20, As we can see by the FIRST_NUMBER definition, this is not the
 same as assigning an integer within the body of the function, this is defining a term as a 
 replacement for the symbol.
+
+#### C Error Messages
+The C error messaging system is considerably more cryptic than that seen in the Python
+interpreter. It is harder to follow, and the key point to take away is that **Not all
+error messages will point to exactly where the error is unlike python sometimes you
+will have to find the error yourself**.
+
+#### The Celsius function
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+#define FREEZING_PT 32.0
+#define SCALE_FACTOR (5.0 / 9.0)
+
+int main(void) {
+  float fahrenheit = 0.0;
+  float celsius = 0.0;
+  printf("Enter Fahrenheit temperature: ");
+  scanf("%f", &fahrenheit);
+  celsius = (fahrenheit - FREEZING_PT) * SCALE_FACTOR;
+  printf("Celsius equivilent: %.1f\n", celsius);
+  return EXIT_SUCCESS;
+}
+```
+
+### How Memory Works
+
+Memory at the lower levels is just a series of bits. C treats memory the same way as it has
+no object store or *heap*. Each piece of memory used is allocated a byte sized number to
+tell us where it is stored, this is known as an *address*, (if we have a 4GB machine, then
+there is 4 Billion bytes to store this information).
+
+#### a = b
+
+Because of the above, the assignment operator *a = b*, is actually saying, go to memory location
+*b* and copy all the bytes of *b* to memory location *a*. This is raw byte copying, this is 
+different to python in the fact that python stores the name in a dictionary asan object.
+
+#### Basic Data Types
+- Integers
+    - unsigned
+    - signed
+    - long
+    - short
+    - int
+- Floating Point Integers
+    - float
+    - double
+- Characters 
+    - char
+    - always 8-bit ASCII encoding (1-byte)
+- Complex Floating Point
+    - not covered in ENCE260
+- Boolean
+    - \_Bool (or just *bool* if #include <stdbool.h>)
+
+```C
+int a = 0;
+short int b = 1;
+signed long long int x = 256;
+short c = 20; // Don't have to expand
+long d = 50;
+```
+
+The different variables tell it how much memory to allocate to each variable, for instance 
+**char** allocates 1-byte, **short** allocates 2-bytes, **int** allocates 4-bytes and **long
+long int** allocates 8-bytes.
+
