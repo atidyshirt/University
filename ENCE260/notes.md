@@ -80,7 +80,11 @@ int main(void) {
 }
 ```
 
-#### Using #define
+#### Using Macro's
+
+The `#define` tag is used to assign macro's in C, this will be completed in-line with other
+arithmetic. This is used to re-assign stock symbols and will execute the arithmetic where it
+is placed in the file.
 
 ```c
 // These are known as Macro's
@@ -92,6 +96,23 @@ This line is defining second number as 20, this means that every time we call th
 second number it means 20, As we can see by the FIRST_NUMBER definition, this is not the
 same as assigning an integer within the body of the function, this is defining a term as a 
 replacement for the symbol.
+
+##### Macro's for arithmetic
+
+As previously noted, we can re-define symbols using Macro's. This means that arithmetic works 
+in the same way as you would expect, so if we define a calculation as the macro, every time we
+use it it will be evaluated in line with the expression. Here is an example.
+
+```C
+#define TEST 4 + 2
+
+int main(void) {
+  int val = TEST * TEST;
+  printf("%i\n" val);
+}
+```
+
+> This will use in-line math to result in the following output: 14
 
 #### C Error Messages
 The C error messaging system is considerably more cryptic than that seen in the Python
