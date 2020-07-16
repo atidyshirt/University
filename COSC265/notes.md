@@ -146,7 +146,7 @@ different users (multiple viewing methods of data).
     - Operators and maintenance
 
 ##### Data Models
-###### Categories of Data Models
+**Categories of Data Models**
 - Conceptual
     - High level, semantic
     - Provide concepts that are close to the way many users percieve data
