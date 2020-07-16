@@ -74,4 +74,47 @@ Note that although a number of assessments are closed-book, we will be permitted
 > each other, however this tends to not be paid for as it is a mutual benefit for both
 > companies to be more connected.
 
+### Bitwise operations
 
+**Bitwise `AND` Operation**
+
+The `AND` operation works by multiplying each bit in the first string to the bits in the
+second string, in the python interpreter, the symbol `~` denotes the bitwise `AND`. The 
+following example will multiple two binary numbers.
+
+```python
+# Here is a python example of a bitwise AND operation
+binary_first = 0b0110110110
+binary_second = 0b1100011101
+
+bitwise_first_AND_second = binary_first & binary_second
+print(bitwise_first_AND_second)
+```
+> Result: 01 0001 0100
+
+**Bitwise `OR` Operation**
+
+The `OR` operation works by checking if the bit is equal to *1*, if it is equal to 1 then
+put 1, else put 0.
+
+```python
+# This is how to preform the bitwise function manually
+output = ""
+if see == 1:
+    output.append(1)
+else:
+    output.append(0)
+print(reversed(output))
+```
+
+To actually preform this in python, you would use the `|` operand to denote the `OR` bitwise
+function. The following is how to preform this in python.
+
+```python
+# Here is a python example of a bitwise OR operation
+binary_first = 0b0110110110
+binary_second = 0b1100011101
+
+bitwise_first_OR_second = binary_first | binary_second
+print(bitwise_first_OR_second)
+```
