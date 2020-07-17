@@ -155,3 +155,67 @@ different users (multiple viewing methods of data).
     - Provide concepts that are describe details of how data is stored
 - Implementation
     - Provide concepts that fall between users views and computer storage details
+
+#### Classification of DBMS's
+- Based on data model used
+    - Relational, Netowrk, Hierarchical
+    - Emerging: Object-orientated Models
+
+#### Don't Bother using DBMS for these Scenario's 
+- small data set
+- strict time requirements
+- access by a single user
+- not expecting data to change
+
+### Database Design
+
+This section is estimated to take around four lectures to complete
+
+#### Data Modeling
+
+##### Phases of Database Design
+- Requirements collection and analysis
+- Conceptual design
+- Logical design
+- Physical design
+
+**Structural Component of ER**
+- `Entities` are specific objects or things in the mini-world that are represented in the database
+- `Attributes` are properties used to describe an entity
+    - Name
+    - SSN
+    - Address
+        - Number
+        - Street
+        - suburb
+    - Gender
+    - etc. 
+
+Note that `Attributes` can have multiple sub-attributes bellow it. If this is the case it is said to be the value is *multi-valued*
+
+- A specific entity will have a value for each of its attributes
+
+Example of an entity with a few attributes
+| Name         | SSN        | Address             | Gender | BirthDate   |
+| ---          | ---        | ---                 | ---    | ---         |
+| 'John Smith' | '12232333' | '731 Houston Drive' | 'Male' | '09-JAN-85' |
+
+#### Types of attributes
+**Simple (atomic) or Composite**
+- *Gender* is a simple attribute
+- *Name* (FirstName, MiddleName, LastName)
+    - Composition may form a hierarchy where some components are themselves composite
+**Single/Multi-valued**
+- *previousDegrees* of a STUDENT
+    - Denoted as `{PreviousDegrees}`
+
+**Composite Multi-valued attribute**
+- Denoted by: `{Degrees (University, Year, Degree, Field)}`
+
+##### The `NULL` Value
+Has three possible interpretations
+- Not known
+- Not applicable
+- Missing
+
+
