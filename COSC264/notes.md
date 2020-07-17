@@ -118,3 +118,103 @@ binary_second = 0b1100011101
 bitwise_first_OR_second = binary_first | binary_second
 print(bitwise_first_OR_second)
 ```
+
+#### Delay - Quality of Service >> Write Types of delay
+| Application                          | Data loss     | bandwidth                               | Delay-sensitive   |
+| ---                                  | ---           | ---                                     | ---               |
+| File Transfer                        | No loss       | Elastic                                 | No                |
+| Email                                | No loss       | Elastic                                 | no                |
+| Web pages                            | No loss       | Mostly elastic, minimum rate desireable | no                |
+| Internet telephony videoconferencing | Loss-tolerant | Audio/Voice: few kbps                   | <= 200 - 250 ms   |
+| Streaming audio/video                | Loss-tolerant | same as above                           | a few seconds     |
+| interactive games                    | Loss-tolerant | few kbps - 1 mbps                       | few hundred ms    |
+| instant messaging                    | No loss       | Elastic                                 | not very, depends |
+
+> The term `elastic` means: these applications have no strict minimum-bandwidth requirements, they are just find with what they get
+
+#### Communication Patterns
+
+##### Unicast
+- Only two nodes in the networks involved
+- One is the transmitter, the other the receiver, but the nodes can have both roles
+- Goal: reproduce exactly at the chosen reciever the bit stream sent by the transmitter
+- Example
+    - phone connections
+    - viewing a web page
+
+##### Broadcast
+- One node as sender, all other as recievers
+- Goal: reporiduce exactly at all stations in the network the bit stream is sent by the transmitter
+- Example
+    - Radio
+    - TV
+
+##### Multicast
+- One node as sender, several but not all recievers
+- Goal: reproduce exxactly at some stations in the network the bit stream is sent by the transmitter
+- often, in multicast groups all nodes can act as senders
+- Example
+    - Internet chat
+    - Phone confrence
+
+#### Client Server Paradigm
+
+The server allocates an address to each client connected. The client acts by sending requests and then turns off
+when it receives its answer, the server will stay on and wait for requests to enter. Servers need to have powerful
+computers and can be a **single point of faliure** as if the server is on a single machine and it dies is causes
+problems for all users, this is why most servers are hosted on multiple machines that act as the same address to
+connect on
+
+One server has multiple clients, and the server has to provide a request `n` times for `n` users.
+
+#### Peer-to-Peer Paradigm
+- Has no centralised network
+    - this means that it avoids a single point of faliure
+
+A peer to peer network is a two way street, you have to both provide data in order to benefit by getting your service.
+
+> an example of this is torrents - you have to upload in order to gain the download
+
+#### Circuit and Packet Switching
+
+The design of a network is strongly influenced by the traffic it is supposed to carry, this will shape the netowrk.
+
+##### Circuit Switching
+
+**Voice Traffic**
+
+- In today's POTS voice is transmitted digitally, the analog voice signal is A/D-converted with fixed sampling rates and resolution
+    - Data rate: 64kbit/s
+- The voice data is generated continously at a fixed rate
+    - The provider has to be able to provide this rate continuously by the period or the voice quality will drop dramatically
+- This is called a continuous bit rate (CBR) data stream
+- No one else's connection is allowed to interfere with our own
+- Goal: provide the illusion of having your own connection with the end user
+    - this is achieved by the server allocating a certain amount of `bandwidth` to your call
+    - at the end of the call, the resources are re-allocated to a new user 
+- Other examples of CBR data: CBR Video, periodic sensor measurements
+
+> When we are recording audio, we do not take the whole thing, we have a 256 bit storage, and we `sample` the data in order to store it.
+
+Properties of Circuit Switching
+- A routing descision is only made once
+- A connection has its resources guaranteed
+- Any bandwidth not used by a connection cannot be re-used by other connections
+- Connection setup takes time, it does not pay off when only very little data needs to be transmitted
+- Connection setup may fail when no route or insufficient resources are available in the network
+
+##### Packet Switching
+- Many data applications naturally have time-varying rates
+- called `Variable-bit-rate (VBR)` or `bursty` traffic
+- CS-networks are not well suited to VBR traffic
+
+**Properties of Packet Switching**
+- Data flows are segmented into packets
+- Packets are basic unit of transmission
+- Packets consist of:
+    - A `packet header` containing meta-information about the packet
+    - The `packet payload` 
+    - Possibly a `packet trailer` for error detection
+- Packets are transmitted individually
+- There is no notion of a connection, packets can be sent immediately without having to setup any state or resource reservation
+- The internet is a Packet-Switching network
