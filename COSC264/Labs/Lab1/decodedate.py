@@ -1,4 +1,4 @@
-def decodedate(encoded_date):
+def encodedate(encoded_date):
     """
     This function takes in an encoded date
     decodes it to get the desired format
@@ -9,14 +9,26 @@ def decodedate(encoded_date):
     # (Day = second  5-bits)  
     # (Year = last  23-bits)
     month = get_month(encoded_date)
+    day = get_day(encoded_date)
+    year = get_year(encoded_date)
+    return str(day) + "." + str(month) + "." + str(year)
 
 def get_month(x):
     bitmask = 0b11110000000000000000000000000000
-    month_pre = int('0b' + str(bin(x) & bitmask))
-    month = (month_pre >> 28) + 0b1
+    month_pre = x | bitmask
+    month = (month_pre >> 28) - 1
     return month
 
-# print(get_month(1107298273))
+def get_day(x):
+    bitmask = 0b00001111100000000000000000000000
+    day_pre = x | bitmask
+    day = (day_pre >> 23) - 1
+    return day
 
-# END GOAL
-# print(decodedate(1107298273)) #should return 5.5.2017
+def get_year(x):
+    bitmask = 0b0000000001111111111111111111111
+    year_pre = x | bitmask
+    year = (year_pre)
+    return year
+
+print(encodedate(5,5,2017)) #should return 5.5.2017
