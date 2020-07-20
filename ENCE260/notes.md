@@ -2,10 +2,9 @@
 
 # ENCE260 Notes - Computer Systems
 
-</center> 
+</center>
 
 > [TOC]
-
 
 ### General Info About Course
 
@@ -20,18 +19,20 @@ Textbook: None
 Recommended text to read (C programming)
 
 #### Grading
+
 - 10% C Programming Assignment
   - (this is a three part super quiz)
 - 10% Embedded Systems Assignment (Term 4)
-    - Date: Monday 12th October
+  - Date: Monday 12th October
 - 10% Weekly Quiz's
-    - Dates: Each one will be on quiz server
-    - There will be around 13 of these (0.8% each)
+  - Dates: Each one will be on quiz server
+  - There will be around 13 of these (0.8% each)
 - 20% Test
-    - Date: Monday 7th September 7pm
+  - Date: Monday 7th September 7pm
 - 50% Final Exam (does not include C programming)
 
 #### Resources
+
 - K. N. King, C programming: a modern approach (2nd Edition) (Recommended not required)
 - [Lecture notes, Recordings and slides](https://learn.canterbury.ac.nz/course/view.php?id=9078&section=1)
 - [C Style Guide](https://learn.canterbury.ac.nz/mod/resource/view.php?id=1346587)
@@ -40,6 +41,7 @@ Recommended text to read (C programming)
 ### Introduction and C Basics
 
 #### Memory Organisation
+
 - C programs should be structured as follows:
   - Program code (text)
   - Global and static data (data)
@@ -48,6 +50,7 @@ Recommended text to read (C programming)
   - scratch pad memory (stack)
 
 #### Basic Hello World!
+
 ```c
 // This line is including the header which contains a vast amount of C
 #include <stdio.h>
@@ -60,6 +63,7 @@ int main(void) {
 ```
 
 #### Declaring Variables
+
 ```c
 #include <stdio.h>
 
@@ -94,12 +98,12 @@ is placed in the file.
 
 This line is defining second number as 20, this means that every time we call the parameter
 second number it means 20, As we can see by the FIRST_NUMBER definition, this is not the
-same as assigning an integer within the body of the function, this is defining a term as a 
+same as assigning an integer within the body of the function, this is defining a term as a
 replacement for the symbol.
 
 ##### Macro's for arithmetic
 
-As previously noted, we can re-define symbols using Macro's. This means that arithmetic works 
+As previously noted, we can re-define symbols using Macro's. This means that arithmetic works
 in the same way as you would expect, so if we define a calculation as the macro, every time we
 use it it will be evaluated in line with the expression. Here is an example.
 
@@ -115,12 +119,14 @@ int main(void) {
 > This will use in-line math to result in the following output: 14
 
 #### C Error Messages
+
 The C error messaging system is considerably more cryptic than that seen in the Python
 interpreter. It is harder to follow, and the key point to take away is that **Not all
 error messages will point to exactly where the error is unlike python sometimes you
 will have to find the error yourself**.
 
 #### The Celsius function
+
 ```C
 #include <stdio.h>
 #include <stdlib.h>
@@ -142,33 +148,34 @@ int main(void) {
 ### How Memory Works
 
 Memory at the lower levels is just a series of bits. C treats memory the same way as it has
-no object store or *heap*. Each piece of memory used is allocated a byte sized number to
-tell us where it is stored, this is known as an *address*, (if we have a 4GB machine, then
+no object store or _heap_. Each piece of memory used is allocated a byte sized number to
+tell us where it is stored, this is known as an _address_, (if we have a 4GB machine, then
 there is 4 Billion bytes to store this information).
 
 #### a = b
 
-Because of the above, the assignment operator *a = b*, is actually saying, go to memory location
-*b* and copy all the bytes of *b* to memory location *a*. This is raw byte copying, this is 
+Because of the above, the assignment operator _a = b_, is actually saying, go to memory location
+_b_ and copy all the bytes of _b_ to memory location _a_. This is raw byte copying, this is
 different to python in the fact that python stores the name in a dictionary asan object.
 
 #### Basic Data Types
+
 - Integers
-    - unsigned
-    - signed
-    - long
-    - short
-    - int
+  - unsigned
+  - signed
+  - long
+  - short
+  - int
 - Floating Point Integers
-    - float
-    - double
-- Characters 
-    - char
-    - always 8-bit ASCII encoding (1-byte)
+  - float
+  - double
+- Characters
+  - char
+  - always 8-bit ASCII encoding (1-byte)
 - Complex Floating Point
-    - not covered in ENCE260
+  - not covered in ENCE260
 - Boolean
-    - \_Bool (or just *bool* if #include <stdbool.h>)
+  - \_Bool (or just _bool_ if #include <stdbool.h>)
 
 ```C
 int a = 0;
@@ -178,7 +185,50 @@ short c = 20; // Don't have to expand
 long d = 50;
 ```
 
-The different variables tell it how much memory to allocate to each variable, for instance 
+The different variables tell it how much memory to allocate to each variable, for instance
 **char** allocates 1-byte, **short** allocates 2-bytes, **int** allocates 4-bytes and **long
 long int** allocates 8-bytes.
 
+### Computer Architecture
+
+#### Digital Logic
+
+Analog Information
+
+- defined by quantity
+
+Digital Information
+
+- true/false
+- yes/no
+- pairs well with logic values
+- switches on/off
+
+Logical variable, represents true or false, and is denoted by `varName = true`
+
+**Logical functions**
+
+- the limited set of values that logical variables can take (0, 1, true or false)
+- makes it feasible to write out every possible combination
+
+**Fundamental Functions**
+
+`NOT`
+
+- $f(a = a')$
+
+`AND`
+
+- $f(a,b) = a * b$
+
+`OR`
+
+#### Boolean Algebra
+
+- closure
+  - for $a,b \in B$ then $a*b \in B$
+- Identity $a*i = a$ therefore
+  - $a*1 = a$
+  - $a + 0 = a$
+- Associative $a * (b*c) = (a*b)*c$
+- Communatative $a*b = b*a$
