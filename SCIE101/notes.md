@@ -70,3 +70,32 @@ below will highlight the key differences between myths and scientific thought.
 1. An explanation is an assertion about what's there, unseen, that accounts for what is seen.
 2. A scientific explanation should be hard to vary.
 3. It's only when an explanation is good that it even matters whether it's testable.
+
+#### Assignment One - 2nd August
+- Marking criteria is on Learn
+- Deadline margin is 5% per day
+
+### Origins of Scientific Reasoning
+
+1. Use the theory of evolution as a lens of understanding
+2. Demonstrate that scientific reasoning might have been around for at least 2 million years.
+
+#### Human design
+- Bipedal
+- Born to run - endurance
+- Cool through sweating
+- Hairless
+- Poor sense of smell
+- Rely mostly on vision to probe the environment
+    - because of this, we are very good at persistence hunting (30-40km running down animals)
+
+#### Inductive reasoning
+- If we have seen something before
+    - This allows us to understand what it is
+
+**Key Point**
+- Evolution + Human Anatomy + Current models of persistent hunting + Paleoanthropology
+
+The combination of the above factors provides a resonable explanation of why hypothetico-deductive reasoning developed
+
+
