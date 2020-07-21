@@ -74,6 +74,19 @@ Note that although a number of assessments are closed-book, we will be permitted
 > each other, however this tends to not be paid for as it is a mutual benefit for both
 > companies to be more connected.
 
+#### Delay - Quality of Service >> Write Types of delay
+| Application                          | Data loss     | bandwidth                               | Delay-sensitive   |
+| ---                                  | ---           | ---                                     | ---               |
+| File Transfer                        | No loss       | Elastic                                 | No                |
+| Email                                | No loss       | Elastic                                 | no                |
+| Web pages                            | No loss       | Mostly elastic, minimum rate desireable | no                |
+| Internet telephony videoconferencing | Loss-tolerant | Audio/Voice: few kbps                   | <= 200 - 250 ms   |
+| Streaming audio/video                | Loss-tolerant | same as above                           | a few seconds     |
+| interactive games                    | Loss-tolerant | few kbps - 1 mbps                       | few hundred ms    |
+| instant messaging                    | No loss       | Elastic                                 | not very, depends |
+
+> The term `elastic` means: these applications have no strict minimum-bandwidth requirements, they are just find with what they get
+
 ### Bitwise operations
 
 **Bitwise `AND` Operation**
@@ -119,20 +132,8 @@ bitwise_first_OR_second = binary_first | binary_second
 print(bitwise_first_OR_second)
 ```
 
-#### Delay - Quality of Service >> Write Types of delay
-| Application                          | Data loss     | bandwidth                               | Delay-sensitive   |
-| ---                                  | ---           | ---                                     | ---               |
-| File Transfer                        | No loss       | Elastic                                 | No                |
-| Email                                | No loss       | Elastic                                 | no                |
-| Web pages                            | No loss       | Mostly elastic, minimum rate desireable | no                |
-| Internet telephony videoconferencing | Loss-tolerant | Audio/Voice: few kbps                   | <= 200 - 250 ms   |
-| Streaming audio/video                | Loss-tolerant | same as above                           | a few seconds     |
-| interactive games                    | Loss-tolerant | few kbps - 1 mbps                       | few hundred ms    |
-| instant messaging                    | No loss       | Elastic                                 | not very, depends |
 
-> The term `elastic` means: these applications have no strict minimum-bandwidth requirements, they are just find with what they get
-
-#### Communication Patterns
+### Communication Patterns
 
 ##### Unicast
 - Only two nodes in the networks involved
@@ -169,7 +170,7 @@ One server has multiple clients, and the server has to provide a request `n` tim
 
 #### Peer-to-Peer Paradigm
 - Has no centralised network
-    - this means that it avoids a single point of faliure
+    - this means that it avoids a single point of failure
 
 A peer to peer network is a two way street, you have to both provide data in order to benefit by getting your service.
 
@@ -196,7 +197,7 @@ The design of a network is strongly influenced by the traffic it is supposed to 
 
 > When we are recording audio, we do not take the whole thing, we have a 256 bit storage, and we `sample` the data in order to store it.
 
-Properties of Circuit Switching
+**Properties of Circuit Switching**
 - A routing descision is only made once
 - A connection has its resources guaranteed
 - Any bandwidth not used by a connection cannot be re-used by other connections
@@ -217,4 +218,52 @@ Properties of Circuit Switching
     - Possibly a `packet trailer` for error detection
 - Packets are transmitted individually
 - There is no notion of a connection, packets can be sent immediately without having to setup any state or resource reservation
+- Congestion *To many cars on the highway* can cause packet loss
+    - we allocate *buffer memory* to back these packets, if we run out of memory, we must drop some of the incoming packets
 - The internet is a Packet-Switching network
+*Conequences*
+- Lack of resourcse reservation means there are no guarantees for packet delivery
+    - Internet/IP "best effort" service: packet is delivered/not delivered
+    - IP's lack of guarantees is compensated in parts by TCP
+    - **Routers in packet-switched networks perform more complex processing during information transfer than
+switching fabrics in circuit-switched networks**
+- Packet size
+    - Packet overheads (header, trailer) have fixed size
+    - Payload size is variable (within bounds)
+    - Tradeoff
+        - Small size payload leads to high overhead ratio
+        - Small payload size leads to reduced susceptibility to errors
+    - Packet size limits can be technology or application driven
+        - to long packets might block important packets from being sent for an unacceptable time
+- Router will not accept packet until it accepts the whole packet and sees trailer (due to corruption)
+
+**Protocols and Services**
+- Packets can get lost, re-ordered, delayed, modified or be tampered with
+- Stations (end hosts or routers) can implement procedures to repair these problems
+- These procedures run in a distributed fashion (as different stations need to cooperate) and are called **protocols**
+- Protocols are rules and procedures underlying data transfer
+
+We need to use sequence numbers in order to keep values in order online (such as if we had
+a book, we need to make sure page one is ordered before page two, as if we purely rely on
+page one arriving before page two, this will not work as we cannot guarantee that the packet
+containing page one will not be lost). This is why we should send timers, and other things included
+within the trailer of a packet.
+
+The role of IP in the internet protocol Stack
+- IP = Internet Protocol
+- There are two protocol versions *4, 6* here we use *IPv4*
+- Everything over IP, IP over everything
+
+**IP Addresses**
+- Each host is identified by one or more IP addresses
+    - A host has many IP addresses as it has network adapters
+    - End hosts usually have only one IP address (as we use the one with widest scope)
+- The IP address not only identifies the host but also helps the network find the path to this host
+- Humans normally do not work with IP directly but with host names such as www.canterbury.ac.nz
+- There exists a special service/protocol called the domain name service (`DNS`) which translates to human-readable host names to IPv4 addresses, the internet itself only works
+    with IPv4 addresses
+- Suppost to be worldwide unique (not really true anymore)
+- unacknowledged (post service does not send back feedback)
+- no guaranteed order of packets recieved with IPv4 protocol
+
+### Socket Programming

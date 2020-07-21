@@ -211,11 +211,60 @@ Example of an entity with a few attributes
 
 **Composite Multi-valued attribute**
 - Denoted by: `{Degrees (University, Year, Degree, Field)}`
+- In charts: *Double oval denotes multivalued attribute*
+
+**Key Attributes**
+- A key attribute may be composite
+    - Denoted as `{CourseCode(CourseNo, UnitNo, AddressNo)}`
+- A key cannot be multivalued
+- It has to be a unique identifier
+- A key attribute in a model will be underlined
+- Strong entity types must contain at least one key attribute
 
 ##### The `NULL` Value
 Has three possible interpretations
 - Not known
 - Not applicable
 - Missing
+
+#### Introduction to Relationships
+
+Relationships are denoted using diamonds in the diagrams
+
+**Relationship types**
+- Is the schema description of a relationship
+- Identifies the relationship name and the participating entity types
+- Also identifies certain relationship constraints
+- More than one relationship type can exist with the same entity types
+- Relationship types can also have attributes associated with them
+- Recursive Relationship Types
+    - Both participants have the same entity type in different roles
+    - (slides 2-26)
+
+**Relationship Set**
+- The current set of relationship instances represented in the database
+- The current state of a relationship type
+
+##### Dependent's
+
+**Dependents**
+- Denoted with double box
+- connects to Depends relationship
+- This is considered a *Weak Identity Type*
+
+**Cardinality Ratio**
+
+The types of relationships, and how they connect.
+
+- One to one `(1:1)`
+- One to many `(1:N)`
+- Many to many `(N:N)`
+
+**Participation Constraint**
+- Total (existential)
+- Partial
+
+Minimum cardinality
+    (also called existence dependency constraint)
 
 
