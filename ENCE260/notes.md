@@ -38,7 +38,7 @@ Recommended text to read (C programming)
 - [C Style Guide](https://learn.canterbury.ac.nz/mod/resource/view.php?id=1346587)
 - [C Refrence](https://en.cppreference.com/w/c)
 
-### Introduction and C Basics
+### Introduction Into C Programming 
 
 #### Memory Organisation
 
@@ -118,6 +118,115 @@ int main(void) {
 
 > This will use in-line math to result in the following output: 14
 
+#### Expressions
+
+**General Operators**
+
+These are mostly like python except:
+
+- No exponential operator
+- `/` operator behaves like Python's `//` (integer devision by default)
+- Logical operators are different
+    - `and = &&`
+        - single `&` acts as bitwise
+    - `or = ||`
+        - single `|` acts as bitwise
+    - `not = !`
+    - `++, --` are used as increment operators
+        - pre-increment $++j$
+        - post-increment $j--$
+    - Assignment operator `=` is used anywhere in expressions
+        * e.g. $foobar = (foo = 2) + (bar = 10)$
+        * only use in simple assignment statements
+
+**If Statements**
+* Syntax in BNF notation
+    - `::=` means *is defined as*
+    - `|` denotes *or*
+    - Tokens in double quotes are *terminals*
+    - Other tokens are expanded by their own syntax definitions
+* Note the parentheses around the condition expression
+
+**To use Boolean Values**
+
+To use boolean values, we must include *stdbool.h* into the program, this will give us a 
+boolean value to use, the following will be the code to use boolean values.
+
+```c
+#include <stdbool.h>
+
+int main(void)
+{
+    bool bigger = 6 > 5;
+}
+```
+
+#### The Switch Statement
+
+The switch statement uses a series of cases, and acts similar to that of the switch statement
+found in `Java`.
+
+```c
+// Example of switch statement
+switch ( expression ) {
+    case constant-expression1 :
+        // statement if case complies
+        break;
+    case constant-expression2 :
+        // statement if case complies
+        break;
+    default :
+        // the final case that is carried out if all above cases do not comply
+}
+```
+
+##### Example of switch: Simple Calculator
+```c
+// Takes in an operand, then two numbers; this will determine the calculations result
+#include <stdio.h>
+
+int main() {
+    char operator;
+    double n1, n2;
+
+    printf("Enter an operator (+, -, *, /): ");
+    scanf("%c", &operator);
+    printf("Enter two operands: ");
+    scanf("%lf %lf",&n1, &n2);
+
+    switch(operator)
+    {
+        case '+':
+            printf("%.1lf + %.1lf = %.1lf",n1, n2, n1+n2);
+            break;
+
+        case '-':
+            printf("%.1lf - %.1lf = %.1lf",n1, n2, n1-n2);
+            break;
+
+        case '*':
+            printf("%.1lf * %.1lf = %.1lf",n1, n2, n1*n2);
+            break;
+
+        case '/':
+            printf("%.1lf / %.1lf = %.1lf",n1, n2, n1/n2);
+            break;
+
+        // operator doesn't match any case constant +, -, *, /
+        default:
+            printf("Error! operator is not correct");
+    }
+
+    return 0;
+}
+```
+
+The above code is a simple calculator, it will enable the user to add, subtract,
+multiply and divide. This is done by scanning for the type of operand (`+, -, *, /`),
+this will allow the user to define what type of operation to address (defined by cases)
+then we will enter the two numbers to use the desired operand on.
+
+
 #### C Error Messages
 
 The C error messaging system is considerably more cryptic than that seen in the Python
@@ -152,7 +261,7 @@ no object store or _heap_. Each piece of memory used is allocated a byte sized n
 tell us where it is stored, this is known as an _address_, (if we have a 4GB machine, then
 there is 4 Billion bytes to store this information).
 
-#### a = b
+#### $a = b$
 
 Because of the above, the assignment operator _a = b_, is actually saying, go to memory location
 _b_ and copy all the bytes of _b_ to memory location _a_. This is raw byte copying, this is
@@ -215,7 +324,7 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 
 `NOT`
 
-- $f(a = a')$
+- $f(a) = a'$
 
 `AND`
 
@@ -233,65 +342,4 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
 
-#### Expressions
-
-**General Operators**
-
-These are mostly like python except:
-
-- No exponential operator
-- `/` operator behaves like Python's `//` (integer devision by default)
-- Logical operators are different
-    - `and = &&`
-        - single `&` acts as bitwise
-    - `or = ||`
-        - single `|` acts as bitwise
-    - `not = !`
-    - `++, --` are used as increment operators
-        - pre-increment `++j`
-        - post-increment `j--`
-    - Assignment operator `=` is used anywhere in expressions
-        * e.g. $foobar = (foo = 2) + (bar = 10)$
-        * only use in simple assignment statements
-
-**If Statements**
-* Syntax in BNF notation
-    - `::=` means *is defined as*
-    - `|` denotes *or*
-    - Tokens in double quotes are *terminals*
-    - Other tokens are expanded by their own syntax definitions
-* Note the parentheses around the condition expression
-
-**To use Boolean Values**
-
-To use boolean values, we must include *stdbool.h* into the program, this will give us a 
-boolean value to use, the following will be the code to use boolean values.
-
-```c
-#include <stdbool.h>
-
-int main(void)
-{
-    bool bigger = 6 > 5;
-}
-```
-
-**The Switch Statement**
-
-The switch statement uses a series of cases, and acts similar to that of the switch statement
-found in `Java`.
-
-```c
-// Example of switch statement
-switch ( expression ) {
-    case constant-expression1 :
-        // statement if case complies
-        break;
-    case constant-expression2 :
-        // statement if case complies
-        break;
-    default :
-        // the final case that is carried out if all above cases do not comply
-}
-```
 
