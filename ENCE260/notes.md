@@ -232,3 +232,67 @@ Logical variable, represents true or false, and is denoted by `varName = true`
   - $a + 0 = a$
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
+
+#### Expressions
+
+**General Operators**
+
+These are mostly like python except:
+
+- No exponential operator
+- `/` operator behaves like Python's `//` (integer devision by default)
+- Logical operators are different
+    - `and = &&`
+        - single `&` acts as bitwise
+    - `or = ||`
+        - single `|` acts as bitwise
+    - `not = !`
+    - `++, --` are used as increment operators
+        - pre-increment `++j`
+        - post-increment `j--`
+    - Assignment operator `=` is used anywhere in expressions
+        * e.g. $foobar = (foo = 2) + (bar = 10)$
+        * only use in simple assignment statements
+
+**If Statements**
+* Syntax in BNF notation
+    - `::=` means *is defined as*
+    - `|` denotes *or*
+    - Tokens in double quotes are *terminals*
+    - Other tokens are expanded by their own syntax definitions
+* Note the parentheses around the condition expression
+
+**To use Boolean Values**
+
+To use boolean values, we must include *stdbool.h* into the program, this will give us a 
+boolean value to use, the following will be the code to use boolean values.
+
+```c
+#include <stdbool.h>
+
+int main(void)
+{
+    bool bigger = 6 > 5;
+}
+```
+
+**The Switch Statement**
+
+The switch statement uses a series of cases, and acts similar to that of the switch statement
+found in `Java`.
+
+```c
+// Example of switch statement
+switch ( expression ) {
+    case constant-expression1 :
+        // statement if case complies
+        break;
+    case constant-expression2 :
+        // statement if case complies
+        break;
+    default :
+        // the final case that is carried out if all above cases do not comply
+}
+```
+
+
