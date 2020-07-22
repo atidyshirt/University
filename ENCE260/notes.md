@@ -232,3 +232,5 @@ Logical variable, represents true or false, and is denoted by `varName = true`
   - $a + 0 = a$
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
+
+
