@@ -98,4 +98,45 @@ below will highlight the key differences between myths and scientific thought.
 
 The combination of the above factors provides a resonable explanation of why hypothetico-deductive reasoning developed
 
+**The Omphalos hypothesis**
+- The universe was created by a got a few thousand years ago, this is the reason evolution happened
 
+**Spaghetti Monsterism**
+- The universe was created by a badly inebriated invisible and undetectible being *Alien*
+
+**Last Thusdayism**
+- The unverse was created last Thursday
+
+> The above are some examples of human thought's. this is called the **Undertirminaton of theory by evidence**
+
+The key idea is that we can determine that many theories can be true if the science supports a single point, it is important to note that
+science is not in the business of proving theories with 100% certainty.
+
+#### Deduction versus induction
+
+Example of a deductively valid argument:
+
+Premise 1:
+- If sally will go to the party, then fred will go to the party.
+
+Premise 2:
+- Sally will go to the party.
+
+Conclusion:
+- Fred will go to the party.
+
+> To say that an argument is *deductively valid* is to say that it is impossible for its conclusion to be false if its premises are all true
+
+Example of a inductively strong argument:
+
+Premise 1:
+- Bert is 100 years old.
+
+Premise 2: 
+- Bert has got arthritis
+
+Conclusion:
+- Bert will not run a 5 minute mile tomorrow.
+
+> To say that an argument is inductively strong is to say that it is improbable, but not impossible for its conclusion to be false if its
+> premises are all true.
