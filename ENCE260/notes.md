@@ -261,7 +261,7 @@ no object store or _heap_. Each piece of memory used is allocated a byte sized n
 tell us where it is stored, this is known as an _address_, (if we have a 4GB machine, then
 there is 4 Billion bytes to store this information).
 
-#### $a = b$
+#### a = b
 
 Because of the above, the assignment operator _a = b_, is actually saying, go to memory location
 _b_ and copy all the bytes of _b_ to memory location _a_. This is raw byte copying, this is
