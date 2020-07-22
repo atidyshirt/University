@@ -233,7 +233,6 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
 
-<<<<<<< HEAD
 #### Expressions
 
 **General Operators**
@@ -295,7 +294,4 @@ switch ( expression ) {
         // the final case that is carried out if all above cases do not comply
 }
 ```
-
-=======
->>>>>>> 28cf737fc9acdde57b860f4fea65da0d679f5ddd
 
