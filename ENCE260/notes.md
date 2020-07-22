@@ -118,9 +118,9 @@ int main(void) {
 
 > This will use in-line math to result in the following output: 14
 
-#### Expressions
+#### Statements
 
-**General Operators**
+**General Expressions**
 
 These are mostly like python except:
 
@@ -160,6 +160,52 @@ int main(void)
     bool bigger = 6 > 5;
 }
 ```
+**Loops**
+
+The loops act very similarly to that of the python loops, there are both `While loops` and `For loops`, that act
+in much the same way that they would in python. The following is a basic implementation of a `while loop`.
+
+```c
+int main(void)
+{
+  int i = 10;
+  while (i < 100) {
+    printf("%i\n", i);
+    i++;
+  }
+}
+```
+
+It is also important to note that there is also another version of the while loop that is called a `Do while loop`, this
+is mostly useless, however it can come in useful occasionally. Here is an example of a `Do while loop`.
+
+```c
+int main(void)
+{
+  int i = 10;
+  do {
+    printf("%i\n", i);
+    i--;
+  } while (i > 0);
+}
+```
+
+Here is an example of a `For loop`, this is used to specify a loop within a range of values. To use this we need to give it
+an initialisation expression, a condition to continue and a loop body indication, this is in this order and is found in the
+brackets in the body below.
+
+```c
+int main(void)
+{
+for (int i = 10; i > 0; i--) {
+  printf("%i\n", i);
+  }
+}
+```
+
+We have been asked to with-hold from using for loops for anything other then simple counting, this is because when we use a
+for loop, the check condition is preformed after the increment is completed. This is very counter intuitive as we would assume
+by the presentation of the statement that the counter would be implemented before the check.
 
 #### The Switch Statement
 
