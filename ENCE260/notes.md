@@ -156,7 +156,7 @@ there is 4 Billion bytes to store this information).
 
 Because of the above, the assignment operator _a = b_, is actually saying, go to memory location
 _b_ and copy all the bytes of _b_ to memory location _a_. This is raw byte copying, this is
-different to python in the fact that python stores the name in a dictionary asan object.
+different to python in the fact that python stores the name in a dictionary as an object.
 
 #### Basic Data Types
 
@@ -233,6 +233,7 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
 
+<<<<<<< HEAD
 #### Expressions
 
 **General Operators**
@@ -295,4 +296,6 @@ switch ( expression ) {
 }
 ```
 
+=======
+>>>>>>> 28cf737fc9acdde57b860f4fea65da0d679f5ddd
 
