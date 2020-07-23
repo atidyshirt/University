@@ -267,4 +267,13 @@ The types of relationships, and how they connect.
 Minimum cardinality
     (also called existence dependency constraint)
 
+**Structural Constraints**
 
+If we want to put a minimum amount of people and maximum on a relationship, we use the syntax `(min, max)` in the diagram.
+Below is an example of how this might look.
+
+```mermaid
+A[Employee] --> |(0, 1)| --> B{Manages} --> |(1, 1) | --> C[Department]
+
+D[Employee] --> |(1, 1) | --> E{Works In} --> |(1, N) | --> F[Department]
+```
