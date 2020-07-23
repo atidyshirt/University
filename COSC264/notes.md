@@ -162,8 +162,7 @@ print(bitwise_first_OR_second)
 
 The server allocates an address to each client connected. The client acts by sending requests and then turns off
 when it receives its answer, the server will stay on and wait for requests to enter. Servers need to have powerful
-computers and can be a **single point of faliure** as if the server is on a single machine and it dies is causes
-problems for all users, this is why most servers are hosted on multiple machines that act as the same address to
+programs for all users, this is why most servers are hosted on multiple machines that act as the same address to
 connect on
 
 One server has multiple clients, and the server has to provide a request `n` times for `n` users.
