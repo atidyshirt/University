@@ -272,10 +272,8 @@ Minimum cardinality
 If we want to put a minimum amount of people and maximum on a relationship, we use the syntax `(min, max)` in the diagram.
 Below is an example of how this might look.
 
-```mermaid
-A[Employee] --> |(0, 1)| --> B{Manages}
-B --> |(1, 1) | --> C[Department]
-
-D[Employee] --> |(1, 1) | --> E{Works In}
-E --> |(1, N) | --> F[Department]
+```flow
+st=>start: Employee
+cond=>condition: Manages
+op=>operation: Department
 ```
