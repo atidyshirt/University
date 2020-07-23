@@ -269,4 +269,4 @@ Minimum cardinality
 
 **Structural Constraints**
 
-If we want to put a minimum amount of people and maximum on a relationship, we use the syntax `(min, max)` in the diagram.
+If we want to put a minimum amount of people and maximum on a relationships cardinality ratio, we use the syntax `(min, max)` in the diagram.
