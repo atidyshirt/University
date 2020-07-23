@@ -273,7 +273,9 @@ If we want to put a minimum amount of people and maximum on a relationship, we u
 Below is an example of how this might look.
 
 ```mermaid
-A[Employee] --> |(0, 1)| --> B{Manages} --> |(1, 1) | --> C[Department]
+A[Employee] --> |(0, 1)| --> B{Manages}
+B --> |(1, 1) | --> C[Department]
 
-D[Employee] --> |(1, 1) | --> E{Works In} --> |(1, N) | --> F[Department]
+D[Employee] --> |(1, 1) | --> E{Works In}
+E --> |(1, N) | --> F[Department]
 ```
