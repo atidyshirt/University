@@ -270,10 +270,3 @@ Minimum cardinality
 **Structural Constraints**
 
 If we want to put a minimum amount of people and maximum on a relationship, we use the syntax `(min, max)` in the diagram.
-Below is an example of how this might look.
-
-```flow
-st=>start: Employee
-cond=>condition: Manages
-op=>operation: Department
-```
