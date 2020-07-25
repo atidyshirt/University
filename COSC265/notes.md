@@ -270,3 +270,13 @@ Minimum cardinality
 **Structural Constraints**
 
 If we want to put a minimum amount of people and maximum on a relationships cardinality ratio, we use the syntax `(min, max)` in the diagram.
+
+#### Relationship Diagrams
+
+Here is an example of a relationship diagram (simple)
+
+```mermaid
+graph TD;
+    Farmer-->B{Owned}-->Cow;
+```
+
