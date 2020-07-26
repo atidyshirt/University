@@ -266,3 +266,145 @@ The role of IP in the internet protocol Stack
 - no guaranteed order of packets recieved with IPv4 protocol
 
 ### Socket Programming
+
+#### TCP Client - Example Workflow
+
+**Functions**
+
+> **Socket()** 
+> - Create a socket, this allocates resources and assigns a random unused port number
+>
+> **Connect()**
+> - Establish a connection with the server
+>
+> **Read()/Write()**
+> - Reading and writing from and to the socket, alternatively you could also use **sendto()** or **recvfrom()** which allow you to specify other parameters
+>
+> **Close()**
+> - closes the connection to the socket
+
+#### TCP Server - Example Workflow
+
+> **Socket()** 
+> - Create a socket, this allocates resources and assigns a random unused port number
+>
+> **Bind()**
+> - Bind a socket to a particular port number and IP addresss
+> 
+> **Listen()**
+> - Declare whether or not the server will accept incoming connections, allocate resources (queue) for incoming connection requests (TCP)
+>
+> **Accepts()**
+> - Accepts an incomming connection request (take it from the request queue) and create a new socket for this connection, bound to the same port as the socket we called `listen()` on.
+>
+> **Read()/Write()**
+> - Reading and writing from and to the socket, alternatively you could also use **sendto()** or **recvfrom()** which allow you to specify other parameters
+>
+> **Close()**
+> - closes the connection to the socket > that was connected to us
+
+#### UDP Client Example Workflow
+
+> **Socket()** 
+> - Create a socket, this allocates resources and assigns a random unused port number
+>
+> **rcvfrom() / sendto()**
+> - Compared to TCP client, no `connect()` system call is necessary
+> - Receiver address then has to be supplied to `sendto()`
+
+#### UDP Client with `connect()`
+
+> **Socket()** 
+> - Create a socket, this allocates resources and assigns a random unused port number
+>
+> **Connect**
+> - The `connect()` system call supplies a default receiver address
+> - `connect()` can be called multiple times to change the default receiver
+>
+> **Write()**
+> - `write()` then sends to the last receiver specified with `connect()`
+>
+> **Close()**
+> - closes the connection to the socket > that was connected to us
+
+#### Using the Socket API in C
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int socket(int domain, int type, int protocol);
+```
+**Using `socket()`**
+
+This creates a new socket structure, including allocation of resources like the socket buffer, assigns  a random un-used port number to it 
+and returns a file descriptor representing the socket
+
+> `socket()` is non-blocking
+
+Parameter `domain`:
+- selects the protocol family to be used for the socket
+- options include `AF_INET` for IPv4, `AF_INET6` for IPv6, `AF_APPLETALK` for the appletalk protocol
+  - for this course we will only use `AF_NET`
+
+Parameter `protocol`:
+- selects the protocol used for the given socket type
+- often only one option sensible; then `protocol=0` is a good choice as it sets the default value for protocol
+
+Return value:
+- If successful, a file descriptor (>= 0) is returned
+- Otherwise -1 is returned, and error code `errno` is set
+
+**Using `bind()`**
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+```
+- Links a socket to a particular IP address / port number / address family combination
+- `bind()` is not blocking
+
+Parameter `sockfd`:
+- Denotes the socket
+- is just the value returned by the previous `socket()` call
+
+Return value:
+- when operation successful: `return 0`
+- when operation fails: `return -1`
+
+**`bind()` The `sockaddr` Structure**
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+
+struct sockaddr {
+  sa_family_t sa_family;
+  char sa_data[14];
+}
+
+struct sockaddr_in {
+  short sin_family;
+  unsigned short sin_port;
+  struct in_addr sin_addr;
+  char sin_zero[8];
+};
+
+struct in_addr {
+  unsigned long s_addr;
+}
+```
+
+**Using `listen()`**
+```c
+#include <sys/types.h>
+#include<sys/socket.h>
+
+int listen(int sockfd, int backlog);
+```
+
