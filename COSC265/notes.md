@@ -1,6 +1,6 @@
 <center>
 
-# COSC265 Notes 
+# COSC265 Notes - Database Management
 
 </center>
 

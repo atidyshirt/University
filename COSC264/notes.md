@@ -1,6 +1,6 @@
 <center>
 
-# COSC264 Notes
+# COSC264 Notes - Networking
 
 </center>
 
