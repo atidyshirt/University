@@ -61,6 +61,18 @@ Note that although a number of assessments are closed-book, we will be permitted
 
 #### First look at the internet
 
+##### Conversion Chart
+
+| Term | Approximate Size |
+| ---  | -----------------|
+| Byte (B) | 8 bits |
+| Kilobyte (KB) | 1024 bytes |
+| megabyte (MB) | 1024 KB | 
+| Gigabyte (GB) | 1024 MB |
+| Terabyte (TB) | 1024 GB |
+| Petabyte (PB) | 1024 TB | 
+| Exabyte (EB) | 1024 PB |
+
 **Where do routers send traffic?** 
 > Routers do not normally generate any traffic of their own, they are there to connect
 > networks from point to point, they make routing decisions in order to indicate where
@@ -86,6 +98,23 @@ Note that although a number of assessments are closed-book, we will be permitted
 | instant messaging                    | No loss       | Elastic                                 | not very, depends |
 
 > The term `elastic` means: these applications have no strict minimum-bandwidth requirements, they are just find with what they get
+
+##### Transmission Delay
+
+The formula for working out transmission delay is as follows $\frac{L}{R}$, where *L = length of packet* and *R = Data rate*, this is
+how we can workout the transmission delay, This is generally denoted as $(T_{d})$
+
+Here is an example of how we could solve for this in python:
+
+```python
+def transmission_delay(packetLength_bytes, rate_mbps):
+    return packetLength_bytes / rate_mbps / 125000
+```
+
+##### Propagation Delay
+
+This is the delay in which it takes to propagate the signal, and is denoted by $(T_{d})$. The way we can calculate propagation delay is
+to use the formula $\frac{d}{s}$ where *d = the distance* and *s = c i.e. the speed of light in copper wire*
 
 ### Bitwise operations
 
