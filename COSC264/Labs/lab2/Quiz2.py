@@ -12,7 +12,6 @@ def transmission_delay (packetLength_bytes, rate_bps):
 def total_time (cableLength_KM, packetLength_b):
      SOL = 200000 #KM/s
      RATE = 10 #Gbps
-    
 
 #  print ("{:.4f}".format(total_time(10000, 8000)))
 
@@ -21,11 +20,12 @@ def queueing_delay (rate_bps, numPackets, packetLength_b):
 
 #  print ("{:.3f}".format(queueing_delay(100*125000, 20, 1500*8)))
 
-def average_trials (P, x=1):
-    """Takes in a probability and returns
-       how many packets on average will need
-       to be sent in order to recieve the packet
-    """
-    return average_trials(P, 1*p)
+def per_from_ber (bitErrorProb, packetLen_b):
+    return 1-((1-bitErrorProb)**packetLen_b)
 
-print ("{:.3f}".format(average_trials(0.1)))
+def avg_trials_from_ber (bit_error_probability, packetLength_b):
+    prob = per_from_ber(bit_error_probability, packetLength_b)
+    return 1 + prob/(1-prob)
+
+print ("{:.3f}".format(avg_trials_from_ber(0.0001, 1000)))
+
