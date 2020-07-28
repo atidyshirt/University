@@ -388,4 +388,39 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 - Associative $a * (b*c) = (a*b)*c$
 - Communatative $a*b = b*a$
 
+#### Logic Gates
+
+We use logic gates to create electronic circuits that describe logical variables and
+their related statements.
+
+| S   | B   | !B  | W=S!B |
+| --- | --- | --- | ---   |
+| 0   | 0   | 1   | 0     |
+| 0   | 1   | 0   | 0     |
+| 1   | 0   | 1   | 1     |
+| 1   | 1   | 0   | 0     |
+
+Each entry in the sequence can have one of two values (`M = 2`), since logical variables
+have two logical values (0, 1). A sequence of `N` bits can be arranged into $2^N$ patterns.
+
+##### Patterns
+
+*Example*
+
+- we have six differently coloured LED's that we can use to represent information
+- we arrange these LED's into two groups, each with three colours (R, G, B).
+
+Question: How many patterns can we make with the LED's.
+
+> Answer: 9 patterns or $3^2$
+
+What happens if we re-arrange the colors into three groups and two possible options (R, B).
+
+> Answer: 8 patterns or $2^3$
+
+How can we work this out without brute force?
+
+In general, a sequence that is `N` entries long, where each entry has `M` values, this
+will give a $M^N$ patterns.
+
 
