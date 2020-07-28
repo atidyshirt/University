@@ -41,6 +41,22 @@ Late work should be accompanied with a detailed explanation of why the work is l
     - example: wind chill does not reflect the temperature of the air
     - we only percieve things, not see them how they are
 
+**Karl Popper**
+- Learn about falsification
+
+**Thomas Kuhn**
+- believed most of scientific work is mop up work
+- believed that we disregarded things that disagree with our view
+- Tried to stucture scientific revolutions and how they happened
+    1. First we have contending schools and gathering random facts
+    2. One paradigm becomes dominant and becomes normal science
+    3. talks about an anomaly that either we cannot get past or we progress with this theory
+    4. eventually we find a crisis that means our theory is not quite right
+    4. Believed that we had to wait for old scientists to die in order to have a chance of scientific revolution
+    5. eventually if we fix enough problems with our theory, we can achieve scientific revolution
+
+Problems: Kuhn's theory does not map well to social sciences, his idea of nessasary death of old scientists is a weel argument, challenging the idea of mastery and progress implicit in Kuhn's work.
+
 **David Deutsch**
 
 His View:
@@ -64,7 +80,7 @@ below will highlight the key differences between myths and scientific thought.
 | components have to have a functional role         | components do not have a functional role |
 | it has **reach**; can be applied to other planets | does not have reach                      |
 
-</center>
+</center> 
 
 #### Key Points
 1. An explanation is an assertion about what's there, unseen, that accounts for what is seen.
@@ -127,6 +143,8 @@ Conclusion:
 
 > To say that an argument is *deductively valid* is to say that it is impossible for its conclusion to be false if its premises are all true
 
+> Deduction is based off of proof
+
 Example of a inductively strong argument:
 
 Premise 1:
@@ -138,5 +156,7 @@ Premise 2:
 Conclusion:
 - Bert will not run a 5 minute mile tomorrow.
 
-> To say that an argument is inductively strong is to say that it is improbable, but not impossible for its conclusion to be false if its
+> To say that an argument is *inductively strong* is to say that it is improbable, but not impossible for its conclusion to be false if its
 > premises are all true.
+
+> Inductive reasoning is saying that if we find a few instances of something, we can conclude that it is always true
