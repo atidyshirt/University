@@ -271,12 +271,24 @@ Minimum cardinality
 
 If we want to put a minimum amount of people and maximum on a relationships cardinality ratio, we use the syntax `(min, max)` in the diagram.
 
+**Lattice**
+
+This is a type of structure where entity types end up at a single node, if this is to occur, it must all stem from the same parent class. If 
+this is the case, it is possible to take on roles of multiple subclasses at the same level.
+
 #### Relationship Diagrams
 
-Here is an example of a relationship diagram (simple)
+Assessment info on Learn, they have given us ER-Tutor to draw diagrams, they have given us model answers (also available on Learn).
 
-```mermaid
-graph TD;
-    Farmer-->B{Owned}-->Cow;
-```
+##### Syntax of Diagrams
 
+| Notation | Definition |
+| -------- | ---------- |
+| Underline | Key attribute |
+| Square box | Entity |
+| Oval | Attributes |
+| Double square | Weak Entity Type |
+| Double Oval | Multi-valued attribute |
+| ) on line | Represents specialization as a subclass of the parent class |
+| circle | represents multiple subclasses below parent |
+| Double lines (Relations) | represents that there need to be plow both ways |
