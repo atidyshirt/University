@@ -101,6 +101,8 @@ Note that although a number of assessments are closed-book, we will be permitted
 
 ##### Transmission Delay
 
+This is the time it takes to transmit an entire packet over a link.
+
 The formula for working out transmission delay is as follows $\frac{L}{R}$, where *L = length of packet* and *R = Data rate*, this is
 how we can workout the transmission delay, This is generally denoted as $(T_{d})$
 
@@ -112,6 +114,8 @@ def transmission_delay(packetLength_bytes, rate_mbps):
 ```
 
 ##### Propagation Delay
+
+This is the time it takes to transmit a single bit of a packet over a link.
 
 This is the delay in which it takes to propagate the signal, and is denoted by $(T_{d})$. The way we can calculate propagation delay is
 to use the formula $\frac{d}{s}$ where *d = the distance* and *s = c i.e. the speed of light in copper wire*
@@ -412,11 +416,13 @@ Return value:
 
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 
+// this is to hold any kind of address (allocating memory)
 struct sockaddr {
   sa_family_t sa_family;
   char sa_data[14];
 }
 
+// Contains all the things that we need to specify an address
 struct sockaddr_in {
   short sin_family;
   unsigned short sin_port;
@@ -430,10 +436,206 @@ struct in_addr {
 ```
 
 **Using `listen()`**
+
 ```c
 #include <sys/types.h>
 #include<sys/socket.h>
 
+// This is called by the TCP server
 int listen(int sockfd, int backlog);
 ```
 
+**Using `accept()`**
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+```
+
+**Using connect()**
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+```
+
+**Helper functions for conversion**
+
+```c
+#include <arpa/inet.h>
+
+uint32_t htonl(uint32_t hostlong);
+uint16_t htons(uint16_t hostshort);
+uint32_t ntonl(uint32_t netlong);
+uint16_t ntons(uint16_t netshort);
+```
+These functions convert from `host(h)` to `network(n)` representation or vice versa
+- They exist for 16 bit (short) and 32 bit(long) integers
+- These helper functions are described in the man page (section 3)
+
+#### Socket Programming Example
+
+##### Client side TCP
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+
+// This will print errors when they occur and then exit (note errors will be printed to terminal)
+void error(const char *msg)
+{
+  perror(msg);
+  exit(0);
+}
+
+int main(int argc, char *argv[])
+{
+  int sockfd, portno, n;
+  struct sockaddr_in serv_addr; // address structure
+  struct hostent *server; // result of DNS resolver
+
+  char buffer[256]; // buffer for actual data (allocated memory)
+  if (argc < 3) { // check number command line arguments
+    fprintf(stderr, "usage %s hostname port\n", argv[0]);
+    exit(0);
+  }
+  portno = atoi(argv[2]); // convert port number argument to integer
+
+  // now create socket, protocol=0 
+  // for given address family TCP will be used, this is how we define a TCP socket
+  // AF_INET >> IPv4, 0 >> default socket
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if (sockfd < 0) {
+    errpr("ERROR opening socket");
+  }
+}
+
+// gives IP address
+server = gethostbyname(argv[1]);
+if (server == NULL) {
+  fprintf(stderr, "ERROR, no such host\n");
+  exit(0);
+}
+
+bzero((char *) &serv_addr, sizeof(serv_addr));
+serv_addr.sin_family = AF_INET;
+bcopy((char *)server->h_addr, (char *) &serv_addr.sin_addr.s_addr, server -> h_length);
+serv_addr.sin_port = htons(portno);
+if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+  error("Error connecting");
+}
+
+printf("Please enter the message: ");
+bzero(buffer,256);
+fgets(buffer,255,stdin);
+
+n = write(sockfd, buffer, strlen(buffer));
+if (n < 0) {
+  error("ERROR writing to socket");
+}
+
+bzero(buffer,256);
+n = read(sockfd, buffer, 255);
+if (n < 0) {
+  error("ERROR reading from socket");
+}
+
+printf("%s\n", buffer);
+
+// cleanup and exit
+close(sockfd);
+return 0;
+```
+
+##### Server side TCP
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+void error(const char*msg) {
+  perror(msg);
+  exit(1);
+}
+
+int main(int argc, char*argv[])
+{
+  int sockfd, newsockfd, portno;
+  socklen_t clilen;
+  char buffer[256];
+  struct sockaddr_in serv_addr, cli_addr;
+  int n;
+
+  // check number of command line arguments, port number needed
+  if (argc < 2) {
+    fprintf(stderr,"ERROR, no port provided\n");
+    exit(1);
+  }
+
+  // create the socket
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) error("ERROR opening socket");
+
+
+bzero((char*) &serv_addr, sizeof(serv_addr));
+portno = atoi(argv[1]);
+serv_addr.sin_family = AF_INET;
+serv_addr.sin_addr.s_addr = INADDR_ANY;
+serv_addr.sin_port = htons(portno);
+if (bind(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr))<0) error("ERROR on binding");
+
+listen(sockfd,5);
+
+clilen = sizeof(cli_addr);
+newsockfd = accept(sockfd, (struct sockaddr*) &cli_addr, &clilen);
+
+if (newsockfd < 0) error("ERROR on accept");
+
+bzero(buffer,256);
+n = read(newsockfd,buffer,255);
+if (n < 0) error("ERROR reading from socket");
+printf("Here is the message: %s\n",buffer);
+n = write(newsockfd,"I got your message",18);
+if (n < 0) error("ERROR writing to socket");
+
+close(newsockfd);
+close(sockfd);
+return 0;
+}
+```
+
+In the assignment, we are asked to do this in python. We can Google socket programming and there will be many tutorials on how to do this
+
+### Network Protocols: Architecture and Basics
+
+We need to have a *Structure* to organize networking software to achieve the following
+
+- Modularity and software re-use
+- independence of network technologies (**Transparency**)
+- Separation of concerns
+- Correctness
+
+This is important because without these things being achieved, we would need to re-write code often as the technology is getting better annually
+
+**Layering**
+
+The internet is structured in such a way that a layer cannot access services of layers that are not at tangents to it, therefore the layer can
+only interface with the layer directly below and directly above, this is a method in order to keep us from having to re-write code, and re-design
+the internet.
+
+An example of how an interface can help us link through layers is the socket API, this allows us to go up a layer and use tools from this area. This is known as `Assessing an access point`
