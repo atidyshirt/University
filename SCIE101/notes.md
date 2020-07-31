@@ -160,3 +160,5 @@ Conclusion:
 > premises are all true.
 
 > Inductive reasoning is saying that if we find a few instances of something, we can conclude that it is always true
+
+
