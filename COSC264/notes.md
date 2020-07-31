@@ -639,3 +639,5 @@ only interface with the layer directly below and directly above, this is a metho
 the internet.
 
 An example of how an interface can help us link through layers is the socket API, this allows us to go up a layer and use tools from this area. This is known as `Assessing an access point`
+
+The concept of layers is to have many layers, that allow us to build a stack to complete a task.

@@ -1,19 +1,20 @@
 #include <stdio.h>
 
 int main(void) {
-    int first, last, test;
-    scanf("%i %i", &first, &last);
+    int first = 0, last = 0, i = 0, j = 0, flag = 0;
 
-    for (int value = first; value <= last; value++) {
-        for (int check = 2; check <= last; check++) {
-            if (value % check != 0) {
-                printf("Non prime");
-            } else {
-                test += 1;
+    scanf(" %i %i", &first, &last);
+    for (i = first; i <= last; i++) {
+        flag = 0;
+        for (j = 2; j <= i / 2; j++) {
+            if ((i % j) == 0) {
+                flag = 1;
+                break;
             }
-        } if (test == 1) {
-            printf("%i\n", value);
-            test = 0;
+        }
+        if (flag == 0) {
+            printf("%d\n", i);
         }
     }
 }
+
