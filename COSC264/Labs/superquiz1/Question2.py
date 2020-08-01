@@ -2,20 +2,19 @@ def basicpacketcheck (pkt):
     firstByte = pkt[0]
     version = (firstByte & 0b11110000) >> 4
     checksum = pkt[10] + pkt[11]
+    if len(pkt) < 20:
+        return 1
+    if version != 4:
+        return 2
     while checksum > 0xFFFF:
         x0 = checksum & 0xFFFF
         x1 = checksum >> 16
         checksum = x0 + x1
-    if len(pkt) < 20:
-        return 1
-    elif version != 4:
-        return 2
-    elif checksum != 0xFFFF:
-        return 3
-    elif pkt[2] + pkt[3] != len(pkt):
+        if checksum != 0xFFFF:
+            return 3
+    if pkt[2] + pkt[3] != len(pkt):
         return 4
-    else:
-        return True
+    return True
 
 
 
