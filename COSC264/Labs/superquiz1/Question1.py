@@ -44,7 +44,7 @@ def composepacket (version, hdrlen, tosdscp, totallength, identification, flags,
         bytelist.append(destinationaddress.to_bytes(4, 'big'))
 
         out = bytearray()
-        
+
         for byte in bytelist:
             out += byte
 
