@@ -423,4 +423,114 @@ How can we work this out without brute force?
 In general, a sequence that is `N` entries long, where each entry has `M` values, this
 will give a $M^N$ patterns.
 
+**Address Bus**
 
+This tells us the location of what we care about
+
+**Data Bus**
+
+This tells us what the data is that we care about
+
+**Control Bus**
+
+This specifies *which way* transfers happen over the data bus
+
+### The Computer
+
+#### The CPU
+
+##### Arithmetic Logic Unit (ALU)
+- calculations (+, -, *, /)
+- comparisons (=, !=, <= >=)
+- logical operations ()
+- binary operands ()
+
+##### General Purpose Registers
+- a set of memory locations located physically close to the ALU
+- stores data that we are intending to manipulate
+- Is a file
+
+##### Control Registers 
+- holds the metadata associated with the data we wish to manipulate
+- Contains
+    - Address of next instruction (PC)
+    - Address of *Top of stack* (SP)
+    - Status of last operation (STATUS)
+
+##### Control/Execution Unit
+- A *finite state machine* that controls what happens and when
+- sends data to the ALU
+- sets ALU mode
+- Control *address* and *control* buses
+- inputs to the FSM are program instructions and the control registers.
+
+#### Memory
+
+##### Sequential Memory
+
+###### SR Latch
+- Simplest form of a sequential circuit (This table is from Slide 23)
+
+| Inputs |     | Outputs |
+| S      | R   | $y_k$   | $z_k$ | $y_(k-1)$ | $z_(k-1)$ |
+| ---    | --- | ---     | ---   | ------    | ------    |
+| 0      | 0   | 1       | 0     | 1         | 0         |
+| 0      | 0   | 0       | 1     | 0         | 1         |
+| 0      | 1   | 1       | 0     | 1         | 0         |
+| 0      | 1   | 0       | 1     | 1         | 0         |
+| 1      | 0   | 1       | 0     | 0         | 1         |
+| 1      | 0   | 0       | 1     | 0         | 1         |
+
+###### D Flip Flop
+- Outputs ignore input until *triggered* by the **Rising edge** of a clock signal
+
+| Input | Current | Next |
+| D     | Q       | Q    | $Q_(k+1)$ | $Q_(k+1)$ |
+| ---   | ---     | ---  | ---       | ---       | 
+
+# > Complete later 
+
+To store a byte of information we will need 8 D Flip Flops, a register typically stores
+a single byte.
+
+**Addressing memory**
+
+```c
+uint8_t varA;
+char varB;
+int16_t temp[2];
+```
+
+This translates to the following byte array
+| Menory | Location | Allocation |
+| ---    | ---      | ---        |
+| 0x100  | byte 0   | varA       |
+| 0x101  | byte 1   | varB       |
+| 0x102  | byte 2   | temp[0]    |
+| 0x104  | byte 3   | temp[0]    |
+| 0x105  | byte 4   | temp[1]    |
+| 0x106  | byte 5   | temp[1]    |
+| 0x107  | byte 6   | EMPTY      | 
+
+**Pointers in C**
+```c
+char varA = 'a'
+char* point_to_varA;
+
+point_to_varA = & varA;
+
+printf("%c", *point_to_varA);
+```
+
+###### Memory Architecture
+- Von Neumann
+    - This is the simpler approach, it is less expensive.
+    - It was desired up until the 1990's
+- Harvard
+    - This is faster and more costly.
+    - Has more buses
+    - Came as a way to increase processing speed
+
+###### IO Architecture
+- Memory Mapped Architecture 
+- Separately Mapped Architecture
