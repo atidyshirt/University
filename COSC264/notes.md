@@ -641,3 +641,28 @@ the internet.
 An example of how an interface can help us link through layers is the socket API, this allows us to go up a layer and use tools from this area. This is known as `Assessing an access point`
 
 The concept of layers is to have many layers, that allow us to build a stack to complete a task.
+
+#### The Physical Layer
+
+**Digital Data vs Analog Data**
+
+| Digital Data                                                                        | Analog Data                                                                                                                                                                                                    |
+| ---                                                                                 | ---                                                                                                                                                                                                            |
+| Digital data refers to a sequence of *discrete symbols*                             | Analog data can take on an uncountable number of values                                                                                                                                                        |
+| A symbol is a member of a **finite** set which is also known as the alphabet        | Human speech and old FM Radio are analog transmissions                                                                                                                                                         |
+| Now days many further types of data are represented digitally, audio, video, images | in recent decades our world has become largely digitalized                                                                                                                                                     | 
+| It has a finite number (0 , 1)                                                      | within computers and networks, all the data of interest by the processor, messages / packets in networks is represented as digital data, perhaps after some conversion from analog to digital (A/D conversion) |
+
+**Transmission of Digital Data**
+
+The transmitter has a stream of bits that it wants to stream to the receiver, the physical layer makes changes in order to transmit this through air (convert it to analog), the
+signal will lose power as it is sent, the receiver will receive a distorted version of the original data. The goal of digital data is to have the same data at the start and end,
+this will be contained with the bit error rate.
+
+**Transmission of Analog Data**
+
+The goal of this is not to get a perfect replica of the transmitted signal to the received data. This means that we are trying to just create as accurate of an image as possible,
+we are not trying to create an exact replica unlike that of digital data.
+
+
+
