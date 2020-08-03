@@ -407,6 +407,10 @@ and hex.
 ```c
 char line[100] = {0}; // this will set 100 bytes to a value of 0
 char line2[5] = {0, 1, 2, 3, 4};
+
+// Note we can also find the size of an array using the following syntax
+printf("The size of line2 is %zu", sizeof line2);
+
 int c, i, n = 0;
 
 puts("Enter a line: ");
@@ -420,6 +424,55 @@ for (i = n - 1; i >= 0; i--) {
 }
 ```
 
+In the code above, we can see that we have allocated 100 bytes to a line of chars.
+This means that if we go over 100 bytes of code in that line, we will find that there
+is going to be an overflow, because of this we will only see the first 100 bytes and
+the rest will be lost.
+
+##### Functions
+
+```c
+#include <stdio.h>
+
+double average(double a, double b) 
+{
+    return (a + b) / 2;
+}
+
+int main(void)
+{
+    printf("Average is: %lf", average(10, 200));
+}
+```
+
+Take away things about functions:
+- you cannot nest functions in C
+- you must define the function before use, therefore we need to define above the main function
+
+##### Strings In C
+
+```c
+#include <stdio.h>
+#define MAX_NAME_LENGTH 80
+
+void readName(int maxLen, char name[])
+{
+    int c = 0;
+    int i = 0;
+    printf("Enter your name: ");
+    while ((c = getchar() != '\n' && c != EOF && i < MAX_NAME_LENGTH)) {
+        name[i++] = c;
+    } name [i] = 0;
+}
+
+int main(void)
+{
+    char name[MAX_NAME_LENGTH] = {0};
+
+    readName(MAX_NAME_LENGTH, name);
+    printf("%s\n", name);
+}
+```
 
 ### Computer Architecture
 
