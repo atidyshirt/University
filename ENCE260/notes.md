@@ -474,6 +474,31 @@ int main(void)
 }
 ```
 
+#### Pointers
+
+In C all memory is treated as a large array, there are no *run-time checks*, programming
+errors with pointers and arrays usually results in a crash of the program: this can be
+*segmentation fault, core dumped*. Sometimes a corrupted memory location causes a problem
+much later in the execution of the program **This is hard to debug**.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    int i = 10;
+    int j = 20;
+    int* p = NULL; // This now points to memory location 0, as int(NULL) == 0
+    p = &i; // P is now set to the Address of int (I)
+    *p = j; // this sets 'i' to the value of 'j'
+}
+```
+
+The $*$ operator in C can be interpreted in a couple of ways depending on context.
+When being used in **Declorations** it is read as `int* point` means define this as a
+pointer to an int. When used in **Expressions**, it is read as *Indirectly via*, so
+`*p = j` means get a value indirectly via `p` and store it in variable `j`.
+
 ### Computer Architecture
 
 #### Digital Logic
@@ -507,6 +532,8 @@ Logical variable, represents true or false, and is denoted by `varName = true`
 - $f(a,b) = a * b$
 
 `OR`
+
+- $f(a,b) = a + b$
 
 #### Boolean Algebra
 
