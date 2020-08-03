@@ -332,6 +332,8 @@ different to python in the fact that python stores the name in a dictionary as a
 - Boolean
   - \_Bool (or just _bool_ if #include <stdbool.h>)
 
+##### Integers
+
 ```C
 int a = 0;
 short int b = 1;
@@ -343,6 +345,81 @@ long d = 50;
 The different variables tell it how much memory to allocate to each variable, for instance
 **char** allocates 1-byte, **short** allocates 2-bytes, **int** allocates 4-bytes and **long
 long int** allocates 8-bytes.
+
+##### Chars 
+
+```c
+char someChar = 0;
+
+someChar = '*';
+printf("'%c'", someChar);
+```
+
+> Return: '*'
+
+This will return the actual character, however if we do an arithmitic operation on the char
+it will treat it as an integer.
+
+```c
+char someChar = 0;
+
+someChar = 42;
+printf("'%c'", someChar);
+```
+
+> Return: 42
+
+Because we have now assigned the char to a numeric variable, it will then treat this as an
+ASCII value for a character in the alphabet.
+
+**Using getchar()**
+
+```c
+int c = 0;
+
+printf("Enter a line: ");
+c = getchar();
+
+while (c != '\n' && != EOF) {
+    printf("c = '%c' dec %d hex %x\n", c, c, c);
+    c = getchar();
+}
+```
+
+Here is a sexier way of writing this
+
+```c
+int c = 0;
+printf("Enter a line: ");
+while (c = getchar()) != '\n' && c != EOF) {
+    printf("c = char '%c' dec %d hex %x\n", c, c, c);
+}
+```
+
+This will take a string of characters, and then print every character as a char, int
+and hex. 
+
+> Note: That this will buffer each char and print at the end of the loop rather then
+>       printing them after each character is entered.
+
+##### Arrays in C
+
+```c
+char line[100] = {0}; // this will set 100 bytes to a value of 0
+char line2[5] = {0, 1, 2, 3, 4};
+int c, i, n = 0;
+
+puts("Enter a line: ");
+while ((c = getchar() != '\n' && c != EOF)) {
+    line[i++] = c;
+}
+
+n = i;
+for (i = n - 1; i >= 0; i--) {
+    putchar(line[i]);
+}
+```
+
 
 ### Computer Architecture
 

@@ -282,13 +282,15 @@ Assessment info on Learn, they have given us ER-Tutor to draw diagrams, they hav
 
 ##### Syntax of Diagrams
 
-| Notation | Definition |
-| -------- | ---------- |
-| Underline | Key attribute |
-| Square box | Entity |
-| Oval | Attributes |
-| Double square | Weak Entity Type |
-| Double Oval | Multi-valued attribute |
-| ) on line | Represents specialization as a subclass of the parent class |
-| circle | represents multiple subclasses below parent |
-| Double lines (Relations) | represents that there need to be plow both ways |
+| Notation                 | Definition                                                  |
+| --------                 | ----------                                                  |
+| Underline                | Key attribute                                               |
+| Square box               | Entity                                                      |
+| Oval                     | Attributes                                                  |
+| Double square            | Weak Entity Type                                            |
+| Double Oval              | Multi-valued attribute                                      |
+| ) on line                | Represents specialization as a subclass of the parent class |
+| circle                   | represents multiple subclasses below parent                 |
+| Double lines (Relations) | represents that there need to be plow both ways             |
+
+
