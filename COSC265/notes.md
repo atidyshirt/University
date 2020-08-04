@@ -293,4 +293,17 @@ Assessment info on Learn, they have given us ER-Tutor to draw diagrams, they hav
 | circle                   | represents multiple subclasses below parent                 |
 | Double lines (Relations) | represents that there need to be plow both ways             |
 
+##### Shit I need to know
 
+An attribute can be associated with the relationship diamond when it shows an association
+between two particular entities.
+
+A week entity type can only have **One Partial Key**, in some cases it can be a composite
+attribute if a set of attributes is required for unique identification
+
+The values of completeness constraint are **Total / Partial**.
+
+An entity type has a multivalued attribute, then there are some entities of this type
+that have more than one value for that attribute.
+
+A week entity type participates in the identifying relationship type **always totally*.
