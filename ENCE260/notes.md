@@ -691,3 +691,4 @@ printf("%c", *point_to_varA);
 ###### IO Architecture
 - Memory Mapped Architecture 
 - Separately Mapped Architecture
+
