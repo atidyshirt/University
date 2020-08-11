@@ -306,4 +306,12 @@ The values of completeness constraint are **Total / Partial**.
 An entity type has a multivalued attribute, then there are some entities of this type
 that have more than one value for that attribute.
 
-A week entity type participates in the identifying relationship type **always totally*.
+A week entity type participates in the identifying relationship type **always totally**.
+
+##### ER to Relational Mapping Algorithm
+
+This is the algorithm to turn an ER model into a relational model
+
+**NOTE:** *Steps for what to do are found in Lecture: July 31st, and corresponding slide-set*
+
+
