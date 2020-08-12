@@ -1,24 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-char data[100];
-char thing1 = 2;
+#include <stdbool.h>
 
-int isInData(char* address)
+int myIndex(int data[], int* element)
 {
-    int flag = 0;
-    for (int i; i < 100; i++) {
-        if (*address == data[i]) {
-            flag = 1;
-        }
-    } 
-    return flag;
+    int i = 0;
+    while (&data[i] != element) {
+        i += 1;
+    }
+    return i;
 }
 
 int main(void)
 {
-    // Expect 1, 1, 1, 0
-    printf("%d\n", isInData(&data[0]));
-    printf("%d\n", isInData(&data[17]));
-    printf("%d\n", isInData(&data[99]));
-    printf("%d\n", isInData(&thing1));
+    int data[30];
+    int* p = &data[17];
+    printf("Index is %d\n", myIndex(data, p));
 }

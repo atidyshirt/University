@@ -1,7 +1,5 @@
 import socket
 
-HEADERSIZE = 5
-
 # These are the inputs
 IP = socket.gethostbyname('localhost')
 PORT = 1024

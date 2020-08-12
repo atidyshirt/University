@@ -474,6 +474,59 @@ int main(void)
 }
 ```
 
+We can indicate strings by having an array of chars and then ending with a `0`, this would
+look something like this `s[] = {'t', 'h', 'i', 's', 0}`, we can also define a string like
+the following:
+
+```c
+char s[] = "This";
+char str = "This";
+
+puts(s);
+puts(str);
+
+s[1] = '*';   // will work
+str[1] = '*'; // will not work
+```
+
+If we use the second example `str[1]`, we will run into a segmentation fault, this is
+because we will be pointing into a defined spot in memory, and therefore causing memory
+errors. We can use the **valgrind** program on Unix systems in order to spot these memory
+errors.
+
+We can use the `<string.h>` header to get string operands when needed, these include the
+`strlen()` function, along with many others.
+
+###### Finding string Lengths
+
+```c
+#include <string.h>
+char s = "String";
+size_t n = strlen(s);
+printf("%zu", n);
+```
+
+> Returns: 6
+
+Above is an example of how to get the length of a string in C or any array of chars. It is
+important to note that this is not returned as an `int`, but is returned as a `size_t`
+attribute.
+
+From figure one, we cannot do something like `if (s == str)`, this is because the equals
+operand compares two places in memory rather then the values.
+
+###### String Functions
+
+**Note:** *We can use the Man page to find the input parameters for the below functions*
+
+We can use `strLen()` to get length of string.
+
+We can use `strcmp()` to compare two strings.
+
+We can use `strncpy()` to copy a string to another object.
+
+We can use `strncat()` to concatenate strings.
+
 #### Pointers
 
 In C all memory is treated as a large array, there are no *run-time checks*, programming

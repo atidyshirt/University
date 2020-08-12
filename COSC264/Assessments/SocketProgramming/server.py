@@ -1,8 +1,6 @@
 import socket
-import select
 import datetime
 
-header = 0
 IP = socket.gethostbyname('localhost')
 PORT_english = 1024
 PORT_maori = 1025
@@ -25,19 +23,35 @@ def packetCheck(packet):
     """
     checks the integrity of the packet, and makes sure that it is formatted correctly
     """
-    print(packet)
-    MagicNo = packet[:2]
-    PacketType = packet[2:4]
-    RequestType = packet[:-2]
+    info = [packet[i:i+2] for i in range(0, len(packet), 2)]
+    MagicNo = int.from_bytes(info[0], 'big')
+    PacketType = int.from_bytes(info[1], 'big')
+    RequestType = int.from_bytes(info[2], 'big')
     if MagicNo != 0x497E:
-        return False
+        print("Magic wrong")
     if PacketType != 0x0001:
         return False
-    if RequestType != 0x0001 or RequestType != 0x0002:
+    if RequestType != 0x0001 and RequestType != 0x0002:
         return False
     return True
 
+def checkRequestType(packet):
+    info = [packet[i:i+2] for i in range(0, len(packet), 2)]
+    RequestType = int.from_bytes(info[2], 'big')
+    if RequestType == 0x0001:
+        return 'date'
+    else:
+        return 'time'
+
 def getDate():
+    """
+    grabs the current date using datetime and returns it as a string.
+    """
+    date = str(datetime.datetime.utcnow())
+    date = date.split(" ")
+    return date[0]
+
+def getTime():
     """
     grabs the current date using datetime and returns it as a string.
     """
@@ -50,11 +64,15 @@ while True: # while there is a connection
         clt, adr=s.accept() # As we established above, accept returns the connection and address (these are being assigned to variables)
         print(f"Connection to {adr} established")
         packet, source = clt.recvfrom(48)
-        print(f"{packetCheck(packet)}")
         if packetCheck(packet):
-            msg = getDate()
-            clt.send(bytes(msg, "utf-8"))
-            clt.close()
+            if checkRequestType(packet) == 'date':
+                msg = getDate()
+                clt.send(bytes(msg, "utf-8"))
+                clt.close()
+            elif checkRequestType(packet) == 'time':
+                msg = getTime()
+                clt.send(bytes(msg, "utf-8"))
+                clt.close()
         else:
             msg = "Packet is not correct"
             clt.send(bytes(msg, "utf-8"))
