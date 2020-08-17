@@ -1,13 +1,22 @@
 import socket
 import argparse
 
-def start_client(DATE, HOST, PORT):
-# These are the inputs
-    IP = socket.gethostbyname(HOST)
+def start_client(DATE, HOST, PORT, verbose):
+    """
+    This function is the main function in order to setup the client. The function contains many sub-functions used for finding
+    parameters nessasary to display the desired output, the body of this function contains the steps to produce a client and
+    calls the nessasary sub-functions to send a request to the server.
+    """
+    try:
+        IP = socket.gethostbyname(HOST)
+    except socket.gaierror:
+        print(f"Hostname not found: Could not connect to ({HOST}:{PORT})")
+        return -1
 
     def checkInputs(DATE, IP, PORT):
+        """ Checks the intergrity of inputs and if they comply to the specifications """
         if not IP:
-            print("The IP address is not specified")
+            print("The Hostname is invalid")
             return False
         if PORT < 1024 or PORT > 64000:
             print("The Port number is not within specified range (1024:64000)")
@@ -18,13 +27,19 @@ def start_client(DATE, HOST, PORT):
         return True
 
     def decrypt_message(packet):
+        """
+        Takes in a packet in the form of a byte array, and decrypts it to pull the relevent data
+        that will later be displayed to the client.
+
+        Note: This has a --verbose flag to get the full contents of the packet.
+        """
         info = [packet[i:i+1] for i in range(0, len(packet), 1)]
         if len(info) < 13:
             print("Packet does not include minimum headersize")
             return -1
 
         MagicNo = int.from_bytes(info[0] + info[1], 'big')
-        
+
         if MagicNo != 0x497E:
             print("MagicNo is incorrect: `{}` recieved, must equal `0x497E`".format(MagicNo))
             return -1
@@ -65,11 +80,26 @@ def start_client(DATE, HOST, PORT):
             print("Length of packet does not match packet received")
             return -1
 
+        if verbose:
+            print("---------------------------------------")
+            print(f"MagicNo: {hex(MagicNo)}")
+            print(f"PacketType: {hex(PacketType)}")
+            print(f"LanguageCode: {hex(LanguageCode)}")
+            print(f"Year: {Year}")
+            print(f"Month: {Month}")
+            print(f"Day: {Day}")
+            print(f"Hour {Hour}")
+            print(f"Minute: {Minute}")
+            print(f"Length: {Length}")
+            print(f"Text: {text}")
+            print("---------------------------------------")
+            print("")
+
         return text
 
     def format_request(Date):
         """
-        Formats the packet into the desired format
+        Formats the packet into a byte array to send to the server.
         """
         MagicNo = 0x497E
         PacketType = 0x0001
@@ -79,52 +109,51 @@ def start_client(DATE, HOST, PORT):
             RequestType = 0x0002
         else:
             return -1
-        bytelist = []
-        bytelist.append(MagicNo.to_bytes(2, 'big'))
-        bytelist.append(PacketType.to_bytes(2, 'big'))
-        bytelist.append(RequestType.to_bytes(2, 'big'))
+        bytelist = [MagicNo.to_bytes(2, 'big'), PacketType.to_bytes(2, 'big'), RequestType.to_bytes(2, 'big')]
+
         arrayBytes = bytearray()
+
         for x in bytelist:
             arrayBytes += x
+
         return arrayBytes
 
     if checkInputs(DATE, IP, PORT):
+        """ Checks if the input date/time is valid """
         request_packet = format_request(DATE)
         if request_packet == -1:
             print("The `date` parameter must be set to either `date` or `time`")
-
+            return -1
         else:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.settimeout(1)
+            s.sendto(request_packet, (IP, PORT))
 
-                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # set to grab IPv4 and socket_stream is to create TCP protocols
-                s.settimeout(1)
-                s.sendto(request_packet, (IP, PORT))
+            complete_message = bytearray()
 
-                complete_message = bytearray()
+        while True:
+            try:
+                msg, source = s.recvfrom(1024)
 
-                while True:
-                    #  read, write, exception = select.select(sockets, [], [])
+                if len(msg) <= 0:
+                    break
 
-                    try:
-                        msg, source = s.recvfrom(1024)
+                complete_message += msg
 
-                        if len(msg) <= 0:
-                            break
+            except socket.timeout:
+                print(f"Client timeout: Could not connect to ({HOST}:{PORT})")
+                break
 
-                        complete_message += msg
+            except socket.error:
+                print(f"Client timeout: Could not connect to ({HOST}:{PORT})")
+                break
 
-                    except socket.timeout:
-                        print("Client socket timeout")
-                        break
-
-                    except socket.error:
-                        print("Client socket timeout")
-                        break
-
-                    result = decrypt_message(complete_message)
-                    if result != -1:
-                        print(result)
-                        break
-                    s.close()
+            result = decrypt_message(complete_message)
+            if result != -1:
+                print(result)
+                break
+            s.close()
+            return result
 
 
 def Main():
@@ -132,12 +161,15 @@ def Main():
     parser.add_argument("MSG", help="The message to receive from server must be `date` or `time`", type=str)
     parser.add_argument("HOST", help="The Hostname to connect to", type=str)
     parser.add_argument("PORT", help="The Port number to connect to", type=int)
+    parser.add_argument("-v", "--verbose", action="store_true", help="verbose output: full output of packet recieved")
 
     args = parser.parse_args()
-    start_client(args.MSG, args.HOST, args.PORT)
+
+    if args.verbose:
+        start_client(args.MSG, args.HOST, args.PORT, verbose=True)
+    else:
+        start_client(args.MSG, args.HOST, args.PORT, verbose=False)
+
 
 if __name__ == "__main__":
     Main()
-
-
-

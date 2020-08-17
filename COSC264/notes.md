@@ -786,7 +786,130 @@ we are not trying to create an exact replica unlike that of digital data.
     - can send IP datagrams over any network interface
 
 
+#### MAC Addresses
+
+Small medium access delay, the time between arrival of packet to
+empty station and start of successful transmission.
+
+Mac Addresses need to be:
+- Fair
+- efficient
+- stable
+
+##### Orthogonal Schemes
+
+Orthogonal schemes the behaviour of one station does not influence the behaviour of your input
+The goal is to achieve collision free communication.
+
+##### Frequency Division Multiple Access (FDMA)
+
+An example of this is FM Radio, as we have a center frequency that we are based around, we have
+enough distance to allow the user to not interfere with frequencies above and below.
+
+- if totally available bandwidth is B $\frac{b}{s}$, station *i* is assigned $\frac{1}{N}$ of *B*
+on a long term basis *neglecting guard bands*
+- Medium access delay for a new packet arriving to an empty station *i* is always zero, since *i*
+can start transmission immediately without risk of collision
+- If a packet has size $\frac{B}{N}$ bits, its transmission takes one second:
+
+$$E[Transmission Delay] = 1$$
+
+FDMA was very popular for both radio and old phone systems.
+
+##### Time Division Multiple Access (TDMA)
+
+The completion time of TDMA can be shown with the following expression
+
+$$E[completion Time] = E[Access Delay] + E[Transmission Delay]$$
+
+- The time to transmit the packet (Transmission Delay) is $\frac{1}{N}$ seconds
+- We can get 
+
+> We can note from this that with TDMA we can start later and finish sooner than FDMA
+
+#### Random Access Protocols
+- do not attempt to reserve channel resources for longer time
+- do not require a central station 
+- do not access the medium at predictable times
+- often have low complexity
+- typically involve some random elements
+
+- Random access protocols are used standalone and also as building blocks for more
+complex MAC protocols
+
+##### ALOHA
+
+- One of the earliest MAC protocols, developed in 1970's
+- when a new packet arrives at an idle station
+    - a checksum is computed and appended to the frame
+    - the frame is then transmitted immediately
+    - an *acknowledgement timer* is started
+- if receiver gets packet, the receiver will transmit, else it will stay quite
+- if the timer expires, we conclude that the packet has got lost
+
+All of the above protocols have in common the sense that they all listen to if there
+is someone else using the service, they will reject the service if it is busy.
+
+#### Ethernet
+
+New packet arrives at the MAC of a station, set coll to zero.
+- coll is a local collision counter, each station has its own
+
+Station performs a carrier-sense operation
+
+When the medium is idle, transmission starts immediately
+
+When medium is busy
+- listen until channel becomes idle
+- start transmitting
+
+While transmitting check for collisions
+
+If collision is detected
+- abort frame transmission
+- increase counter coll, counting # of subsequent collision
+- if coll is > 16 drop frame, set coll to 0
+- wait for random time **the backoff time**
+
+If no collision, transmit the entire frame and reset `coll`
+
+Draw a random integer number uniformly from the backoff window.
+
+The backoff window can be denoted by the following:
+
+$$[0, 1, ..., 2^(min{10,coll})-1]$$
+
+The backoff window size and therefore the average backoff time doubles each collision
+until 10 collisions have been seen. This is called the *truncated* binary exponential
+backoff algorithm.
+
+Note: This is shown in full in the slides (Ethernet Section)
+
+Ethernet under light load has minimal delay, however when under heavy load, it still
+only experiences 50 - 60% as many collisions and is therefore faster.
+
+#### Bridges and Switches
+
+##### Repeaters
+
+A repeater amplifies a signal on an analog level
+- Any noise present in the signal is amplified as well
+- Repeaters add their own noise
+- Repeaters are agnostic to any protocol or modulation
+- They can create slight delay (nanoseconds or less)
+
+**Regenerating Repeater**
+
+A **Regenerating Repeater** demodulates an incoming signal symbol-per-symbol and modulates
+it again
+- It does not look beyond one symbol at a time
+- No interpretation whatsoever of protocols
+
+##### Hubs
+
+Acts as a centralized repeaters, take signals coming from one port and sends to all the
+ports using broadcast transmission.
+
+The advantage over a bus is that we cannot cut a cable to remove the signal.
 
 
-
-#### New Topic
