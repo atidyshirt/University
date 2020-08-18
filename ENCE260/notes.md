@@ -745,3 +745,4 @@ printf("%c", *point_to_varA);
 - Memory Mapped Architecture 
 - Separately Mapped Architecture
 
+

@@ -314,4 +314,249 @@ This is the algorithm to turn an ER model into a relational model
 
 **NOTE:** *Steps for what to do are found in Lecture: July 31st, and corresponding slide-set*
 
+A table is defined as a set of tuples, this means that we can not contain duplicate
+entries.
+
+### Relational Algebra
+
+#### The Pie Operand
+
+This is the Reject operation.
+
+$\pi (A, C)$ if the tuple does not contain a key, it is possible to have < `N` entries
+as there is a possibility that there are duplicate entries in the table (SET OF TUPLES).
+
+If A or C is a key, the tuples cannot be the same because they have a unique identifier.
+
+### The Omega Operand
+
+
+$\sigma$ is used to define a select method. therefore if given the following:
+
+Table: 
+
+| A (key) | B   | C   |
+| ---     | --- | --- |
+| 1       | 1   | 2   |
+| 2       | 2   | 1   |
+| 3       | 3   | 2   |
+| 4       | 1   | 2   |
+| 5       | 2   | 1   |
+| 6       | 3   | 3   | 
+
+Here are some expressions/questions.
+
+
+Q1: 
+
+$\pi _(A, C) (R)$
+
+This expression will give the following output table:
+
+| A   | C   |
+| --- | --- |
+| 1   | 2   |
+| 2   | 1   |
+| 3   | 2   |
+| 4   | 2   |
+| 5   | 1   |
+| 6   | 3   |
+
+The table gives a result set that is of length `N` becuase A is a primary key.
+
+
+$\pi _(B, C) (R)$
+
+| B   | C   |
+| --- | --- |
+| 1   | 2   |
+| 2   | 1   |
+| 3   | 2   |
+| 3   | 3   |
+
+The reason that this result set `S < N` is because that if we look at the input table `Table`
+we can see that there have been some results appearing multiple times, such as ($B _1, C _1$)
+
+Q3:
+
+$\sigma _(B > 1) (R)$
+
+| $\underline{A}$ | B   | C   |
+| ---             | --- | --- |
+| 2               | 2   | 1   |
+| 3               | 3   | 2   |
+| 5               | 2   | 1   |
+| 6               | 3   | 3   |
+
+We can use a series of relational Algebra in order to imply a table as these things are
+interchangable.
+
+**Union compatible relations**
+- same degree
+- each pair of corresponding attreubutes have the same domain
+
+- Union: $S \cup R$
+- Intersection: $S \cap R$
+- Set difference (minus) $S - R$
+
+Properties of Union Intersect and Difference
+
+- Both Union and intersect are Communatative
+    - $R\cup S=S \cup R \quad AND \quad R \cap S = S \cap R$
+
+#### Cartesian Product
+
+- set operation
+- does not require union compatible relations
+- $S \times X$
+- Binary operation
+- Communatative
+
+Example:
+
+Table R:
+
+| $\underline{A}$ | B   | C   |
+| ---             | --- | --- |
+| 1               | 1   | 2   |
+| 2               | 2   | 1   |
+| 3               | 3   | 2   |
+| 4               | 1   | 2   |
+| 5               | 2   | 1   |
+| 6               | 3   | 3   |
+
+Table S:
+
+| $\underline{D}$ | E   | A    |
+| ---             | --- | ---  |
+| 1               | a   | 1    |
+| 2               | b   | 2    |
+| 3               | e   | 4    |
+| 4               | a   | l    |
+| 5               | c   | null |
+| 6               | d   | 4    |
+| 7               | f   | 2    |
+
+Question: Find the cartesian Product
+
+$S \times R$
+
+| A   | B   | C   | D   | E   | A   |
+| --- | --- | --- | --- | --- | --- |
+| 1   | 1   | 2   | 1   | a   | 1   |
+| 1   | 1   | 2   | 2   | 6   | 2   |
+|     |     |     |     |     |     |
+| 1   | 1   | 2   | 7   | f   | 2   |
+| 2   | 2   | 1   | 1   | a   | 1   |
+| 2   | 2   | 1   | 2   | 6   | 2   |
+|     |     |     |     |     |     |
+| 2   | 2   | 1   | 7   | f   | 2   |
+|     |     |     |     |     |     |
+| 6   | 3   | 3   | 7   | f   | 2   |
+
+**Joins**
+
+- Binary relational operation
+- $R \bowtie_{<join condition>} S$
+- join condition: $R.A = S.B$
+- Example 8:
+    - *Join the MOVIE and DVD tables*
+
+The resulting table will have the same number of tuples as the DVD table, as a MOVIE
+can have many DVD's. This is more efficent than Cartesian in this case as it does not
+create every possible combination of MOVIE and DVD.
+
+If we specify the condition in which it is joining, this is the variable we are joining
+onto *This tends to be when the foreign key and primary key from different tables tend
+to have the same name*
+
+Aquajoin will not remove the double up of the keys, normal outer join will remove this
+double contents.
+
+#### Complete set of relational algebra operations
+ 
+The set is as follows, this should allow us to derive any operation on a database from
+these five different operations: 
+
+`SET =`$\{\sigma, \pi, \cup, -, \times\}$
+
+### SQL
+
+- Terminology: tables, columns and rows
+- Important distinction: between `SQL` and the formal relational model, `SQL` will allow
+a table to contain multiple duplicate tuples.
+- Hence an `SQL` relastion table is a *multi-set* of tuples; it is **Not** a set
+of tuples.
+- `SQL` relations can be constrained to be sets by specifying `PRIMARY KEY` or `UNIQUE`
+attributes, or by using the `DISTINCT` option in a query.
+
+#### Logical Design
+
+*This is the process of going from a relational model to an DBMS specific outline
+for this section we will be using Oracle*
+
+**Oracle Syntax**
+
+For the value of a primary key we cannot use the `NUMBER` as it is a reserved
+word in Oracle, we must instead use `DNUMBER` for our unique identifiers
+
+Comments: HTML/C Style /\* ... \*/ Multi-line comment or -- for single line.
+
+```sql
+-- single line comment
+
+/* 
+    Multi-line
+    comment
+*/
+```
+
+Example of setting values with constraints
+
+```sql
+-- This is an example of a statement in SQL --
+BORN integer
+    constraint dir_born check
+        (BORN between 1880 and 1990);
+```
+
+We can also specify key, ability to hold nulls, other constraints and conditions.
+
+Here is a full `SQL` example of a table:
+
+```sql
+/* This table is a table of movies, with the following attributes:
+MNUMBER >> Unique Identifier
+TITLE >> String length 50 chars (not null)
+TYPE >> String length 15 not null
+AANOM >> integer
+AAWON >> integer
+YEAR >> integer
+CRITICS >> string length 2
+DIRECTOR >> integer that references a primary key from another table (DIRECTOR table)
+    Note: This foreign key MUST be the same type as the primary key
+*/
+CREATE TABLE MOVIE(
+    MNUMBER Unique number not null PRIMARY KEY, 
+    TITLE, varchar(50) not null,
+    TYPE varchar(15) not null,
+    AANOM integer,
+    AAWON integer,
+    YEAR integer,
+    CRITICS varchar(2),
+    DIRECTOR integer references DIRECTOR
+);
+```
+
+#### Division
+
+We can divide a table by another table. This means to remove the values from table B
+in table A. This can be denoted using $A \div B$
+
+Given two relations `R(X)` and `S(Z)`:
+
+$R \div S = T(Y)$, this results in the corresponding association $Y = X - Z$, for
+a tuple `t` to appear in `T`, the values in `t`   must appear in `R` in combination
+with every *tuple* in `S`.
+
 

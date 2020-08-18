@@ -161,4 +161,39 @@ Conclusion:
 
 > Inductive reasoning is saying that if we find a few instances of something, we can conclude that it is always true
 
+### Maori Background
+
+#### Maori Knowledge (Matouranga)
+
+**Matauranga**
+
+What is Matauranga Maori mean?
+
+Translated directly to Knowledge, it is not the only word used but it is the most common
+translation.
+
+Maori Knowledge is not an alternative to science, neither do they claim it to be. Science
+and Maori beliefs are two independent Entities.
+
+**Whakapapa**
+
+Whakapapa, means *Genealogical table*
+- Translates to place in layers
+- the world was ordered and understood by whakapapa's
+
+Formal introductions and Mihi's use GPS, we introduce mountains, rivers, people and place
+rather than introducing them via names.
+
+The word means social history and kinship
+
+#### Mihimihi Assessment
+
+Is a greeting, to acknowledge and thank.
+
+A Mihi is an introductory speech and used as a formal greeting.
+
+Located within a Maori perspective: takanga (process) whakapapa (geneology) and
+te aro.
+
+
 
