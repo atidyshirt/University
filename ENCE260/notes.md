@@ -552,6 +552,39 @@ When being used in **Declorations** it is read as `int* point` means define this
 pointer to an int. When used in **Expressions**, it is read as *Indirectly via*, so
 `*p = j` means get a value indirectly via `p` and store it in variable `j`.
 
+Something that we must understand about C, is that everything 
+
+**Addressing memory**
+
+```c
+uint8_t varA;
+char varB;
+int16_t temp[2];
+```
+
+This translates to the following byte array
+| Menory | Location | Allocation |
+| ---    | ---      | ---        |
+| 0x100  | byte 0   | varA       |
+| 0x101  | byte 1   | varB       |
+| 0x102  | byte 2   | temp[0]    |
+| 0x104  | byte 3   | temp[0]    |
+| 0x105  | byte 4   | temp[1]    |
+| 0x106  | byte 5   | temp[1]    |
+| 0x107  | byte 6   | EMPTY      | 
+
+**Pointers in C syntax**
+```c
+char varA = 'a'
+char* point_to_varA;
+
+point_to_varA = &varA;
+
+printf("%c", *point_to_varA);
+```
+
+
+
 ### Computer Architecture
 
 #### Digital Logic
@@ -650,10 +683,67 @@ This specifies *which way* transfers happen over the data bus
 #### The CPU
 
 ##### Arithmetic Logic Unit (ALU)
-- calculations (+, -, *, /)
+- calculations (+, -, $\cdot, \div$)
+    * $+$ = `OR` gate
+    * $\cdot$ = `AND` gate
 - comparisons (=, !=, <= >=)
 - logical operations ()
 - binary operands ()
+
+If we want to map this to hardware, we will need to use combinational circuits that
+use logic gates. (An example of this can be found in the slides).
+
+Here are some real world examples of logic circuits that  are often found within an
+`ALU`.
+
+**Decoder**
+
+Used to get the memory location from an observed address.
+
+- Typically used for *selecting* a memory location given an address
+- *N* address bits $\rightarrow 2^N$ locations
+- We want to separate output to be high for each possible combination of inputs
+- Below is an example of what a decoder might look like in a logic circuit.
+
+![Decoder Diagram](./Diagrams/decoder.JPG)
+
+**Encoder**
+
+
+
+**Multiplexer**
+
+They act as a traffic  cop, deciding which of two values go to the output.
+
+- Multiplexers select one of several inputs and send it to output
+- For example: ALU can operate on operands from the general purpose registor file
+but they can also user the output of the previous operation for one of the operands.
+- A mux at one of the ALU inputs allows the execution unit to select the source of
+the operand.
+
+![Mux Diagram](./Diagrams/mux.png)
+
+| Input | Output |
+| S     | O      |
+| ---   | ---    |
+| 0     | $I_0$  |
+| 1     | $I_1$  |
+
+**Demultipexer**
+
+This acts like a multiplexer except it can output to multiple outputs. There will be a
+diagram below that will show this:
+
+- The way that this works is that it is conceptually similar to a Mux, however the inputs
+and outputs are switched.
+
+![Demultiplexer (1 to 4)](./Diagrams/demultiplexer.jpg)
+
+**Adder**
+
+The following is an example of a full adder, 
+
+![Full Adder](./Diagrams/full-adder-circuit.png)
 
 ##### General Purpose Registers
 - a set of memory locations located physically close to the ALU
@@ -694,9 +784,9 @@ This specifies *which way* transfers happen over the data bus
 ###### D Flip Flop
 - Outputs ignore input until *triggered* by the **Rising edge** of a clock signal
 
-| Input | Current | Next |
+| Input | Current | Next |           |           | 
+| ---   | ---     | ---  | ---       | ---       |
 | D     | Q       | Q    | $Q_(k+1)$ | $Q_(k+1)$ |
-| ---   | ---     | ---  | ---       | ---       | 
 
 # > Complete later 
 
