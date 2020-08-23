@@ -52,14 +52,14 @@ Student* readOneStudent(FILE* file)
 Student* readStudents(FILE *file)
 {
     Student* first = NULL;     // Pointer to the first student in the list
-    Student* last = (Student*)malloc(sizeof(struct Student*));      // Pointer to the last student in the list
+    Student* last = NULL;
     Student* student = readOneStudent(file);
     while (student != NULL) {
         if (first == NULL) {
             first = last = student;   // Empty list case
         } else {
-            last->next = first;
-            last = student;
+            student->next = first;
+            first = student;
         }
         student = readOneStudent(file);
     }
