@@ -741,9 +741,13 @@ and outputs are switched.
 
 **Adder**
 
-The following is an example of a full adder, 
+The following is an example of a full adder:
 
 ![Full Adder](./Diagrams/full-adder-circuit.png)
+
+Here is an example of a 3-Bit Adder
+
+![3-Bit Adder](./Diagrams/bit_adder.png)
 
 ##### General Purpose Registers
 - a set of memory locations located physically close to the ALU
