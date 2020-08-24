@@ -4,7 +4,7 @@
 
 </center>
 
-> [TOC]
+> __TOC__
 
 ### General Info About Course
 
@@ -990,7 +990,7 @@ printf("%c", *point_to_varA);
 
 *Here is all the Questions and answers for Tutorials:*
 
-![Tutorial one](/Tutorials/Tutorial1.pdf)
+![Tutorial one](./Tutorials/Tutorial1.pdf)
 ![Tutorial two](./Tutorials/Tutorial2.pdf)
 ![Tutorial three](./Tutorials/Tutorial3.pdf)
 
