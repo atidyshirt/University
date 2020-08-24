@@ -4,7 +4,7 @@
 
 </center>
 
-__TOC__
+:TOC:
 
 ### General Info About Course
 
