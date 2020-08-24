@@ -6,7 +6,7 @@
     - [General Info About Course](#general-info-about-course)
       - [Grading](#grading)
       - [Resources](#resources)
-        - [Tutorials](#tutorials)
+      - [Tutorials](#tutorials)
     - [Introduction Into C Programming](#introduction-into-c-programming)
       - [Memory Organisation](#memory-organisation)
       - [Basic Hello World!](#basic-hello-world)
@@ -91,14 +91,14 @@ Recommended text to read (C programming)
 - [C Style Guide](https://learn.canterbury.ac.nz/mod/resource/view.php?id=1346587)
 - [C Refrence](https://en.cppreference.com/w/c)
 
-##### Tutorials
+#### Tutorials
 
 This is some tutorial questions for computer architecture, It contains both questions and
 model answers.
 
-![Tutorial one](./Tutorials/Tutorial1.pdf)
-![Tutorial two](./Tutorials/Tutorial2.pdf)
-![Tutorial three](./Tutorials/Tutorial3.pdf)
+- ![Tutorial one](./Tutorials/Tutorial1.pdf)
+- ![Tutorial two](./Tutorials/Tutorial2.pdf)
+- ![Tutorial three](./Tutorials/Tutorial3.pdf)
 
 ### Introduction Into C Programming 
 
