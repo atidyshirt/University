@@ -4,7 +4,7 @@
 
 </center>
 
-> __TOC__
+__TOC__
 
 ### General Info About Course
 
