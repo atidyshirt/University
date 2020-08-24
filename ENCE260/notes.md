@@ -313,7 +313,7 @@ Because of the above, the assignment operator _a = b_, is actually saying, go to
 _b_ and copy all the bytes of _b_ to memory location _a_. This is raw byte copying, this is
 different to python in the fact that python stores the name in a dictionary as an object.
 
-#### Basic Data Types
+#### Data Types and Interesting Functions
 
 - Integers
   - unsigned
@@ -527,7 +527,7 @@ We can use `strncpy()` to copy a string to another object.
 
 We can use `strncat()` to concatenate strings.
 
-#### Pointers
+##### Pointers
 
 In C all memory is treated as a large array, there are no *run-time checks*, programming
 errors with pointers and arrays usually results in a crash of the program: this can be
@@ -583,7 +583,152 @@ point_to_varA = &varA;
 printf("%c", *point_to_varA);
 ```
 
+##### Malloc & Free
 
+Because we do not want to have to declare `DEFINE` statements every time we want to use
+a list, we only need to do this as it allows us to make a maximum size. Instead we can
+use the `malloc()` function to allocate space.
+
+Here is an example of using the `malloc()` function to allocate space for a student struct
+
+```c
+typedef student_s student;
+student = malloc(sizeof(Student)); // Malloc will return a size in memory or Null if no space in memory.
+```
+
+Something to note is that when we are using strings we need to append the null terminator,
+this will mean that `malloc()` will take `StringSize = n`; `n + 1` bits of memory to store
+the value.
+
+```c
+// We must allocate the string size and another bit for '\0' (Terminator)
+char[] string = "This is a string";
+char* name = malloc(strlen(name) + 1);
+```
+
+> Remember to use the Man page if you don't understand dipshit!
+
+Usually we want to check the return type of `malloc()` as it is good practice to make sure
+it is not a `NULL` value, the most important part of this is once we free up memory, we
+MUST NOT LOOK BACK INSIDE IT!
+
+```c
+// This is freeing a piece of memory
+free(name);
+```
+
+**But how does it work?**
+
+- *malloc* and *free* are the two main functions in the *memory allocator* module.
+- They manage the **Heap**
+    - the free memory area above the initilized data segment
+    - the maintain a booking sheet of available and unavailable memory.
+        - a global variable in the module
+- The size of the heap grows or shrinks by OS calls `brk` or `sbrk`
+    - Use the man page to read on these functions
+
+Here is a simple view of `malloc() & free()`:
+
+![Malloc and Free](./Diagrams/simple_malloc:free.png)
+
+If you either underflow or overflow, you will end up having a messy heap, this will result
+in either errors or miss-allocated bytes *this will cause hell in debugging*.
+
+If we need to re-allocate a value to a new place in memory, we can use the `realloc()` 
+function.
+
+```c
+void* realloc(void* memPtr, int newSize);
+
+// Here is a real example ( from slides )
+char* readLine(void)
+{
+char* buff = NULL;
+int numBytes = 0;  
+int c = 0;
+while ((c = getchar()) != EOF && c != '\n') {
+buff = realloc(buff, numBytes + 1);  // Get a new bigger block
+buff[numBytes++] = c;
+      }
+      if (buff != NULL) {
+            buff[numBytes] = '\0';
+      }
+      return buff;  // NULL if no data read
+}
+```
+> if Result = NULL; we have run out of memory
+
+This is a big fucking issue if this happens, its hard to diagnose and is really really annoying.
+
+> else: Result != Null, we have not run out of memory
+
+When we are using `malloc()` and `free()`, for every time we use `malloc()`, we MUST use
+`free()` at some point for every `malloc()`. If this is not satisfied, we will have
+*memory leaks*, this means that we will have a memory footprint that will grow with no
+upper bound.
+
+> To detect this, we can use the Unix valgrind tool.
+
+Here is an example of simplification using `malloc AND free`. The example is from *Lab 6*:
+
+```c
+for (i = 0; i < NUM_REPEATS; i++)
+{
+studs = readStudents(inFile);
+printStudents(&studs );
+freeStudents(&studs );
+rewind(inputFile); 
+}
+
+Student* readStudent(FILE* fp)
+{
+    // Read from file then call …
+    // newStudent which does ...
+    sp = malloc(sizeof(Student));
+    buffSize = strlen(name) + 1;
+    sp->name = malloc(buffSize);
+    ...
+    strncpy(sp->name, name, buffSize);
+    sp->age = age;
+    sp->next = NULL;
+    return sp;
+}
+
+void freeOneStudent(Student* sp) {
+    free(sp->name);
+    free(sp);
+}
+
+StudentList readStudents(FILE* fp)
+{
+    StudentList studs = {NULL, NULL};
+    Student* sp = NULL;
+    while ((sp=readStudent(fp))!=NULL)
+    {
+        addStudent(&studs, sp);
+    };
+    return studs;
+}
+
+void freeStudents(StudentList* studs) {    
+    /* **** TBS **** */
+}
+```
+
+###### Dealing with Heap Corruption
+
+* Over-running a `malloc’d` buffer is fatal
+    - Probably
+    - Eventually
+* Difficult to debug
+    - Solution: don't bug! Not-bugging is easier than de-bugging!
+- Again there are many tools to help you find heap corruptions
+    - *valgrind* checks every heap memory reference (great tool for small projects but too slow and expensive for large projects)
+Link program with `–lmcheck`
+        * Uses versions of `malloc`, free that do some runtime checks 
+        * Aborts on error
+            - But checks only when `malloc`, free called
+        - Should always use this when developing code that uses `malloc`/`free`
 
 ### Computer Architecture
 
@@ -838,5 +983,15 @@ printf("%c", *point_to_varA);
 ###### IO Architecture
 - Memory Mapped Architecture 
 - Separately Mapped Architecture
+
+#### Combinational and Sequential Logic
+
+##### Tutorial 3
+
+*Here is all the Questions and answers for Tutorials:*
+
+![Tutorial one](/Tutorials/Tutorial1.pdf)
+![Tutorial two](./Tutorials/Tutorial2.pdf)
+![Tutorial three](./Tutorials/Tutorial3.pdf)
 
 
