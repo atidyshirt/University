@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Usage](#usage)
+- [Server Source Code](#server-source-code)
+- [Client Source Code](#client-source-code)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: Socket Programming Assignment
 author: Jordan Pyott; 87433186

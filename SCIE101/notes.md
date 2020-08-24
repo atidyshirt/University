@@ -1,3 +1,24 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [SCIE101 Notes](#scie101-notes)
+    - [General Information About Course](#general-information-about-course)
+      - [Grading](#grading)
+      - [Resources](#resources)
+    - [What is scientific thinking?](#what-is-scientific-thinking)
+      - [Key Points](#key-points)
+      - [Assignment One - 2nd August](#assignment-one---2nd-august)
+    - [Origins of Scientific Reasoning](#origins-of-scientific-reasoning)
+      - [Human design](#human-design)
+      - [Inductive reasoning](#inductive-reasoning)
+      - [Deduction versus induction](#deduction-versus-induction)
+    - [Maori Background](#maori-background)
+      - [Maori Knowledge (Matouranga)](#maori-knowledge-matouranga)
+      - [Mihimihi Assessment](#mihimihi-assessment)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <center>
 
 # SCIE101 Notes

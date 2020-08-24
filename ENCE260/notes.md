@@ -45,7 +45,7 @@
         - [Sequential Memory](#sequential-memory)
           - [SR Latch](#sr-latch)
           - [D Flip Flop](#d-flip-flop)
-- [> Complete later](#-complete-later)
+      - [Complete later](#complete-later)
           - [Memory Architecture](#memory-architecture)
           - [IO Architecture](#io-architecture)
       - [Combinational and Sequential Logic](#combinational-and-sequential-logic)
@@ -990,7 +990,7 @@ Here is an example of a 3-Bit Adder
 | ---   | ---     | ---  | ---       | ---       |
 | D     | Q       | Q    | $Q_(k+1)$ | $Q_(k+1)$ |
 
-# > Complete later 
+#### Complete later 
 
 To store a byte of information we will need 8 D Flip Flops, a register typically stores
 a single byte.
@@ -1004,7 +1004,7 @@ int16_t temp[2];
 ```
 
 This translates to the following byte array
-| Menory | Location | Allocation |
+| Memory | Location | Allocation |
 | ---    | ---      | ---        |
 | 0x100  | byte 0   | varA       |
 | 0x101  | byte 1   | varB       |

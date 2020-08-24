@@ -1,3 +1,42 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [COSC265 Notes - Database Management](#cosc265-notes---database-management)
+    - [General Info About Course](#general-info-about-course)
+      - [Gradings](#gradings)
+      - [Resources](#resources)
+    - [Introduction to Databases](#introduction-to-databases)
+      - [Data Management](#data-management)
+        - [Example Database](#example-database)
+        - [DBMS Functionality](#dbms-functionality)
+        - [Schema's and Instances](#schemas-and-instances)
+        - [Database Features](#database-features)
+        - [Data Models](#data-models)
+      - [Classification of DBMS's](#classification-of-dbmss)
+      - [Don't Bother using DBMS for these Scenario's](#dont-bother-using-dbms-for-these-scenarios)
+    - [Database Design](#database-design)
+      - [Data Modeling](#data-modeling)
+        - [Phases of Database Design](#phases-of-database-design)
+      - [Types of attributes](#types-of-attributes)
+        - [The `NULL` Value](#the-null-value)
+      - [Introduction to Relationships](#introduction-to-relationships)
+        - [Dependent's](#dependents)
+      - [Relationship Diagrams](#relationship-diagrams)
+        - [Syntax of Diagrams](#syntax-of-diagrams)
+        - [Shit I need to know](#shit-i-need-to-know)
+        - [ER to Relational Mapping Algorithm](#er-to-relational-mapping-algorithm)
+    - [Relational Algebra](#relational-algebra)
+      - [The Pie Operand](#the-pie-operand)
+    - [The Omega Operand](#the-omega-operand)
+      - [Cartesian Product](#cartesian-product)
+      - [Complete set of relational algebra operations](#complete-set-of-relational-algebra-operations)
+    - [SQL](#sql)
+      - [Logical Design](#logical-design)
+      - [Division](#division)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <center>
 
 # COSC265 Notes - Database Management
