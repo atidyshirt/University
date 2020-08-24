@@ -43,8 +43,6 @@
 
 </center>
 
-> [TOC]
-
 ### General Info About Course
 
 #### Gradings

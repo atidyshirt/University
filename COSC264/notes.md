@@ -63,8 +63,6 @@
 
 </center>
 
-> [TOC]
-
 ### General Info About Course
 
 Note that although a number of assessments are closed-book, we will be permitted to bring an A4 hand written sheet of paper, this can be double sided but must be *hand written*.

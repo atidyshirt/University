@@ -25,8 +25,6 @@
 
 </center>
 
-> [TOC]
-
 ### General Information About Course
 
 Late work should be accompanied with a detailed explanation of why the work is late. The work will be marked and 5% of the total marks will be subtracted for each day the work is late.
