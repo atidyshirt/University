@@ -6,6 +6,7 @@
     - [General Info About Course](#general-info-about-course)
       - [Grading](#grading)
       - [Resources](#resources)
+        - [Tutorials](#tutorials)
     - [Introduction Into C Programming](#introduction-into-c-programming)
       - [Memory Organisation](#memory-organisation)
       - [Basic Hello World!](#basic-hello-world)
@@ -49,7 +50,6 @@
           - [Memory Architecture](#memory-architecture)
           - [IO Architecture](#io-architecture)
       - [Combinational and Sequential Logic](#combinational-and-sequential-logic)
-        - [Tutorial 3](#tutorial-3)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -90,6 +90,15 @@ Recommended text to read (C programming)
 - [Lecture notes, Recordings and slides](https://learn.canterbury.ac.nz/course/view.php?id=9078&section=1)
 - [C Style Guide](https://learn.canterbury.ac.nz/mod/resource/view.php?id=1346587)
 - [C Refrence](https://en.cppreference.com/w/c)
+
+##### Tutorials
+
+This is some tutorial questions for computer architecture, It contains both questions and
+model answers.
+
+![Tutorial one](./Tutorials/Tutorial1.pdf)
+![Tutorial two](./Tutorials/Tutorial2.pdf)
+![Tutorial three](./Tutorials/Tutorial3.pdf)
 
 ### Introduction Into C Programming 
 
@@ -1039,12 +1048,5 @@ printf("%c", *point_to_varA);
 
 #### Combinational and Sequential Logic
 
-##### Tutorial 3
-
-*Here is all the Questions and answers for Tutorials:*
-
-![Tutorial one](./Tutorials/Tutorial1.pdf)
-![Tutorial two](./Tutorials/Tutorial2.pdf)
-![Tutorial three](./Tutorials/Tutorial3.pdf)
 
 
