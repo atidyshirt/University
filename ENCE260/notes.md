@@ -1048,5 +1048,16 @@ printf("%c", *point_to_varA);
 
 #### Combinational and Sequential Logic
 
+We measure *frequency* in `hz` and *period* in `s`
+
+Notation:
+
+`T` = period
+`f` = frequency
+`clk` = clock time
+
+Formulae for Logic circuits:
+
+$T_Q = \frac{1}{f_Q}$ *where* $f_Q = \frac{1}{2}(f_{clk})$
 
 
