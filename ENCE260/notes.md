@@ -851,7 +851,7 @@ their related statements.
 | 1   | 1   | 0   | 0     |
 
 Each entry in the sequence can have one of two values (`M = 2`), since logical variables
-have two logical values (0, 1). A sequence of `N` bits can be arranged into $2^N$ patterns.
+have two logical values (0, 1). A sequence of `N` bits can be arranged into $2^{N}$ patterns.
 
 ##### Patterns
 
@@ -862,11 +862,11 @@ have two logical values (0, 1). A sequence of `N` bits can be arranged into $2^N
 
 Question: How many patterns can we make with the LED's.
 
-> Answer: 9 patterns or $3^2$
+> Answer: 9 patterns or $3^{2}$
 
 What happens if we re-arrange the colors into three groups and two possible options (R, B).
 
-> Answer: 8 patterns or $2^3$
+> Answer: 8 patterns or $2^{3}$
 
 How can we work this out without brute force?
 
@@ -920,7 +920,8 @@ Used to get the memory location from an observed address.
 
 **Multiplexer**
 
-They act as a traffic  cop, deciding which of two values go to the output.
+They act as a traffic  cop, deciding which of two values go to the output. It essentially
+routs a single input to the output.
 
 - Multiplexers select one of several inputs and send it to output
 - For example: ALU can operate on operands from the general purpose registor file
