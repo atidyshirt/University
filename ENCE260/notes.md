@@ -866,7 +866,7 @@ Question: How many patterns can we make with the LED's.
 
 What happens if we re-arrange the colors into three groups and two possible options (R, B).
 
-> Answer: 8 patterns or $2^{3}$
+> Answer: 8 patterns or ${2^{3}}$
 
 How can we work this out without brute force?
 
