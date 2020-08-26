@@ -983,22 +983,24 @@ Here is an example of a 3-Bit Adder
 ###### SR Latch
 - Simplest form of a sequential circuit (This table is from Slide 23)
 
-| Inputs |     | Outputs |
-| S      | R   | $y_k$   | $z_k$ | $y_(k-1)$ | $z_(k-1)$ |
-| ---    | --- | ---     | ---   | ------    | ------    |
-| 0      | 0   | 1       | 0     | 1         | 0         |
-| 0      | 0   | 0       | 1     | 0         | 1         |
-| 0      | 1   | 1       | 0     | 1         | 0         |
-| 0      | 1   | 0       | 1     | 1         | 0         |
-| 1      | 0   | 1       | 0     | 0         | 1         |
-| 1      | 0   | 0       | 1     | 0         | 1         |
+`S AND R` are inputs into the table, `Y AND Z` are outputs (this particular SR latch
+takes in two inputs and spits out four outputs)
+
+| S      | R   | $y_k$   | $z_k$ | $y_{(k-1)}$ | $z_{(k-1)}$ |
+| ---    | --- | ---     | ---   | ------      | ------      |
+| 0      | 0   | 1       | 0     | 1           | 0           |
+| 0      | 0   | 0       | 1     | 0           | 1           |
+| 0      | 1   | 1       | 0     | 1           | 0           |
+| 0      | 1   | 0       | 1     | 1           | 0           |
+| 1      | 0   | 1       | 0     | 0           | 1           |
+| 1      | 0   | 0       | 1     | 0           | 1           |
 
 ###### D Flip Flop
 - Outputs ignore input until *triggered* by the **Rising edge** of a clock signal
 
 | Input | Current | Next |           |           | 
 | ---   | ---     | ---  | ---       | ---       |
-| D     | Q       | Q    | $Q_(k+1)$ | $Q_(k+1)$ |
+| D     | Q       | Q    | $Q_{(k+1)}$ | $Q_{(k+1)}$ |
 
 #### Complete later 
 
