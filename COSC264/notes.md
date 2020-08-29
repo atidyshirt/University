@@ -54,6 +54,8 @@
       - [Bridges and Switches](#bridges-and-switches)
         - [Repeaters](#repeaters)
         - [Hubs](#hubs)
+    - [IP Addressing](#ip-addressing)
+      - [Routing and Fowarding](#routing-and-fowarding)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -968,5 +970,34 @@ Acts as a centralized repeaters, take signals coming from one port and sends to 
 ports using broadcast transmission.
 
 The advantage over a bus is that we cannot cut a cable to remove the signal.
+
+### IP Addressing
+
+- IP addresses have 32 bits (IPV4)
+- They are suppost to be worldwide unique
+    - This is not really true anymore with NAT
+- IP addresses are written in dotted decimal notation
+> 130.149.99.77
+- They have internal structure
+> <network-id> <host-id>
+
+- where
+    * `<network-id>` denotes a network (e.g. an Ethernet)
+    * `<host-id>` denotes a host *within* the network
+- `<host-id>` must only be unique with respect to its network
+
+#### Routing and Fowarding
+
+- IP routers have several network interfaces or ports, (different from TCP/UDP port numbers) where they recieve/transmit datagrams
+- In IP networks a router getting a packet on some input port looks at the `DestinationAddress` field to determine the output port
+
+**Important points about routing**o
+
+A host address is tied to its location in the network, it is coupled to network topology
+when a host switches to another network it obtains another address and ongoing connections (TCP)
+break - IP therefore has no direct support for mobility.
+
+IP Routing is mostly concerned with networks, i.e. forwarding tables in routers mostly store
+`<network-id>`'s - it is the responsibility of the last router to deliver an IP datagram to the host connected.
 
 
