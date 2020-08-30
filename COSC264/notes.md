@@ -747,7 +747,7 @@ we are not trying to create an exact replica unlike that of digital data.
 
 ##### The Link Layer
 - Task: transfer messages over one physical link
-- Link later messages are often called frames
+- Link later messages are often called **frames**
 - Often involves specification of:
     - Framing:
         - delineation of frame start and end
@@ -936,7 +936,7 @@ Draw a random integer number uniformly from the backoff window.
 
 The backoff window can be denoted by the following:
 
-$$[0, 1, ..., 2^(min{10,coll})-1]$$
+$$[0, 1, ..., 2^{min(10,coll)}-1]$$
 
 The backoff window size and therefore the average backoff time doubles each collision
 until 10 collisions have been seen. This is called the *truncated* binary exponential
