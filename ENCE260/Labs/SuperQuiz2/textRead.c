@@ -9,15 +9,15 @@
 #define MAX_TEXTFILE_SIZE 4096
 #define MAX_FILENAME_LENGTH 80
 
-size_t readText(FILE* file, char text[], size_t maxTextSize);
-
 size_t readText(FILE* file, char text[], size_t maxTextSize)
 {
-    int i = 0;
-    while (i*sizeof(char) < strlen(text) - 1 && i < maxTextSize - 1) {
-        i++;
+    char c;
+    int count = 0; // index from one as we want the actual # of chars
+    while((c = fgetc(file)) != EOF && count < maxTextSize) {
+        text[count] = c;
+        count++;
     }
-    return i;
+    return count - 1;
 }
 
 int main(void)
