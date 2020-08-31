@@ -47,7 +47,7 @@
       - [MAC Addresses](#mac-addresses)
         - [Orthogonal Schemes](#orthogonal-schemes)
         - [Frequency Division Multiple Access (FDMA)](#frequency-division-multiple-access-fdma)
-        - [Time Division Multiple Access (TDMA)](#time-division-multiple-access-tdma)
+      - [Time Division Multiple Access (TDMA)](#time-division-multiple-access-tdma)
       - [Random Access Protocols](#random-access-protocols)
         - [ALOHA](#aloha)
       - [Ethernet](#ethernet)
@@ -55,6 +55,8 @@
         - [Repeaters](#repeaters)
         - [Hubs](#hubs)
     - [IP Addressing](#ip-addressing)
+      - [Bridges](#bridges)
+      - [Switches](#switches)
       - [Routing and Fowarding](#routing-and-fowarding)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -857,10 +859,32 @@ Mac Addresses need to be:
 
 ##### Orthogonal Schemes
 
-Orthogonal schemes the behaviour of one station does not influence the behaviour of your input
-The goal is to achieve collision free communication.
+In Orthogonal schemes the behaviour of one station does not influence
+the behaviour of other stations. The goal is to achieve collision free 
+communication.
+
+There are four types of orthogonal schemes:
+- FDMA (Frequency Division Multiple Access)
+- TDMA (Time Division Multiple Access)
+- SDMA (Space Division Multiple Access)
+- CDMA (Code Division Multiple Access)
+    * Note: In this course we will not discuss `SDMA` and `CDMA`
 
 ##### Frequency Division Multiple Access (FDMA)
+
+A channel's bandwidth is sumdivided into *N sub-channels*
+
+Between the sub-channels and at the fringe of the channel there are *guard bands*:
+- Reduction of adjecent-channel interference, robustness against imperfect frequency synchronization
+
+A sub-channel is *exclusively*  assigned to a station *i* on a longer-term basis for
+transmission of data, **no other station is allowed to transmit on this channel**.
+
+To receive data a station must do the following:
+- Either possess a separate receiver for each channel or
+- have a single tunable receiver that must be switched to a specific channel before data
+can be received on it
+    - Problems: coordination/rendez-vous, tuning times
 
 An example of this is FM Radio, as we have a center frequency that we are based around, we have
 enough distance to allow the user to not interfere with frequencies above and below.
@@ -875,16 +899,65 @@ $$E[Transmission Delay] = 1$$
 
 FDMA was very popular for both radio and old phone systems.
 
-##### Time Division Multiple Access (TDMA)
+**Advantages of** `FDMA`:
+- *N* stations can transmit in parallel
+- No need for time synchronization between the *N* transmitters
+
+**Disadvantages of** `FDMA`:
+- Need for *N* recievers or tunable receivers increasing complexity
+- Frequency synchronization required
+- No re-use channel not used by owner can't be used by others
+- Coordination and shared state required for allocating subchannels
+
+**Conclusion on FDMA: Good for CBR but bad for VBR traffic**
+
+#### Time Division Multiple Access (TDMA)
+
+Each station uses the whole frequency band (except some guard bands at the fringe
+the spectrum), but only at certain times:
+- Time is subdivided into *superframes* of duration $T_{SF}$
+- Each superframe is subdivided into *N* time-slots
+- There are short *guard times* between time slots
+- One or more time slots are assigned exclusively and on a longer-term basis to a station *i*
+for transmission
+
+Stations must be time-synchronized to avoid overlapping transmissions, guard times are required
+to compensate (small) synchronization errors.
+
+Neglecting guard times each station having a slot gets the full channel bandwidth *B*
+$[\frac{b}{s}]$ for a fraction of $\frac{1}{N}$ of time
+
+Assume the following facts:
+- station *8* owns one time slot
+- $T_{SF}$ = 1 second
+- a time-slot suffices to transmit $\frac{B}{N}$ bits (we ignore guard times)
+- a packet of $\frac{B}{N}$ bits arrived at random time to empty station *i*
+
+Medium access delay is the waiting time until station *i*'s next slot starts
+
+$$E[Access Delay] = \frac{T_{SF}}{2} = 0.5_s$$
 
 The completion time of TDMA can be shown with the following expression
 
 $$E[completion Time] = E[Access Delay] + E[Transmission Delay]$$
 
 - The time to transmit the packet (Transmission Delay) is $\frac{1}{N}$ seconds
-- We can get 
 
 > We can note from this that with TDMA we can start later and finish sooner than FDMA
+
+**Advantages:**
+- It is easier to achieve asymmetric bandwidth assignments in `TDMA` than it is in `FDMA` using multiple time-slots is much simpler than transmitting on multiple frequencies in
+    parallel
+- `TDMA` tends to have better completion times than `FDMA`
+- No tunable receivers needed
+
+**Disadvantages**
+- Tight time-synchronization between stations required
+- High expected access delay even in otherwise idle systems
+- Not pissible to re-use unused time slots
+- Coordination and shared state required for allocating time slots
+
+> Conclusion: TDMA is good for CBR but bad for VBR traffic
 
 #### Random Access Protocols
 - do not attempt to reserve channel resources for longer time
@@ -985,6 +1058,51 @@ The advantage over a bus is that we cannot cut a cable to remove the signal.
     * `<network-id>` denotes a network (e.g. an Ethernet)
     * `<host-id>` denotes a host *within* the network
 - `<host-id>` must only be unique with respect to its network
+
+These are Half-Duplex - meaning that we cannot send and receive at the same time, this
+means that we are guaranteed to get a collision if we send and receive at the same time, this
+is very bad.
+
+An example of a hub is below:
+
+![Hub](./Diagrams/Hub.png)
+
+#### Bridges
+
+These were designed as a method to solve some of the short comings with hubs, they segment
+the network into many sections. It does this by using MAC Addresses of the Destination and
+Source address.
+
+Here is an example of a Bridge network:
+
+![Bridge](./Diagrams/Bridge.png)
+
+Bridges are the following:
+- Layer two device:
+    * Can Understand MAC Protocols
+- Segments LAN's
+- 2 Collision Domains
+- Fewer Ports
+- Now Replaced by switches
+
+#### Switches
+
+Switches use MAC Addresses and PORT controls. A switch works by sending data to all connected
+clients, and when the desired client responds, the switch will learn what Port the client is
+connected on. This means that the switch now has the clients MAC and Port number, this means that
+instead of having to contact all the clients, it knows exactly how to reach the desired client from
+here on. This is very efficient.
+
+Switches are the following: 
+- Can understand MAC protocols
+- Full-Duplex
+- Multiple collision domains
+- Saves bandwidth
+- Increased Security
+
+Here is an example of a basic Switch setup:
+
+![Switch](./Diagrams/Switch.png)
 
 #### Routing and Fowarding
 
