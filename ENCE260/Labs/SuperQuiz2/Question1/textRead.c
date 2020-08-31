@@ -12,11 +12,12 @@
 size_t readText(FILE* file, char text[], size_t maxTextSize)
 {
     char c;
-    int count = 0; // index from one as we want the actual # of chars
+    int count = 0; 
     while((c = fgetc(file)) != EOF && count < maxTextSize) {
-        text[count] = c;
+        text[count] = c; 
         count++;
     }
+      
     return count - 1;
 }
 
