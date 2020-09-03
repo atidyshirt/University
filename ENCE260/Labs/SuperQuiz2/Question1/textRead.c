@@ -17,6 +17,8 @@ size_t readText(FILE* file, char text[], size_t maxTextSize)
         text[count] = c; 
         count++;
     }
+
+    text[count] = '\0';
       
     return count - 1;
 }
