@@ -9,20 +9,17 @@
 #define MAX_TEXTFILE_SIZE 4096
 #define MAX_FILENAME_LENGTH 80
 
+
 size_t readText(FILE* file, char text[], size_t maxTextSize)
 {
-    /* 
-     * This function reads text from a file and returns the number of
-     * characters in the file (inclusive of whitespace)
-     */
-    char c;
-    int count = 0; 
-    while((c = fgetc(file)) != EOF && count < maxTextSize) {
-        text[count] = c; 
-        count++;
+    char* line = fgets(text, maxTextSize, file);
+    size_t len = strlen(text);
+
+    while(line != NULL && len < maxTextSize-1) {
+        line = fgets(text+len, maxTextSize-len, file);
+        len = strlen(text);
     }
-    text[-1] = '\0';
-    return count - 1;
+    return len;
 }
 
 int main(void)
