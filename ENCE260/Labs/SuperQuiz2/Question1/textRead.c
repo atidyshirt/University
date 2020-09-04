@@ -29,19 +29,14 @@ void removeChar(char *str, unsigned int index) {
 
 size_t readCipherBook(FILE* file, char text[], size_t maxTextSize)
 {
-    int c;
     int i = 0;
     size_t length = readText(file, text, maxTextSize);
-    printf("%d\n", fgetc(file));
-    printf("%s\n", text);
-    while ((c = getc(file)) != EOF) {
-        printf("%c", c);
-        if (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '\f') {
+    while (text[i] != '\0') {
+        if (text[i] == ' ' || text[i] == '\n' || text[i] == '\t' || text[i] == '\r' || text[i] == '\f') {
             removeChar(text, i);
             length-= 1;
         }
         i++;
-
     }
     return length;
 }
