@@ -14,12 +14,36 @@ size_t readText(FILE* file, char text[], size_t maxTextSize)
 {
     char* line = fgets(text, maxTextSize, file);
     size_t len = strlen(text);
-
-    while(line != NULL && len < maxTextSize-1) {
+    while(line != NULL && len != maxTextSize - 1) {
         line = fgets(text+len, maxTextSize-len, file);
         len = strlen(text);
     }
     return len;
+}
+
+void removeChar(char *str, unsigned int index) {
+    char *src;
+    for (src = str+index; *src != '\0'; *src = *(src+1),++src) ;
+    *src = '\0';
+}
+
+size_t readCipherBook(FILE* file, char text[], size_t maxTextSize)
+{
+    int c;
+    int i = 0;
+    size_t length = readText(file, text, maxTextSize);
+    printf("%d\n", fgetc(file));
+    printf("%s\n", text);
+    while ((c = getc(file)) != EOF) {
+        printf("%c", c);
+        if (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '\f') {
+            removeChar(text, i);
+            length-= 1;
+        }
+        i++;
+
+    }
+    return length;
 }
 
 int main(void)
@@ -28,14 +52,16 @@ int main(void)
     char text[MAX_TEXTFILE_SIZE] = "";
     FILE* file = NULL;
     size_t textLength = 0;
+    
     scanf("%80s", filename);
     file = fopen(filename, "r");
     if (file == NULL) {
-        printf("File not found... program will crash with a segmentation fault\n");
+        printf("File not found... program will fail with segmentation fault\n");
     }
-    textLength = readText(file, text, MAX_TEXTFILE_SIZE);
+    textLength = readCipherBook(file, text, MAX_TEXTFILE_SIZE);
     fclose(file);
+    
     printf("%s\n", text);
-    printf("Size of textfile is %zu\n", textLength);
+    printf("Size of cipherfile is %zu\n", textLength);
     return 0;
 }
