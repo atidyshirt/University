@@ -11,22 +11,18 @@
 
 size_t readText(FILE* file, char text[], size_t maxTextSize)
 {
+    /* 
+     * This function reads text from a file and returns the number of
+     * characters in the file (inclusive of whitespace)
+     */
     char c;
     int count = 0; 
     while((c = fgetc(file)) != EOF && count < maxTextSize) {
         text[count] = c; 
         count++;
     }
-    text[count] = '\0';
-
-    if (ferror(file) != 0) {
-        printf("\n");
-        printf("fuck \n");
-        printf("\n");
-    }
-
-    return count - 1;
-
+    text[-1] = '\0';
+    return count;
 }
 
 int main(void)
@@ -35,7 +31,6 @@ int main(void)
     char text[MAX_TEXTFILE_SIZE] = "";
     FILE* file = NULL;
     size_t textLength = 0;
-    
     scanf("%80s", filename);
     file = fopen(filename, "r");
     if (file == NULL) {
@@ -43,7 +38,6 @@ int main(void)
     }
     textLength = readText(file, text, MAX_TEXTFILE_SIZE);
     fclose(file);
-    
     printf("%s\n", text);
     printf("Size of textfile is %zu\n", textLength);
     return 0;
