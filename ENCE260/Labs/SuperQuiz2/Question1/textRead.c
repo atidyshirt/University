@@ -17,10 +17,16 @@ size_t readText(FILE* file, char text[], size_t maxTextSize)
         text[count] = c; 
         count++;
     }
-
     text[count] = '\0';
-      
+
+    if (ferror(file) != 0) {
+        printf("\n");
+        printf("fuck \n");
+        printf("\n");
+    }
+
     return count - 1;
+
 }
 
 int main(void)
