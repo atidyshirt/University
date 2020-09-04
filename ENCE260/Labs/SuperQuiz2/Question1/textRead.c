@@ -22,7 +22,7 @@ size_t readText(FILE* file, char text[], size_t maxTextSize)
         count++;
     }
     text[-1] = '\0';
-    return count;
+    return count - 1;
 }
 
 int main(void)
