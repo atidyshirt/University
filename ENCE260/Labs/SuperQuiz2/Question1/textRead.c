@@ -32,7 +32,7 @@ size_t readCipherBook(FILE* file, char text[], size_t maxTextSize)
     int i = 0;
     size_t length = readText(file, text, maxTextSize);
     while (text[i] != '\0') {
-        if (text[i] == ' ' || text[i] == '\n' || text[i] == '\t' || text[i] == '\r' || text[i] == '\f') {
+        if (isspace(text[i])) {
             removeChar(text, i);
             length-= 1;
         }
