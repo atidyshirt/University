@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -39,6 +38,7 @@ size_t readCipherBook(FILE* file, char text[], size_t maxTextSize)
             i += 1;
         }
     }
+    memset(text, 0, maxTextSize); 
     strcpy(text, narr);
     return j;
 }
