@@ -20,8 +20,24 @@ int add_sub(const int data[], int n)
     return total;
 }
 
+int add_even_sub_odd(const int data[], int n)
+{
+    int flag = 0, total = 0, i = 0;
+    while (i < n) {
+        if (flag == 0) {
+            total -= data[i];
+            flag = 1;
+        } else {
+            total += data[i];
+            flag = 0;
+        }
+        i++;
+    }
+    return total;
+}
+
 int main(void)
 {
-    int data[4] = {1, 2, 3, 4};
-    printf("%d\n", add_sub(data, 4));
+    int data[6] = {5, -9, -3, 0, 8, -1};
+    printf("%d\n", add_even_sub_odd(data, 6));
 }

@@ -2,7 +2,15 @@
 
 int* pairSumSearch(int* data, int numEls, int pairSum)
 {
-
+    int i = 0, j = 1;
+    for (i = 0; i < numEls; i++) {
+        if ((data[i] + data[j]) == pairSum) {
+            int *count = &i;
+            return count;
+        }
+        j++;
+    }
+    return NULL;
 }
 
 int main(void)
