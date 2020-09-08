@@ -1085,7 +1085,7 @@ How a router works **23 minutes Lecture (Monday 7th september)**
 These routers are built on Linux distro's, they are made up with ram and CPU's, 
 this allows us to have quickly allocated memory.
 
-![RouterInside](./Diagrams/Router Inside.png)
+![RouterInside](./Diagrams/Router%20Inside.png)
 
 #### Routing algorithms
 
@@ -1108,4 +1108,6 @@ Autonimus Systems (AS)
 Routing determines the **path** to take, Forwarding transfers packets hop-by-hop.
 
 Routers will create forwarding tables to plan a path, this is open to change when
-topology changes.
+topology changes. This table is stored in local memory.
+
+![AlgorithmsvsProtocols](./Diagrams/AlgorithmsOrProtocols)
