@@ -5,8 +5,7 @@ int* pairSumSearch(int* data, int numEls, int pairSum)
     int i = 0, j = 1;
     for (i = 0; i < numEls; i++) {
         if ((data[i] + data[j]) == pairSum) {
-            int *count = &i;
-            return count;
+            return &(data[i]);
         }
         j++;
     }
@@ -15,8 +14,8 @@ int* pairSumSearch(int* data, int numEls, int pairSum)
 
 int main(void)
 {
-    int data[] = {1, 10, 3, 20, 1, 3, 7};
-    int* p = pairSumSearch(data, 7, 23);
+    int data[] = {10, 20, 10}; 
+    int* p = pairSumSearch(data, 1, 30); // NB 2nd param = 1
     if (p != NULL) {
         printf("Found at position %zd\n", p - data);
     }

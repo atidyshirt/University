@@ -18,11 +18,17 @@ Vector3d vectorAdd(Vector3d a, Vector3d b)
     return v;
 }
 
+Vector3d vectorCrossProduct(Vector3d a, Vector3d b)
+{
+    Vector3d v = {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
+    return v;
+}
+
 int main(void)
 {
-    Vector3d v1 = vector(1, 4, -1);
-    Vector3d v2 = vector(2, 4, -1);
-    Vector3d v3 = vectorAdd(v1, v2);
+    Vector3d v1 = vector(1, 2, 3);
+    Vector3d v2 = vector(-4, -6, 2);
+    Vector3d v3 = vectorCrossProduct(v1, v2);
     printf("(%d, %d, %d)\n", v3.x, v3.y, v3.z);
 }
 

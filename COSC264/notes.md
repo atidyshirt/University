@@ -1,65 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [COSC264 Notes - Networking](#cosc264-notes---networking)
-    - [General Info About Course](#general-info-about-course)
-      - [Grading](#grading)
-      - [Resources](#resources)
-    - [Introduction to Networking](#introduction-to-networking)
-      - [Terminology](#terminology)
-      - [First look at the internet](#first-look-at-the-internet)
-        - [Conversion Chart](#conversion-chart)
-      - [Delay - Quality of Service >> Write Types of delay](#delay---quality-of-service--write-types-of-delay)
-        - [Transmission Delay](#transmission-delay)
-        - [Propagation Delay](#propagation-delay)
-    - [Bitwise operations](#bitwise-operations)
-    - [Communication Patterns](#communication-patterns)
-        - [Unicast](#unicast)
-        - [Broadcast](#broadcast)
-        - [Multicast](#multicast)
-      - [Client Server Paradigm](#client-server-paradigm)
-      - [Peer-to-Peer Paradigm](#peer-to-peer-paradigm)
-      - [Circuit and Packet Switching](#circuit-and-packet-switching)
-        - [Circuit Switching](#circuit-switching)
-        - [Packet Switching](#packet-switching)
-    - [Socket Programming](#socket-programming)
-      - [TCP Client - Example Workflow](#tcp-client---example-workflow)
-      - [TCP Server - Example Workflow](#tcp-server---example-workflow)
-      - [UDP Client Example Workflow](#udp-client-example-workflow)
-      - [UDP Client with `connect()`](#udp-client-with-connect)
-      - [Using the Socket API in C](#using-the-socket-api-in-c)
-      - [Socket Programming Example](#socket-programming-example)
-        - [Client side TCP](#client-side-tcp)
-        - [Server side TCP](#server-side-tcp)
-    - [Network Protocols: Architecture and Basics](#network-protocols-architecture-and-basics)
-      - [The OSI Seven Layer Model](#the-osi-seven-layer-model)
-        - [The Physical Layer](#the-physical-layer)
-        - [The Link Layer](#the-link-layer)
-        - [Network Layer](#network-layer)
-        - [Transport Layer](#transport-layer)
-        - [Session and Representation Layer](#session-and-representation-layer)
-        - [Application Layer](#application-layer)
-      - [TCP / IP Reference Model (**The Internet**)](#tcp--ip-reference-model-the-internet)
-        - [Application Layer](#application-layer-1)
-        - [Transport Layer](#transport-layer-1)
-        - [Internet Layer](#internet-layer)
-      - [MAC Addresses](#mac-addresses)
-        - [Orthogonal Schemes](#orthogonal-schemes)
-        - [Frequency Division Multiple Access (FDMA)](#frequency-division-multiple-access-fdma)
-      - [Time Division Multiple Access (TDMA)](#time-division-multiple-access-tdma)
-      - [Random Access Protocols](#random-access-protocols)
-        - [ALOHA](#aloha)
-      - [Ethernet](#ethernet)
-      - [Bridges and Switches](#bridges-and-switches)
-        - [Repeaters](#repeaters)
-        - [Hubs](#hubs)
-    - [IP Addressing](#ip-addressing)
-      - [Bridges](#bridges)
-      - [Switches](#switches)
-      - [Routing and Fowarding](#routing-and-fowarding)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+> [TOC]
 
 <center>
 
@@ -1118,4 +1057,55 @@ break - IP therefore has no direct support for mobility.
 IP Routing is mostly concerned with networks, i.e. forwarding tables in routers mostly store
 `<network-id>`'s - it is the responsibility of the last router to deliver an IP datagram to the host connected.
 
+### Term Four
 
+We will go over the Network layer, transport layer and App layer over this term.
+
+Network layer is responsible for how to find a route from A - B, Transport layer is concerned
+with how to transport data from A to B with *reliability and ease of use*, the Application layer
+is concerned with how we share this data and information.
+
+#### Protocol layering and data
+
+Each layer takes data from the layer above
+- adds header information to create new data unit
+- passes new data unit to layer below
+
+![layering](./Diagrams/layering.png)
+
+`jitter` is defined as the difference between two packets receiving time.
+
+A bus is a shared medium, where many people get to access it but if someone is using the
+bus we cannot connect to it.
+
+How a router works **23 minutes Lecture (Monday 7th september)**
+
+![Router](./Diagrams/router)
+
+These routers are built on Linux distro's, they are made up with ram and CPU's, 
+this allows us to have quickly allocated memory.
+
+![RouterInside](./Diagrams/Router Inside.png)
+
+#### Routing algorithms
+
+**Routing overview**
+- Hierarchical routing
+- Forwarding vs routing
+- Classification of routing algorithms
+
+**Hierarchical Routing**
+
+We need to have this because of the pure scale of the internet. According to Cisco
+we will have 500 billion devices connected to the internet in 2030. We also need these
+to make the system considerably more simple as we can offload some of the work to the upper
+levels of the hierarchy.
+
+Autonimus Systems (AS)
+- An internet provider is an example of an AS or more specifically an (ISP)
+- An AS is a set of routers that are used to localise a network
+
+Routing determines the **path** to take, Forwarding transfers packets hop-by-hop.
+
+Routers will create forwarding tables to plan a path, this is open to change when
+topology changes.

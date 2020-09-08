@@ -1116,4 +1116,44 @@ Formulae for Logic circuits:
 
 $T_Q = \frac{1}{f_Q}$ *where* $f_Q = \frac{1}{2}(f_{clk})$
 
+#### Program Execution
 
+To execute a program, we use a control execution unit. It is built using a number
+of cycles, namely `fetch, Decode and execute` this is known as a `Finite State 
+Machine`.
+
+- `Fetch` an instruction from memory
+- `Decode` the instruction
+- `Execute` the instruction
+
+Here is what this looks like visually:
+
+![finite stage machine](./Diagrams/executionControl.png)
+
+Here is how these are built with reference to memory:
+
+![FSM](./Diagrams/FSM.png)
+
+**Exam Question**
+
+Question: If you were designing a control unit, state whether you would implement it as a Moore FSM or a Mealy FSM. Choose and justify why?
+
+> Mealy FSM's depends on both the input and its current state, as appose to a Moores finite state machine because
+> it the output only depends on the current state (and not on any input), this means that it is syncrhonus (as because
+> the input is not changing the result, it will always be in sync with the clock signal transitions).
+
+We can ask the CPU to do a number of different tricks and conditions. these are as follows:
+
+![ALUTricks](./Diagrams/ALUTricks.png)
+
+We can group these instructions into a set that is known as the *Instruction Set Architecture*
+
+- These instructions read by the control unit into 3 categories:
+- Complex instruction set computer (CISC)
+    * Arithmetic / Logic instructions assess registers or memory
+    * Instructions do not all complete in the same number of clock cycles
+    * instructions do not have the same length
+- Reduced Instruction set computer (RISC)
+    * Arithmetic / logic only accesses registers
+    * separate data transfer instructions
+    * Design philosophy: instructions are simple, can be completed in the same time frame

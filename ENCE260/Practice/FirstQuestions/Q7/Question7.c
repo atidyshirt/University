@@ -17,16 +17,20 @@ char* alphaShiftRight(char* s)
 
 char* rotateLeft(char* s)
 {
-    int i = 0;
-    while (i <= strlen(s)) {
-        s[i] = s[i-1];
-        i++;
+    if (strlen(s) < 2) {
+        return NULL;
+    }
+    char tmp;
+    for (int i=0; i < strlen(s)-1; i++) {
+        tmp = s[i];
+        s[i] = s[i + 1];
+        s[i + 1] = tmp;
     }
     return s;
 }
 
 int main(void)
 {
-    char s[] = "B hr mns rn azc zesdq zkk";
-    printf("%s\n", alphaShiftRight(s));
+    char s[] = "Hello World!";
+    printf("%s\n", rotateLeft(s));
 }
