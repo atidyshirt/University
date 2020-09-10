@@ -1,58 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [ENCE260 Notes - Computer Systems](#ence260-notes---computer-systems)
-    - [General Info About Course](#general-info-about-course)
-      - [Grading](#grading)
-      - [Resources](#resources)
-      - [Tutorials](#tutorials)
-    - [Introduction Into C Programming](#introduction-into-c-programming)
-      - [Memory Organisation](#memory-organisation)
-      - [Basic Hello World!](#basic-hello-world)
-      - [Declaring Variables](#declaring-variables)
-      - [Using Macro's](#using-macros)
-        - [Macro's for arithmetic](#macros-for-arithmetic)
-      - [Statements](#statements)
-      - [The Switch Statement](#the-switch-statement)
-        - [Example of switch: Simple Calculator](#example-of-switch-simple-calculator)
-      - [C Error Messages](#c-error-messages)
-      - [The Celsius function](#the-celsius-function)
-    - [How Memory Works](#how-memory-works)
-      - [a = b](#a--b)
-      - [Data Types and Interesting Functions](#data-types-and-interesting-functions)
-        - [Integers](#integers)
-        - [Chars](#chars)
-        - [Arrays in C](#arrays-in-c)
-        - [Functions](#functions)
-        - [Strings In C](#strings-in-c)
-          - [Finding string Lengths](#finding-string-lengths)
-          - [String Functions](#string-functions)
-        - [Pointers](#pointers)
-        - [Malloc & Free](#malloc--free)
-          - [An actual implementation of Dynamic Memory Allocation](#an-actual-implementation-of-dynamic-memory-allocation)
-          - [Dealing with Heap Corruption](#dealing-with-heap-corruption)
-    - [Computer Architecture](#computer-architecture)
-      - [Digital Logic](#digital-logic)
-      - [Boolean Algebra](#boolean-algebra)
-      - [Logic Gates](#logic-gates)
-        - [Patterns](#patterns)
-    - [The Computer](#the-computer)
-      - [The CPU](#the-cpu)
-        - [Arithmetic Logic Unit (ALU)](#arithmetic-logic-unit-alu)
-        - [General Purpose Registers](#general-purpose-registers)
-        - [Control Registers](#control-registers)
-        - [Control/Execution Unit](#controlexecution-unit)
-      - [Memory](#memory)
-        - [Sequential Memory](#sequential-memory)
-          - [SR Latch](#sr-latch)
-          - [D Flip Flop](#d-flip-flop)
-      - [Complete later](#complete-later)
-          - [Memory Architecture](#memory-architecture)
-          - [IO Architecture](#io-architecture)
-      - [Combinational and Sequential Logic](#combinational-and-sequential-logic)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+> [TOC]
 
 <center>
 
@@ -101,7 +47,7 @@ model answers.
 - ![Tutorial two](./Tutorials/Tutorial2.pdf)
 - ![Tutorial three](./Tutorials/Tutorial3.pdf)
 
-### Introduction Into C Programming 
+## C Programming 
 
 #### Memory Organisation
 
@@ -845,7 +791,7 @@ Link program with `–lmcheck`
             - But checks only when `malloc`, free called
         - Should always use this when developing code that uses `malloc`/`free`
 
-### Computer Architecture
+## Computer Architecture
 
 #### Digital Logic
 
@@ -1157,3 +1103,9 @@ We can group these instructions into a set that is known as the *Instruction Set
     * Arithmetic / logic only accesses registers
     * separate data transfer instructions
     * Design philosophy: instructions are simple, can be completed in the same time frame
+
+## Embedded Systems
+
+An Embedded System is a system that is made for a single purpose, it is unlike a
+general purpose computer in the fact that it is not suppose to many things, they are
+more simple and efficient at a single thing.
