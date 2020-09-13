@@ -47,7 +47,7 @@ model answers.
 - ![Tutorial two](./Tutorials/Tutorial2.pdf)
 - ![Tutorial three](./Tutorials/Tutorial3.pdf)
 
-## C Programming 
+## C Programming
 
 #### Memory Organisation
 
@@ -136,29 +136,30 @@ These are mostly like python except:
 - No exponential operator
 - `/` operator behaves like Python's `//` (integer devision by default)
 - Logical operators are different
-    - `and = &&`
-        - single `&` acts as bitwise
-    - `or = ||`
-        - single `|` acts as bitwise
-    - `not = !`
-    - `++, --` are used as increment operators
-        - pre-increment $++j$
-        - post-increment $j--$
-    - Assignment operator `=` is used anywhere in expressions
-        * e.g. $foobar = (foo = 2) + (bar = 10)$
-        * only use in simple assignment statements
+  - `and = &&`
+    - single `&` acts as bitwise
+  - `or = ||`
+    - single `|` acts as bitwise
+  - `not = !`
+  - `++, --` are used as increment operators
+    - pre-increment $++j$
+    - post-increment $j--$
+  - Assignment operator `=` is used anywhere in expressions
+    - e.g. $foobar = (foo = 2) + (bar = 10)$
+    - only use in simple assignment statements
 
 **If Statements**
-* Syntax in BNF notation
-    - `::=` means *is defined as*
-    - `|` denotes *or*
-    - Tokens in double quotes are *terminals*
-    - Other tokens are expanded by their own syntax definitions
-* Note the parentheses around the condition expression
+
+- Syntax in BNF notation
+  - `::=` means _is defined as_
+  - `|` denotes _or_
+  - Tokens in double quotes are _terminals_
+  - Other tokens are expanded by their own syntax definitions
+- Note the parentheses around the condition expression
 
 **To use Boolean Values**
 
-To use boolean values, we must include *stdbool.h* into the program, this will give us a 
+To use boolean values, we must include _stdbool.h_ into the program, this will give us a
 boolean value to use, the following will be the code to use boolean values.
 
 ```c
@@ -169,6 +170,7 @@ int main(void)
     bool bigger = 6 > 5;
 }
 ```
+
 **Loops**
 
 The loops act very similarly to that of the python loops, there are both `While loops` and `For loops`, that act
@@ -236,6 +238,7 @@ switch ( expression ) {
 ```
 
 ##### Example of switch: Simple Calculator
+
 ```c
 // Takes in an operand, then two numbers; this will determine the calculations result
 #include <stdio.h>
@@ -280,7 +283,6 @@ The above code is a simple calculator, it will enable the user to add, subtract,
 multiply and divide. This is done by scanning for the type of operand (`+, -, *, /`),
 this will allow the user to define what type of operation to address (defined by cases)
 then we will enter the two numbers to use the desired operand on.
-
 
 #### C Error Messages
 
@@ -355,7 +357,7 @@ The different variables tell it how much memory to allocate to each variable, fo
 **char** allocates 1-byte, **short** allocates 2-bytes, **int** allocates 4-bytes and **long
 long int** allocates 8-bytes.
 
-##### Chars 
+##### Chars
 
 ```c
 char someChar = 0;
@@ -364,7 +366,7 @@ someChar = '*';
 printf("'%c'", someChar);
 ```
 
-> Return: '*'
+> Return: '\*'
 
 This will return the actual character, however if we do an arithmitic operation on the char
 it will treat it as an integer.
@@ -406,10 +408,10 @@ while (c = getchar()) != '\n' && c != EOF) {
 ```
 
 This will take a string of characters, and then print every character as a char, int
-and hex. 
+and hex.
 
 > Note: That this will buffer each char and print at the end of the loop rather then
->       printing them after each character is entered.
+> printing them after each character is entered.
 
 ##### Arrays in C
 
@@ -443,7 +445,7 @@ the rest will be lost.
 ```c
 #include <stdio.h>
 
-double average(double a, double b) 
+double average(double a, double b)
 {
     return (a + b) / 2;
 }
@@ -455,6 +457,7 @@ int main(void)
 ```
 
 Take away things about functions:
+
 - you cannot nest functions in C
 - you must define the function before use, therefore we need to define above the main function
 
@@ -526,7 +529,7 @@ operand compares two places in memory rather then the values.
 
 ###### String Functions
 
-**Note:** *We can use the Man page to find the input parameters for the below functions*
+**Note:** _We can use the Man page to find the input parameters for the below functions_
 
 We can use `strLen()` to get length of string.
 
@@ -538,9 +541,9 @@ We can use `strncat()` to concatenate strings.
 
 ##### Pointers
 
-In C all memory is treated as a large array, there are no *run-time checks*, programming
+In C all memory is treated as a large array, there are no _run-time checks_, programming
 errors with pointers and arrays usually results in a crash of the program: this can be
-*segmentation fault, core dumped*. Sometimes a corrupted memory location causes a problem
+_segmentation fault, core dumped_. Sometimes a corrupted memory location causes a problem
 much later in the execution of the program **This is hard to debug**.
 
 ```c
@@ -558,10 +561,10 @@ int main(void)
 
 The $*$ operator in C can be interpreted in a couple of ways depending on context.
 When being used in **Declorations** it is read as `int* point` means define this as a
-pointer to an int. When used in **Expressions**, it is read as *Indirectly via*, so
+pointer to an int. When used in **Expressions**, it is read as _Indirectly via_, so
 `*p = j` means get a value indirectly via `p` and store it in variable `j`.
 
-Something that we must understand about C, is that everything 
+Something that we must understand about C, is that everything
 
 **Addressing memory**
 
@@ -573,16 +576,17 @@ int16_t temp[2];
 
 This translates to the following byte array
 | Menory | Location | Allocation |
-| ---    | ---      | ---        |
-| 0x100  | byte 0   | varA       |
-| 0x101  | byte 1   | varB       |
-| 0x102  | byte 2   | temp[0]    |
-| 0x104  | byte 3   | temp[0]    |
-| 0x105  | byte 4   | temp[1]    |
-| 0x106  | byte 5   | temp[1]    |
-| 0x107  | byte 6   | EMPTY      | 
+| --- | --- | --- |
+| 0x100 | byte 0 | varA |
+| 0x101 | byte 1 | varB |
+| 0x102 | byte 2 | temp[0] |
+| 0x104 | byte 3 | temp[0] |
+| 0x105 | byte 4 | temp[1] |
+| 0x106 | byte 5 | temp[1] |
+| 0x107 | byte 6 | EMPTY |
 
 **Pointers in C syntax**
+
 ```c
 char varA = 'a'
 char* point_to_varA;
@@ -652,7 +656,7 @@ int main(void)
 
 Task* newTask(char* description, float duration, int priority)
 {
-    Task* task = NULL; 
+    Task* task = NULL;
     size_t allo = strlen(description) + 1;
     task = malloc(sizeof(Task));
     if (task != NULL) {
@@ -680,22 +684,22 @@ void freeTask(Task* task)
 
 **But how does it work?**
 
-- *malloc* and *free* are the two main functions in the *memory allocator* module.
+- _malloc_ and _free_ are the two main functions in the _memory allocator_ module.
 - They manage the **Heap**
-    - the free memory area above the initilized data segment
-    - the maintain a booking sheet of available and unavailable memory.
-        - a global variable in the module
+  - the free memory area above the initilized data segment
+  - the maintain a booking sheet of available and unavailable memory.
+    - a global variable in the module
 - The size of the heap grows or shrinks by OS calls `brk` or `sbrk`
-    - Use the man page to read on these functions
+  - Use the man page to read on these functions
 
 Here is a simple view of `malloc() & free()`:
 
 ![Malloc and Free](./Diagrams/simple_malloc:free.png)
 
 If you either underflow or overflow, you will end up having a messy heap, this will result
-in either errors or miss-allocated bytes *this will cause hell in debugging*.
+in either errors or miss-allocated bytes _this will cause hell in debugging_.
 
-If we need to re-allocate a value to a new place in memory, we can use the `realloc()` 
+If we need to re-allocate a value to a new place in memory, we can use the `realloc()`
 function.
 
 ```c
@@ -705,7 +709,7 @@ void* realloc(void* memPtr, int newSize);
 char* readLine(void)
 {
 char* buff = NULL;
-int numBytes = 0;  
+int numBytes = 0;
 int c = 0;
 while ((c = getchar()) != EOF && c != '\n') {
 buff = realloc(buff, numBytes + 1);  // Get a new bigger block
@@ -717,6 +721,7 @@ buff[numBytes++] = c;
       return buff;  // NULL if no data read
 }
 ```
+
 > if Result = NULL; we have run out of memory
 
 This is a big fucking issue if this happens, its hard to diagnose and is really really annoying.
@@ -725,12 +730,12 @@ This is a big fucking issue if this happens, its hard to diagnose and is really 
 
 When we are using `malloc()` and `free()`, for every time we use `malloc()`, we MUST use
 `free()` at some point for every `malloc()`. If this is not satisfied, we will have
-*memory leaks*, this means that we will have a memory footprint that will grow with no
+_memory leaks_, this means that we will have a memory footprint that will grow with no
 upper bound.
 
 > To detect this, we can use the Unix valgrind tool.
 
-Here is an example of simplification using `malloc AND free`. The example is from *Lab 6*:
+Here is an example of simplification using `malloc AND free`. The example is from _Lab 6_:
 
 ```c
 for (i = 0; i < NUM_REPEATS; i++)
@@ -738,7 +743,7 @@ for (i = 0; i < NUM_REPEATS; i++)
 studs = readStudents(inFile);
 printStudents(&studs );
 freeStudents(&studs );
-rewind(inputFile); 
+rewind(inputFile);
 }
 
 Student* readStudent(FILE* fp)
@@ -771,25 +776,23 @@ StudentList readStudents(FILE* fp)
     return studs;
 }
 
-void freeStudents(StudentList* studs) {    
+void freeStudents(StudentList* studs) {
     /* **** TBS **** */
 }
 ```
 
 ###### Dealing with Heap Corruption
 
-* Over-running a `malloc’d` buffer is fatal
-    - Probably
-    - Eventually
-* Difficult to debug
-    - Solution: don't bug! Not-bugging is easier than de-bugging!
-- Again there are many tools to help you find heap corruptions
-    - *valgrind* checks every heap memory reference (great tool for small projects but too slow and expensive for large projects)
-Link program with `–lmcheck`
-        * Uses versions of `malloc`, free that do some runtime checks 
-        * Aborts on error
-            - But checks only when `malloc`, free called
-        - Should always use this when developing code that uses `malloc`/`free`
+- Over-running a `malloc’d` buffer is fatal
+  - Probably
+  - Eventually
+- Difficult to debug
+  - Solution: don't bug! Not-bugging is easier than de-bugging!
+
+* Again there are many tools to help you find heap corruptions - _valgrind_ checks every heap memory reference (great tool for small projects but too slow and expensive for large projects)
+  Link program with `–lmcheck`
+  _ Uses versions of `malloc`, free that do some runtime checks
+  _ Aborts on error - But checks only when `malloc`, free called - Should always use this when developing code that uses `malloc`/`free`
 
 ## Computer Architecture
 
@@ -843,7 +846,7 @@ We use logic gates to create electronic circuits that describe logical variables
 their related statements.
 
 | S   | B   | !B  | W=S!B |
-| --- | --- | --- | ---   |
+| --- | --- | --- | ----- |
 | 0   | 0   | 1   | 0     |
 | 0   | 1   | 0   | 0     |
 | 1   | 0   | 1   | 1     |
@@ -854,7 +857,7 @@ have two logical values (0, 1). A sequence of `N` bits can be arranged into $2^{
 
 ##### Patterns
 
-*Example*
+_Example_
 
 - we have six differently coloured LED's that we can use to represent information
 - we arrange these LED's into two groups, each with three colours (R, G, B).
@@ -882,16 +885,17 @@ This tells us what the data is that we care about
 
 **Control Bus**
 
-This specifies *which way* transfers happen over the data bus
+This specifies _which way_ transfers happen over the data bus
 
 ### The Computer
 
 #### The CPU
 
 ##### Arithmetic Logic Unit (ALU)
+
 - calculations (+, -, $\cdot, \div$)
-    * $+$ = `OR` gate
-    * $\cdot$ = `AND` gate
+  - $+$ = `OR` gate
+  - $\cdot$ = `AND` gate
 - comparisons (=, !=, <= >=)
 - logical operations ()
 - binary operands ()
@@ -899,15 +903,15 @@ This specifies *which way* transfers happen over the data bus
 If we want to map this to hardware, we will need to use combinational circuits that
 use logic gates. (An example of this can be found in the slides).
 
-Here are some real world examples of logic circuits that  are often found within an
+Here are some real world examples of logic circuits that are often found within an
 `ALU`.
 
 **Decoder**
 
 Used to get the memory location from an observed address.
 
-- Typically used for *selecting* a memory location given an address
-- *N* address bits $\rightarrow 2^N$ locations
+- Typically used for _selecting_ a memory location given an address
+- _N_ address bits $\rightarrow 2^N$ locations
 - We want to separate output to be high for each possible combination of inputs
 - Below is an example of what a decoder might look like in a logic circuit.
 
@@ -915,26 +919,24 @@ Used to get the memory location from an observed address.
 
 **Encoder**
 
-
-
 **Multiplexer**
 
-They act as a traffic  cop, deciding which of two values go to the output. It essentially
+They act as a traffic cop, deciding which of two values go to the output. It essentially
 routs a single input to the output.
 
 - Multiplexers select one of several inputs and send it to output
 - For example: ALU can operate on operands from the general purpose registor file
-but they can also user the output of the previous operation for one of the operands.
+  but they can also user the output of the previous operation for one of the operands.
 - A mux at one of the ALU inputs allows the execution unit to select the source of
-the operand.
+  the operand.
 
 ![Mux Diagram](./Diagrams/mux.png)
 
 | Input | Output |
-| S     | O      |
-| ---   | ---    |
-| 0     | $I_0$  |
-| 1     | $I_1$  |
+| S | O |
+| --- | --- |
+| 0 | $I_0$ |
+| 1 | $I_1$ |
 
 **Demultipexer**
 
@@ -942,7 +944,7 @@ This acts like a multiplexer except it can output to multiple outputs. There wil
 diagram below that will show this:
 
 - The way that this works is that it is conceptually similar to a Mux, however the inputs
-and outputs are switched.
+  and outputs are switched.
 
 ![Demultiplexer (1 to 4)](./Diagrams/demultiplexer.jpg)
 
@@ -957,22 +959,25 @@ Here is an example of a 3-Bit Adder
 ![3-Bit Adder](./Diagrams/bit_adder.png)
 
 ##### General Purpose Registers
+
 - a set of memory locations located physically close to the ALU
 - stores data that we are intending to manipulate
 - Is a file
 
-##### Control Registers 
+##### Control Registers
+
 - holds the metadata associated with the data we wish to manipulate
 - Contains
-    - Address of next instruction (PC)
-    - Address of *Top of stack* (SP)
-    - Status of last operation (STATUS)
+  - Address of next instruction (PC)
+  - Address of _Top of stack_ (SP)
+  - Status of last operation (STATUS)
 
 ##### Control/Execution Unit
-- A *finite state machine* that controls what happens and when
+
+- A _finite state machine_ that controls what happens and when
 - sends data to the ALU
 - sets ALU mode
-- Control *address* and *control* buses
+- Control _address_ and _control_ buses
 - inputs to the FSM are program instructions and the control registers.
 
 #### Memory
@@ -980,28 +985,30 @@ Here is an example of a 3-Bit Adder
 ##### Sequential Memory
 
 ###### SR Latch
+
 - Simplest form of a sequential circuit (This table is from Slide 23)
 
 `S AND R` are inputs into the table, `Y AND Z` are outputs (this particular SR latch
 takes in two inputs and spits out four outputs)
 
-| S      | R   | $y_k$   | $z_k$ | $y_{(k-1)}$ | $z_{(k-1)}$ |
-| ---    | --- | ---     | ---   | ------      | ------      |
-| 0      | 0   | 1       | 0     | 1           | 0           |
-| 0      | 0   | 0       | 1     | 0           | 1           |
-| 0      | 1   | 1       | 0     | 1           | 0           |
-| 0      | 1   | 0       | 1     | 1           | 0           |
-| 1      | 0   | 1       | 0     | 0           | 1           |
-| 1      | 0   | 0       | 1     | 0           | 1           |
+| S   | R   | $y_k$ | $z_k$ | $y_{(k-1)}$ | $z_{(k-1)}$ |
+| --- | --- | ----- | ----- | ----------- | ----------- |
+| 0   | 0   | 1     | 0     | 1           | 0           |
+| 0   | 0   | 0     | 1     | 0           | 1           |
+| 0   | 1   | 1     | 0     | 1           | 0           |
+| 0   | 1   | 0     | 1     | 1           | 0           |
+| 1   | 0   | 1     | 0     | 0           | 1           |
+| 1   | 0   | 0     | 1     | 0           | 1           |
 
 ###### D Flip Flop
-- Outputs ignore input until *triggered* by the **Rising edge** of a clock signal
 
-| Input | Current | Next |           |           | 
-| ---   | ---     | ---  | ---       | ---       |
+- Outputs ignore input until _triggered_ by the **Rising edge** of a clock signal
+
+| Input | Current | Next |             |             |
+| ----- | ------- | ---- | ----------- | ----------- |
 | D     | Q       | Q    | $Q_{(k+1)}$ | $Q_{(k+1)}$ |
 
-#### Complete later 
+#### Complete later
 
 To store a byte of information we will need 8 D Flip Flops, a register typically stores
 a single byte.
@@ -1016,16 +1023,17 @@ int16_t temp[2];
 
 This translates to the following byte array
 | Memory | Location | Allocation |
-| ---    | ---      | ---        |
-| 0x100  | byte 0   | varA       |
-| 0x101  | byte 1   | varB       |
-| 0x102  | byte 2   | temp[0]    |
-| 0x104  | byte 3   | temp[0]    |
-| 0x105  | byte 4   | temp[1]    |
-| 0x106  | byte 5   | temp[1]    |
-| 0x107  | byte 6   | EMPTY      | 
+| --- | --- | --- |
+| 0x100 | byte 0 | varA |
+| 0x101 | byte 1 | varB |
+| 0x102 | byte 2 | temp[0] |
+| 0x104 | byte 3 | temp[0] |
+| 0x105 | byte 4 | temp[1] |
+| 0x106 | byte 5 | temp[1] |
+| 0x107 | byte 6 | EMPTY |
 
 **Pointers in C**
+
 ```c
 char varA = 'a'
 char* point_to_varA;
@@ -1036,21 +1044,23 @@ printf("%c", *point_to_varA);
 ```
 
 ###### Memory Architecture
+
 - Von Neumann
-    - This is the simpler approach, it is less expensive.
-    - It was desired up until the 1990's
+  - This is the simpler approach, it is less expensive.
+  - It was desired up until the 1990's
 - Harvard
-    - This is faster and more costly.
-    - Has more buses
-    - Came as a way to increase processing speed
+  - This is faster and more costly.
+  - Has more buses
+  - Came as a way to increase processing speed
 
 ###### IO Architecture
-- Memory Mapped Architecture 
+
+- Memory Mapped Architecture
 - Separately Mapped Architecture
 
 #### Combinational and Sequential Logic
 
-We measure *frequency* in `hz` and *period* in `s`
+We measure _frequency_ in `hz` and _period_ in `s`
 
 Notation:
 
@@ -1060,13 +1070,12 @@ Notation:
 
 Formulae for Logic circuits:
 
-$T_Q = \frac{1}{f_Q}$ *where* $f_Q = \frac{1}{2}(f_{clk})$
+$T_Q = \frac{1}{f_Q}$ _where_ $f_Q = \frac{1}{2}(f_{clk})$
 
 #### Program Execution
 
 To execute a program, we use a control execution unit. It is built using a number
-of cycles, namely `fetch, Decode and execute` this is known as a `Finite State 
-Machine`.
+of cycles, namely `fetch, Decode and execute` this is known as a `Finite State Machine`.
 
 - `Fetch` an instruction from memory
 - `Decode` the instruction
@@ -1092,20 +1101,49 @@ We can ask the CPU to do a number of different tricks and conditions. these are 
 
 ![ALUTricks](./Diagrams/ALUTricks.png)
 
-We can group these instructions into a set that is known as the *Instruction Set Architecture*
+We can group these instructions into a set that is known as the _Instruction Set Architecture_
 
 - These instructions read by the control unit into 3 categories:
 - Complex instruction set computer (CISC)
-    * Arithmetic / Logic instructions assess registers or memory
-    * Instructions do not all complete in the same number of clock cycles
-    * instructions do not have the same length
+  - Arithmetic / Logic instructions assess registers or memory
+  - Instructions do not all complete in the same number of clock cycles
+  - instructions do not have the same length
 - Reduced Instruction set computer (RISC)
-    * Arithmetic / logic only accesses registers
-    * separate data transfer instructions
-    * Design philosophy: instructions are simple, can be completed in the same time frame
+  - Arithmetic / logic only accesses registers
+  - separate data transfer instructions
+  - Design philosophy: instructions are simple, can be completed in the same time frame
 
 ## Embedded Systems
 
 An Embedded System is a system that is made for a single purpose, it is unlike a
 general purpose computer in the fact that it is not suppose to many things, they are
 more simple and efficient at a single thing.
+
+The labs will not be assessed, however will be important in preparing you for the lab test and the final exam, we will write our programs in modules to simplify code and keep certain ideas seperate.
+
+### Bit shifting and binary
+
+$$ (1 << 4) | (1 << 2) = 0001 0100 = 0x14 = 20 $$
+
+The above equation involes a bitshift by four and two respectively, and uses a bitwise `OR` to distinguish when to take the byte or when not to.
+
+Bitwise operations in C
+
+1. `~` is bitwise complement `NOT`
+2. `|` is bitwise `OR`
+3. `&` is bitwise `AND`
+4. `^` is bitwise `XOR`
+5. `<<` is bitwise left shift
+6. '>>' is bitwise right shift
+
+Examples of bitwise operations:
+
+`NOT` > $~(0101) = 1010$
+
+`OR` > $0101 \quad | \quad 1010 = 1111$
+
+`AND` > $0101 \quad \& \quad  1010 = 0000$
+
+SHIFT` > $0001\quad << \quad 2 = 0100$
+
+`XOR` > `0101 ^ 1011 = 1110`
