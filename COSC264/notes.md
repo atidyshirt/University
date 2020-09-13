@@ -1014,7 +1014,7 @@ Source address.
 
 Here is an example of a Bridge network:
 
-![Bridge](./Diagrams/Bridge.png)
+![Bridge](./Diagrams/Bridges.png)
 
 Bridges are the following:
 - Layer two device:
