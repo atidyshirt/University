@@ -1097,7 +1097,7 @@ Question: If you were designing a control unit, state whether you would implemen
 > it the output only depends on the current state (and not on any input), this means that it is syncrhonus (as because
 > the input is not changing the result, it will always be in sync with the clock signal transitions).
 
-We can ask the CPU to do a number of different tricks and conditions. these are as follows:
+We can ask the CPU to do a number of different tricks and conditions. These are as follows:
 
 ![ALUTricks](./Diagrams/ALUTricks.png)
 
@@ -1113,13 +1113,36 @@ We can group these instructions into a set that is known as the _Instruction Set
   - separate data transfer instructions
   - Design philosophy: instructions are simple, can be completed in the same time frame
 
+##### The Stack and Function Calls
+
+The stack is a region in memory that is used to record a program context.
+
+It contains:
+
+- function arguments
+- local variables
+- return variables
+- copies of the contents of some of the general and special purpose registers, including PC.
+
+![The stack](./Diagrams/memory_and_the_stack.png)
+
+Here is an example of a conceptual idea of a stack frame:
+
+![stack frame](./Diagrams/stack_frame)
+
+To leave a function, we need to record where we are in the stack. This is how we can call a function and then return to our original function.
+
 ## Embedded Systems
 
 An Embedded System is a system that is made for a single purpose, it is unlike a
 general purpose computer in the fact that it is not suppose to many things, they are
 more simple and efficient at a single thing.
 
-The labs will not be assessed, however will be important in preparing you for the lab test and the final exam, we will write our programs in modules to simplify code and keep certain ideas seperate.
+The labs will not be assessed, however will be important in preparing you for the lab test and the final exam, we will write our programs in modules to simplify code and keep certain ideas separate.
+
+The stack frame is being held in Data Memory, and the registers hold the stack frame
+
+When we want to call a function , we push the register holding our previous function in order to allow us to get back to it. We then push the new item to the stack to indicate that we are using it.
 
 ### Bit shifting and binary
 

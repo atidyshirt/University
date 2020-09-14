@@ -1,41 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [COSC265 Notes - Database Management](#cosc265-notes---database-management)
-    - [General Info About Course](#general-info-about-course)
-      - [Gradings](#gradings)
-      - [Resources](#resources)
-    - [Introduction to Databases](#introduction-to-databases)
-      - [Data Management](#data-management)
-        - [Example Database](#example-database)
-        - [DBMS Functionality](#dbms-functionality)
-        - [Schema's and Instances](#schemas-and-instances)
-        - [Database Features](#database-features)
-        - [Data Models](#data-models)
-      - [Classification of DBMS's](#classification-of-dbmss)
-      - [Don't Bother using DBMS for these Scenario's](#dont-bother-using-dbms-for-these-scenarios)
-    - [Database Design](#database-design)
-      - [Data Modeling](#data-modeling)
-        - [Phases of Database Design](#phases-of-database-design)
-      - [Types of attributes](#types-of-attributes)
-        - [The `NULL` Value](#the-null-value)
-      - [Introduction to Relationships](#introduction-to-relationships)
-        - [Dependent's](#dependents)
-      - [Relationship Diagrams](#relationship-diagrams)
-        - [Syntax of Diagrams](#syntax-of-diagrams)
-        - [Shit I need to know](#shit-i-need-to-know)
-        - [ER to Relational Mapping Algorithm](#er-to-relational-mapping-algorithm)
-    - [Relational Algebra](#relational-algebra)
-      - [The Pie Operand](#the-pie-operand)
-    - [The Omega Operand](#the-omega-operand)
-      - [Cartesian Product](#cartesian-product)
-      - [Complete set of relational algebra operations](#complete-set-of-relational-algebra-operations)
-    - [SQL](#sql)
-      - [Logical Design](#logical-design)
-      - [Division](#division)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+> [TOC]
 
 <center>
 
@@ -46,6 +9,7 @@
 ### General Info About Course
 
 #### Gradings
+
 - Assessment part 1 8% (8/8/2020, 5PM)
 - Assessment part 2 16% (21/8/2020, 5PM)
 - Quizzes 6% (multiple quizzes)
@@ -53,22 +17,24 @@
 - Final Exam 50% (To be announced)
 
 #### Resources
+
 - [Lecture Notes](https://learn.canterbury.ac.nz/course/view.php?id=8959&section=1)
 - [Labs and Tutorials](https://learn.canterbury.ac.nz/course/view.php?id=8959&section=2)
 - [Homework Material](https://learn.canterbury.ac.nz/course/view.php?id=8959&section=4)
 - [Previous Exams](https://learn.canterbury.ac.nz/course/view.php?id=8959&section=2)
 
-### Introduction to Databases 
+### Introduction to Databases
 
 #### Data Management
+
 - Entity
-    - Is something that we have to collect data about
+  - Is something that we have to collect data about
 - Attribute
-    - Is something we assign to a value, ie if we have an entity called person, 
-      the person will have a name attribute
+  - Is something we assign to a value, ie if we have an entity called person,
+    the person will have a name attribute
 - Data
-    - Must be well organized
-    - we need to have a system in order to access it efficiently
+  - Must be well organized
+  - we need to have a system in order to access it efficiently
 - Record
 
 **Why We Use Databases**
@@ -91,7 +57,9 @@ A DBMS is a general software, it is possible to have many databases on each DBMS
 the labs we will use the Oracle database.
 
 ##### Example Database
+
 Entities
+
 - Course
 - section
 - grade_report
@@ -100,7 +68,7 @@ Entities
 **Here is an example of an Entity**
 
 | course_name               | course_number | credit | department |
-| -----------               | ------------- | ------ | ---------- |
+| ------------------------- | ------------- | ------ | ---------- |
 | Intro to computer science | CS1310        | 4      | CS         |
 | Data Structures           | CS1120        | 3      | CS         |
 | Discrete Mathematics      | MA2220        | 5      | MATH       |
@@ -110,21 +78,21 @@ Entities
 - Define database:
 - Construct or load databases
 - Manipulate database
-    - querying
-    - generating reports
-    - insertions
-    - deletions
-    - modification to content
+  - querying
+  - generating reports
+  - insertions
+  - deletions
+  - modification to content
 - Concurrent processing
 - Protection or security
 
 ##### Schema's and Instances
 
 | Terminology            | Description                                                          |
-| ---                    | ---                                                                  |
+| ---------------------- | -------------------------------------------------------------------- |
 | Database Schema        | The description of a database (database's purpose)                   |
 | Schema Diagram         | A diagram display of some aspects of database schema                 |
-| Database instance      | The actual data stored in a database *at one point in time*          |
+| Database instance      | The actual data stored in a database _at one point in time_          |
 | Database state         | Refers to content of database at a time (extension, occurrence)      |
 | Data model             | A set of concepts used to describe the structure of a database       |
 | Initial database state | Refers to the database when it is loaded                             |
@@ -154,12 +122,13 @@ made for them in an automatic fashion. We can give different descriptions of the
 different users (multiple viewing methods of data).
 
 ##### Database Features
+
 - Data catalog (dictionary)
 - Data abstraction
 - Data integrity
 - Data independence
-    - Logical data independence
-    - physical data independence
+  - Logical data independence
+  - physical data independence
 - Multiple views of data
 - Sharing of data
 - Controlled data redundancy (repeated stuff)
@@ -169,36 +138,41 @@ different users (multiple viewing methods of data).
 - Utilities
 
 **People invlolved with Databases**
+
 - Actors on the scene
-    - Database administrators
-    - Database designers
-    - End-users
-        - Casual users
-        - Naive/Parametric users *("canned transactions")*
-        - sophisticated users
-        - standalone users
+  - Database administrators
+  - Database designers
+  - End-users
+    - Casual users
+    - Naive/Parametric users _("canned transactions")_
+    - sophisticated users
+    - standalone users
 - Working behind the scene
-    - DBMS designers and implementers
-    - Tool developers
-    - Operators and maintenance
+  - DBMS designers and implementers
+  - Tool developers
+  - Operators and maintenance
 
 ##### Data Models
+
 **Categories of Data Models**
+
 - Conceptual
-    - High level, semantic
-    - Provide concepts that are close to the way many users percieve data
+  - High level, semantic
+  - Provide concepts that are close to the way many users percieve data
 - Physical
-    - Low level, internal
-    - Provide concepts that are describe details of how data is stored
+  - Low level, internal
+  - Provide concepts that are describe details of how data is stored
 - Implementation
-    - Provide concepts that fall between users views and computer storage details
+  - Provide concepts that fall between users views and computer storage details
 
 #### Classification of DBMS's
-- Based on data model used
-    - Relational, Netowrk, Hierarchical
-    - Emerging: Object-orientated Models
 
-#### Don't Bother using DBMS for these Scenario's 
+- Based on data model used
+  - Relational, Netowrk, Hierarchical
+  - Emerging: Object-orientated Models
+
+#### Don't Bother using DBMS for these Scenario's
+
 - small data set
 - strict time requirements
 - access by a single user
@@ -211,55 +185,62 @@ This section is estimated to take around four lectures to complete
 #### Data Modeling
 
 ##### Phases of Database Design
+
 - Requirements collection and analysis
 - Conceptual design
 - Logical design
 - Physical design
 
 **Structural Component of ER**
+
 - `Entities` are specific objects or things in the mini-world that are represented in the database
 - `Attributes` are properties used to describe an entity
-    - Name
-    - SSN
-    - Address
-        - Number
-        - Street
-        - suburb
-    - Gender
-    - etc. 
+  - Name
+  - SSN
+  - Address
+    - Number
+    - Street
+    - suburb
+  - Gender
+  - etc.
 
-Note that `Attributes` can have multiple sub-attributes bellow it. If this is the case it is said to be the value is *multi-valued*
+Note that `Attributes` can have multiple sub-attributes bellow it. If this is the case it is said to be the value is _multi-valued_
 
 - A specific entity will have a value for each of its attributes
 
 Example of an entity with a few attributes
-| Name         | SSN        | Address             | Gender | BirthDate   |
-| ---          | ---        | ---                 | ---    | ---         |
+| Name | SSN | Address | Gender | BirthDate |
+| --- | --- | --- | --- | --- |
 | 'John Smith' | '12232333' | '731 Houston Drive' | 'Male' | '09-JAN-85' |
 
 #### Types of attributes
+
 **Simple (atomic) or Composite**
-- *Gender* is a simple attribute
-- *Name* (FirstName, MiddleName, LastName)
-    - Composition may form a hierarchy where some components are themselves composite
-**Single/Multi-valued**
-- *previousDegrees* of a STUDENT
-    - Denoted as `{PreviousDegrees}`
+
+- _Gender_ is a simple attribute
+- _Name_ (FirstName, MiddleName, LastName) - Composition may form a hierarchy where some components are themselves composite
+  **Single/Multi-valued**
+- _previousDegrees_ of a STUDENT
+  - Denoted as `{PreviousDegrees}`
 
 **Composite Multi-valued attribute**
+
 - Denoted by: `{Degrees (University, Year, Degree, Field)}`
-- In charts: *Double oval denotes multivalued attribute*
+- In charts: _Double oval denotes multivalued attribute_
 
 **Key Attributes**
+
 - A key attribute may be composite
-    - Denoted as `{CourseCode(CourseNo, UnitNo, AddressNo)}`
+  - Denoted as `{CourseCode(CourseNo, UnitNo, AddressNo)}`
 - A key cannot be multivalued
 - It has to be a unique identifier
 - A key attribute in a model will be underlined
 - Strong entity types must contain at least one key attribute
 
 ##### The `NULL` Value
+
 Has three possible interpretations
+
 - Not known
 - Not applicable
 - Missing
@@ -269,25 +250,28 @@ Has three possible interpretations
 Relationships are denoted using diamonds in the diagrams
 
 **Relationship types**
+
 - Is the schema description of a relationship
 - Identifies the relationship name and the participating entity types
 - Also identifies certain relationship constraints
 - More than one relationship type can exist with the same entity types
 - Relationship types can also have attributes associated with them
 - Recursive Relationship Types
-    - Both participants have the same entity type in different roles
-    - (slides 2-26)
+  - Both participants have the same entity type in different roles
+  - (slides 2-26)
 
 **Relationship Set**
+
 - The current set of relationship instances represented in the database
 - The current state of a relationship type
 
 ##### Dependent's
 
 **Dependents**
+
 - Denoted with double box
 - connects to Depends relationship
-- This is considered a *Weak Identity Type*
+- This is considered a _Weak Identity Type_
 
 **Cardinality Ratio**
 
@@ -298,11 +282,12 @@ The types of relationships, and how they connect.
 - Many to many `(N:N)`
 
 **Participation Constraint**
+
 - Total (existential)
 - Partial
 
 Minimum cardinality
-    (also called existence dependency constraint)
+(also called existence dependency constraint)
 
 **Structural Constraints**
 
@@ -310,7 +295,7 @@ If we want to put a minimum amount of people and maximum on a relationships card
 
 **Lattice**
 
-This is a type of structure where entity types end up at a single node, if this is to occur, it must all stem from the same parent class. If 
+This is a type of structure where entity types end up at a single node, if this is to occur, it must all stem from the same parent class. If
 this is the case, it is possible to take on roles of multiple subclasses at the same level.
 
 #### Relationship Diagrams
@@ -320,7 +305,7 @@ Assessment info on Learn, they have given us ER-Tutor to draw diagrams, they hav
 ##### Syntax of Diagrams
 
 | Notation                 | Definition                                                  |
-| --------                 | ----------                                                  |
+| ------------------------ | ----------------------------------------------------------- |
 | Underline                | Key attribute                                               |
 | Square box               | Entity                                                      |
 | Oval                     | Attributes                                                  |
@@ -349,7 +334,7 @@ A week entity type participates in the identifying relationship type **always to
 
 This is the algorithm to turn an ER model into a relational model
 
-**NOTE:** *Steps for what to do are found in Lecture: July 31st, and corresponding slide-set*
+**NOTE:** _Steps for what to do are found in Lecture: July 31st, and corresponding slide-set_
 
 A table is defined as a set of tuples, this means that we can not contain duplicate
 entries.
@@ -367,24 +352,22 @@ If A or C is a key, the tuples cannot be the same because they have a unique ide
 
 ### The Omega Operand
 
-
 $\sigma$ is used to define a select method. therefore if given the following:
 
-Table: 
+Table:
 
 | A (key) | B   | C   |
-| ---     | --- | --- |
+| ------- | --- | --- |
 | 1       | 1   | 2   |
 | 2       | 2   | 1   |
 | 3       | 3   | 2   |
 | 4       | 1   | 2   |
 | 5       | 2   | 1   |
-| 6       | 3   | 3   | 
+| 6       | 3   | 3   |
 
 Here are some expressions/questions.
 
-
-Q1: 
+Q1:
 
 $\pi _(A, C) (R)$
 
@@ -400,7 +383,6 @@ This expression will give the following output table:
 | 6   | 3   |
 
 The table gives a result set that is of length `N` becuase A is a primary key.
-
 
 $\pi _(B, C) (R)$
 
@@ -419,7 +401,7 @@ Q3:
 $\sigma _(B > 1) (R)$
 
 | $\underline{A}$ | B   | C   |
-| ---             | --- | --- |
+| --------------- | --- | --- |
 | 2               | 2   | 1   |
 | 3               | 3   | 2   |
 | 5               | 2   | 1   |
@@ -429,6 +411,7 @@ We can use a series of relational Algebra in order to imply a table as these thi
 interchangable.
 
 **Union compatible relations**
+
 - same degree
 - each pair of corresponding attreubutes have the same domain
 
@@ -439,7 +422,7 @@ interchangable.
 Properties of Union Intersect and Difference
 
 - Both Union and intersect are Communatative
-    - $R\cup S=S \cup R \quad AND \quad R \cap S = S \cap R$
+  - $R\cup S=S \cup R \quad AND \quad R \cap S = S \cap R$
 
 #### Cartesian Product
 
@@ -454,7 +437,7 @@ Example:
 Table R:
 
 | $\underline{A}$ | B   | C   |
-| ---             | --- | --- |
+| --------------- | --- | --- |
 | 1               | 1   | 2   |
 | 2               | 2   | 1   |
 | 3               | 3   | 2   |
@@ -465,7 +448,7 @@ Table R:
 Table S:
 
 | $\underline{D}$ | E   | A    |
-| ---             | --- | ---  |
+| --------------- | --- | ---- |
 | 1               | a   | 1    |
 | 2               | b   | 2    |
 | 3               | e   | 4    |
@@ -497,23 +480,23 @@ $S \times R$
 - $R \bowtie_{<join condition>} S$
 - join condition: $R.A = S.B$
 - Example 8:
-    - *Join the MOVIE and DVD tables*
+  - _Join the MOVIE and DVD tables_
 
 The resulting table will have the same number of tuples as the DVD table, as a MOVIE
 can have many DVD's. This is more efficent than Cartesian in this case as it does not
 create every possible combination of MOVIE and DVD.
 
 If we specify the condition in which it is joining, this is the variable we are joining
-onto *This tends to be when the foreign key and primary key from different tables tend
-to have the same name*
+onto _This tends to be when the foreign key and primary key from different tables tend
+to have the same name_
 
 Aquajoin will not remove the double up of the keys, normal outer join will remove this
 double contents.
 
 #### Complete set of relational algebra operations
- 
+
 The set is as follows, this should allow us to derive any operation on a database from
-these five different operations: 
+these five different operations:
 
 `SET =`$\{\sigma, \pi, \cup, -, \times\}$
 
@@ -521,16 +504,16 @@ these five different operations:
 
 - Terminology: tables, columns and rows
 - Important distinction: between `SQL` and the formal relational model, `SQL` will allow
-a table to contain multiple duplicate tuples.
-- Hence an `SQL` relastion table is a *multi-set* of tuples; it is **Not** a set
-of tuples.
+  a table to contain multiple duplicate tuples.
+- Hence an `SQL` relastion table is a _multi-set_ of tuples; it is **Not** a set
+  of tuples.
 - `SQL` relations can be constrained to be sets by specifying `PRIMARY KEY` or `UNIQUE`
-attributes, or by using the `DISTINCT` option in a query.
+  attributes, or by using the `DISTINCT` option in a query.
 
 #### Logical Design
 
-*This is the process of going from a relational model to an DBMS specific outline
-for this section we will be using Oracle*
+_This is the process of going from a relational model to an DBMS specific outline
+for this section we will be using Oracle_
 
 **Oracle Syntax**
 
@@ -542,7 +525,7 @@ Comments: HTML/C Style /\* ... \*/ Multi-line comment or -- for single line.
 ```sql
 -- single line comment
 
-/* 
+/*
     Multi-line
     comment
 */
@@ -574,7 +557,7 @@ DIRECTOR >> integer that references a primary key from another table (DIRECTOR t
     Note: This foreign key MUST be the same type as the primary key
 */
 CREATE TABLE MOVIE(
-    MNUMBER Unique number not null PRIMARY KEY, 
+    MNUMBER Unique number not null PRIMARY KEY,
     TITLE, varchar(50) not null,
     TYPE varchar(15) not null,
     AANOM integer,
@@ -593,7 +576,128 @@ in table A. This can be denoted using $A \div B$
 Given two relations `R(X)` and `S(Z)`:
 
 $R \div S = T(Y)$, this results in the corresponding association $Y = X - Z$, for
-a tuple `t` to appear in `T`, the values in `t`   must appear in `R` in combination
-with every *tuple* in `S`.
+a tuple `t` to appear in `T`, the values in `t` must appear in `R` in combination
+with every _tuple_ in `S`.
 
+#### Insert
 
+- used to add one or more tuples to a relation
+- attribute values should be listed in the same order as the attributes were specified in the `CREATE TABLE` command
+- `INSERT INTO` table_name `VALUES` (list_of_values)
+
+This is a statement to add a person to a table, so to add to a table we can use the following syntax
+
+```sql
+insert into customer
+values ('John', 'Marks', 18, 0, 0, '10/19/20');
+```
+
+The above will insert an new customer instance into the customer table, we can also do this without specifying all of the customer value fields, lets say we wanted to insert a customer but we only know the first and last name of this user.
+
+```sql
+insert into customer (cnumber, fname, lname)
+values (19, "John", "Wick");
+```
+
+#### Entering multiple Tuples
+
+- Another variation of INSERT allows insertions of _multiple tuples_ resulting from a query into a relationship
+- INSERT INTO table_name(att_list) select_statement;
+
+Example
+
+```sql
+create table movie_info
+as select mnumber, title, year, fname, lname
+from movie join director on director-dnumber
+```
+
+> This will create the table and also add data at the same time, rather then having to insert the data manually after the creation of the table.
+
+#### Delete
+
+- `DELETE FROM` table_of_values
+
+If there is no where clause, it will delete all info from the table. If there is a where clause it will delete data that meets the condition of the clause.
+
+This will delete all entries in the table movies:
+
+```sql
+DELETE FROM movies;
+```
+
+#### Update
+
+This is an operation to update the value of an attribute for a tuple in a table, we can use this to update all values in the table by doing the following:
+
+```sql
+UPDATE customer
+set bonus = bonus + 5;
+```
+
+Or we could use a `WHERE` clause to be more specific about the values we want to update.
+For instance we could use the unique identifier for a customer in order to isolate a
+single instance/tuple.
+
+#### Views
+
+- virtual tables: data does not exist on the disk but the query is stored
+- Purpose
+  - security
+  - Custom access to data
+  - Specifications of complex operations on base tables
+- Updatable views
+  - Defined over a single table
+  - Containing primary or candidate key
+  - Not involving aggregate functions for grouping
+
+##### Creating Views
+
+Define a view called _MOVDIR_ which consists of the movie number, title, director number and director name for all movies with type="comedy"
+
+```sql
+create view movdir
+as select number, title, director, fname, lname
+from movie join director on director=dnumber
+where type='comedy';
+```
+
+> This is actually storing the select statement rather than creating a table, however it
+> still used exactly like any other table would be used.
+
+NOTE: A view with a single defining table is updatable if the view contains the primary key or a candidate key of the base relation.
+
+#### Indexing
+
+We should create indexes before we add data to the table, as changing indexes is a very
+costly operation for a `DBMS`, as we will likely need to do $O(n^2)$ operations instead
+of $O(1)$ due to having to move indexes when inserting each value into the Database.
+
+- Access structures., used to speed up retrieval
+- CREATE INDEX index_name ON table_name (att_list);
+
+```sql
+CREATE index CNO ON customer(cnumber);
+```
+
+This is no longer part of the `SQL` standard, but Oracle or some other `DBMS's` will still
+use this and sometimes automatically create indexing for you (behind the scenes).
+
+We can also `DROP` index by name, the syntax for this is as follows:
+
+```sql
+DROP INDEX index_name;
+```
+
+#### Integrity Enhancement Feature
+
+- Required data (NOT null)
+- Domain constraints
+- Entity integrity (primary key, unique)
+- Referential integrity (foreign key, references)
+- Referential integrity constraint violation
+- Enterprise constraints
+
+#### Triggers
+
+![Triggers](./Diagrams/triggers.png)

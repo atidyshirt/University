@@ -8,53 +8,56 @@
 
 ### General Info About Course
 
-Note that although a number of assessments are closed-book, we will be permitted to bring an A4 hand written sheet of paper, this can be double sided but must be *hand written*.
+Note that although a number of assessments are closed-book, we will be permitted to bring an A4 hand written sheet of paper, this can be double sided but must be _hand written_.
 
 #### Grading
+
 - Lab quizzes (16%)
-    - Four in first term (2% each)
-    - Four in second term (2% each)
+  - Four in first term (2% each)
+  - Four in second term (2% each)
 - Super quiz on packet processing (7%)
-    - Open during week 3
+  - Open during week 3
 - Socket programming assignment (10%)
-    - Due: Sunday, August 16, 2020, 11:59pm
+  - Due: Sunday, August 16, 2020, 11:59pm
 - Mid-term test (25%)
   - 90 minutes
   - Closed-book, mostly electronic
   - Covers all first term content
   - Friday September 11, 2020 7:00 - 8:00pm
 - Lab test(17%)
-    - 60 minutes
-    - closed-book
-    - Friday, October 9, 7:00pm
-    - Held in Jack Erskine Labs (TBC)
-    - Covers material from labs in second term
+  - 60 minutes
+  - closed-book
+  - Friday, October 9, 7:00pm
+  - Held in Jack Erskine Labs (TBC)
+  - Covers material from labs in second term
 - Final exam (25%)
-    - 90 minutes
-    - closed-book
-    - time and place to be determined
+  - 90 minutes
+  - closed-book
+  - time and place to be determined
 
 > In order to pass this course, you must meet the following criteria, an average of 50%
-> across all assessments, and an average mark of at least 45% on invigilate assessments 
+> across all assessments, and an average mark of at least 45% on invigilate assessments
 > (mid-term, lab test and final exam).
 
 #### Resources
+
 - [Lecture Notes](https://learn.canterbury.ac.nz/course/view.php?id=9047&section=1)
 - [Problem Sheets](https://learn.canterbury.ac.nz/course/view.php?id=9047&section=2)
 - Principles of Digital Transmission – With Wireless Applications
-    - Sergio Benedetto and Ezio Biglieri
+  - Sergio Benedetto and Ezio Biglieri
 - Principles of Digital Communication
-    -  Robert G. Gallager
+  - Robert G. Gallager
 - Data and Computer Communications
-    - William Stallings
+  - William Stallings
 - Computer Networks.
-    - Andrew S. Tanenbaum and David J. Wetherall
+  - Andrew S. Tanenbaum and David J. Wetherall
 
 ### Introduction to Networking
 
 #### Terminology
+
 | Term         | Description                                                                                                       |
-| ------       | -----------                                                                                                       |
+| ------------ | ----------------------------------------------------------------------------------------------------------------- |
 | End Stations | These are the items connecting to a user ie a computer, servers etc. these are always connected to other stations |
 | Network      | A loose term used in many ways, but essentially is a path for information flow                                    |
 | Router       | Connects networks together so data can flow from one network to another                                           |
@@ -63,23 +66,25 @@ Note that although a number of assessments are closed-book, we will be permitted
 
 ##### Conversion Chart
 
-| Term | Approximate Size |
-| ---  | -----------------|
-| Byte (B) | 8 bits |
-| Kilobyte (KB) | 1024 bytes |
-| megabyte (MB) | 1024 KB | 
-| Gigabyte (GB) | 1024 MB |
-| Terabyte (TB) | 1024 GB |
-| Petabyte (PB) | 1024 TB | 
-| Exabyte (EB) | 1024 PB |
+| Term          | Approximate Size |
+| ------------- | ---------------- |
+| Byte (B)      | 8 bits           |
+| Kilobyte (KB) | 1024 bytes       |
+| megabyte (MB) | 1024 KB          |
+| Gigabyte (GB) | 1024 MB          |
+| Terabyte (TB) | 1024 GB          |
+| Petabyte (PB) | 1024 TB          |
+| Exabyte (EB)  | 1024 PB          |
 
-**Where do routers send traffic?** 
+**Where do routers send traffic?**
+
 > Routers do not normally generate any traffic of their own, they are there to connect
 > networks from point to point, they make routing decisions in order to indicate where
 > to send the traffic to.
 
 **How can I connect overseas then?**
-> Parts of the internet are owned by service providers. These companies own large cables 
+
+> Parts of the internet are owned by service providers. These companies own large cables
 > that go overseas to allow companies to connect their networks to the world, service
 > providers sell connectivity for a price, your local internet providers will purchase
 > access from the largest providers, the top level service providers tend to provide to
@@ -87,8 +92,9 @@ Note that although a number of assessments are closed-book, we will be permitted
 > companies to be more connected.
 
 #### Delay - Quality of Service >> Write Types of delay
+
 | Application                          | Data loss     | bandwidth                               | Delay-sensitive   |
-| ---                                  | ---           | ---                                     | ---               |
+| ------------------------------------ | ------------- | --------------------------------------- | ----------------- |
 | File Transfer                        | No loss       | Elastic                                 | No                |
 | Email                                | No loss       | Elastic                                 | no                |
 | Web pages                            | No loss       | Mostly elastic, minimum rate desireable | no                |
@@ -103,7 +109,7 @@ Note that although a number of assessments are closed-book, we will be permitted
 
 This is the time it takes to transmit an entire packet over a link.
 
-The formula for working out transmission delay is as follows $\frac{L}{R}$, where *L = length of packet* and *R = Data rate*, this is
+The formula for working out transmission delay is as follows $\frac{L}{R}$, where _L = length of packet_ and _R = Data rate_, this is
 how we can workout the transmission delay, This is generally denoted as $(T_{d})$
 
 Here is an example of how we could solve for this in python:
@@ -118,14 +124,14 @@ def transmission_delay(packetLength_bytes, rate_mbps):
 This is the time it takes to transmit a single bit of a packet over a link.
 
 This is the delay in which it takes to propagate the signal, and is denoted by $(T_{d})$. The way we can calculate propagation delay is
-to use the formula $\frac{d}{s}$ where *d = the distance* and *s = c i.e. the speed of light in copper wire*
+to use the formula $\frac{d}{s}$ where _d = the distance_ and _s = c i.e. the speed of light in copper wire_
 
 ### Bitwise operations
 
 **Bitwise `AND` Operation**
 
 The `AND` operation works by multiplying each bit in the first string to the bits in the
-second string, in the python interpreter, the symbol `~` denotes the bitwise `AND`. The 
+second string, in the python interpreter, the symbol `~` denotes the bitwise `AND`. The
 following example will multiple two binary numbers.
 
 ```python
@@ -136,11 +142,12 @@ binary_second = 0b1100011101
 bitwise_first_AND_second = binary_first & binary_second
 print(bitwise_first_AND_second)
 ```
+
 > Result: 01 0001 0100
 
 **Bitwise `OR` Operation**
 
-The `OR` operation works by checking if the bit is equal to *1*, if it is equal to 1 then
+The `OR` operation works by checking if the bit is equal to _1_, if it is equal to 1 then
 put 1, else put 0.
 
 ```python
@@ -165,31 +172,33 @@ bitwise_first_OR_second = binary_first | binary_second
 print(bitwise_first_OR_second)
 ```
 
-
 ### Communication Patterns
 
 ##### Unicast
+
 - Only two nodes in the networks involved
 - One is the transmitter, the other the receiver, but the nodes can have both roles
 - Goal: reproduce exactly at the chosen reciever the bit stream sent by the transmitter
 - Example
-    - phone connections
-    - viewing a web page
+  - phone connections
+  - viewing a web page
 
 ##### Broadcast
+
 - One node as sender, all other as recievers
 - Goal: reporiduce exactly at all stations in the network the bit stream is sent by the transmitter
 - Example
-    - Radio
-    - TV
+  - Radio
+  - TV
 
 ##### Multicast
+
 - One node as sender, several but not all recievers
 - Goal: reproduce exxactly at some stations in the network the bit stream is sent by the transmitter
 - often, in multicast groups all nodes can act as senders
 - Example
-    - Internet chat
-    - Phone confrence
+  - Internet chat
+  - Phone confrence
 
 #### Client Server Paradigm
 
@@ -201,8 +210,9 @@ connect on
 One server has multiple clients, and the server has to provide a request `n` times for `n` users.
 
 #### Peer-to-Peer Paradigm
+
 - Has no centralised network
-    - this means that it avoids a single point of failure
+  - this means that it avoids a single point of failure
 
 A peer to peer network is a two way street, you have to both provide data in order to benefit by getting your service.
 
@@ -217,19 +227,20 @@ The design of a network is strongly influenced by the traffic it is supposed to 
 **Voice Traffic**
 
 - In today's POTS voice is transmitted digitally, the analog voice signal is A/D-converted with fixed sampling rates and resolution
-    - Data rate: 64kbit/s
+  - Data rate: 64kbit/s
 - The voice data is generated continously at a fixed rate
-    - The provider has to be able to provide this rate continuously by the period or the voice quality will drop dramatically
+  - The provider has to be able to provide this rate continuously by the period or the voice quality will drop dramatically
 - This is called a continuous bit rate (CBR) data stream
 - No one else's connection is allowed to interfere with our own
 - Goal: provide the illusion of having your own connection with the end user
-    - this is achieved by the server allocating a certain amount of `bandwidth` to your call
-    - at the end of the call, the resources are re-allocated to a new user 
+  - this is achieved by the server allocating a certain amount of `bandwidth` to your call
+  - at the end of the call, the resources are re-allocated to a new user
 - Other examples of CBR data: CBR Video, periodic sensor measurements
 
 > When we are recording audio, we do not take the whole thing, we have a 256 bit storage, and we `sample` the data in order to store it.
 
 **Properties of Circuit Switching**
+
 - A routing descision is only made once
 - A connection has its resources guaranteed
 - Any bandwidth not used by a connection cannot be re-used by other connections
@@ -237,39 +248,39 @@ The design of a network is strongly influenced by the traffic it is supposed to 
 - Connection setup may fail when no route or insufficient resources are available in the network
 
 ##### Packet Switching
+
 - Many data applications naturally have time-varying rates
 - called `Variable-bit-rate (VBR)` or `bursty` traffic
 - CS-networks are not well suited to VBR traffic
 
 **Properties of Packet Switching**
+
 - Data flows are segmented into packets
 - Packets are basic unit of transmission
 - Packets consist of:
-    - A `packet header` containing meta-information about the packet
-    - The `packet payload` 
-    - Possibly a `packet trailer` for error detection
+  - A `packet header` containing meta-information about the packet
+  - The `packet payload`
+  - Possibly a `packet trailer` for error detection
 - Packets are transmitted individually
 - There is no notion of a connection, packets can be sent immediately without having to setup any state or resource reservation
-- Congestion *To many cars on the highway* can cause packet loss
-    - we allocate *buffer memory* to back these packets, if we run out of memory, we must drop some of the incoming packets
+- Congestion _To many cars on the highway_ can cause packet loss
+  - we allocate _buffer memory_ to back these packets, if we run out of memory, we must drop some of the incoming packets
 - The internet is a Packet-Switching network
-*Conequences*
-- Lack of resourcse reservation means there are no guarantees for packet delivery
-    - Internet/IP "best effort" service: packet is delivered/not delivered
-    - IP's lack of guarantees is compensated in parts by TCP
-    - **Routers in packet-switched networks perform more complex processing during information transfer than
-switching fabrics in circuit-switched networks**
+  _Conequences_
+- Lack of resourcse reservation means there are no guarantees for packet delivery - Internet/IP "best effort" service: packet is delivered/not delivered - IP's lack of guarantees is compensated in parts by TCP - **Routers in packet-switched networks perform more complex processing during information transfer than
+  switching fabrics in circuit-switched networks**
 - Packet size
-    - Packet overheads (header, trailer) have fixed size
-    - Payload size is variable (within bounds)
-    - Tradeoff
-        - Small size payload leads to high overhead ratio
-        - Small payload size leads to reduced susceptibility to errors
-    - Packet size limits can be technology or application driven
-        - to long packets might block important packets from being sent for an unacceptable time
+  - Packet overheads (header, trailer) have fixed size
+  - Payload size is variable (within bounds)
+  - Tradeoff
+    - Small size payload leads to high overhead ratio
+    - Small payload size leads to reduced susceptibility to errors
+  - Packet size limits can be technology or application driven
+    - to long packets might block important packets from being sent for an unacceptable time
 - Router will not accept packet until it accepts the whole packet and sees trailer (due to corruption)
 
 **Protocols and Services**
+
 - Packets can get lost, re-ordered, delayed, modified or be tampered with
 - Stations (end hosts or routers) can implement procedures to repair these problems
 - These procedures run in a distributed fashion (as different stations need to cooperate) and are called **protocols**
@@ -282,18 +293,20 @@ containing page one will not be lost). This is why we should send timers, and ot
 within the trailer of a packet.
 
 The role of IP in the internet protocol Stack
+
 - IP = Internet Protocol
-- There are two protocol versions *4, 6* here we use *IPv4*
+- There are two protocol versions _4, 6_ here we use _IPv4_
 - Everything over IP, IP over everything
 
 **IP Addresses**
+
 - Each host is identified by one or more IP addresses
-    - A host has many IP addresses as it has network adapters
-    - End hosts usually have only one IP address (as we use the one with widest scope)
+  - A host has many IP addresses as it has network adapters
+  - End hosts usually have only one IP address (as we use the one with widest scope)
 - The IP address not only identifies the host but also helps the network find the path to this host
 - Humans normally do not work with IP directly but with host names such as www.canterbury.ac.nz
 - There exists a special service/protocol called the domain name service (`DNS`) which translates to human-readable host names to IPv4 addresses, the internet itself only works
-    with IPv4 addresses
+  with IPv4 addresses
 - Suppost to be worldwide unique (not really true anymore)
 - unacknowledged (post service does not send back feedback)
 - no guaranteed order of packets recieved with IPv4 protocol
@@ -304,60 +317,76 @@ The role of IP in the internet protocol Stack
 
 **Functions**
 
-> **Socket()** 
+> **Socket()**
+>
 > - Create a socket, this allocates resources and assigns a random unused port number
 >
 > **Connect()**
+>
 > - Establish a connection with the server
 >
 > **Read()/Write()**
+>
 > - Reading and writing from and to the socket, alternatively you could also use **sendto()** or **recvfrom()** which allow you to specify other parameters
 >
 > **Close()**
+>
 > - closes the connection to the socket
 
 #### TCP Server - Example Workflow
 
-> **Socket()** 
+> **Socket()**
+>
 > - Create a socket, this allocates resources and assigns a random unused port number
 >
 > **Bind()**
+>
 > - Bind a socket to a particular port number and IP addresss
-> 
+>
 > **Listen()**
+>
 > - Declare whether or not the server will accept incoming connections, allocate resources (queue) for incoming connection requests (TCP)
 >
 > **Accepts()**
+>
 > - Accepts an incomming connection request (take it from the request queue) and create a new socket for this connection, bound to the same port as the socket we called `listen()` on.
 >
 > **Read()/Write()**
+>
 > - Reading and writing from and to the socket, alternatively you could also use **sendto()** or **recvfrom()** which allow you to specify other parameters
 >
 > **Close()**
+>
 > - closes the connection to the socket > that was connected to us
 
 #### UDP Client Example Workflow
 
-> **Socket()** 
+> **Socket()**
+>
 > - Create a socket, this allocates resources and assigns a random unused port number
 >
 > **rcvfrom() / sendto()**
+>
 > - Compared to TCP client, no `connect()` system call is necessary
 > - Receiver address then has to be supplied to `sendto()`
 
 #### UDP Client with `connect()`
 
-> **Socket()** 
+> **Socket()**
+>
 > - Create a socket, this allocates resources and assigns a random unused port number
 >
 > **Connect**
+>
 > - The `connect()` system call supplies a default receiver address
 > - `connect()` can be called multiple times to change the default receiver
 >
 > **Write()**
+>
 > - `write()` then sends to the last receiver specified with `connect()`
 >
 > **Close()**
+>
 > - closes the connection to the socket > that was connected to us
 
 #### Using the Socket API in C
@@ -368,23 +397,27 @@ The role of IP in the internet protocol Stack
 
 int socket(int domain, int type, int protocol);
 ```
+
 **Using `socket()`**
 
-This creates a new socket structure, including allocation of resources like the socket buffer, assigns  a random un-used port number to it 
+This creates a new socket structure, including allocation of resources like the socket buffer, assigns a random un-used port number to it
 and returns a file descriptor representing the socket
 
 > `socket()` is non-blocking
 
 Parameter `domain`:
+
 - selects the protocol family to be used for the socket
 - options include `AF_INET` for IPv4, `AF_INET6` for IPv6, `AF_APPLETALK` for the appletalk protocol
   - for this course we will only use `AF_NET`
 
 Parameter `protocol`:
+
 - selects the protocol used for the given socket type
 - often only one option sensible; then `protocol=0` is a good choice as it sets the default value for protocol
 
 Return value:
+
 - If successful, a file descriptor (>= 0) is returned
 - Otherwise -1 is returned, and error code `errno` is set
 
@@ -396,14 +429,17 @@ Return value:
 
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 ```
+
 - Links a socket to a particular IP address / port number / address family combination
 - `bind()` is not blocking
 
 Parameter `sockfd`:
+
 - Denotes the socket
 - is just the value returned by the previous `socket()` call
 
 Return value:
+
 - when operation successful: `return 0`
 - when operation fails: `return -1`
 
@@ -473,7 +509,9 @@ uint16_t htons(uint16_t hostshort);
 uint32_t ntonl(uint32_t netlong);
 uint16_t ntons(uint16_t netshort);
 ```
+
 These functions convert from `host(h)` to `network(n)` representation or vice versa
+
 - They exist for 16 bit (short) and 32 bit(long) integers
 - These helper functions are described in the man page (section 3)
 
@@ -511,7 +549,7 @@ int main(int argc, char *argv[])
   }
   portno = atoi(argv[2]); // convert port number argument to integer
 
-  // now create socket, protocol=0 
+  // now create socket, protocol=0
   // for given address family TCP will be used, this is how we define a TCP socket
   // AF_INET >> IPv4, 0 >> default socket
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -623,7 +661,7 @@ In the assignment, we are asked to do this in python. We can Google socket progr
 
 ### Network Protocols: Architecture and Basics
 
-We need to have a *Structure* to organize networking software to achieve the following
+We need to have a _Structure_ to organize networking software to achieve the following
 
 - Modularity and software re-use
 - independence of network technologies (**Transparency**)
@@ -642,13 +680,12 @@ An example of how an interface can help us link through layers is the socket API
 
 The concept of layers is to have many layers, that allow us to build a stack to complete a task.
 
-
 #### The OSI Seven Layer Model
 
-*Layer's*
+_Layer's_
 
 | Layer's            |
-| ---                |
+| ------------------ |
 | Application Layer  |
 | Presentation Layer |
 | Session Layer      |
@@ -663,16 +700,15 @@ The concept of layers is to have many layers, that allow us to build a stack to 
 - Upper four layers exchange PDU's between hosts and have end-to-end scope
 - routers only work on the lowest three layers
 
-
 ##### The Physical Layer
 
 **Digital Data vs Analog Data**
 
 | Digital Data                                                                        | Analog Data                                                                                                                                                                                                    |
-| ---                                                                                 | ---                                                                                                                                                                                                            |
-| Digital data refers to a sequence of *discrete symbols*                             | Analog data can take on an uncountable number of values                                                                                                                                                        |
+| ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Digital data refers to a sequence of _discrete symbols_                             | Analog data can take on an uncountable number of values                                                                                                                                                        |
 | A symbol is a member of a **finite** set which is also known as the alphabet        | Human speech and old FM Radio are analog transmissions                                                                                                                                                         |
-| Now days many further types of data are represented digitally, audio, video, images | in recent decades our world has become largely digitalized                                                                                                                                                     | 
+| Now days many further types of data are represented digitally, audio, video, images | in recent decades our world has become largely digitalized                                                                                                                                                     |
 | It has a finite number (0 , 1)                                                      | within computers and networks, all the data of interest by the processor, messages / packets in networks is represented as digital data, perhaps after some conversion from analog to digital (A/D conversion) |
 
 **Transmission of Digital Data**
@@ -687,65 +723,70 @@ The goal of this is not to get a perfect replica of the transmitted signal to th
 we are not trying to create an exact replica unlike that of digital data.
 
 ##### The Link Layer
+
 - Task: transfer messages over one physical link
 - Link later messages are often called **frames**
 - Often involves specification of:
-    - Framing:
-        - delineation of frame start and end
-        - choice of frame size
-        - frame format
-    - Error Control:
-        - Error correction coding is often regarded as a physical function
-    - Medium access control
-        - distributes right to send on shared channel to several participants
-        - often considered a separate sub-layer
-    - Flow Control:
-        - avoid overwhelming a slow receiver with too much data
+  - Framing:
+    - delineation of frame start and end
+    - choice of frame size
+    - frame format
+  - Error Control:
+    - Error correction coding is often regarded as a physical function
+  - Medium access control
+    - distributes right to send on shared channel to several participants
+    - often considered a separate sub-layer
+  - Flow Control:
+    - avoid overwhelming a slow receiver with too much data
 
 ##### Network Layer
+
 - Concerned with:
-    - providing a link technology independent abstraction of the entire network to higher layers
-    - addressing and routing
-    - end-to-end delivery of messages
+  - providing a link technology independent abstraction of the entire network to higher layers
+  - addressing and routing
+  - end-to-end delivery of messages
 
 ##### Transport Layer
+
 - Concerned with:
-    - Reliability of end-to-end transfer
-    - programming abstractions (interface) to higher layers
+  - Reliability of end-to-end transfer
+  - programming abstractions (interface) to higher layers
 - Often involves specification of:
-    * Error control
-    * Flow control
-    * Congestion control procedures
-        - Protect network against overloading
-        - can also be considered a network layer issue
+  - Error control
+  - Flow control
+  - Congestion control procedures
+    - Protect network against overloading
+    - can also be considered a network layer issue
 
 ##### Session and Representation Layer
+
 - Session Layer:
-    * Concerend with establishing communication sessions between applications
-    * A session can involve many transport layers connections in parallel or sequentially
-    * A session might control the way in which two partners interact, for example enforce that partners speak in an alternating fashion
+  - Concerend with establishing communication sessions between applications
+  - A session can involve many transport layers connections in parallel or sequentially
+  - A session might control the way in which two partners interact, for example enforce that partners speak in an alternating fashion
 - Representation Layer
-    * Translates between different representations of data types used on different end hosts
+  - Translates between different representations of data types used on different end hosts
 
 ##### Application Layer
+
 - Application support functions useful for many applications
-    * File transfer services
-    * Directory services
-    * Transaction processing support
+  - File transfer services
+  - Directory services
+  - Transaction processing support
 
 #### TCP / IP Reference Model (**The Internet**)
 
-| Layers            | 
-| ---               | 
-| Application Layer | 
+| Layers            |
+| ----------------- |
+| Application Layer |
 | Transport Layer   |
 | Internet          |
 | Network Interface |
 | Physical Layer    |
 
-* The model is used in the internet 
-* This is broadly equivalent to OSI 
-* The internet follows on an end-to-end system
+- The model is used in the internet
+- This is broadly equivalent to OSI
+- The internet follows on an end-to-end system
 
 ##### Application Layer
 
@@ -758,17 +799,17 @@ we are not trying to create an exact replica unlike that of digital data.
 - Provides end-to-end communications
 - Offers its services through socket interfaces
 - standard transport layer protocols
-- - SAPs are called *ports* used for application multiplexing
-    * several applications can use a transport services
-    * a port is bound to an application
-    * ports are identified by numbers
-    * the PDU's are generated by TCP/UDP (standard protocols) are known as **segments**
-    * segments include port number
-    * receiver delivers the incoming segment to the application denoted by the port number
+- - SAPs are called _ports_ used for application multiplexing
+    - several applications can use a transport services
+    - a port is bound to an application
+    - ports are identified by numbers
+    - the PDU's are generated by TCP/UDP (standard protocols) are known as **segments**
+    - segments include port number
+    - receiver delivers the incoming segment to the application denoted by the port number
 - TCP has mechanisms for:
-    - Error control
-    - Flow control
-    - Congestion control
+  - Error control
+  - Flow control
+  - Congestion control
 - UDP has none of these basic features
 - For transmission TCP and UDP hand over segments to the internet layer
 - For receptions TCP and UDP get incoming segments for the internet layer
@@ -776,15 +817,14 @@ we are not trying to create an exact replica unlike that of digital data.
 ##### Internet Layer
 
 - This is the key part of TCP/IP reference model
-- Uses IP its PDU's are called *datagrams*
+- Uses IP its PDU's are called _datagrams_
 - All higher segments are encapsulated in datagrams
 - IP:
-    - Specifies addressing scheme **IP address**
-    - Provides end-to-end delivery of datagrams **Forwarding**
-    - Does not specify how routing is done
-    - has no mechanism for error, flow and congestion controls
-    - can send IP datagrams over any network interface
-
+  - Specifies addressing scheme **IP address**
+  - Provides end-to-end delivery of datagrams **Forwarding**
+  - Does not specify how routing is done
+  - has no mechanism for error, flow and congestion controls
+  - can send IP datagrams over any network interface
 
 #### MAC Addresses
 
@@ -792,6 +832,7 @@ Small medium access delay, the time between arrival of packet to
 empty station and start of successful transmission.
 
 Mac Addresses need to be:
+
 - Fair
 - efficient
 - stable
@@ -799,39 +840,41 @@ Mac Addresses need to be:
 ##### Orthogonal Schemes
 
 In Orthogonal schemes the behaviour of one station does not influence
-the behaviour of other stations. The goal is to achieve collision free 
+the behaviour of other stations. The goal is to achieve collision free
 communication.
 
 There are four types of orthogonal schemes:
+
 - FDMA (Frequency Division Multiple Access)
 - TDMA (Time Division Multiple Access)
 - SDMA (Space Division Multiple Access)
 - CDMA (Code Division Multiple Access)
-    * Note: In this course we will not discuss `SDMA` and `CDMA`
+  - Note: In this course we will not discuss `SDMA` and `CDMA`
 
 ##### Frequency Division Multiple Access (FDMA)
 
-A channel's bandwidth is sumdivided into *N sub-channels*
+A channel's bandwidth is sumdivided into _N sub-channels_
 
-Between the sub-channels and at the fringe of the channel there are *guard bands*:
+Between the sub-channels and at the fringe of the channel there are _guard bands_:
+
 - Reduction of adjecent-channel interference, robustness against imperfect frequency synchronization
 
-A sub-channel is *exclusively*  assigned to a station *i* on a longer-term basis for
+A sub-channel is _exclusively_ assigned to a station _i_ on a longer-term basis for
 transmission of data, **no other station is allowed to transmit on this channel**.
 
 To receive data a station must do the following:
+
 - Either possess a separate receiver for each channel or
 - have a single tunable receiver that must be switched to a specific channel before data
-can be received on it
-    - Problems: coordination/rendez-vous, tuning times
+  can be received on it - Problems: coordination/rendez-vous, tuning times
 
 An example of this is FM Radio, as we have a center frequency that we are based around, we have
 enough distance to allow the user to not interfere with frequencies above and below.
 
-- if totally available bandwidth is B $\frac{b}{s}$, station *i* is assigned $\frac{1}{N}$ of *B*
-on a long term basis *neglecting guard bands*
-- Medium access delay for a new packet arriving to an empty station *i* is always zero, since *i*
-can start transmission immediately without risk of collision
+- if totally available bandwidth is B $\frac{b}{s}$, station _i_ is assigned $\frac{1}{N}$ of _B_
+  on a long term basis _neglecting guard bands_
+- Medium access delay for a new packet arriving to an empty station _i_ is always zero, since _i_
+  can start transmission immediately without risk of collision
 - If a packet has size $\frac{B}{N}$ bits, its transmission takes one second:
 
 $$E[Transmission Delay] = 1$$
@@ -839,11 +882,13 @@ $$E[Transmission Delay] = 1$$
 FDMA was very popular for both radio and old phone systems.
 
 **Advantages of** `FDMA`:
-- *N* stations can transmit in parallel
-- No need for time synchronization between the *N* transmitters
+
+- _N_ stations can transmit in parallel
+- No need for time synchronization between the _N_ transmitters
 
 **Disadvantages of** `FDMA`:
-- Need for *N* recievers or tunable receivers increasing complexity
+
+- Need for _N_ recievers or tunable receivers increasing complexity
 - Frequency synchronization required
 - No re-use channel not used by owner can't be used by others
 - Coordination and shared state required for allocating subchannels
@@ -854,25 +899,27 @@ FDMA was very popular for both radio and old phone systems.
 
 Each station uses the whole frequency band (except some guard bands at the fringe
 the spectrum), but only at certain times:
-- Time is subdivided into *superframes* of duration $T_{SF}$
-- Each superframe is subdivided into *N* time-slots
-- There are short *guard times* between time slots
-- One or more time slots are assigned exclusively and on a longer-term basis to a station *i*
-for transmission
+
+- Time is subdivided into _superframes_ of duration $T_{SF}$
+- Each superframe is subdivided into _N_ time-slots
+- There are short _guard times_ between time slots
+- One or more time slots are assigned exclusively and on a longer-term basis to a station _i_
+  for transmission
 
 Stations must be time-synchronized to avoid overlapping transmissions, guard times are required
 to compensate (small) synchronization errors.
 
-Neglecting guard times each station having a slot gets the full channel bandwidth *B*
+Neglecting guard times each station having a slot gets the full channel bandwidth _B_
 $[\frac{b}{s}]$ for a fraction of $\frac{1}{N}$ of time
 
 Assume the following facts:
-- station *8* owns one time slot
+
+- station _8_ owns one time slot
 - $T_{SF}$ = 1 second
 - a time-slot suffices to transmit $\frac{B}{N}$ bits (we ignore guard times)
-- a packet of $\frac{B}{N}$ bits arrived at random time to empty station *i*
+- a packet of $\frac{B}{N}$ bits arrived at random time to empty station _i_
 
-Medium access delay is the waiting time until station *i*'s next slot starts
+Medium access delay is the waiting time until station _i_'s next slot starts
 
 $$E[Access Delay] = \frac{T_{SF}}{2} = 0.5_s$$
 
@@ -885,12 +932,14 @@ $$E[completion Time] = E[Access Delay] + E[Transmission Delay]$$
 > We can note from this that with TDMA we can start later and finish sooner than FDMA
 
 **Advantages:**
+
 - It is easier to achieve asymmetric bandwidth assignments in `TDMA` than it is in `FDMA` using multiple time-slots is much simpler than transmitting on multiple frequencies in
-    parallel
+  parallel
 - `TDMA` tends to have better completion times than `FDMA`
 - No tunable receivers needed
 
 **Disadvantages**
+
 - Tight time-synchronization between stations required
 - High expected access delay even in otherwise idle systems
 - Not pissible to re-use unused time slots
@@ -899,22 +948,23 @@ $$E[completion Time] = E[Access Delay] + E[Transmission Delay]$$
 > Conclusion: TDMA is good for CBR but bad for VBR traffic
 
 #### Random Access Protocols
+
 - do not attempt to reserve channel resources for longer time
-- do not require a central station 
+- do not require a central station
 - do not access the medium at predictable times
 - often have low complexity
 - typically involve some random elements
 
 - Random access protocols are used standalone and also as building blocks for more
-complex MAC protocols
+  complex MAC protocols
 
 ##### ALOHA
 
 - One of the earliest MAC protocols, developed in 1970's
 - when a new packet arrives at an idle station
-    - a checksum is computed and appended to the frame
-    - the frame is then transmitted immediately
-    - an *acknowledgement timer* is started
+  - a checksum is computed and appended to the frame
+  - the frame is then transmitted immediately
+  - an _acknowledgement timer_ is started
 - if receiver gets packet, the receiver will transmit, else it will stay quite
 - if the timer expires, we conclude that the packet has got lost
 
@@ -924,6 +974,7 @@ is someone else using the service, they will reject the service if it is busy.
 #### Ethernet
 
 New packet arrives at the MAC of a station, set coll to zero.
+
 - coll is a local collision counter, each station has its own
 
 Station performs a carrier-sense operation
@@ -931,12 +982,14 @@ Station performs a carrier-sense operation
 When the medium is idle, transmission starts immediately
 
 When medium is busy
+
 - listen until channel becomes idle
 - start transmitting
 
 While transmitting check for collisions
 
 If collision is detected
+
 - abort frame transmission
 - increase counter coll, counting # of subsequent collision
 - if coll is > 16 drop frame, set coll to 0
@@ -951,7 +1004,7 @@ The backoff window can be denoted by the following:
 $$[0, 1, ..., 2^{min(10,coll)}-1]$$
 
 The backoff window size and therefore the average backoff time doubles each collision
-until 10 collisions have been seen. This is called the *truncated* binary exponential
+until 10 collisions have been seen. This is called the _truncated_ binary exponential
 backoff algorithm.
 
 Note: This is shown in full in the slides (Ethernet Section)
@@ -964,6 +1017,7 @@ only experiences 50 - 60% as many collisions and is therefore faster.
 ##### Repeaters
 
 A repeater amplifies a signal on an analog level
+
 - Any noise present in the signal is amplified as well
 - Repeaters add their own noise
 - Repeaters are agnostic to any protocol or modulation
@@ -973,6 +1027,7 @@ A repeater amplifies a signal on an analog level
 
 A **Regenerating Repeater** demodulates an incoming signal symbol-per-symbol and modulates
 it again
+
 - It does not look beyond one symbol at a time
 - No interpretation whatsoever of protocols
 
@@ -987,15 +1042,16 @@ The advantage over a bus is that we cannot cut a cable to remove the signal.
 
 - IP addresses have 32 bits (IPV4)
 - They are suppost to be worldwide unique
-    - This is not really true anymore with NAT
+  - This is not really true anymore with NAT
 - IP addresses are written in dotted decimal notation
-> 130.149.99.77
+  > 130.149.99.77
 - They have internal structure
-> <network-id> <host-id>
+
+  > <network-id> <host-id>
 
 - where
-    * `<network-id>` denotes a network (e.g. an Ethernet)
-    * `<host-id>` denotes a host *within* the network
+  - `<network-id>` denotes a network (e.g. an Ethernet)
+  - `<host-id>` denotes a host _within_ the network
 - `<host-id>` must only be unique with respect to its network
 
 These are Half-Duplex - meaning that we cannot send and receive at the same time, this
@@ -1017,8 +1073,9 @@ Here is an example of a Bridge network:
 ![Bridge](./Diagrams/Bridges.png)
 
 Bridges are the following:
+
 - Layer two device:
-    * Can Understand MAC Protocols
+  - Can Understand MAC Protocols
 - Segments LAN's
 - 2 Collision Domains
 - Fewer Ports
@@ -1032,7 +1089,8 @@ connected on. This means that the switch now has the clients MAC and Port number
 instead of having to contact all the clients, it knows exactly how to reach the desired client from
 here on. This is very efficient.
 
-Switches are the following: 
+Switches are the following:
+
 - Can understand MAC protocols
 - Full-Duplex
 - Multiple collision domains
@@ -1043,7 +1101,7 @@ Here is an example of a basic Switch setup:
 
 ![Switch](./Diagrams/Switch.png)
 
-#### Routing and Fowarding
+#### Routing and Forwarding
 
 - IP routers have several network interfaces or ports, (different from TCP/UDP port numbers) where they recieve/transmit datagrams
 - In IP networks a router getting a packet on some input port looks at the `DestinationAddress` field to determine the output port
@@ -1055,6 +1113,7 @@ when a host switches to another network it obtains another address and ongoing c
 break - IP therefore has no direct support for mobility.
 
 IP Routing is mostly concerned with networks, i.e. forwarding tables in routers mostly store
+
 `<network-id>`'s - it is the responsibility of the last router to deliver an IP datagram to the host connected.
 
 ### Term Four
@@ -1062,12 +1121,13 @@ IP Routing is mostly concerned with networks, i.e. forwarding tables in routers 
 We will go over the Network layer, transport layer and App layer over this term.
 
 Network layer is responsible for how to find a route from A - B, Transport layer is concerned
-with how to transport data from A to B with *reliability and ease of use*, the Application layer
+with how to transport data from A to B with _reliability and ease of use_, the Application layer
 is concerned with how we share this data and information.
 
 #### Protocol layering and data
 
 Each layer takes data from the layer above
+
 - adds header information to create new data unit
 - passes new data unit to layer below
 
@@ -1078,11 +1138,11 @@ Each layer takes data from the layer above
 A bus is a shared medium, where many people get to access it but if someone is using the
 bus we cannot connect to it.
 
-How a router works **23 minutes Lecture (Monday 7th september)**
+How a router works **23 minutes Lecture (Monday 7th September)**
 
 ![Router](./Diagrams/router)
 
-These routers are built on Linux distro's, they are made up with ram and CPU's, 
+These routers are built on Linux distro's, they are made up with ram and CPU's,
 this allows us to have quickly allocated memory.
 
 ![RouterInside](./Diagrams/Router%20Inside.png)
@@ -1090,6 +1150,7 @@ this allows us to have quickly allocated memory.
 #### Routing algorithms
 
 **Routing overview**
+
 - Hierarchical routing
 - Forwarding vs routing
 - Classification of routing algorithms
@@ -1101,7 +1162,8 @@ we will have 500 billion devices connected to the internet in 2030. We also need
 to make the system considerably more simple as we can offload some of the work to the upper
 levels of the hierarchy.
 
-Autonimus Systems (AS)
+Autonomous Systems (AS)
+
 - An internet provider is an example of an AS or more specifically an (ISP)
 - An AS is a set of routers that are used to localise a network
 
@@ -1111,3 +1173,88 @@ Routers will create forwarding tables to plan a path, this is open to change whe
 topology changes. This table is stored in local memory.
 
 ![AlgorithmsvsProtocols](./Diagrams/AlgorithmsOrProtocols)
+
+##### Dijkstra's Algorithm
+
+Modelling a network using graph theory. We treat the Routers as nodes on the network, and the links between the routers are treated as edges/paths on the network. Edge labels are called Metrics, and can be interpreted in a number of ways, namely as costs, delay, transmission cost or geographical distance. It can also be treated as number of available resources or the current capacity given the set of flows that are already using the link.
+
+Dijkstra's algorithm is used to find the smallest path to each node in the tree when we have a weighted mapping of nodes.
+
+Once each router and end point understands the topology of the network, we can use
+Dijkstra's algorithm to find the shortest path to every other node in the network with
+respect to their costs. (Output of this will return a forwarding table)
+
+Psudocode for Dijkstra's
+
+```
+s = {u} // U is the source node
+for all nodes in v:
+  if v is adjecent to u {
+    then D(v) = c(u, v)
+    else D(v) = INF
+  }
+
+Loop while !all(nodes in S)
+  find w not in S with smallest D(w)
+  add w to S
+  update D(v) for all v adjacent to w and not in S
+  D(v) = min(D(v), D(w) + c(w, v))
+```
+
+Here is an example of dijkstra's implementation in python, (note that this takes in a graph in the format of an adjacency list)
+
+```python
+def dijkstras(graph, source, destination):
+    n = len(graph)
+    parent = [None] * n
+    distance = [float('inf')] * n
+    in_tree = [False] * n
+    distance[source] = 0
+
+    while not all(in_tree):
+        cur = min([node for node in graph if not in_tree[node]], key=lambda node: distance[node])
+        for adj, weight in graph[cur]:
+            if distance[cur] + weight < distance[adj]:
+                parent[adj] = cur
+                distance[adj] = distance[cur] + weight
+        return distance[destination]
+```
+
+Summary, link state Routing is based off of Dijkstra's, each router broadcasts the link state, (this gives each router a complete view of the graph), each router computes least cost paths.
+
+##### Bellman-Ford Algorithm
+
+- Dynamic
+- Decentralised
+- Load-sensitive/load-insensitive
+- Asynchronous
+
+We need to introduce some equations in order to understand how the Bellman-Ford algorithm works
+
+<center>
+
+$d_{x}(y) :=$ cost of least-cost path from x to y
+
+We denote `c(x, y)` as the cost of the distance between `(x, y)`.
+
+</center>
+
+This equation is nessasary to understand if we are to grasp the Bellman-Ford Equation, here is the Bellman-Ford Equation. Where min is taken over all the neighbours of `x`
+
+$$d_{x}(y) = min_{v} [{c(x,v) + d_v(y)}]$$
+
+We must do this for each of the items contained in the set V. This will allow us to find the minimum of all the values put into the Bellman-Ford Equation.
+
+![DistanceVectorAlgorithms](./Diagrams/DistanceVectors.png)
+
+![DistanceVector2](./Diagrams/DistanceVectorTwo)
+
+The Distance Vector Algorithm is an iterative and asynchronous algorithm. Each node does the following:
+
+![distanceVectorNode](./Diagrams/NodeVisual.png)
+
+The following is the Psudocode for the Distance Vector Algorithm:
+
+![DistanceVectorAlgorithmPsudocode](./Diagrams/DVAPsudocode.png)
+
+([31:12](https://echo360.org.au/lesson/G_027eef60-c8c3-4395-b608-c72b9c2751a1_aa864d61-54dc-47be-9392-60b845f2e5ad_2020-09-11T14:00:00.000_2020-09-11T14:55:00.000/classroom#sortDirection=desc)) - Run through Bellman-Ford Algorithm.
