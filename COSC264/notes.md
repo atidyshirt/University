@@ -1258,3 +1258,6 @@ The following is the Psudocode for the Distance Vector Algorithm:
 ![DistanceVectorAlgorithmPsudocode](./Diagrams/DVAPsudocode.png)
 
 ([31:12](https://echo360.org.au/lesson/G_027eef60-c8c3-4395-b608-c72b9c2751a1_aa864d61-54dc-47be-9392-60b845f2e5ad_2020-09-11T14:00:00.000_2020-09-11T14:55:00.000/classroom#sortDirection=desc)) - Run through Bellman-Ford Algorithm.
+
+Watch September 14th Lecture to learn the Distance Vector and the poisoned reverse
+algorithm.

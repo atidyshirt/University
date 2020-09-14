@@ -701,3 +701,26 @@ DROP INDEX index_name;
 #### Triggers
 
 ![Triggers](./Diagrams/triggers.png)
+
+Triggers can be useful to calculate or update values of derived attributes.
+
+A trigger has an **Event** which is a change to the DB that activates the trigger, a **condition** that is a test or query which is run when the trigger is activated, and an **action** which is used and executed when the trigger is activated and the condition is activated.
+
+```sql
+/* Syntax for a trigger */
+CREATE [or REPLACE] trigger [schema]trigger
+  {before | after | instead of}
+  {delete | insert | update [of column [, column] ...]}
+  [or {delete | insert | update [of column [, column]]}]
+  on [schema]{table-name | view_name}
+  [[referencing {old [as] old | new [as] new}]]
+  for each [row | statement]
+  [when (condition])]
+  PL / SQL block
+/
+```
+
+A dirrived attribute must have its value updated every time there is an `INSERT, UPDATE or DELETE` operation.
+
+Lab test
+creating tables, deleting tables, adding data to tables, insert, deleting and updating, complex queries and triggers / procedures, it will be completely open book.

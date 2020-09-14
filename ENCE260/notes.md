@@ -1167,6 +1167,55 @@ Examples of bitwise operations:
 
 `AND` > $0101 \quad \& \quad  1010 = 0000$
 
-SHIFT` > $0001\quad << \quad 2 = 0100$
+`SHIFT` > $0001 \quad << \quad 2 = 0100$
 
 `XOR` > `0101 ^ 1011 = 1110`
+
+### Timing and flashing LED's
+
+Frequency $f = \frac{cycles}{second}$
+
+Period $T = \frac{1}{f}$
+
+**Delaying with a loop**
+
+In C code, this will add a delay to a LED that is turning on and off. With the following method, the delay_ms function will hog the CPU by remaining idle while the delay is on (nothing can be calculated in this time), Another problem with this method is that it will result in a delay that is > 500 ms.
+
+```c
+int main(void)
+{
+  system_init();
+
+  DDRC != (1 << 2);
+
+  while (1) {
+  PORTC ^= (1 << 2);
+
+  delay_ms(500);
+  }
+  return 0;
+}
+```
+
+Here is a better method of using timers, we can use the TCNT1 timer unit on our micro-controller. The following is an example in C:
+
+```c
+void timer_delay (uint16_t ticks)
+{
+  TCNT1 = 0;
+
+  // This timer will automatically tick until we want it to break out.
+  while (TCNT1 < ticks) {
+    continue;
+  }
+}
+```
+
+Another delay function (the one we want to implement) is to be used as the following in C:
+
+```c
+void delay_ms (uint16_t delay)
+{
+  timer_delay(delay * (F_CPU / TIMER1_PRESCALE) / 1000);
+}
+```
