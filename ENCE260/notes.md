@@ -1219,3 +1219,38 @@ void delay_ms (uint16_t delay)
   timer_delay(delay * (F_CPU / TIMER1_PRESCALE) / 1000);
 }
 ```
+
+### Multiplexing With Funkit
+
+Because we have a light matrix of `5 x 7` lights, we can either use a single pin to be paired with a light. If we want to use multiple inputs and outputs per pins, we must use multiplexing (_with regards to funkit we have 35 output lights and 23 PIO pins_)
+
+A multiplexer is a switching circuit that provides a path from many inputs to select a single output. These can be constructed with `AND/OR` gates. With `N` bits, we can choose between $2^N$ inputs.
+
+![LedHighLow](./Diagrams/LedHighLow.png)
+
+The above sheet shows us how the voltages define whether the LED is on or off.
+
+On the funkit to turn on an `LED`, we must turn the `ROW` and `COLUMN` to be on low voltage in order to turn the `LED` on. This is for the reasons below.
+
+We can use `MOSFET's` to turn on multiple lights at a single time. This is displayed below.
+
+![MOSFET](./Diagrams/Mosfet.png)
+
+**Setting LED's to be initially off in C**
+
+```c
+#include "pio.h"
+#include "system.h"
+
+int main(void)
+{
+  // We must do the following for the entire matrix of LED's
+  pio_config_set(LETMAT_ROW1_PIO, PIO_OUTPUT_HIGH);
+}
+```
+
+We can use two states that are changing at a high frequency to give the appearance of an LED being on the entire time, here is an example below to make it appear like we have the 3 corners displaying at the same time.
+
+![MultiplexingExample](./Diagrams/Osilasting.png)
+
+This is an example of using a `MUSFET` to display two states at one time

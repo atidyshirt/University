@@ -1261,3 +1261,21 @@ The following is the Psudocode for the Distance Vector Algorithm:
 
 Watch September 14th Lecture to learn the Distance Vector and the poisoned reverse
 algorithm.
+
+Below is a comparison between Link state (Dijkstra's algorithm) and Distance vector (more specifically Bellman-Ford algorithm)
+
+![LS algorithms vs DV algorithms](./Diagrams/LSvsDV.png)
+
+#### NAT: Network Address Translation
+
+`NAT` is a protocol that is used to take global IP's and re-use them when they are obtained in a local network, It does this by doing the following; when we take a global IP address, the router changes the address and generates a random port number. The local `IPV4` is mapped to the outside address in order to route the local transmission back to the global background. This allows us to have a single global address and many local addresses instead of having to have many `IPV4` global addresses, using up more resources on the global scale.
+
+The reason we have `IPV6` is due to the fact that we ran out of `IPV4` addresses, this means we needed to throw more bytes at the problem in order to allow for more addresses.
+
+In `IPV6` the header length is fixed, it is always `40` byres, it contains the following packet structure:
+
+![Packet Structure](./Diagrams/PacketStructureV6.png)
+
+Now because of the invention of `IPV6`, we have some routers that are compatible with both, some that only work with `IPV4` and some that only work with `IPV6`. We need to completely transition from `IPV4` to `IPV6`, but on a global scale this is very hard to achieve.
+
+To deal with the problem above, we have decided that a method to deal with this is to use the `NAT` tunneling method, we receive an `IPV6` address, and we then associate a smaller `IPV4` address, we assign the payload the `IPV4` address as we do not need to deliver the entire header and other componants as it has already made it to the correct address.
