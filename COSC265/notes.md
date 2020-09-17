@@ -720,7 +720,32 @@ CREATE [or REPLACE] trigger [schema]trigger
 /
 ```
 
-A dirrived attribute must have its value updated every time there is an `INSERT, UPDATE or DELETE` operation.
+A derived attribute must have its value updated every time there is an `INSERT, UPDATE or DELETE` operation.
 
 Lab test
 creating tables, deleting tables, adding data to tables, insert, deleting and updating, complex queries and triggers / procedures, it will be completely open book.
+
+**Security and Authorization**
+
+We have two different methods of controlling security, we have _Discretionary_ security mechanisms this is when we create different levels or roles of people that have different rights to view different places in the dbms, another option is _Mandatory_ security mechanisms, this is when we use have different levels of security and we use it to allow different users to be at this level or not, the difference is one is altering the value of the people and one is altering the value of access to the database.
+
+The `DBA` is responsible for database security, there are special things that only the `DBA` can do.
+
+We can use the `GRAND` Key word to assign privileges to a user, this uses the following syntax:
+
+```sql
+GRAND {account_priv | odj_priv | ALL [PRIVILEGES]}
+[ON {object}]
+TO {user | role | PUBLIC}
+{WITH GRANT OPTION};
+```
+
+> This will grant some user access to a specific role / privilege that the user wants them to have access to.
+
+Here is an example of how we can take away privileges:
+
+```sql
+REVOKE {system_priv | obj_priv | ALL [PRIVILEGES]}
+[ON {object}]
+FROM {user | role | PUBLIC};
+```
