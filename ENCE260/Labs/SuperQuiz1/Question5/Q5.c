@@ -24,6 +24,7 @@ int readInput(unsigned char input[], size_t inputMaxLength)
     } 
     return i;
 }
+
 int splitInput(unsigned char input[], size_t inputLength, int section, unsigned char part[], size_t maxPartLength)
 {
     int test = 2 + section;
@@ -33,7 +34,6 @@ int splitInput(unsigned char input[], size_t inputLength, int section, unsigned 
         if (i > maxPartLength) {
             return -1;
         }
-
         if (input[i] == input[0]) {
             test -= 1;
         } else if (test == 1 && input[i] != input[0]) {
@@ -64,14 +64,11 @@ int main(void)
 {
     unsigned char input[MAX_INPUT_MESSAGE_LENGTH];
     int inputLength = readInput(input, MAX_INPUT_MESSAGE_LENGTH);
-
     unsigned char part[MAX_KEY_LENGTH];
     unsigned char messagePart[MAX_TEXT_LENGTH];
     int keyLength = splitInput(input, inputLength, 0, part, MAX_KEY_LENGTH);
     int messageLength = splitInput(input, inputLength, 1, messagePart, MAX_TEXT_LENGTH);
-
     decryptMessage(part, keyLength, messagePart, messageLength);
-
     for (int i = 0; i < messageLength; i++) {
         printf("%c", messagePart[i]);
     }
