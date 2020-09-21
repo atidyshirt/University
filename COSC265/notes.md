@@ -749,3 +749,91 @@ REVOKE {system_priv | obj_priv | ALL [PRIVILEGES]}
 [ON {object}]
 FROM {user | role | PUBLIC};
 ```
+
+### Functional Dependencies
+
+A functional dependency is a relationship between two attributes, typically between the PK and other non-key attributes within a table. For any relation R, attribute Y is functionally dependent on attribute X (usually the PK), if for every valid instance of X, that value of X uniquely determines the value of Y.
+
+The left side of an FD diagram is called the determinant, and the right side is the dependent. Here are a few examples.
+
+<center>
+
+In the first example, below, SIN determines Name, Address and Birthdate. Given SIN, we can determine any of the other attributes within the table.
+
+`SIN ———> Name, Address, Birthdate`
+
+For the second example, SIN and Course determine the date completed (DateCompleted). This must also work for a composite PK.
+
+`SIN, Course ———> DateCompleted`
+
+The third example indicates that ISBN determines Title.
+
+`ISBN ———–> Title`
+
+</center>
+
+**Inference Rules for FD's**
+
+X -> Y denotes that `X` determines `Y`
+
+- Reflexive
+  - $If \quad Y \in X, \quad then \quad X -> Y$
+- Augmentation
+  - $If \quad X -> Y, \quad then \quad XZ -> YZ$
+- Transitive
+  - $If \quad X -> Y \quad AND \quad Y -> Z, \quad then \quad X -> Y$
+
+If we know just these three rules, we can derive any other inference rules, these rules are not axioms, they are theorems, meaning that they each have valid proofs.
+
+These proofs are outlined in the following timestamp [9:15](https://echo360.org.au/lesson/G_099ab24d-9b4c-4ffa-b320-7cbb02fe8170_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-18T16:00:00.000_2020-09-18T16:55:00.000/classroom#sortDirection=desc)
+
+- Decomposition
+  - $If \quad X -> YZ, \quad then \quad X -> Y \quad and \quad X -> Z$
+- Union
+  - $IF \quad X -> Y \quad and \quad X -> Z, \quad then \quad X -> YZ$
+- Pseudotransitivity
+  - $If \quad X -> Y \quad and \quad WY -> Z, \quad then \quad WX -> Z$
+
+These rules can be derived from the first three rules.
+
+**Example Exam Question**
+
+Given relation R(A, B, C, D) and a set of functional dependencies F={A -> B, AC -> D, BC -> A, BC -> D, CD -> A} show that AC -> D is redundant.
+
+- Using Armstrong's theorems
+
+> A -> B Given \
+> AC -> BC Augmentation \
+> BC -> D Given (from the set) \
+> AC -> D 2, 3 Transitive
+
+This proves that `AC -> D` is redundant (however note this only answers the first part of the question, we will come to this later).
+
+- **Closure** of a set of attributes X with respect to F is the set $X^+$ of all attributes that are functionally determined by X.
+
+Algorithm to find _Closure_
+
+$X^+ := X;$ \
+$repeat$ \
+$\qquad oldX^+ := X^+$ \
+$\qquad for \ each \ FD \ Y -> Z \ in \ F \ do:$ \
+$\qquad \qquad If \ Y \in X^+ \ then \ X^+ \ := | X^+ \cup Z;$ \
+$until (oldX^+ = X^+);$
+
+![ExampleQuestion3](./Diagrams/exampleQestion3.png)
+
+> The following is the answer and full working if you want the video, you can refer to the following: [31:46](https://echo360.org.au/lesson/G_099ab24d-9b4c-4ffa-b320-7cbb02fe8170_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-18T16:00:00.000_2020-09-18T16:55:00.000/classroom#sortDirection=desc)
+
+> The goal is to find keys, if we start from `A` and we can get to all the values, this means that we have fount a key
+
+The answer to this questions is in the format as follows
+
+> {A} = {A, B, C, D, E} (therefore is a key)
+> {B} = {B, D} (this is not a key)
+
+Here is the full working of the above question:
+
+![ExampleAnswer3](./Diagrams/exampleAnswer3.png)
+
+> The answer to this question is the following four keys:
+> Keys = {A, E, BC, CD}

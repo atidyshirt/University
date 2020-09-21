@@ -1278,4 +1278,67 @@ In `IPV6` the header length is fixed, it is always `40` byres, it contains the f
 
 Now because of the invention of `IPV6`, we have some routers that are compatible with both, some that only work with `IPV4` and some that only work with `IPV6`. We need to completely transition from `IPV4` to `IPV6`, but on a global scale this is very hard to achieve.
 
-To deal with the problem above, we have decided that a method to deal with this is to use the `NAT` tunneling method, we receive an `IPV6` address, and we then associate a smaller `IPV4` address, we assign the payload the `IPV4` address as we do not need to deliver the entire header and other componants as it has already made it to the correct address.
+To deal with the problem above, we have decided that a method to deal with this is to use the `NAT` tunneling method, we receive an `IPV6` address, and we then associate a smaller `IPV4` address, we assign the payload the `IPV4` address as we do not need to deliver the entire header and other components as it has already made it to the correct address.
+
+### Routing of the internet
+
+#### Heirachicial routing
+
+![HeirachyRouting](./Diagrams/heirachy.png)
+
+#### RIP
+
+RIP and OSPF are intra-AS routing, also known as _Interior Gateway Protocols (IGP)_.
+
+**RIP (Routing Information Protocol)**
+
+- Works using Distance Vector Algorithm, (Bellman-Ford Algorithm)
+- included in `UNIX` systems
+- Distance metric: number of hops
+  - Number of hops is defined as the number of subnets traversed along the shortest path from the source router to the destination subnet.
+
+_Subnet_: To determine subnets, detatch each interface from its host or router, creating islands of isolated networks, with interfaces determinating the endpoints of the isolated networks. Each of these isolated networks is called a subnet.
+
+Here is a visual representation of subnets
+
+![sbnets](./Diagrams/subnets.png)
+
+RIP uses `UDP` packets to message neighbours (gives them a routing table), this will allow neighbours to have more information, each of these are known as an **advertisement**.
+
+Each advertisement: can list up to 25 destination nets within an `AS`.
+
+Here is an example of how a routing table is formed using `RIP`, **NOTE:** that the blue box represents a forwarding table and the red box represents the routing table as a whole (forwarding tables only include information about the next router and the destination network).
+
+![forwardingRouting](./Diagrams/routingVsForwarding.png)
+
+RIP is an application layer protocol that is implemented over `UDP` (`UDP` is the third layer).
+
+Note that this is in practice much more complicated then what has been described above.
+
+#### OSPF (Open Shortest Path First)
+
+- `OPEN` meaning that it is pulbicly available
+- Uses Link State algorithm
+  - Route computation using Dijkstra's Algorithm
+- Advertisements are disseminated to entire AS (via broadcast)
+  - Carried in `OSPF` messages directly over the IP frame rather than using `UDP/TCP`
+- `OSPF` and `ISIS` are typically deployed in upper-teir `ISP's` whereas `RIP` is for lower-tier `ISP's`
+
+The `OSPF` protocol provides Security, Multiple same-cost paths are allowed, link cost can be set by administrators, multicast support and is able to be set up in a hierarchy.
+
+Image for reference:
+
+![OSPF](./Diagrams/OSPF.png)
+
+#### BGP (Border Gateway Protocol)
+
+BGP obtains subnet information about reachability, it then propergates the reachibility information accross the network and determines 'good' routes to the subnets.
+
+- `BGP` peers exchange routing information over `TCP` connections. (`BGP` is implemented as an application): `BGP` sessions.
+- when `AS3` advertises a prefix to `AS1`, `AS3` is promising it will forward any datagrams destined to that prefix.
+- With `eBGP` session between 3a and 1c, `AS3` sends prefix reachability info to `AS1`
+- 1c can then use `iBGP` to distribute this new prefix reach info to all routers in `AS1`.
+- 1b can then re-advertise the new reach info to `AS2` over 1b-to-2a `eBGP` session
+- when router learns about a new prefix, it creates an entry for the prefix in the forwarding table
+
+`BGP` does not select the best route available, it selects good routes available.
