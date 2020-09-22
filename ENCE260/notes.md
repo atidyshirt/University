@@ -1357,3 +1357,67 @@ C. Neglecting the time it takes to call `pio_output_low` and `pio_output_high` d
 D. State one advantage for using data abstraction functions in `pio.h` for `IO operations`
 
 >
+
+#### Communicating between two funkits
+
+- Bit polarity: does a high or low indicate 1 or 0
+- Bit order: do we send the `MSB` or `LSB` first
+- Message encoding: `ASCII` or `Unicode`
+- Bit synchronisation: when does each bit start
+
+**Simplex system**
+
+- data can only be sent in one direction
+
+![simplex](./Diagrams/simplex.png)
+
+**Full Duplex**
+
+- Data can be sent both directions at the same time (there may only be a single line).
+
+![full duplex](./Diagrams/fullDuplex.png)
+
+**Half Duplex**
+
+- Data can be sent in both directions, but only in a single direction at a time.
+- Only one person can talk at a single time.
+
+![Half Duplex](./Diagrams/halfDuplex.png)
+
+**UART**
+
+- UniversalAsynchronousReceiver/Transmitter
+- Most commonly used form of serial communications (ie bit by bit) for microcontrollers.
+- One wire per direction (plus common ground).
+- Asynchronous (tx and rx need to use preset clock frequencies)
+
+![UART](./Diagrams/UART.png)
+
+Above is an example of a `Full Duplex` system, as we can send and recieve at the same time.
+
+**Baud Rate**
+
+- Since transmission is serial, the transmission speed is given in the maximum number of bits per second.
+- Known as the Baud rate (max number of bit transitions per second).
+- We need a start bit to indicate the start of the frame (also synchronises the receiver).
+- We need stop bit(s) to indicate the end of the frame.
+- We may also use a parity bit for error checking.
+  - we need to have either an even or an odd number of 1's.
+
+```c
+// Receive a character from USART, blocks until char is received
+int8_t usart1_getc(void)
+{
+  while(UCSR1A & (1 << RXC1 == 0)) continue;
+  return UDR1;
+}
+```
+
+```c
+// transmit a character from USART blocks until the char can be sent
+void usart1_putc(char ch)
+{
+  while(UCSR1A & (1 << UDRE1) == 0) continue;
+  UDRT = ch;
+}
+```
