@@ -1288,3 +1288,72 @@ void pacer_wait(void)
 **Periodic Scheduler**
 
 ![periodic scheduler](./Diagrams/PeriodicScheduler.png)
+
+### Tutorial 2
+
+![Question2](./Diagrams/Tut2Q2.png)
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+**Question 3**
+
+Consider the LED flashing program:
+
+```c
+#include "pio.h"
+
+void tempo(uint16_t bravo)
+{
+  while(TCNT1 < bravo) {
+    continue;
+  } TCNT1 = 0;
+}
+
+void flasher(uint16_t huey, uint16_t dewey, uint16_t louie)
+{
+  TCCRIB = 0x05;
+  TCNT1 = 0;
+
+  while (louie--) {
+    pio_output_high(LED1);
+    tempo(huey);
+    pio_output_low(LED1);
+    tempo(dewey - louie);
+  }
+}
+
+int main(void)
+{
+  system_init();
+  pio_config_set(LED1, PIO_OUTPUT_LOW);
+  flasher(10, 400, 10);
+
+  return 0;
+}
+```
+
+A. How many times will the LED flash?
+
+>
+
+B. Magic numbers are used in Listing 1. Add appropriate lines of code and rewrite others to show how magic numbers are removed from this program
+
+>
+
+C. Neglecting the time it takes to call `pio_output_low` and `pio_output_high` determine the duty cycle of the `LED`
+
+>
+
+D. State one advantage for using data abstraction functions in `pio.h` for `IO operations`
+
+>
