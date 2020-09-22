@@ -1332,7 +1332,7 @@ Image for reference:
 
 #### BGP (Border Gateway Protocol)
 
-BGP obtains subnet information about reachability, it then propergates the reachibility information accross the network and determines 'good' routes to the subnets.
+`BGP` obtains subnet information about reachability, it then propagates the reachability information across the network and determines 'good' routes to the subnets.
 
 - `BGP` peers exchange routing information over `TCP` connections. (`BGP` is implemented as an application): `BGP` sessions.
 - when `AS3` advertises a prefix to `AS1`, `AS3` is promising it will forward any datagrams destined to that prefix.
@@ -1342,3 +1342,38 @@ BGP obtains subnet information about reachability, it then propergates the reach
 - when router learns about a new prefix, it creates an entry for the prefix in the forwarding table
 
 `BGP` does not select the best route available, it selects good routes available.
+
+#### How to send packets reliably (Checksums)?
+
+How can we remove the following errors from the journey of a packet:
+
+| Problems        | Cause                                               | Solutions                                   |
+| --------------- | --------------------------------------------------- | ------------------------------------------- |
+| Bit Error       | signal noise                                        | Error detection and correction              |
+| Buffer Overflow | speed mismatch, too much traffic                    | flow control and congestion controls        |
+| Lost Packet     | Buffer overflow at router/host                      | acknowledgement and re-transmission (`ARQ`) |
+| Out of order    | an early packet gets lost and arrives after another | `ARQ`                                       |
+
+##### Error Detection
+
+`EDC` = Error detection and Correction bits (redundancy)
+`D` = Data protected by error checking, may include header files
+
+**Parity Check**
+
+The simplest error detecting scheme is to append a parity bit to the end of a block of data.
+
+- Even Parity
+  - append a one to make it even, if we receive an odd number we know it is an error
+- Odd Parity
+  - even numbers are detected as an error
+
+We can do this in a 2d format to create a table
+
+![paritycheck](./Diagrams/paritycheck.png)
+
+Note: Parity checks cannot detect more than one bit error, this is a huge downside of this type of check.
+
+**Ones Complement to find checksums**
+
+![hexOnesComplement](./Diagrams/onesComp.png)

@@ -1254,3 +1254,37 @@ We can use two states that are changing at a high frequency to give the appearan
 ![MultiplexingExample](./Diagrams/Osilasting.png)
 
 This is an example of using a `MUSFET` to display two states at one time
+
+##### Methods of implementing
+
+**Round Robin Scheduler**
+
+We do things in sequence, this tends to be implemented with a loop and is done in order.
+
+- easy to implement
+- Response times are the same for every task
+- Good for background tasks
+
+- In most applications not all tasks will have the same priority
+- If a task takes too long it will be hogging the CPU
+
+**Paced Loops**
+
+A paced loop allows us to synchronise tasks, however, it blocks the CPU while it is waiting.
+
+This ensures that the tasks are being done at a specific frequency.
+
+```c
+void pacer_wait(void)
+{
+  while (TCNT1 < pacer_period) {
+    continue;
+  }
+  // Reset the counter
+  TCNT1 = 0;
+}
+```
+
+**Periodic Scheduler**
+
+![periodic scheduler](./Diagrams/PeriodicScheduler.png)

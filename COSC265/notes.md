@@ -837,3 +837,21 @@ Here is the full working of the above question:
 
 > The answer to this question is the following four keys:
 > Keys = {A, E, BC, CD}
+
+![MinimalSets](./Diagrams/MinimalSets.png)
+
+![Example5](./Diagrams/Example5.png)
+
+![Example5Answer](./Diagrams/Example5Answer.png)
+
+Note: that because there is only one item on the left for each line, this must be a minimal set as if we remove one, we cannot infer it from the other dependencies in the set.
+
+**Definition of Keys**
+
+![KeyDefine](./Diagrams/KeyDefine.png)
+
+![KeyDefine2](./Diagrams/KeyDefine2.png)
+
+**Full functional Dependency**
+
+- a FD where $Y -> Z$ where removal of any attribute in `Y` means the FD does not hold any more.
