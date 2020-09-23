@@ -1377,3 +1377,55 @@ Note: Parity checks cannot detect more than one bit error, this is a huge downsi
 **Ones Complement to find checksums**
 
 ![hexOnesComplement](./Diagrams/onesComp.png)
+
+**Cyclic Redundancy Check (CRC)**
+
+> This is also known as polynomial codes
+
+Addition and subtraction uses binary addition with no carries (essentially the `XOR` operation)
+
+- Now define
+  - D = d-bit block of data
+  - F = r additional bits (Frame Check Sequence)
+  - T = (d+r)-bit frame to be transmitted
+  - G = pattern of r+1 bits; this is the predetermined divisor
+
+To find the number of `r bits`, we can use the following:
+
+- $D \times 2^r \qaud XOR \quad F = nG$
+- $D \times 2^r = nG \quad XOR \quad F$
+- F = remainder of \$\frac{D \times 2^r]{G} (modulo-2 arithmetic);
+
+Example of long division in Modulo-2 arithmetic:
+
+Note: if any heading `0's` ignore them and start from the left most `1`.
+
+![base2 long division](./Diagrams/base2division.png)
+
+If there is no remainder we assume that we have no bit errors.
+
+##### Forward Error Correction
+
+This is not particularly useful for wireless links as there are much higher bit-error rates on a wireless link, and this method has much propagation delay.
+
+_Datawords_: message blocks that are not encoded or manipulated
+
+_Codewords_: message blocks that have been encoded or manipulated
+
+- Hamming distance
+  - `d(v1, v2)` between two `n–bit` binary sequences `v1` and `v2` is the number of bits in which `v1` and `v2` disagree.
+  - E.g. `v1=011011`, `v2=110001`, `d(v1,v2) = 3`
+
+We use the closest code word to the data word in order to distinguish whether an error has occurred or not, the 'closest' is determined by which bits are matching and which bits are not. This means that most of the time we are successful if there is only a single error bit, however if multiple bit errors occur then this could be an issue (as it could mistake it for another codeword)
+
+**Example of FEC**
+
+- There are 25 = 32 possible codwords of which 4 are valid, leaving 28 invalid codewords.
+
+We try to map the code words as closely as we can, here is a table to further explain:
+
+The minimum distance calculated in this table below is the `Hamming distance` that is defined above
+
+![ExampleFEC](./Diagrams/ExampleFEC.png)
+
+The result of this will give as a decent guess at what word it could possibly be, however there are limitations on this, as in certain cases we will not be able to decide which way to go.
