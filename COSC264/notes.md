@@ -1174,6 +1174,28 @@ topology changes. This table is stored in local memory.
 
 ![AlgorithmsvsProtocols](./Diagrams/AlgorithmsOrProtocols)
 
+**Types of Autonomous Systems**
+
+`Stub AS:`
+
+This AS is connected to only one other AS. A corporate network that is connected to an AS is considered to have the same AS number as the AS it is connected to.
+
+`Transit AS:`
+
+This AS is connected to more than one other AS and can be used for transit traffic between autonomous systems. They are usually administered by large Internet service providers (ISPs).
+
+`Multihomed AS:`
+
+This AS is connected to more than one other AS but does not let transit traffic from another AS pass through itself. An example might be a corporate network with several Internet connections to different ISPs.
+
+**Inter-AS vs Intra-AS**
+
+Inter-AS
+- Routing between Autonomous Systems (inter-AS routing) is external to the AS and allows one AS to send traffic to another AS
+
+Intra-AS
+- Routing within an Autonomous System (intra-AS routing) is internal to that AS and invisible to those outside it. The AS administrator decides what routing algorithm should run within it.
+
 ##### Dijkstra's Algorithm
 
 Modelling a network using graph theory. We treat the Routers as nodes on the network, and the links between the routers are treated as edges/paths on the network. Edge labels are called Metrics, and can be interpreted in a number of ways, namely as costs, delay, transmission cost or geographical distance. It can also be treated as number of available resources or the current capacity given the set of flows that are already using the link.
@@ -1186,7 +1208,7 @@ respect to their costs. (Output of this will return a forwarding table)
 
 Psudocode for Dijkstra's
 
-```
+```javascript
 s = {u} // U is the source node
 for all nodes in v:
   if v is adjecent to u {
