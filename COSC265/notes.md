@@ -820,7 +820,10 @@ $\qquad for \ each \ FD \ Y -> Z \ in \ F \ do:$ \
 $\qquad \qquad If \ Y \in X^+ \ then \ X^+ \ := | X^+ \cup Z;$ \
 $until (oldX^+ = X^+);$
 
-![ExampleQuestion3](./Diagrams/exampleQestion3.png)
+| Question                                            | Working                                          |
+|-----------------------------------------------------|--------------------------------------------------|
+| ![ExampleQuestion3](./Diagrams/exampleQestion3.png) | ![ExampleAnswer3](./Diagrams/exampleAnswer3.png) |
+
 
 > The following is the answer and full working if you want the video, you can refer to the following: [31:46](https://echo360.org.au/lesson/G_099ab24d-9b4c-4ffa-b320-7cbb02fe8170_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-18T16:00:00.000_2020-09-18T16:55:00.000/classroom#sortDirection=desc)
 
@@ -833,25 +836,51 @@ The answer to this questions is in the format as follows
 
 Here is the full working of the above question:
 
-![ExampleAnswer3](./Diagrams/exampleAnswer3.png)
-
 > The answer to this question is the following four keys:
 > Keys = {A, E, BC, CD}
 
 ![MinimalSets](./Diagrams/MinimalSets.png)
 
-![Example5](./Diagrams/Example5.png)
+| Question                             | Working                                          |
+|--------------------------------------|--------------------------------------------------|
+| ![Example5](./Diagrams/Example5.png) | ![Example5Answer](./Diagrams/Example5Answer.png) |
 
-![Example5Answer](./Diagrams/Example5Answer.png)
+
 
 Note: that because there is only one item on the left for each line, this must be a minimal set as if we remove one, we cannot infer it from the other dependencies in the set.
 
 **Definition of Keys**
 
-![KeyDefine](./Diagrams/KeyDefine.png)
-
-![KeyDefine2](./Diagrams/KeyDefine2.png)
+| First Slide                            | Second Slide                             |
+|----------------------------------------|------------------------------------------|
+| ![KeyDefine](./Diagrams/KeyDefine.png) | ![KeyDefine2](./Diagrams/KeyDefine2.png) |
 
 **Full functional Dependency**
 
 - a FD where $Y -> Z$ where removal of any attribute in `Y` means the FD does not hold any more.
+
+**Normal Forms**
+
+An example of normal form relation:
+
+| Question                     |
+|------------------------------|
+| ![Ex10](./Diagrams/ex10.png) |
+
+| Graphical Solution             | Explaination                                                                                                                                                                                                             |
+|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![Ex10A](./Diagrams/ex10A.png) | We know _AB_ is a primary key (given), we know that *C* is a candidate key because it is not primary and can infer all other attributes, because *D* infers *C* and *C* is a key, we can conclude that *D* is also a key |
+
+To find the closure from example 10, just take the logical order down $\{D\}^+ = \{D, C, A, B\}$
+
+But we have still not answered the question, we must find the highest normal form of the Relation `R1`.
+
+- [Article on how to complete this process](https://www.geeksforgeeks.org/how-to-find-the-highest-normal-form-of-a-relation/)
+- [Timestamp from Lectre](https://echo360.org.au/lesson/G_72da4005-3aa4-4310-a2b1-6721dd784429_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-24T09:00:00.000_2020-09-24T09:55:00.000/classroom#sortDirection=desc)
+
+| Question                       | Explanation                    |
+|--------------------------------|--------------------------------|
+| ![Ex11](.Diagrams/ex11.png)    | ![ex11A](./Diagrams/ex11A.png) |
+| ![ex112](./Diagrams/ex112.png) |
+
+
