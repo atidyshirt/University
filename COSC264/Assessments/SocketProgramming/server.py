@@ -105,6 +105,7 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
 
         MagicNo = 0x497E .to_bytes(2, "big")
         PacketType = 0x0002 .to_bytes(2, "big")
+        LanguageCode = 0
         if sock is s_english:
             LanguageCode = 0x0001
             flag = "english"
@@ -117,6 +118,7 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
         date = datetime.datetime.today()
         LanguageCode = LanguageCode.to_bytes(2, "big")
         year = date.year.to_bytes(2, "big")
+        flag = ""
         language_months = months[flag]
         chosen_month = language_months[(date.month - 1)]
         month = date.month.to_bytes(1, "big")
@@ -172,6 +174,8 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
             LanguageCode = 0x0003
             flag = "german"
         date = datetime.datetime.today()
+        LanguageCode = 0
+        flag = ""
         LanguageCode = LanguageCode.to_bytes(2, "big")
         year = date.year.to_bytes(2, "big")
         month = (date.month).to_bytes(1, "big")
@@ -238,7 +242,8 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
 
     while True:
         try:
-            read, write, exception = select.select(sockets, [], [])
+            exception = select.select(sockets, [], [])
+            read = exception[0]
             for s in read:
                 packet, source = s.recvfrom(48)
                 if verbose:

@@ -1451,3 +1451,5 @@ The minimum distance calculated in this table below is the `Hamming distance` th
 ![ExampleFEC](./Diagrams/ExampleFEC.png)
 
 The result of this will give as a decent guess at what word it could possibly be, however there are limitations on this, as in certain cases we will not be able to decide which way to go.
+
+

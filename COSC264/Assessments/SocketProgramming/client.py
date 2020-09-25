@@ -158,13 +158,15 @@ def start_client(DATE, HOST, PORT, verbose):
         else:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.settimeout(1)
-            s.sendto(request_packet, (IP, PORT))
+            target = (IP, PORT)
+            s.sendto(request_packet, target)
 
             complete_message = bytearray()
 
         while True:
             try:
-                msg, source = s.recvfrom(1024)
+                res = s.recvfrom(1024)
+                msg = res[0]
 
                 if len(msg) <= 0:
                     break
