@@ -871,7 +871,7 @@ An example of normal form relation:
 |--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ![Ex10A](./Diagrams/ex10A.png) | We know _AB_ is a primary key (given), we know that *C* is a candidate key because it is not primary and can infer all other attributes, because *D* infers *C* and *C* is a key, we can conclude that *D* is also a key |
 
-To find the closure from example 10, just take the logical order down $\{D\}^+ = \{D, C, A, B\}$
+To find the closure from example 10, just take the logical order down $\{D\}^+ = \{D, C, AB\}$
 
 But we have still not answered the question, we must find the highest normal form of the Relation `R1`.
 

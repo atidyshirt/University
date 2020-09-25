@@ -11,7 +11,7 @@ int readUCharInt(unsigned char* input)
     return size;
 }
 
-int readInput(unsigned char input[], size_t inputMaxLength) 
+int readInput(unsigned char input[], size_t inputMaxLength)
 {
     int i = 0;
     unsigned char tester;
@@ -21,7 +21,7 @@ int readInput(unsigned char input[], size_t inputMaxLength)
         if (i == inputMaxLength) {
             return -1;
         }
-    } 
+    }
     return i;
 }
 
@@ -39,15 +39,15 @@ int splitInput(unsigned char input[], size_t inputLength, int section, unsigned 
         } else if (test == 1 && input[i] != input[0]) {
             part[j] = input[i];
             j += 1;
-        }   
+        }
         i += 1;
-    }     
+    }
     return j;
 }
 
 void decryptMessage(unsigned char key[], size_t keyLength, unsigned char message[], size_t messageLength)
 {
-    int i = 0; 
+    int i = 0;
     int r = 0;
     while (i < messageLength) {
         if (r >= keyLength) {
@@ -57,7 +57,7 @@ void decryptMessage(unsigned char key[], size_t keyLength, unsigned char message
             r += 1;
             i += 1;
         }
-    } 
+    }
 }
 
 int main(void)

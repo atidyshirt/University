@@ -1,4 +1,3 @@
-
 ###############################################################
 
 def binary_search(sequence, item):
@@ -35,7 +34,7 @@ print(binary_search(sequence_a, item_a))
 #  k = num steps
 
 #  n * 1/2 * 1/2 * ... * 1/2 = n/2^k
-#  therefore               k = log2(n) 
+#  therefore               k = log2(n)
 
 # BIG O
 # BEST CASE:    O(1)
