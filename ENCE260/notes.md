@@ -1421,5 +1421,3 @@ void usart1_putc(char ch)
   UDRT = ch;
 }
 ```
-
-
