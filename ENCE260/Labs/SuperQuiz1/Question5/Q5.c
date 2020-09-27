@@ -50,7 +50,7 @@ void decryptMessage(unsigned char key[], size_t keyLength, unsigned char message
     int i = 0;
     int r = 0;
     while (i < messageLength) {
-        if (r >= keyLength) {
+        if (r >= eyLength) {
             r = r - keyLength;
         } else {
             message[i] = message[i] - key[r];
