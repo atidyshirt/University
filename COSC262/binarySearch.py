@@ -1,5 +1,3 @@
-###############################################################
-
 def binary_search(sequence, item):
     begin_index = 0
     end_index = len(sequence) - 1
@@ -22,23 +20,3 @@ sequence_a = [1,2,3,4,5,6,7,8,9,14,23]
 item_a = 14
 
 print(binary_search(sequence_a, item_a))
-
-###############################################################
-
-#  BINARY SEARCH COMPLEXITY
-
-#  search size of n elements
-#  when going through search each comparison 1/2's results
-
-#  n = len(sequence)
-#  k = num steps
-
-#  n * 1/2 * 1/2 * ... * 1/2 = n/2^k
-#  therefore               k = log2(n)
-
-# BIG O
-# BEST CASE:    O(1)
-# WORST CASE:   O(log n)
-# AVERAGE:      O(log n)
-
-###############################################################
