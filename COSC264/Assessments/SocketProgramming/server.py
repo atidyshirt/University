@@ -213,7 +213,7 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
 
         return out
 
-    """ 
+    """
     Here is where we implement the Socket API. This is the main setup for the server to receive and send
     the appropriate packets.
     """
@@ -233,9 +233,7 @@ def start_server(PORT_english, PORT_maori, PORT_german, verbose):
         if check_port(port):
             sock.bind((IP, port))
         else:
-            print(
-                "Server closed: port {} isnt within range (1024 - 64000)".format(port)
-            )
+            print("Server closed: port {} isnt within range (1024 - 64000)".format(port))
             return -1
 
     sockets = [s_english, s_maori, s_german]
