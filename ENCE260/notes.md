@@ -1421,3 +1421,17 @@ void usart1_putc(char ch)
   UDRT = ch;
 }
 ```
+##### Timers
+
+These are extremely useful, to the point where pretty much all micro-controller's include
+timers at this point in time.
+
+On our micro controller, we have one 8-bit timer and another 16-bit timer, we can use
+`separate prescaler's` and `Compare` mode (using two 8-bit `PWM channels`) the 16 bit timer
+is a bit more fancy.
+
+Example exam questions on `PWM Timers` can be found at [27:00](https://echo360.org.au/lesson/G_daf26e6b-127d-485c-ad13-eb692901ba33_3b73f99b-e9c9-4c73-a092-60087273ce90_2020-09-28T11:00:00.000_2020-09-28T11:55:00.000/classroom#sortDirection=desc)
+
+
+
+

@@ -878,9 +878,109 @@ But we have still not answered the question, we must find the highest normal for
 - [Article on how to complete this process](https://www.geeksforgeeks.org/how-to-find-the-highest-normal-form-of-a-relation/)
 - [Timestamp from Lectre](https://echo360.org.au/lesson/G_72da4005-3aa4-4310-a2b1-6721dd784429_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-24T09:00:00.000_2020-09-24T09:55:00.000/classroom#sortDirection=desc)
 
-| Question                       | Explanation                    |
-|--------------------------------|--------------------------------|
-| ![Ex11](.Diagrams/ex11.png)    | ![ex11A](./Diagrams/ex11A.png) |
-| ![ex112](./Diagrams/ex112.png) |
+### Database file organization and indexing
+
+**Internal Schema**
+
+This is efficent storage and index structures, this is very important. Schema's depend
+on the chosen `DBMS` as there are no specific standard. We must think about how to store
+tables in persistent storage and how to speed up access to this data?
+
+
+**Disk storage devices**
+
+Data is stored as magnetized areas on the disk, a `disk pack` contains several magentic
+disks connected to a rotating spindle. Disks are divided into concentric circular `tracks`
+on each disk surface, track capacities vary, this is referred to as `HHD Space`. To access
+information on the `HHD`, we must refer to the address that the block is stationed.
+
+**Record Organization**
+
+A file is a sequence of records, where each record is a collection of values, inside
+we have many blocks (in each file), inside each block we have a record *a row in our
+table*, this is how we represent the data.
+
+We have an important concept known as the blocking factor, this is the factor of how
+many blocks can be contained in said file, this is used to distinguish when we need to
+go to a new file.
+
+**Unspanned**
+- no record can span two blocks
+
+**Spanned**
+- Records can be spread over multiple blocks
+
+If we store database data in primary memory, we would lose all data if there was a
+crash (this is a terrible idea). We have some database ideas to manage this problem,
+these are called `In-Memory Database Systems`.
+
+Pro's and Cons of `In-Memory Database Systems`
+- relies mainly on main memory for data storage
+- faster access
+- loss of data if crash
+
+Hashing files, hashed files for disk files are known as *External Hashing*, file blocks
+are divided into `M` equal-sized *buckets*, typically a bucket responds to one or more disk
+blocks.
+
+A *Hash Key* is computed for each file record. The record with hash key value `K` is
+stored in bucket `I`, where `i = h(K)` and `h` is the hash function.
+
+Searching hash Keys is extremely efficent, and is much better then searching by name.
+
+Collisions can occur when a new record hashes to a bucket that is already full (We use
+an overflow file to store such records).
+
+| Raid 0    | Raid 1    |
+| --------- | --------- |
+| single    | double    |
+| unsafe    | safer     |
+| full size | half size |
+
+Raid 4 and Raid 5 are also used often (refer to Lecture below):
+- [36.00](https://echo360.org.au/lesson/G_484b044b-4c52-4ad9-baf9-9899f418d8f5_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-09-28T13:00:00.000_2020-09-28T13:55:00.000/classroom#sortDirection=desc)
+
+#### Index Structure
+
+Physical order of records affects the efficiecny of individual queries required for 
+file traversal.
+
+Physical records can only be in one order at a time, Need an efficient way to access
+records in different orders without expensive operations like physical sorting.
+
+Index's are stored in a separate table that hold the index number and the address of
+each record. We can have many indexes per table, index entries are ordered by index field
+value, they are generally implemented on primary or candidate keys.
+
+We have three different single level indexes:
+- Primary index
+    - specified on the ordering key field of an ordered file
+- Clustering index
+    - specified on the ordering non-key field of an ordered file
+- Secondary index
+    - can be specified on any non-ordering field of a file
+
+A file can have **EITHER** a primary or a clustering index, it **CANNOT** have both.
+
+If the keys are repeated, this is a clustering index, if they are `distinct` then it is
+likely to be a primary index.
+
+We describe an index as `DENSE` if we have an index for every tuple in the database,
+an index is `SPARSE` if there is an index for each table rather then for each tuple.
+
+How to answer the question of how many searches we have to do to find the needle in
+the stack of files (Binary Search Tree's).
+
+Questions: [24:00](https://echo360.org.au/lesson/G_099ab24d-9b4c-4ffa-b320-7cbb02fe8170_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-10-02T16:00:00.000_2020-10-02T16:55:00.000/classroom#sortDirection=desc)
+
+**Multi-Level Indexes**
+
+Because a single level index is an ordered file, we create an empty primary index *to
+index itself*, we do this because the original index file is called the *first-level index*.
+We then have have a second-level index of pointers to the set of indexes.
+
+
+
+
 
 
