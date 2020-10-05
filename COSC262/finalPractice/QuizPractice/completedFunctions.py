@@ -3,13 +3,13 @@ def almost_all(numbers, n=-1):
     "Only sums numbers once"
     if n == -1:
         n = sum(numbers)
-    return [n - x for x in numbers] 
+    return [n - x for x in numbers]
 
-def sort_of(numbers): 
-    result = [] 
-    for i in range(len(numbers)): 
-        sub = sorted(numbers[i:]) 
-        result.append(sub[0]) 
+def sort_of(numbers):
+    result = []
+    for i in range(len(numbers)):
+        sub = sorted(numbers[i:])
+        result.append(sub[0])
     return result
 
 def concat_list(list_of_strings, res = ""):
@@ -44,7 +44,7 @@ def squares(nums):
     if len(nums) <= 0:
         return []
     else:
-        return [(nums[0]**2)] + squares(nums[1:]) 
+        return [(nums[0]**2)] + squares(nums[1:])
 
 def find(data, value):
     if len(data) <= 0:
@@ -136,6 +136,7 @@ def print_shows(show_list):
 def fractional_knapsack(capacity, items):
     #Items = (name, weight, value) just return total value
     result = 0
+
     for item in sorted(items, key=lambda item: (item[1]/item[2]), reverse=True):
         if capacity == 0:
             break
@@ -201,7 +202,7 @@ def lcs_numerical(s1, s2): # input: {[1,3,4,3,2], [1,2,3,9,8]} >> output: {1,2,3
             return m
     return aux(len(s1), len(s2))
 
-def lcs_string(s1, s2): # input: 'world', 'wrong' >> output: ['w', 'r', 'o'] 
+def lcs_string(s1, s2): # input: 'world', 'wrong' >> output: ['w', 'r', 'o']
     cache = {}
     def aux(i, j):
         if (i, j) in cache:
@@ -216,5 +217,5 @@ def lcs_string(s1, s2): # input: 'world', 'wrong' >> output: ['w', 'r', 'o']
             m = max([aux(i - 1, j), aux(i, j - 1)], key=len)
             cache [(i, j)] = m
             return m
-    return "".join(aux(len(s1), len(s2))) 
+    return "".join(aux(len(s1), len(s2)))
 
