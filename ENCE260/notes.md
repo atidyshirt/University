@@ -1132,6 +1132,51 @@ Here is an example of a conceptual idea of a stack frame:
 
 To leave a function, we need to record where we are in the stack. This is how we can call a function and then return to our original function.
 
+##### Finite State Machines
+
+| Intro                                                                                                                                                                                                                | Stopwatch Example                             |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+|Example Finite state are used for many things in computing, they are a system where particular inputs cause particular changes in states. An example of this is a stop watch with three distinct states, here is an example: | ![FSMStopwatch](./Diagrams/Statemachines.png) |
+
+An example of a stopwatch in software is the following:
+
+```c
+switch(state) {
+  case STATE_OFF:
+    if (input == POWER_BUTTON) {
+      ...
+      state = STATE_ON;
+    }
+  case STATE_ON:
+    if (input == START_BUTTON) {
+      state = STATE_RECORDING;
+    } else if (input == POWER_BUTTON) {
+      state = STATE_OFF;
+    }
+}
+```
+
+This can be achieved via software, and is commanly seen in communication software such as phones.
+
+We can also achieve a similar idea from hardware, here is some examples:
+
+| Mealy Machine                        | Moore Machine                  |
+|--------------------------------------|--------------------------------|
+| ![Mealy](./Diagrams/Moore.png)       | ![Moore](./Diagrams/Mealy.png) |
+| Good because we have less flip flops | Good for asyncronous design    |
+
+We will now go over how to design a finite state machine (`FSM`), in order to do this we must
+do the following:
+
+1. Determine inputs and outputs
+2. Draw `FSM` state transition diagram
+3. Choose a state encoding
+4. Choose the implementation structure
+5. Design the next-state and output logic
+
+We must develop a solution to reach all states using boolean algebra (`NOT, AND, OR, XOR`) gates
+in a physical machine.
+
 ## Embedded Systems
 
 An Embedded System is a system that is made for a single purpose, it is unlike a
@@ -1434,12 +1479,31 @@ Example exam questions on `PWM Timers` can be found at [27:00](https://echo360.o
 
 ---
 
-#### C Compiler
+#### C Compiler and Tool Chains
 
 The **Preprocessor** rads the C source file, the header files and they expand `Macros`.
 
 | GCC                                                                                                                                            | Toolchain                                 |
 |------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most unix operating systems *despite the name GNU Not Unix*. | ![Toolchain](./Diagrams/compileChain.png) |
+
+Makefile syntax
+
+```make
+# this is to build the `main.o` object file
+main.o: depend1.h depend2.h depend3.h
+  $(CC) -c $(CFLAGS) $< -o $@
+```
+
+The above shows a file to build, the dependency files that are used to build it, then the compiler
+will build the `game.out` and create the `exe` file.
+
+#### Git (info I don't know)
+
+**Dealing with conflicts in Git**
+
+When both users have the same lines, we need to manually change the values.
+
+#### Modular Programming
 
 

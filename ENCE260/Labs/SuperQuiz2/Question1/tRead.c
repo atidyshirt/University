@@ -38,7 +38,7 @@ size_t readCipherBook(FILE* file, char text[], size_t maxTextSize)
             i += 1;
         }
     }
-    memset(text, 0, maxTextSize); 
+    memset(text, 0, maxTextSize);
     strcpy(text, narr);
     return j;
 }
@@ -49,7 +49,7 @@ int main(void)
     char text[MAX_TEXTFILE_SIZE] = "";
     FILE* file = NULL;
     size_t textLength = 0;
-    
+
     scanf("%80s", filename);
     file = fopen(filename, "r");
     if (file == NULL) {
@@ -57,7 +57,7 @@ int main(void)
     }
     textLength = readCipherBook(file, text, MAX_TEXTFILE_SIZE);
     fclose(file);
-    
+
     printf("%s\n", text);
     printf("Size of cipherfile is %zu\n", textLength);
     return 0;

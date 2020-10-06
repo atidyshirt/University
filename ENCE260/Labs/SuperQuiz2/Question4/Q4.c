@@ -49,7 +49,7 @@ int main(void)
     char filename[MAX_FILENAME_LENGTH] = "";
     FILE* file = NULL;
     Agent* agent = NULL;
-    AgentPool agentPool;    
+    AgentPool agentPool;
 
     initAgentPool(&agentPool);
     scanf("%80s", filename);
