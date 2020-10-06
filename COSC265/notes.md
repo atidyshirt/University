@@ -979,8 +979,50 @@ Because a single level index is an ordered file, we create an empty primary inde
 index itself*, we do this because the original index file is called the *first-level index*.
 We then have have a second-level index of pointers to the set of indexes.
 
+**Making Query Processing more Efficient**
 
+Over the next set of lectures we will be talking about how to overcome the hurdle of inefficent
+queries, and hope to understand the steps of query processing and techniques to optimize.
 
+We can do this by changing the order of operations, for instance, if we are joining three different
+tables, we can make our joins more efficient by asking for the information from table one, and 
+join to the other two (_By calculating the information first, we can cut down our time a lot_).
 
+This is because we have to do one less join operation in the process, (Table operands are more
+expensive then select queries).
+
+**Translating SQL into Relational Algebra**
+
+```sql
+select LNAME, FNAME
+FROM EMPLOYEE
+WHERE SALARY>(SELECT MAX(SALARY) FROM EMPLOYEE WHERE DNO=5);
+
+/* This turns into two blocks */
+/* */
+SELECT LNAME, FNAME
+FROM EMPLOYEE
+WHERE SALARY > C
+
+/* */
+SELECT MAX(SALARY)
+FROM EMPLOYEE
+WHERE DNO=5;
+```
+
+To make the above blocks more efficient, we must sort the values of both blocks by `salary`, this
+will allow us to just select the top row (as it will be the `MAX(salary)`), this means that at
+runtime, this will be the best case, however we need some sort of sorting algorithm as we need a
+method of finding values in a sorted table. (we will not go into this, however `Merge sort` is acceptable).
+
+The Cross-Join is the worst method of joining, we can use **brute force** to heck each tuple from each
+table, we can use **single-loop join** to be more efficient.
+
+**Aggregate functions**
+
+Aggregate functions have a large running time, because they are higher level operations and are
+preforming complicated tasks behind the scenes, (we can think about these, for example the `MAX` function)
+this is `Log(n)` as it needs to iterate through `n` times and sort the data, then return the top field, this
+is an `Log(1)` operation, and `Log(n) + Log(1) + n = log(n)`.
 
 

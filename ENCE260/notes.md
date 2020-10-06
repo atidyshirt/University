@@ -1432,6 +1432,14 @@ is a bit more fancy.
 
 Example exam questions on `PWM Timers` can be found at [27:00](https://echo360.org.au/lesson/G_daf26e6b-127d-485c-ad13-eb692901ba33_3b73f99b-e9c9-4c73-a092-60087273ce90_2020-09-28T11:00:00.000_2020-09-28T11:55:00.000/classroom#sortDirection=desc)
 
+---
 
+#### C Compiler
+
+The **Preprocessor** rads the C source file, the header files and they expand `Macros`.
+
+| GCC                                                                                                                                            | Toolchain                                 |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most unix operating systems *despite the name GNU Not Unix*. | ![Toolchain](./Diagrams/compileChain.png) |
 
 
