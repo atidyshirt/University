@@ -1134,9 +1134,9 @@ To leave a function, we need to record where we are in the stack. This is how we
 
 ##### Finite State Machines
 
-| Intro                                                                                                                                                                                                                | Stopwatch Example                             |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-|Example Finite state are used for many things in computing, they are a system where particular inputs cause particular changes in states. An example of this is a stop watch with three distinct states, here is an example: | ![FSMStopwatch](./Diagrams/Statemachines.png) |
+| Intro                                                                                                                                                                                                                        | Stopwatch Example                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Example Finite state are used for many things in computing, they are a system where particular inputs cause particular changes in states. An example of this is a stop watch with three distinct states, here is an example: | ![FSMStopwatch](./Diagrams/Statemachines.png) |
 
 An example of a stopwatch in software is the following:
 
@@ -1161,7 +1161,7 @@ This can be achieved via software, and is commanly seen in communication softwar
 We can also achieve a similar idea from hardware, here is some examples:
 
 | Mealy Machine                        | Moore Machine                  |
-|--------------------------------------|--------------------------------|
+| ------------------------------------ | ------------------------------ |
 | ![Mealy](./Diagrams/Moore.png)       | ![Moore](./Diagrams/Mealy.png) |
 | Good because we have less flip flops | Good for asyncronous design    |
 
@@ -1466,6 +1466,7 @@ void usart1_putc(char ch)
   UDRT = ch;
 }
 ```
+
 ##### Timers
 
 These are extremely useful, to the point where pretty much all micro-controller's include
@@ -1484,8 +1485,8 @@ Example exam questions on `PWM Timers` can be found at [27:00](https://echo360.o
 The **Preprocessor** rads the C source file, the header files and they expand `Macros`.
 
 | GCC                                                                                                                                            | Toolchain                                 |
-|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
-| We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most unix operating systems *despite the name GNU Not Unix*. | ![Toolchain](./Diagrams/compileChain.png) |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most unix operating systems _despite the name GNU Not Unix_. | ![Toolchain](./Diagrams/compileChain.png) |
 
 Makefile syntax
 
@@ -1502,8 +1503,11 @@ will build the `game.out` and create the `exe` file.
 
 **Dealing with conflicts in Git**
 
-When both users have the same lines, we need to manually change the values.
+When both users have the same lines, we need to manually change the values. (use git fugitive binds)
+We can use `<Leader>gs` to get git status, then use `dv` on the conflict file to open the differneces
+in views, this will allow us to see one commit from each person, conflicts/changes will show in green
+and red on both sides.
 
 #### Modular Programming
 
-
+How do we write stuff into different modules in order to have simplicity in C coding?
