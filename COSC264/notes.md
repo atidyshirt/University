@@ -1376,12 +1376,12 @@ How can we remove the following errors from the journey of a packet:
 | Lost Packet     | Buffer overflow at router/host                      | acknowledgement and re-transmission (`ARQ`) |
 | Out of order    | an early packet gets lost and arrives after another | `ARQ`                                       |
 
-##### Error Detection
+#### Error Detection
 
 `EDC` = Error detection and Correction bits (redundancy)
 `D` = Data protected by error checking, may include header files
 
-**Parity Check**
+##### Parity Check
 
 The simplest error detecting scheme is to append a parity bit to the end of a block of data.
 
@@ -1396,11 +1396,11 @@ We can do this in a 2d format to create a table
 
 Note: Parity checks cannot detect more than one bit error, this is a huge downside of this type of check.
 
-**Ones Complement to find checksums**
+##### Ones Complement to find checksums
 
 ![hexOnesComplement](./Diagrams/onesComp.png)
 
-**Cyclic Redundancy Check (CRC)**
+##### Cyclic Redundancy Check (CRC)
 
 > This is also known as polynomial codes
 
@@ -1414,17 +1414,30 @@ Addition and subtraction uses binary addition with no carries (essentially the `
 
 To find the number of `r bits`, we can use the following:
 
-- $D \times 2^r \qaud XOR \quad F = nG$
+- $D \times 2^r \quad XOR \quad F = nG$
 - $D \times 2^r = nG \quad XOR \quad F$
-- F = remainder of \$\frac{D \times 2^r]{G} (modulo-2 arithmetic);
+- F = remainder of $\frac{D \times 2^r}{G}$ (modulo-2 arithmetic);
 
-Example of long division in Modulo-2 arithmetic:
+Example of basic Modulo-2 arithmetic
 
-Note: if any heading `0's` ignore them and start from the left most `1`.
+$$ \frac{ \ \ \ 1111}{+1010} = 0101 $$
+
+This is done using the exclusive or `XOR` operation, this is done by taking the
+bits that are `NOT` the same as `1` else make it `0`.
+
+Note: *if any heading* `0's` *ignore them and start from the left most* `1`*.*
+
+Example of **long division** in Modulo-2 arithmetic: (given `D, G`)
 
 ![base2 long division](./Diagrams/base2division.png)
 
+The output of this will find the length and value of the `F` (additional bits)
+
 If there is no remainder we assume that we have no bit errors.
+
+The leftmost bit of the generator `G` must be 1. the generator is of size `r + 1`
+bits, this will be the divisor for the packet being sent in order to produce the check
+sum `F`.
 
 ##### Forward Error Correction
 
@@ -1442,7 +1455,7 @@ We use the closest code word to the data word in order to distinguish whether an
 
 **Example of FEC**
 
-- There are 25 = 32 possible codwords of which 4 are valid, leaving 28 invalid codewords.
+- There are 25 = 32 possible codewords of which 4 are valid, leaving 28 invalid codewords.
 
 We try to map the code words as closely as we can, here is a table to further explain:
 
@@ -1451,5 +1464,120 @@ The minimum distance calculated in this table below is the `Hamming distance` th
 ![ExampleFEC](./Diagrams/ExampleFEC.png)
 
 The result of this will give as a decent guess at what word it could possibly be, however there are limitations on this, as in certain cases we will not be able to decide which way to go.
+
+This can only correct a single error, we can have and detect two errors however can only correct
+one with this method, the hamming distance is used to `guess` the closest _dataword_.
+
+#### Reliable Data Transfer
+
+To implement a reliable data transfer, we must abuse retransmission, we must use requests also.
+
+In this overview, we will start with simple protocols and end with advanced protocols in order
+to correct unreliable transport layer methods.
+
+**rdt 1.0 Reliable (perfect) transmission**
+
+a pefectly reliable channel
+- no bit errors
+- no buffer overflow
+- no out-of-order
+- no packet loss
+
+The sender sends data when ever it is availible, the reciever recieves data and delivers data
+to its upper layer protocol.
+
+**rdt 2.0 lossless channel with bit errors (no packet loss)**
+
+- a channel with only bit errors
+- we use acknowledgements and resend things if they do not arrive or are misunderstood
+
+(Only using positive/negitive acknowledgements in conjunction with re-transmission)
+
+*Sender:*
+
+When packet is ready, send and wait for `ACK/NAK`, if `NAK` recieved, retransmit the last packet
+and wait for `ACK/NAK`, if `ACK` is then recieved, wait for the next packet to be ready.
+
+*Receiver:*
+
+If packet is received without error, sends `ACK`, If packet is recieved with error, sends `NAK`.
+
+**rdt 2.0 FSM**
+
+We can use a finite state machine to implement `rdt 2.0` this can be used as the `stop-wait protocol`
+this is low efficiency as it sets the value and then waits for response before acting.
+
+This method has one fatal flaw, what if the `ACK/NAK` is corrupted? We must solve this
+if we cannot interpret the acknowledgement.
+
+```
+if (acknowledge != {"ACK", "NAK"}) {
+    resend(packet);
+} else {
+    process(packet);
+}
+```
+**rdt 2.1 corrupted acknowledgements**
+
+To deal with this we use a sequence number, in `rdf 2.0`, we use a one bit sequence number in order
+to decide whether we have re-transmitted this information, and a `0` to inform us that we have not
+transmitted this before (this is the initial value).
+
+This is a good system if we assume that there will be no packet loss in the protocol.
+
+**rdt 2.2: a NAK-free protocol**
+
+We can use duplicate `ACK` to replace a `NAK`, this will make it so we don't have to define `NAK`
+and if we receive two distinct acknowledgements this indicates a `NAK`.
+
+**rdt 3.0: Lossy, when packet loss occurs**
+
+When this happens we must deal with it using `Retransmission`, we send, and expect to have an `ACK`
+sent back, if we do not receive an `ACK` then we wait a period of time, then send packet again.
+
+We need to send a wait timer that will not expire too quickly and does not become inefficent when
+we do not receive a packet. We will need to calculate this, this will be shown later.
+
+Main Point: *We use a timeout to detect packet loss, we use retransmission to recover from packet loss.*
+
+| RDT 3.0 Illustration                 |
+|--------------------------------------|
+| ![RDTExample](./Diagrams/rdt3.0.png) |
+
+This protocol is known as `alternating bit protocol`.
+
+The mechanisms use from `RDT 1.0 - 3.0` is as follows:
+- Checksum (to detect bit error)
+- ACK / NAK (to notify sender)
+- Sequence number (duplicate data packet handling)
+- Duplicate ACKs (NAK free)
+- Timer (data packet loss)
+- Retransmission (a panacea)
+
+Using this `rtd 3.0` could be very inefficient, purely because we are just doing so much.
+
+**Pipelining**
+
+We need to have buffers for both the sender and the reciever, as having a buffer size 
+(sequence number) of size `2 = {0, 1}` as we have discussed above, is insufficent as
+in practice sequence number field occupies `k` bits, ranging from $k \in \{0, \quad 2^k - 1\}$
+the sender and receiver may have to buffer more than a single packet, then we have two basic 
+approaches based on *pipelining*.
+
+*Go-Back-N Protocol*
+
+- the sender is allowed to send multiple packets without waiting for an acknowledgement, but is
+    constrained to having *no more than N unacknowledged packets* in the pipeline.
+
+We have four different states for this protocol, a sequence number that is `ACK'd`, send sequence
+number that is send and not `ACK'd`, usable sequence number not yet sent, unusable sequence number
+*where each sequence number maps to a packet in the queue*. The number of sequence numbers not sent
+and usable is known as the `Window Size`, the window works on `FILO` structure.
+
+Below are some sources with more information on this process.
+
+| ARQ Protocols Sources                                                                       |
+|-----------------------------------------------------------------------------------|
+| [geek4geeks](https://www.geeksforgeeks.org/what-is-arq-automatic-repeat-request/) |
 
 
