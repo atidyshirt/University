@@ -1177,6 +1177,28 @@ do the following:
 We must develop a solution to reach all states using boolean algebra (`NOT, AND, OR, XOR`) gates
 in a physical machine.
 
+We can simplify expressions from boolean logic tables to produce a simplified alternative expression.
+
+Example; [rules used] to solve the following:
+
+**Question:**
+
+$$y = \not{a} \not{b} c + a \not{b} \not{c} + a \not{b} c + a b \not{c}$$
+
+**Working:**
+
+$$y = \not{a} \not{b} c + a \not{b} \not{c} + a \not{b} c + a b \not{c}$$
+*[Commutative]*
+$$y = \not{a} \not{b} c + a \not{b} c + a \not{b} \not{c} + a b \not{c}$$
+*[Distributive]*
+$$y = (\not{a} + a) \not{b} c + a \not{c} (\not{b} + b)$$
+*[OrComplement]*
+$$1 \dot \not{b} c + a \not{c} \dot 1$$ 
+*[Commutative]*
+$$\not{b} c + a \not{c}$$
+
+
+
 ## Embedded Systems
 
 An Embedded System is a system that is made for a single purpose, it is unlike a
@@ -1511,3 +1533,5 @@ and red on both sides.
 #### Modular Programming
 
 How do we write stuff into different modules in order to have simplicity in C coding?
+
+

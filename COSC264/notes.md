@@ -1468,7 +1468,7 @@ The result of this will give as a decent guess at what word it could possibly be
 This can only correct a single error, we can have and detect two errors however can only correct
 one with this method, the hamming distance is used to `guess` the closest _dataword_.
 
-#### Reliable Data Transfer
+#### Basics of Reliable Data Transfer (RDT)
 
 To implement a reliable data transfer, we must abuse retransmission, we must use requests also.
 
@@ -1535,7 +1535,7 @@ and if we receive two distinct acknowledgements this indicates a `NAK`.
 When this happens we must deal with it using `Retransmission`, we send, and expect to have an `ACK`
 sent back, if we do not receive an `ACK` then we wait a period of time, then send packet again.
 
-We need to send a wait timer that will not expire too quickly and does not become inefficent when
+We need to send a wait timer that will not expire too quickly and does not become inefficient when
 we do not receive a packet. We will need to calculate this, this will be shown later.
 
 Main Point: *We use a timeout to detect packet loss, we use retransmission to recover from packet loss.*
@@ -1555,6 +1555,9 @@ The mechanisms use from `RDT 1.0 - 3.0` is as follows:
 - Retransmission (a panacea)
 
 Using this `rtd 3.0` could be very inefficient, purely because we are just doing so much.
+
+`rtd 3.0` is a stop and wait protocol, it spends more time waiting then it does sending and
+receiving information.
 
 **Pipelining**
 
@@ -1576,8 +1579,116 @@ and usable is known as the `Window Size`, the window works on `FILO` structure.
 
 Below are some sources with more information on this process.
 
-| ARQ Protocols Sources                                                                       |
+| ARQ Protocols Sources / how they work                                             |
 |-----------------------------------------------------------------------------------|
 | [geek4geeks](https://www.geeksforgeeks.org/what-is-arq-automatic-repeat-request/) |
+| This is how Go-Back-N Protocol Works on Sender side                               |
+| ![showOfGBN](./Diagrams/GoBackN.png)                                              |
+| This is how Go-Back-N Protocol Works on Receiver side                             |
+| ![showOfGBN](./Diagrams/GoBackNReciever.png)                                      |
 
+**Selective Repeat (SR)**
+
+Receiver individually acknowledges all correctly received packets, buffers packets as needed.
+
+Refer to Geek4Geek link above to see how this works, (better explained then in lectures).
+
+Main point: Selective repeat means that if there is a timeout, only one selected packet will be resent, each
+packet has a distinct timer, they are sent and recieved seporately.
+
+##### TCP introduction
+
+Now that we understand the basics of having reliable transfer, we will loop at some real world examples
+of how these are actually implemented.
+
+Packets are called `TCP segments` at the transport layer in `TCP`.
+
+`TCP` works by sending a segment of `1000` bytes with a sequence number for the first segment at the start of the
+byte, then this is followed by a sequence number for the second segment, the second segment sequence number
+tends to be a *random sequence number*.
+
+Here is a logical `TCP` sender (psudocode)
+
+```c
+while(1) {
+  switch(event) {
+    case data_recieved:
+      if(!timer) {
+          init_timer();
+      }
+      foward_segment_to_ip();
+      NextSeqNum = NextSeqNum + len(data);
+    case timer_timeout:
+      if(!segment_ack()) {
+        retransmit(segment_smallest_seqNum);
+        timer_init();
+      }
+    case ACK_Recieved where(ACK_Recieved == y):
+    if(y > SendBase) {
+      SendBase = y;
+      if(total_unacknowledged_segments()) {
+        timer_init();
+    }
+  }
+}
+```
+
+`TCP` **retransmission scenarios**
+
+Refer to lectures to see examples of this:
+- [16:36](https://echo360.org.au/lesson/G_027eef60-c8c3-4395-b608-c72b9c2751a1_aa864d61-54dc-47be-9392-60b845f2e5ad_2020-10-02T14:00:00.000_2020-10-02T14:55:00.000/classroom#sortDirection=desc)
+
+`TCP` uses the next byte to be transmitted as the `ACK`, it says if we have received `99` bytes, we are expecting byte `100`,
+therefore we send back `ACK: 100` to acknowledge that we received all bytes before byte `100`.
+
+If the `ACK` arrives after the packet timeout, then we will need to update the window, because this is when
+we are expecting the packet to be sent again.
+
+When we re-transmit a segment, we need to double the timeout interval in order to deal with congestion in the network.
+
+When a byte is not received, and next bytes are sent after, we need to receive the first bye in order to deal with the
+lack of modularity in the network, we then can just resend the one byte and then send the 3 following `ACK's` in order
+indicate when we have passed the non-received segment.
+
+| TCP `ACK` generation                      |
+|-------------------------------------------|
+| ![table](./Diagrams/TCPTable.png)         |
+| Methods (tricks) used in TCP              |
+| ![dataTable](./Diagrams/TCPdataTable.png) |
+
+How do we decide the timeout time?
+
+> We decide the timeout, we generally use a size greater than the `RTT` `ACK + trans time`.
+> we estimate this using the sum of the last 100 segments transmitted, and divide this by 100
+> Here is the formal calculation 'Exponential weighted moving average'
+
+$$ EstimatedRTT = (1 - \alpha) \times EstimatedRTT + \alpha \times SampleRTT $$
+
+$$ E_0 = S_0 $$
+$$ E_1 = (1 - \alpha) E_0 + \alpha S_1 = (1 - \alpha) S_0 + \alpha S_1$$
+$$ E_2 = (1 - \alpha) E_1 + \alpha S_2 = (1 - \alpha)^2 + \alpha (1 - \alpha) S_1 + \alpha S_2$$
+$$ E_n = (1 - \alpha) E_{n - 1} + \alpha S_n = (1 - \alpha)^n \ \ S_0 \ \ \alpha (1 - \alpha)^{n - 1} \ \ S_1 + \alpha (1 - \alpha)^{n - 2} S_2 \\ + ... + \alpha (1 -\alpha) S_{n - 1} + \alpha S_n $$
+
+$\alpha$ is typically defined as $\alpha = 0.125$ or $\alpha = \frac{1}{8}$ the influence of past
+sample size decreases exponentially. The weighted average puts more weight on recent samples which
+better reflect the current congestion.
+
+If we were to graph `RTT`, we would see that actual (sampled) round trip time will fluctuate lots
+however the average `RTT` will remain stable.
+
+In order to set the `timeout`, we must first estimate how much `SampleRTT` deviates from `EstimatedRTT`
+we can do this by using the following:
+
+$$ DevRTT = (1 - \beta) \times DevRTT + \beta \times | SampleRTT - EstimatedRTT | $$
+
+> Note: *typically we set $(\beta = 0.25) OR (\beta = \frac{1}{4})$*
+
+The **timeout interval** is calculated by using the following formula:
+
+$$ TimeoutInterval = EstimatedRTT + 4 \times DevRTT $$
+
+Where `EstimatedRTT` is the average, and `DevRTT` is the estimated deviation of the `AverageRTT`.
+
+The reason we use `4` as a multiplier is just based of observation, we have concluded that using `4`
+as a multiplier is the best option.
 
