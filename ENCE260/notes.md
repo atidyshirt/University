@@ -1530,8 +1530,55 @@ We can use `<Leader>gs` to get git status, then use `dv` on the conflict file to
 in views, this will allow us to see one commit from each person, conflicts/changes will show in green
 and red on both sides.
 
-#### Modular Programming
+### Final Exam (Information)
 
-How do we write stuff into different modules in order to have simplicity in C coding?
+**Format**
+
+- two questions on computer architecture, two on Embedded systems
+  - All of these are weighted evenly (25%)
+- UC calculators are allowed
+- grade of < 45% is considered a fail of the course.
+    - Formal evaluation: ($TestPercent \times 0.2 + FinalPercent \times 0.5) \div 0.7 >= 45$
+
+$$66.7 \times 0.2 + final \times 0.5) \div 0.7 > 45 where final >= 36.32$$
+
+| Embedded systems content                    | Architecture content                |
+|---------------------------------------------|-------------------------------------|
+| ![content](./Diagrams/content1.png)         | ![content](./Diagrams/content2.png) |
+| <center> No cheat sheet available </center> | ![content](./Diagrams/content3.png) |
+
+### Exam Study Question Answers
+
+**2019 Exam (Question 1)**
+
+If we have a selection of three options, and we are allowed to chose two of them, we use exponents
+in order to find the number of permutations `M`, $M = Num_Selections^{N_Choices}$
+
+If we need to have `100` different options, what is the minimum number of choises to create unique
+codes for all `100` people? 
+
+> We can find this out by finding the lowest exponant > 100 ($2^7$)
+
+To preform 2's compliment on a number from decimal we do the following: Input `-41`, use 12-bit representation.
+
+Convert number to binary 
+
+> 41 : 000000101001 (12-bit as question specifies)
+
+Next flip bits to get `1's Complement`
+
+> 41 : 111111010110
+
+Then finally add `1` to get `2's complement`
+
+> Result: 111111010111 == -41
+
+If we want to convert `Hexidecimal to Decimal` we can achieve this by using the following method:
+
+Take `0x0AB` as an example, we know that `A` = 10, and `B` = 11, then multiply these by $16^{index}$
+
+$$ 10 \times 16^1 + 11 \times 16^0 = 171_{10}$$
+
+
 
 

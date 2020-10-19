@@ -1856,7 +1856,7 @@ as many servers uploading to leaches who are the clients in this case.
 This is also used in instant messaging, this is done using peer to peer, however the connection is established by a
 centralised station.
 
-##### The Web
+##### The Web (HTTP)
 
 `HTTP` is the application layer protocol for the internet, this is the building blocks or heart of the web.
 
@@ -1867,7 +1867,30 @@ centralised station.
 - is built on a client server model
 
 | Here is a quick overview of HTTP     |
+|--------------------------------------|
 | ![http](./Diagrams/HTTPOverview.png) |
 
+**Non-persistent HTTP**
+- at most one object is sent over `TCP`
+- HTTP/1 uses nonpersistent HTTP
+
+**Persistent HTTP**
+- Multiple objects can be sent over a single `TCP` connection between client and a server
+- HTTP/1.1 > uses persistent connections in default mode
+- server leaves connection open after sending response
+- subsequent `HTTP` messages between same client/server are sent over the same connection
+
+**Persistent HTTP with pipelining**
+- default in HTTP/1.1
+- reduced response time
+
+`HTTP` is a stateless, meaning that it does not require information from the client to work,
+(we may get a better experience if we do).
+
+**Cookies**
+
+We use unique identifiers in order to track our cookies and distinguish them from other cookies.
+This is stored in a databased and used in order to recommend the best fits for you in order to
+maximise companies profits and give them data.
 
 
