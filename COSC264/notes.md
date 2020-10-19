@@ -1692,3 +1692,182 @@ Where `EstimatedRTT` is the average, and `DevRTT` is the estimated deviation of 
 The reason we use `4` as a multiplier is just based of observation, we have concluded that using `4`
 as a multiplier is the best option.
 
+`TCP` **Flow Control**
+
+`TCP` uses a `Full Duplex` system in order to transfer information. If the window is full, we will send
+and receive the number of fillable byres in the window, this will allow us to see when we can
+fill the window and when we cannot.
+
+| Filling Buffers                               |
+|-----------------------------------------------|
+| ![fillbuffers](./Diagrams/fillingBuffers.png) |
+
+We must always send a value, even if it is `0` this is so we have consistency.
+
+So now we know about data-flow in the `TCP` network, but what happens if we are going through many routers?
+
+This question naturally leads us to the issue of packet loss.
+
+**Congestion and traffic control**
+
+**How do we deal with packet loss (TCP)**
+
+Firstly packet loss is generally a result of overflowing routers, as routers also have a buffer of `N` size,
+it is very possible for these routers to get congested with traffic and eventually overflow, this leads to
+packets being dropped at the station, and in turn creates the need for retransmission.
+
+Flow control is used to restrict how much traffic is sent from our own station, congestion control tries to
+redirect traffic in order to ensure that there is minimal overflow at select stations.
+
+The two main ways of implementing these is using `Network-assisted control` and `End-end congestion control`.
+The later is used in `TCP's` approach. Here is a comparison:
+
+| Comparison                                                |
+|-----------------------------------------------------------|
+| ![congestion](./Diagrams/congestionControlComparison.png) |
+
+If there is congestion on the network where too many sources are sending data across the same link, we will end
+up with loss of efficiency in the network, this is because the forwarding from A to B where the link between A and B
+is already used, we will have forwarded to the link and the packet will be dropped, this means that the router has used
+resources to send data that will inevitably be lost.
+
+The share of bandwidth is dynamic, we are constantly spending less or more depending on how much is available (this is
+why turning off and on your router works sometimes).
+
+Basic observation of the rate can be calculated using the following rough estimate:
+
+$$ rate = \frac{CongWin}{RTT} (Bytes per second) $$
+
+- By adjusting the `CongWin` according to how much network congestion there is, the sender can adjust its rate at which it
+sends data into its connection.
+
+Here is how we decrease and increase the `CongWin` effectively:
+
+| Adjusting the CongWindow                         |
+|--------------------------------------------------|
+| ![adjusting](./Diagrams/adjustingCongWindow.png) |
+
+`TCP` has a slow start feature, that means that for every `ACK` received, we will decide to increase the rate of our
+sending by adding one for every `ACK` received. Here is the equations used to send and receive `CongWin`.
+
+To increase whenever a new `ACK` is received, it will use the following formulae:
+
+$$ 1 MSS \times \frac{MSS}{CongWin} $$
+
+After ($\frac{CongWin}{MSS}$) segements are sent and `ACK'd` within one RTT, `CongWin` will be increased by the following:
+
+$$ 1 MSS \times \frac{MSS}{CongWin} \times \frac{CongWin}{MSS} = 1 MSS $$
+
+| Here is an example of how this works          |
+|-----------------------------------------------|
+| ![Exx](./Diagrams/exampleOfTCPCongestion.png) |
+
+| Here is a flow chart, outlining how `TCP` works |
+|-------------------------------------------------|
+| ![TCPFlowchart](./Diagrams/TCPFlowChart.png)    |
+
+`TCP` has the following qualities
+- point to point (one receiver and sender)
+- reliable and in order
+- pipelined
+  - `TCP` congestion and flow control set window size
+- full duplex data
+  - bi-direction data flow in same connection
+  - `MSS`: maximum segment size
+- Connection orientated
+  - handshake to initiate connection
+- flow controlled
+  - tells other party how big its buffer window is at any point in time.
+
+**Three way TCP handshake**
+
+Firstly, the client host sends `TCP` SYN segment, (SYN is initilized to 1) and is sent to server
+- specifies hosts sequence number `client_isn`
+
+Then the server receives `SYN` replies with `SYNACK` segment, the server allocates buffers, specifies servers
+initial sequence number (`server_isn`).
+
+The client then receives `SYNACK` sends an acknowledgement segment which may contain data, now that both the server 
+and the receiver are aware of the starting sequence number, they are now able to send and receive data safely.
+
+This is called the three way handshake because we need both confirmation from both the receiver and the server in
+order to establish the handshake (after the first packet).
+
+To close the connection across `TCP` the client disconnects sending a `FIN` segment, then the server will send an `ACK`
+and a distinct `FIN` to say that we are happy for the client to disconnect, then the receiver will send an `ACK` to confirm
+the disconnection.
+
+##### Popular internet applications and their transport layer protocols
+
+| App       | App-layer protocol  | Transport layer |
+|-----------|---------------------|-----------------|
+| Email     | SMTP                | TCP             |
+| Web       | HTTP                | TCP             |
+| Streaming | Typically propriaty | UDP             |
+
+Important distinction: network layer is two hosts talking together, the transport layer is when two `processes` are talking to
+each other.
+
+##### Multiplexing and Demultiplexing
+
+Multiplexing is the use of the same channel across many hosts whether remote or not, `Demultiplexing` is when the hosts in the
+channel are aware of when to leave the channel and return to there own hosts.
+
+- Multiplexing is creating segments and then passing them into the network layer.
+
+- Demultiplexing is to deliver the data in the transport layer to the correct socket.
+
+`UDP` sockets are defined by a tuple that looks like this: (`destination IP address`, `destination PORT number`)
+
+When we are multiplexing, host `a,b,c` all send datagrams to the same destination `IP, PORT` this is then used like firing many wires
+through a tunnel.
+
+There is also a `Connection-orientatied Demux` this is using `TCP` and must take both the source and destination addresses as we are establishing
+a connection, this means the receiver will use all the values to direct the segments to the appropriate socket. The server must be able to 
+support many connections with many hosts simultaniously.
+
+Multiplexing is extremely important to use with streaming apps, as it is loss tolerant and rate sensitive, because these services use `UDP`, 
+we need to have some method of creating reliable transfer (mimicking `TCP`), this is mostly done at the application layer through propriety
+software.
+
+We still use `UDP` because of the following
+- no connection
+- no connection state at sender and receiver
+- simple
+- small segment header (8 bytes)
+- no congestion control (we can send as fast as possible)
+
+##### Network Applications (Application Layer)
+
+Some applications have bandwidth constraints other apps are non-strict (elastic) in regards to bandwidth.
+
+Some applications have timing constraints, with end-to-end delay, we need to have latency that is not too high to
+be annoying or in-feasable for the service to operate correctly.
+
+The internet is a perfect platform for developing `time sensitive` appliactions, this is because it is future proof
+for many years.
+
+`P2P` **Peer to Peer**
+
+This type of communication lets each host act as both a server and a host, this architecture is used for torrents,
+and is extremely hard to manage effectively. This is a good method as having both leaches and seeders; seeders acting
+as many servers uploading to leaches who are the clients in this case.
+
+This is also used in instant messaging, this is done using peer to peer, however the connection is established by a
+centralised station.
+
+##### The Web
+
+`HTTP` is the application layer protocol for the internet, this is the building blocks or heart of the web.
+
+`HTTP/S`
+- can be information, text, video, photos and more
+- web page consists of base `HTML` files which include several referenced objects
+- each object is addressable
+- is built on a client server model
+
+| Here is a quick overview of HTTP     |
+| ![http](./Diagrams/HTTPOverview.png) |
+
+
+
