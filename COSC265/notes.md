@@ -942,7 +942,7 @@ Raid 4 and Raid 5 are also used often (refer to Lecture below):
 
 #### Index Structure
 
-Physical order of records affects the efficiecny of individual queries required for 
+Physical order of records affects the efficiecny of individual queries required for
 file traversal.
 
 Physical records can only be in one order at a time, Need an efficient way to access
@@ -985,7 +985,7 @@ Over the next set of lectures we will be talking about how to overcome the hurdl
 queries, and hope to understand the steps of query processing and techniques to optimize.
 
 We can do this by changing the order of operations, for instance, if we are joining three different
-tables, we can make our joins more efficient by asking for the information from table one, and 
+tables, we can make our joins more efficient by asking for the information from table one, and
 join to the other two (_By calculating the information first, we can cut down our time a lot_).
 
 This is because we have to do one less join operation in the process, (Table operands are more
@@ -1024,5 +1024,46 @@ Aggregate functions have a large running time, because they are higher level ope
 preforming complicated tasks behind the scenes, (we can think about these, for example the `MAX` function)
 this is `Log(n)` as it needs to iterate through `n` times and sort the data, then return the top field, this
 is an `Log(1)` operation, and `Log(n) + Log(1) + n = log(n)`.
+
+**Query Trees**
+
+These are tree data structures that correspond to a relational algebra expression
+- relations = leaf nodes
+- relational algebra operations = internal nodes
+
+Canonical tree
+- a standard tree that corresponds to an `SQL query` without optimisation
+
+Which one of these is the canonical tree? (why) -- we must be able to draw these trees
+
+- [Identifying Canonical trees (19:34)](https://echo360.org.au/lesson/G_72da4005-3aa4-4310-a2b1-6721dd784429_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-10-08T09:00:00.000_2020-10-08T09:55:00.000/classroom#sortDirection=desc)
+
+> Answer: we expect two cross joins in a canonical tree
+
+- How do we draw a canonical tree of an sql query?
+- what is the complexity of this tree?
+
+We can use these trees in order to isolate the most complex parts of a query in order to make them more efficent.
+
+
+Here is an explaination of why (A) is more efficent then (B) (using $\sigma$ (selection) first, then doing inner join ($\boetie$)instead of cross join/cartesian product ($\times$))
+- [Identifying Canonical trees (30:00)](https://echo360.org.au/lesson/G_72da4005-3aa4-4310-a2b1-6721dd784429_f0fc3e94-0d9e-495a-8d23-7290ed389ccd_2020-10-08T09:00:00.000_2020-10-08T09:55:00.000/classroom#sortDirection=desc)
+
+Goal: An ideal scenario is to have the highest result at the top as this would make it more efficient on the aggregate
+
+**Data Catalogs (Dictionaries of database)**
+
+Catalogs are stored as a read-only view or relation. They are very useful in queries.
+
+They are generally constructed using 3 views, one for the `User views` (our tables), one for `ALL views` (all we have access to)
+and another for the `DBA views` these act as what we can see from the database, in our database, we can see the `User and All views`.
+
+Example: find all rows of a select table?
+
+```sql
+SELECT *
+FROM ALL_TABLES
+WHERE OWNER IN ('NAME_OF_OWNER') /* this is so we can select our tables not ALL tables (for admins) */
+```
 
 

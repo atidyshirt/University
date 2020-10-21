@@ -1872,7 +1872,7 @@ centralised station.
 
 **Non-persistent HTTP**
 - at most one object is sent over `TCP`
-- HTTP/1 uses nonpersistent HTTP
+- HTTP/1 uses non-persistent HTTP
 
 **Persistent HTTP**
 - Multiple objects can be sent over a single `TCP` connection between client and a server
@@ -1892,5 +1892,63 @@ centralised station.
 We use unique identifiers in order to track our cookies and distinguish them from other cookies.
 This is stored in a databased and used in order to recommend the best fits for you in order to
 maximise companies profits and give them data.
+
+##### Email
+
+Three major components
+- User agents
+- mail services
+- simple mail transfer protocol `SMTP` *Web applications* use `HTTP`
+
+We usually have an outgoing message queue and a mailbox to send and receive from.
+
+**SMTP**
+
+First used by `RFC 821` in 1982, is considered legacy technology.
+
+Basic usage:
+
+1. Alice uses user agent to compose message
+2. Alices user agent sends message to her mail server; message placed in message queue 
+3. client side of `SMTP` opens `TCP` connection with Bob's mail server
+4. `SMTP` client sends Alice's message over the `TCP` connection
+5. Bob's mail server places the message in Bob's mailbox
+6. Bob invokes his user agent to read message
+
+We use a port that is different to standard `TCP` port in order to remove double port processing issues
+this tends to be implemented using a daemon running a mail server on a local machine.
+
+We encode all bodies of messages into `7-bit ASCII`, to handle images over `SMTP` we put all objects into
+one message, in `HTTP` each message stores a single object and are sent seporately. Note: we do not still
+use this now, we have another protocol called `MIME` in order to send non-ASCII information (uses `Base64`
+encoding).
+
+In order to access emails, we need to use `POP3 || IMAP`, if we have an online access, we use `HTTP` to 
+interact with the `SMTP` service.
+
+Email uses `DNS` in order to map its host name to the service, in order to do this we need to communicate
+on the router level, we need to interact with `IP` routing services, `DNS` is responsible for this and more.
+
+**Domain Name System (DNS)**
+
+Hosts can be identified by their `IP Address`
+Routers use `IP Address` however people prefer to use `hostnames` to connect to.
+
+> Use nslookup `hostname` to find IP and PORT used to communicate with DNS
+
+`DNS`
+- not centralised
+  - traffic issues, single point of failure, lots to maintain
+- Heirachical node service (tree structure)
+
+We have a `Root` `DNS` service we then have sub-servers, firstly we have top level domain servers 
+such as `.org, .com, .edu`, then we have Authoritive `DNS` servers, these host our local websites
+such as `yahoo.com, amazon.com poly.eu` ect.
+
+Client queries a root server to find Top-level domains, these sub-servers are queried to find
+local websites servers in order to reach the desired place.
+
+Note: their are only 13 `Root` servers at the moment globally, most of which are located in North
+America.
 
 
