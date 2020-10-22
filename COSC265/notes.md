@@ -1066,4 +1066,15 @@ FROM ALL_TABLES
 WHERE OWNER IN ('NAME_OF_OWNER') /* this is so we can select our tables not ALL tables (for admins) */
 ```
 
+`OCT 12 - 25:40`
+
+`Exam`
+
+Exam is structured like a quiz, this means that it is different to previous years; this means that we will have long answer `Explain` answer questions
+and other styles of questions, we will have `NOT` main questions and sub-questions, 1 (a, b, c) format, this will mean that each of the questions relate to
+each other in these forms of questions (these will probably be grouped due to use of the same database). For a more accurate idea of how the exam will be
+structured, view the `2019 Exam`.
+
+Low weighting for things we have already been assessed on (`SQL, ER Models`), Migaels content will be tested more frequently than other topics.
+
 
