@@ -23,7 +23,7 @@ def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, time
 
     headerchecksum = 0
 
-    # 16-bit ones 
+    # 16-bit ones
     first = (version << 12) | (hdrlen << 8) | (tosdscp << 2)
     second = (totallength)
     third = (identification)
@@ -31,7 +31,7 @@ def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, time
     fifth = (timetolive << 8) | protocoltype
     sixth = headerchecksum
 
-    #32 bit ones 
+    #32 bit ones
     seven = sourceaddress
     eight = destinationaddress
 
@@ -57,7 +57,7 @@ def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, time
     version = version << 28
     hdrlen = hdrlen << 24
     tosdscp = tosdscp << 16
-    #totallength 
+    #totallength
 
     #SECOND 32
     identification = identification << 16
