@@ -1174,22 +1174,6 @@ Low weighting for things we have already been assessed on (`SQL, ER Models`), Mi
 - Network factors
 - Concurrency
 
-CARTESIAN PRODUCT is expensive:
+**Rule-based optimization vs cost-based optimization**
 
- If R has n records and j attributes and S has m records and k attributes, the result relation will have n*m records and j+k attributes
-
- UNION
-
- Sort the two relations on the same attributes.
-
- Scan and merge both sorted files concurrently, whenever the same tuple exists in both relations, only one is kept
-
- INTERSECTION
-
- Sort the two relations on the same attributes.
-
- Scan and merge both sorted files concurrently, keep in the merged results only those tuples that appear in both relations
-
- SET DIFFERENCE R-S
-
- Keep in the merged results only those tuples that appear in relation R but not in relation S
+- Might need a little more context but as an example in the Oracle world it was possible to have either cost based (CBO) or rule based (RBO) query execution. The rule based optimizer relies mainly on schema structure (table fields, keys, indexes) and set rules when creating an execution plan. The cost based optimizer relies on generated schema/table statistics (including table size, indexes, data cardinality, etc.) and availability/speed of resources (CPU, memory, disk) and is more dynamic. Typically cost based is better, but does have the drawback of requiring that statistics be kept fairly up to date, but this drawback has become less of an issue as the underlying hardware has gotten better. Most modern databases use cost based optimization. Specifically in the Oracle world the rule based optimizer is obsolete.
