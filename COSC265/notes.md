@@ -1077,4 +1077,119 @@ structured, view the `2019 Exam`.
 
 Low weighting for things we have already been assessed on (`SQL, ER Models`), Migaels content will be tested more frequently than other topics.
 
+### Definitions
 
+| Term                          | Description                                                                                                                                               |
+|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Database Schema               | The *description* of a database                                                                                                                           |
+| Schema diagram                | A diagrammatic display of (some aspects of) a database schema                                                                                             |
+| Database instance             | The actual data stored in a database at a particular point in time                                                                                        |
+| Database state                | extension, occurrence; refers to the content in database at a moment in time                                                                              |
+| initial database state        | refers to database when it was loaded                                                                                                                     |
+| Valid state                   | A state that satisfies the structure and constraints of the database                                                                                      |
+| Categories of Data models     |                                                                                                                                                           |
+| Conceptual (high level)       | Provide concepts that are close to the way many users percieve data                                                                                       |
+| Physical (low level)          | Provide concepts that describe details of how data is stored on a computer                                                                                |
+| Implementation                | Provide concepts that fall inbetween the two above                                                                                                        |
+| Database languages            | Data definition language (DDL), View definition language (VDL), Storage definition language (SDL), Data manipulation language (DML)                       |
+| Entities                      | are specific objects or things in the mini-world that are represented in the database                                                                     |
+| Attributes                    | are properties used to describe an entity                                                                                                                 |
+| TYPES OF ATTRIBUTES           |                                                                                                                                                           |
+| Simple/Atomic/Composite       | *Gender* is a simple attribute; composition may form a heirarchy where some components are themselves composite                                           |
+| Single/Muti-valued            | multiple values denoted as {PreviousDegrees}                                                                                                              |
+| Stored or derived             | can be both stored in a table or derived (non-stored attributes or attributes that come from other attributes)                                            |
+| Recursive relation            | Both pariticpations are same entity type in different roles                                                                                               |
+| Weak entity type              | An entity type that does not have a key attribute can contain a partial key                                                                               |
+| Cardinality ratio             | (1:1, 1:N, N,M) indicates cardinality of a relationship                                                                                                   |
+| Specialization                | The process of defining a set of subclasses of a superclass                                                                                               |
+| Generalization                | The reverse of the specialization process                                                                                                                 |
+| Relation                      | A set of rows (tuples), a set of columns (attributes) -- maps to a table                                                                                  |
+| Relation Degree               | The number of attributes                                                                                                                                  |
+| Relation Cardinality          | The number of Tuples                                                                                                                                      |
+| Domain                        | The set of valid values                                                                                                                                   |
+| Tuple                         | An unordered set of values                                                                                                                                |
+| Relational Database Schema    | A set `S` of relation schema's that belong to the same database. `S` is the *name* of the database                                                        |
+| Entity Integrity              | No primary key value can be NULL                                                                                                                          |
+| Referential Integrity         | A constraint involving *two* relations (referencing using a foreign key)                                                                                  |
+| Union Compatible relation     | Must have same degree, each pair of corresponding attributes have the same domain                                                                         |
+| Union                         | Denoted as `S U R`                                                                                                                                        |
+| Intersection                  | Denoted as `S n R`                                                                                                                                        |
+| Set difference                | Denoted as `S - R`                                                                                                                                        |
+| Cartesian Product (CROSS)     | Denoted as `S x R`                                                                                                                                        |
+| Join                          | Denoted as $\bowtie_{<condition>}$                                                                                                                        |
+| Natural Join                  | Denoted as `S * R`                                                                                                                                        |
+| Types of joins                | ![joins](./Diagrams/joinTable.png)                                                                                                                        |
+| Operands                      | ![operands](./Diagrams/operands.png)                                                                                                                      |
+| Views                         | Virtual tables, data is not stored on the disk, instead the query itself is stored (good for security, customised access to data)                         |
+| Semantics of attributes       | each tuple in a relation should represent one entity or relationship instance                                                                             |
+| Decomposition                 | Update abnormalities can be solved by decomposing relations, this is the process of breaking up large relations into sets of smaller ones                 |
+| Normalization                 | A technique for producing a set of relations with desirable properties                                                                                    |
+| Functional dependency         | A constraint between two sets of attributes in a database                                                                                                 |
+| Closure                       | D+ defines all attributes we can get from D                                                                                                               |
+| Equivalence of sets (FD's)    | Two sets are equivalent if every FD in R can be inferred from G and every FD in G can be inferred from F                                                  |
+|                               | This means that if F+ = G+, we can say they are equivalent                                                                                                |
+| Minimal set                   | A set is minimal if every dependency in F has a single attribute for its RHS, we cannot remove any dependencies and still have an equivalent set          |
+| Normalization of relations    | the process of decomposing bad relations by breaking their attributes into smaller relations                                                              |
+| Normal Form                   | Condition using keys and FD's of a relation to certify whether a relation schema is in a particular normal form                                           |
+| Superkey                      | An attributes or set of attributes that uniquely identify a tuple or row such that no other attribute has the same value in the set                       |
+| Candidate key                 | If a relation schema has more than one key, each is called a candidate key                                                                                |
+| Primary Key                   | An arbitarily assigned candidate key chosen to be the unique identifier                                                                                   |
+| Prime attribute               | An attribute that is a member of a candidate key                                                                                                          |
+| Non-Prime attribute           | An attribute that is not a member of a candidate key                                                                                                      |
+| 1NF                           | Must conform to all single atomic values                                                                                                                  |
+| 2NF                           | If Y -> Z such that the removal of any attribute in Y implies that the FD does not hold anymore                                                           |
+| 3NF                           | If in 2NF and no non-prime attribute A in R is transitively dependent on the primary key                                                                  |
+| BCNF                          | If whenever FD X -> A holds in R then X is a superkey of R                                                                                                |
+| Catalog                       | The catalog consists of Base tables, user-accessible views                                                                                                |
+| Query Block                   | The basic unit that can be translated into algebraic operators and optimized                                                                              |
+| Query tree                    | A tree data structure that corresponds to a relational algebra expression (relations = leaf nodes, relational algebra operations - internal nodes)        |
+| Canonical tree                | A standard tree that corresponds to an SQL query without optimization                                                                                     |
+| Materialized evalution        | The result of an operation is stored as a temporary relation                                                                                              |
+| Pipelined evalution           | as the result of an operator is produced, it is forwarded to the next operator in sequence                                                                |
+| Semantic query optimization   | Uses constraints specified on the database schema in order to modify one query into another query that is more efficent to execute                        |
+| Rule-based query optimization | The optimizer chooses execution plans based on heuristically ranked operations                                                                            |
+| Cost-based query optimization | The optimizer examines alternative access paths and operator algorithms and chooses the execution plan with lowest estimate cost                          |
+| Single-user system            | At most one user at a time can access system                                                                                                              |
+| Multi-user system             | Many users can access system concurrently                                                                                                                 |
+| Concurrency                   |                                                                                                                                                           |
+| Interleaved processing        | Concurrent execution of processes is interleaved in a single CPU                                                                                          |
+| Parallel processing           | Processes are concurrently executed in multiple CPU's                                                                                                     |
+| Transaction                   | A logical unit of work (can be one or more statements)                                                                                                    |
+| Atomicity                     | A transaction is either performed to completion or is not performed at all                                                                                |
+| Consistency                   | A correct execution of the transaction must take the database from one consistent state to another                                                        |
+| Isolation                     | A transaction should not make its updates visible to other transactions until committed; this when strictly followed ensures the temporary update problem |
+| Durability                    | Once a transaction changes the database and the changes are committed, these changes to the database must never be lost because of subsequent failure     |
+| Phantoms                      | New rows being read using the same read with a condition                                                                                                  |
+| Program Data Dependence       | When we require a change to the program after we have a change to the data set                                                                            |
+
+
+**Distinctions between SQL and Relational model**
+- SQL allows for a relation to have more tuples to have two or more tuples that are identical in attribute values (all) to exist
+
+**Factors for database performance**
+- Secondary storage
+- Memory management
+- Indexing
+- Query optimisation
+- Network factors
+- Concurrency
+
+CARTESIAN PRODUCT is expensive:
+
+ If R has n records and j attributes and S has m records and k attributes, the result relation will have n*m records and j+k attributes
+
+ UNION
+
+ Sort the two relations on the same attributes.
+
+ Scan and merge both sorted files concurrently, whenever the same tuple exists in both relations, only one is kept
+
+ INTERSECTION
+
+ Sort the two relations on the same attributes.
+
+ Scan and merge both sorted files concurrently, keep in the merged results only those tuples that appear in both relations
+
+ SET DIFFERENCE R-S
+
+ Keep in the merged results only those tuples that appear in relation R but not in relation S
