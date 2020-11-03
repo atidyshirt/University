@@ -1177,3 +1177,11 @@ Low weighting for things we have already been assessed on (`SQL, ER Models`), Mi
 **Rule-based optimization vs cost-based optimization**
 
 - Might need a little more context but as an example in the Oracle world it was possible to have either cost based (CBO) or rule based (RBO) query execution. The rule based optimizer relies mainly on schema structure (table fields, keys, indexes) and set rules when creating an execution plan. The cost based optimizer relies on generated schema/table statistics (including table size, indexes, data cardinality, etc.) and availability/speed of resources (CPU, memory, disk) and is more dynamic. Typically cost based is better, but does have the drawback of requiring that statistics be kept fairly up to date, but this drawback has become less of an issue as the underlying hardware has gotten better. Most modern databases use cost based optimization. Specifically in the Oracle world the rule based optimizer is obsolete.
+
+**B trees information**
+
+- B+ trees support efficient direct access to each data file record, even for very large numbers of unordered data file records, through its structure as a balanced multi-level index tree with large fan-out/blocking factor
+
+- B+ trees support maintenance of a balanced index tree for consistent access times across all data values, even when new values are inserted into or deleted from the unordered data file, by keeping nodes between half full and full, and splitting nodes (when full) or merging nodes (when getting too spare), and by growing upward as needed to ensure a consistent length access path for each data access.
+
+- B+ trees support in-ordered access to all data file records, even though the data file may be unordered, by having leaf-level index nodes store key values and their associated data pointers in order, and having each leaf- level index node link to the next leaf-level node for direct in-order access of all actual data records.
