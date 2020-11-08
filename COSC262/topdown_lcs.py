@@ -23,7 +23,7 @@ def lcs(u, v):
                 return inner_lcs(c, i + 1, j, result)
     return inner_lcs(c, 0, 0)
 
- 
+
 def lcs_helper(u, v, c, i, j):
     """
     LCS Helper:
