@@ -20,7 +20,6 @@ def adjacency_list(Str):
                 element = lines[i].split(' ')
                 list_of_lists[int(element[0])].append((int(element[1]), None))
                 list_of_lists[int(element[1])].append((int(element[0]), None))
-
     elif header[0] == "D":
         if len(header) > 2:
             if header[2] == 'W':
@@ -48,7 +47,7 @@ def bfs_loop(adj, Q, state, parent):
                 state[v[0]] = 'D'
                 parent[v[0]] = u
                 Q.append(v[0])
-                
+
         state[u] = 'P'
     return parent
 def tree_path(parent, s, t):
