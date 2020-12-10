@@ -535,20 +535,17 @@ void error(const char *msg)
   perror(msg);
   exit(0);
 }
-
 int main(int argc, char *argv[])
 {
   int sockfd, portno, n;
   struct sockaddr_in serv_addr; // address structure
   struct hostent *server; // result of DNS resolver
-
   char buffer[256]; // buffer for actual data (allocated memory)
   if (argc < 3) { // check number command line arguments
     fprintf(stderr, "usage %s hostname port\n", argv[0]);
     exit(0);
   }
   portno = atoi(argv[2]); // convert port number argument to integer
-
   // now create socket, protocol=0
   // for given address family TCP will be used, this is how we define a TCP socket
   // AF_INET >> IPv4, 0 >> default socket

@@ -14,7 +14,7 @@ int* pairSumSearch(int* data, int numEls, int pairSum)
 
 int main(void)
 {
-    int data[] = {10, 20, 10}; 
+    int data[] = {10, 20, 10};
     int* p = pairSumSearch(data, 1, 30); // NB 2nd param = 1
     if (p != NULL) {
         printf("Found at position %zd\n", p - data);
