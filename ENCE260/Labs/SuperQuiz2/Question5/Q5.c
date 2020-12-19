@@ -51,7 +51,7 @@ int main(void)
     FILE* file = NULL;
     AgentPool agentPool;
     Agent* agent;
-    
+
     scanf("%80s", filename);
     initAgentPool(&agentPool);
     file = fopen(filename, "r");
@@ -64,7 +64,7 @@ int main(void)
     fclose(file);
 
     getchar();
-    
+
     readAgentName(agentname, MAX_AGENTNAME_LENGTH);
     agent = findAgent(agentname, &agentPool);
     if (agent != NULL) {

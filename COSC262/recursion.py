@@ -55,5 +55,5 @@ def sort_of(num):
     return list(reversed(res))
 
 print(sort_of([1, 2, 3, 3]))
-print(sort_of(list(range(10**5))))
+#  print(sort_of(list(range(10**5))))
 
