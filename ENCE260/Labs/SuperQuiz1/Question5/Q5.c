@@ -62,6 +62,7 @@ void decryptMessage(unsigned char key[], size_t keyLength, unsigned char message
 
 int main(void)
 {
+    // This is a comment
     unsigned char input[MAX_INPUT_MESSAGE_LENGTH];
     int inputLength = readInput(input, MAX_INPUT_MESSAGE_LENGTH);
     unsigned char part[MAX_KEY_LENGTH];
