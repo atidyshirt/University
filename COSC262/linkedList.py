@@ -1,19 +1,19 @@
 
-# Node class 
-class Node: 
-   
-    # Function to initialize the node object 
-    def __init__(self, data): 
-        self.data = data  # Assign data 
-        self.next = None  # Initialize  
-                          # next as null 
-   
-# Linked List class 
-class LinkedList: 
-     
-    # Function to initialize the Linked  
-    # List object 
-    def __init__(self):  
+# Node class
+class Node:
+
+    # Function to initialize the node object
+    def __init__(self, data):
+        self.data = data  # Assign data
+        self.next = None  # Initialize
+                          # next as null
+
+# Linked List class
+class LinkedList:
+
+    # Function to initialize the Linked
+    # List object
+    def __init__(self):
         self.head = None
 
 '''
@@ -23,7 +23,7 @@ linked list is a series of linked nodes
 to access a node, you must start at the
 head, and link untill reach desired node
 
-append to the end is inefficent O(n), 
+append to the end is inefficent O(n),
 however deleting and inserting at front
 of list is extremely quick O(1)
 

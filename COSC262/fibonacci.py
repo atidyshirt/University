@@ -4,19 +4,19 @@
     #  else:
         #  return fibonacci(n-1) + fibonacci(n-2)
 
-#  def recur_fibo(n):  
-    #  if n <= 1:  
-         #  return n  
-    #  else:  
-        #  return(recur_fibo(n-1) + recur_fibo(n-2))  
-#  # take input from the user  
-#  #  nterms = int(input("How many terms? "))  
-#  #  # check if the number of terms is valid  
-#  #  if nterms <= 0:  
-    #  #  print("Plese enter a positive integer")  
-#  #  else:  
-    #  #  print("Fibonacci sequence:")  
-    #  for i in range(nterms):  
+#  def recur_fibo(n):
+    #  if n <= 1:
+         #  return n
+    #  else:
+        #  return(recur_fibo(n-1) + recur_fibo(n-2))
+#  # take input from the user
+#  #  nterms = int(input("How many terms? "))
+#  #  # check if the number of terms is valid
+#  #  if nterms <= 0:
+    #  #  print("Plese enter a positive integer")
+#  #  else:
+    #  #  print("Fibonacci sequence:")
+    #  for i in range(nterms):
         #  print(recur_fibo(i))
 #  print(fibonacci(5))
 #  print(fibonacci(6))
@@ -56,7 +56,7 @@ def matrix_power( x, n ):
     if ( n%2 == 0 ):
         return matrix_power( mult(x, x), n//2 )
     return mult(x, matrix_power( mult(x, x), n//2 ) )
-    
+
 # fibonacci example:
 A = [1,1,1,0]
 v = [1,0]

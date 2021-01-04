@@ -1,4 +1,4 @@
-> [TOC]
+> [DOC]
 
 <center>
 
@@ -8,7 +8,7 @@
 
 ### General Info About Course
 
-The goal of this course is to introduce and get familiar with linux and to teach you how to program in C. In this course the notes will be split into 3 major chunks throughout the year.
+The goal of this course is to introduce and get familiar with Linux and to teach you how to program in C. In this course the notes will be split into 3 major chunks throughout the year.
 
 1. C Programming
 2. Computer Architecture
@@ -36,7 +36,7 @@ Recommended text to read (C programming)
 - K. N. King, C programming: a modern approach (2nd Edition) (Recommended not required)
 - [Lecture notes, Recordings and slides](https://learn.canterbury.ac.nz/course/view.php?id=9078&section=1)
 - [C Style Guide](https://learn.canterbury.ac.nz/mod/resource/view.php?id=1346587)
-- [C Refrence](https://en.cppreference.com/w/c)
+- [C Reference](https://en.cppreference.com/w/c)
 
 #### Tutorials
 
@@ -54,7 +54,7 @@ model answers.
 - C programs should be structured as follows:
   - Program code (text)
   - Global and static data (data)
-  - Uninitilized global data (bss)
+  - Uninitialized global data (bss)
   - Dynamic memory (heap)
   - scratch pad memory (stack)
 
@@ -63,7 +63,7 @@ model answers.
 ```c
 // This line is including the header which contains a vast amount of C
 #include <stdio.h>
-// sepcifies the return type, main body function, and takes in void perameters
+// specifies the return type, main body function, and takes in void parameters
 int main(void) {
   // Despite printing a string, this function will return 0, if return != 0 --> error
   printf("Hello World\n");
@@ -79,7 +79,7 @@ int main(void) {
 # define A_CONSTANT 30 //this is how to define constants
 
 int main(void) {
-//Declorations are as follows
+//Declarations are as follows
   int number1; // int means dedicate 4 bits to a number
   int number2;
   int total;
@@ -361,7 +361,7 @@ printf("'%c'", someChar);
 
 > Return: '\*'
 
-This will return the actual character, however if we do an arithmitic operation on the char
+This will return the actual character, however if we do an arithmetic operation on the char
 it will treat it as an integer.
 
 ```c
@@ -553,7 +553,7 @@ int main(void)
 ```
 
 The $*$ operator in C can be interpreted in a couple of ways depending on context.
-When being used in **Declorations** it is read as `int* point` means define this as a
+When being used in **Declarations** it is read as `int* point` means define this as a
 pointer to an int. When used in **Expressions**, it is read as _Indirectly via_, so
 `*p = j` means get a value indirectly via `p` and store it in variable `j`.
 
@@ -568,7 +568,7 @@ int16_t temp[2];
 ```
 
 This translates to the following byte array
-| Menory | Location | Allocation |
+| Memory | Location | Allocation |
 | --- | --- | --- |
 | 0x100 | byte 0 | varA |
 | 0x101 | byte 1 | varB |
@@ -679,7 +679,7 @@ void freeTask(Task* task)
 
 - _malloc_ and _free_ are the two main functions in the _memory allocator_ module.
 - They manage the **Heap**
-  - the free memory area above the initilized data segment
+  - the free memory area above the initialized data segment
   - the maintain a booking sheet of available and unavailable memory.
     - a global variable in the module
 - The size of the heap grows or shrinks by OS calls `brk` or `sbrk`
@@ -831,7 +831,7 @@ Logical variable, represents true or false, and is denoted by `varName = true`
   - $a*1 = a$
   - $a + 0 = a$
 - Associative $a * (b*c) = (a*b)*c$
-- Communatative $a*b = b*a$
+- Communicative $a*b = b*a$
 
 #### Logic Gates
 
@@ -918,7 +918,7 @@ They act as a traffic cop, deciding which of two values go to the output. It ess
 routs a single input to the output.
 
 - Multiplexers select one of several inputs and send it to output
-- For example: ALU can operate on operands from the general purpose registor file
+- For example: ALU can operate on operands from the general purpose register file
   but they can also user the output of the previous operation for one of the operands.
 - A mux at one of the ALU inputs allows the execution unit to select the source of
   the operand.
@@ -931,7 +931,7 @@ routs a single input to the output.
 | 0 | $I_0$ |
 | 1 | $I_1$ |
 
-**Demultipexer**
+**Demultiplexer**
 
 This acts like a multiplexer except it can output to multiple outputs. There will be a
 diagram below that will show this:
@@ -959,7 +959,7 @@ Here is an example of a 3-Bit Adder
 
 ##### Control Registers
 
-- holds the metadata associated with the data we wish to manipulate
+- holds the meta data associated with the data we wish to manipulate
 - Contains
   - Address of next instruction (PC)
   - Address of _Top of stack_ (SP)
@@ -1149,14 +1149,14 @@ switch(state) {
 }
 ```
 
-This can be achieved via software, and is commanly seen in communication software such as phones.
+This can be achieved via software, and is commonly seen in communication software such as phones.
 
 We can also achieve a similar idea from hardware, here is some examples:
 
 | Mealy Machine                        | Moore Machine                  |
 | ------------------------------------ | ------------------------------ |
 | ![Mealy](./Diagrams/Moore.png)       | ![Moore](./Diagrams/Mealy.png) |
-| Good because we have less flip flops | Good for asyncronous design    |
+| Good because we have less flip flops | Good for asynchronous design    |
 
 We will now go over how to design a finite state machine (`FSM`), in order to do this we must
 do the following:
@@ -1418,7 +1418,7 @@ D. State one advantage for using data abstraction functions in `pio.h` for `IO o
 
 >
 
-#### Communicating between two funkits
+#### Communicating between two fun kits
 
 - Bit polarity: does a high or low indicate 1 or 0
 - Bit order: do we send the `MSB` or `LSB` first
@@ -1447,13 +1447,13 @@ D. State one advantage for using data abstraction functions in `pio.h` for `IO o
 **UART**
 
 - UniversalAsynchronousReceiver/Transmitter
-- Most commonly used form of serial communications (ie bit by bit) for microcontrollers.
+- Most commonly used form of serial communications (ie bit by bit) for micro controllers.
 - One wire per direction (plus common ground).
-- Asynchronous (tx and rx need to use preset clock frequencies)
+- Asynchronous (TX and Rx need to use preset clock frequencies)
 
 ![UART](./Diagrams/UART.png)
 
-Above is an example of a `Full Duplex` system, as we can send and recieve at the same time.
+Above is an example of a `Full Duplex` system, as we can send and receive at the same time.
 
 **Baud Rate**
 
@@ -1501,7 +1501,7 @@ The **Preprocessor** rads the C source file, the header files and they expand `M
 
 | GCC                                                                                                                                            | Toolchain                                 |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most unix operating systems _despite the name GNU Not Unix_. | ![Toolchain](./Diagrams/compileChain.png) |
+| We use the `GCC` compiler (made by `GNU`), this is the C compiler that is used on most Unix operating systems _despite the name GNU Not Unix_. | ![Toolchain](./Diagrams/compileChain.png) |
 
 Makefile syntax
 
@@ -1519,7 +1519,7 @@ will build the `game.out` and create the `exe` file.
 **Dealing with conflicts in Git**
 
 When both users have the same lines, we need to manually change the values. (use git fugitive binds)
-We can use `<Leader>gs` to get git status, then use `dv` on the conflict file to open the differneces
+We can use `<Leader>gs` to get git status, then use `dv` on the conflict file to open the differences
 in views, this will allow us to see one commit from each person, conflicts/changes will show in green
 and red on both sides.
 
@@ -1547,12 +1547,12 @@ $$66.7 \times 0.2 + final \times 0.5) \div 0.7 > 45 where final >= 36.32$$
 If we have a selection of three options, and we are allowed to chose two of them, we use exponents
 in order to find the number of permutations `M`, $M = Num_Selections^{N_Choices}$
 
-If we need to have `100` different options, what is the minimum number of choises to create unique
+If we need to have `100` different options, what is the minimum number of choices to create unique
 codes for all `100` people? 
 
-> We can find this out by finding the lowest exponant > 100 ($2^7$)
+> We can find this out by finding the lowest exponent > 100 ($2^7$)
 
-To preform 2's compliment on a number from decimal we do the following: Input `-41`, use 12-bit representation.
+To preform 2 compliment on a number from decimal we do the following: Input `-41`, use 12-bit representation.
 
 Convert number to binary 
 
@@ -1570,8 +1570,5 @@ If we want to convert `Hexidecimal to Decimal` we can achieve this by using the 
 
 Take `0x0AB` as an example, we know that `A` = 10, and `B` = 11, then multiply these by $16^{index}$
 
-$$ 10 \times 16^1 + 11 \times 16^0 = 171_{10}$$
-
-
-
+$$ 10 \times 16^1 + 11 \times 16^0 = 171_{10}$$ 
 
