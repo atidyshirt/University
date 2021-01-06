@@ -19,8 +19,6 @@ class Vector2d:
         self.x = x
         self.y = y
 
-    # Here is a comment
-
     def __add__(self, other):
         return Vector2d(self.x + other.x, self.y + other.y)
 
@@ -37,7 +35,8 @@ class Vector2d:
     def __repr__(self):
         return f"({self.x}, {self.y})"
 
-def adding_vectors(lov: list[Vector2d]):
+def adding_vectors(lov: list[Vector2d]) -> Vector2d:
+    """ adding a list of vectors """
     final = Vector2d()
     for vector in lov:
         final += vector
