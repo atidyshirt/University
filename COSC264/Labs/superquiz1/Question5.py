@@ -1,4 +1,4 @@
-def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, timetolive, protocoltype, sourceaddress, destinationaddress, payload):
+def revisedcompose (hdrlen: int, tosdscp: int, identification: int, flags: int, fragmentoffset: int, timetolive: int, protocoltype: int, sourceaddress: int, destinationaddress: int, payload: bytearray):
 # this is a test
     # Validity Checks
     version = 4
@@ -23,15 +23,12 @@ def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, time
 
     headerchecksum = 0
 
-    # 16-bit ones
     first = (version << 12) | (hdrlen << 8) | (tosdscp << 2)
     second = (totallength)
     third = (identification)
     fourth = (flags << 13) | fragmentoffset
     fifth = (timetolive << 8) | protocoltype
     sixth = headerchecksum
-
-    #32 bit ones
     seven = sourceaddress
     eight = destinationaddress
 
@@ -41,9 +38,7 @@ def revisedcompose (hdrlen, tosdscp, identification, flags, fragmentoffset, time
         x0 = X & 0xFFFF
         x1 = X >> 16
         X = x0 + x1
-
         X = ~X
-
         headerchecksum = (X << 16) & 0xFFFF
 
     if headerchecksum.bit_length() > 16 or headerchecksum.bit_length() < 0:

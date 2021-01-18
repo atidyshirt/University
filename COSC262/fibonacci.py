@@ -27,40 +27,40 @@
 #  """ Fibonacci sequence using memoisation"""
 
 
-#  seq = {0:0, 1:1}  # Cache of memoised answers
+seq = {0:0, 1:1}  # Cache of memoised answers
 
-#  def fib(num):
-    #  if num not in seq:
-        #  seq[num] = fib(num-1) + fib(num-2)
-    #  return seq[num]
+def fib(num):
+    if num not in seq:
+        seq[num] = fib(num-1) + fib(num-2)
+    return seq[num]
 
-#  print(fib(100))
+print(fib(100))
 
 
 #fib matrix
-def mult(x,y):
-    if ( len(y) == 2 ):
-        a = x[0]*y[0]+x[1]*y[1]
-        b = x[2]*y[0]+x[3]*y[1]
-        return [a,b]
-    a = x[0]*y[0] + x[1]*y[2]
-    b = x[0]*y[1] + x[1]*y[3]
-    c = x[2]*y[0] + x[3]*y[2]
-    d = x[2]*y[1] + x[3]*y[3]
-    return [a,b,c,d]
+#  def mult(x,y):
+    #  if ( len(y) == 2 ):
+        #  a = x[0]*y[0]+x[1]*y[1]
+        #  b = x[2]*y[0]+x[3]*y[1]
+        #  return [a,b]
+    #  a = x[0]*y[0] + x[1]*y[2]
+    #  b = x[0]*y[1] + x[1]*y[3]
+    #  c = x[2]*y[0] + x[3]*y[2]
+    #  d = x[2]*y[1] + x[3]*y[3]
+    #  return [a,b,c,d]
 
-# Only works for positive powers!
-def matrix_power( x, n ):
-    if ( n == 1 ):
-        return x
-    if ( n%2 == 0 ):
-        return matrix_power( mult(x, x), n//2 )
-    return mult(x, matrix_power( mult(x, x), n//2 ) )
+#  # Only works for positive powers!
+#  def matrix_power( x, n ):
+    #  if ( n == 1 ):
+        #  return x
+    #  if ( n%2 == 0 ):
+        #  return matrix_power( mult(x, x), n//2 )
+    #  return mult(x, matrix_power( mult(x, x), n//2 ) )
 
-# fibonacci example:
-A = [1,1,1,0]
-v = [1,0]
+#  # fibonacci example:
+#  A = [1,1,1,0]
+#  v = [1,0]
 
-x = 1000000
-print mult(matrix_power(A,x-1),v)[0]
+#  x = 1000000
+#  print mult(matrix_power(A,x-1),v)[0]
 
