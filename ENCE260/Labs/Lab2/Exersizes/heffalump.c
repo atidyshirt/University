@@ -9,7 +9,7 @@ int heffalump(float screeHeight, float rushHeight, float slideBack, int counter)
         return counter + 1;
     } else {
         return heffalump(screeHeight-rushHeight+slideBack, rushHeight, slideBack, counter+1);
-    } 
+    }
 }
 
 int main(void)
@@ -20,6 +20,6 @@ int main(void)
     scanf("%f %f %f", &scree, &step, &slide);
 
     result = heffalump(scree, step, slide, counter);
-    
+
     printf("%i", result);
 }

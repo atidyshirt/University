@@ -1,4 +1,4 @@
-> [DOC]
+> [TOC]
 
 <center>
 
@@ -595,7 +595,7 @@ Because we do not want to have to declare `DEFINE` statements every time we want
 a list, we only need to do this as it allows us to make a maximum size. Instead we can
 use the `malloc()` function to allocate space.
 
-Here is an example of using the `malloc()` function to allocate space for a student struct
+Here is an example of using the `malloc()` function to allocate space for a student structure
 
 ```c
 typedef student_s student;
