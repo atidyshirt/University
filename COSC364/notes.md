@@ -45,11 +45,11 @@ Next step is to populate the config files for both `zebra.conf` and `ripd.conf`
 Both the mid-term and the final exam are closed book tests, however you are permitted to bring
 a one page hand written cheat sheet on an A4 sheet of paper, double sided.
 
-**NOTE:** These assessments will be altered if lock down takes place, see details of adjustment on learn.
+> NOTE: These assessments will be altered if lock down takes place, see details of adjustment on learn.
 
-### Slide Sets
+### Lectures
 
-#### IPV4 Refresh
+#### Lecture One: IPV4 Refresh
 
 Packets are called `dataframes`, each interface in the network is assigned an `IP` address (each wifi card/ethernet)
 
@@ -57,3 +57,54 @@ Packets are called `dataframes`, each interface in the network is assigned an `I
 here is the packet structure of a `IPV4` packet (dataframe)
 
 ![packet](./Diagrams/ipv4_packet_structure.png)
+
+#### Lecture Two: IP Addressing
+
+**IP Address Representation**
+
+- IP addresses have a width of 32 bits
+- They are supposed to be worldwide unique
+    * This is no longer true
+- IP addresses are written in dotted-decimal notation
+- They have an internal structure:
+    * `<network-id>` `<host-id>`
+ 
+**Classless Inter-Domain Routing**
+
+- Question: how many bits to allocate to `<network-id>`?
+- In the early days this was fixed to three different values
+- This proved inflexible
+- `CIDR`: Classless Inter-Domain Routing
+- Introduced in 1993
+- Modern routing protocols `OSPF, RIPv2, BGP` use `CIDR`
+- In `CIDR` a network is specified by two values
+    * A 32 bit network address
+    * A 32 bit network mask (`netmask`)
+
+**CIDR - Netmask**
+
+- For a given 32-bit IP address, the net-mask specifies which bits belong to network-id and which
+    bit belong to host-id
+- The net-mask consists of 32 bits the left *k* bits are ones the remaining 32 - *k* bits are zeros; *where k is the net-mask*
+
+> To use a net-mask in practice we can use a boolean `AND` operation in order to pull the ones with a mask
+
+In order to completely specify an IP network, we must provide both the IP address and the net-mask:
+
+$$192.168.40.0/24$$
+$$192.168.40.0/21$$
+
+> Note: The above network prefixes are NOT the same network. *due to different net-masks*
+
+The number of available host addresses in a `/k` network is: $2^{32-k} - 2$
+
+The big problem is the size of routing/forwarding tables.
+
+[Example of why this is a problem: 35:40](https://echo360.org.au/lesson/G_8f1a649f-406a-4efb-ab3c-60f1c74f77c7_2edec770-99c1-4501-9fd4-3441f9fdc940_2021-02-25T10:00:00.000_2021-02-25T10:55:00.000/classroom#sortDirection=desc)
+
+Address aggregation is an important approach of reducing the size of forwarding tables, it makes use 
+of `CIDR`.
+
+
+
+### Labs
