@@ -145,4 +145,39 @@ Some bootstrap effort is needed before starting
 - the team knows the steps to implement each story 
 - the team knows what each task needs to produce
 
+#### Lecture Three
+
+**Scrum Roles**
+
+Product Owner
+- translates user demands into stories
+- maintains and prioritises the list of things to do
+- negotiates content of releases and timing with the team
+
+Scrum master
+- acts as a coach
+- facilitates communication inside and outside the team
+- represents managements, but protects team members
+
+Team aka developers
+- everyone is a developer
+- everyone works on everything
+
+Epic:
+- large piece of work that may be implemented over many scrums
+
+Story:
+- a well defined piece of work
+- confined within a sprint (unless too much is allocated)
+
+Product backlog:
+- contains tasks (stories)
+- everything that still needs to be done
+- maintained by PO
+- some estimations may be missing
+
+Sprint backlog:
+- items that will be handled within our current sprint
+- allocated from product backlog and estimated
+
 

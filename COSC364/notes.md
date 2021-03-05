@@ -96,6 +96,8 @@ $$192.168.40.0/21$$
 
 > Note: The above network prefixes are NOT the same network. *due to different net-masks*
 
+**Aggregation**
+
 The number of available host addresses in a `/k` network is: $2^{32-k} - 2$
 
 The big problem is the size of routing/forwarding tables.
@@ -103,8 +105,35 @@ The big problem is the size of routing/forwarding tables.
 [Example of why this is a problem: 35:40](https://echo360.org.au/lesson/G_8f1a649f-406a-4efb-ab3c-60f1c74f77c7_2edec770-99c1-4501-9fd4-3441f9fdc940_2021-02-25T10:00:00.000_2021-02-25T10:55:00.000/classroom#sortDirection=desc)
 
 Address aggregation is an important approach of reducing the size of forwarding tables, it makes use 
-of `CIDR`.
+of `CIDR`. (This keeps the routing tables small)
+
+#### Lecture Three: IP Forwarding
+
+**Routing Daemon**
+
+- Refers to the forwarding table
+- gathers the IP output
+    * deliver directory or calculate next hop
+    * decrement `TTL`
+    * recompute header checksum
+- passed to network interfaces
+- IP input queue
+- process IP options
+- check if our packet:
+    * destined to one of my IP addresses
+    * destined to broadcast address
+        + send via `UDP, TCP, ICMP`
+    * Forward datagram *if forwarding is enabled*
+
+**Forwarding Table Contents**
+
+- Each entry in the forwarding table contains:
+    * Destination IP prefix
+    * Information about next hop
+        + IP address of next-hop router or interface towards it
+        + IP address of directly connected network (with net-mask)
+    * Flags
+        + whether next hop is router or directly attached network
+    * Specification of outgoing interface
 
 
-
-### Labs
