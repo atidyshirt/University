@@ -399,6 +399,6 @@ A REST service has the following benefits
 - RESTful systems typically
     * communicate over HTTP
     * with the same HTTP verbs (GET, POST, PUT, DELETE)
-- Use URL to navigate between the `API` instances
+- Use URL to navigate between the API instances
 
 </details>
