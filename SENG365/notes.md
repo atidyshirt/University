@@ -6,9 +6,34 @@
 
 ### Grading Structure
 
+- Assignment One (25%)
+    * No extension
+- Mid-semester test (20%)
+    * Wednesday 24 March, 7:00 pm
+    * Topics
+        + HTTP
+        + REST API
+        + JavaScript
+        + Web databases
+    * paper exam, closed book
+    * 24 short answer questions
+    * 2 hours (should take less)
+- Assignment 2 (25%)
+    * Compulsory lab in final week
+    * No extension
+- Exam (30%)
+    * 2 hours
+
+# Lab Notes
+
+<details close="">
+  <summary>Lab One</summary>
+</details>
+
 ### Lectures
 
-#### Lecture One: Introduction to HTTP and JavaScript
+<details close="">
+  <summary> Lecture One: Introduction to HTTP and JavaScript</summary>
 
 **What is a web application?**
 
@@ -231,7 +256,7 @@ scope as the outer function.
 
 > IMPORTANT NOTE: Functions will use the scope of where they are declared, not where they are called or implemented.
 
-Using the following code will avoid these idiosyncrocies as they are blocked scoped:
+Using the following code will avoid these idiocies as they are blocked scoped:
 
 ```JavaScript
 let x = 1;
@@ -246,4 +271,134 @@ Use `this` keyword carefully, it references different objects depending on the c
 
 Chaining functions can make your code more readable.
 
+</details>
 
+<details close="">
+  <summary>Lecture Two: Asynchronous behaviour</summary>
+
+A problem that we commonly face is when we have some set of actions, but we do not know in what
+order these tasks/actions are going to be completed in. `JavaScript` is a single threaded language,
+it has a single call stack, a heap and the message queue which records a list of messages to be processed and the associate callbakc
+functions to execute.
+
+It also has an event loop, this is the order of operations the heap is called in, understanding this
+is crucial to understanding odd errors that may occur.
+
+
+The term `Blocking` really just means, we don't want to fill the call stack, when we have blocking code is JS
+it is just when the call stack is too full (a while loop if it is not running too long will not be blocking)
+
+We need to structure our code into different modules, there are different ways of managing this.
+Modular JavaScript files, we will be using the `CommonJS` approach.
+
+`CommonJS:`
+
+- One specification for managing module dependencies
+- maps well to `Node.js`
+
+We can use the `require()` function in order to use local modules, and we are able to install
+external modules using the Node Package Manager (`npm`) *commands - install, upgrade, status, -v*
+
+```javascript
+// Syntax for require function
+var importJson = require('./path/to/data.json');
+```
+
+We will use the `express` library as a public interface module to use the web.
+
+</details>
+
+<details close="">
+  <summary>Lecture Three: data persistence with SQL, memory stores and Graph DB</summary>
+
+**Using JSON data**
+
+- JSON is a lightweight data-interchange format
+- A syntax for serializing data, objects, arrays, numbers, strings
+- Data only, does not support comments except as a data field
+- Non specific to JavaScript
+    * Was originally intended for data interchange between Java and JavaScript
+- No versioning for JSON
+    * Enables consistency
+    * Data gets updated all the time, it means that the syntax will always remain stable
+- JSON has many variants (maintained by different people)
+    * JSON-T (template JSON)
+    * Many other forms of JSON
+- JSON rules:
+    * All key-names are double-quoted
+    * Values
+        + Strings are double quoted
+        + Non-strings are not quoted
+    * Escape uses \
+    * Works with a set of values contained (can be mapped to a large dictionary)
+
+**Relational Databases**
+
+- One of the few situations where a theoretical contribution led to use case in the industry
+- Relational Model
+    * Data is presented as relations
+    * Collections of tables with columns and rows (tuples)
+    * Each tuple has attributes
+    * Unique key per row
+    * Relational model is built off of Relational Calculus (formal notation of key points)
+- ACID transactions
+    * Atomicity: if one part of a transaction fails, then transaction fails
+    * Consistency: the database is kept in a consistent state before and after transaction execution
+    * isolation: one transaction should not see the effects of another in progress
+    * Durability: ensures transactions, once committed, are persistent
+
+**CAP Theorem**
+- In distributed computing, choose two of:
+    * Consistency - every read receives the most recent data
+    * Availability - every read receives a response
+    * Partition tolerance - system continues if network goes down
+- Situation is actually more subtle than implied
+- BASE
+    * Give up consistency and instead get:
+        + Basic Availability - through replication
+        + Soft state - state of the system may change over time
+        + Eventual consistency - the data will be consistent eventually
+
+**Memory Data Store**
+- Whole database stored in RAM
+    * Very fast access
+    * Useful for cached storage
+- Key value store where the value can be complex data structure
+    * Strings, Bit arrays, lists, sets, hashes
+    * streams
+    * binary safe keys
+    * command set for optimized load, storing and changing data values
+- Useful for logging
+
+**Document Databases**
+- Storing in local files (JSON/XML or any other unstructured data format) 
+- Tends to be stored with meta data (security, providence)
+- Builds index from contexts and meta data
+- storage of raw program types
+- Complex data easily stored
+- No need for costly schema
+- Same data can be replicated (loads of redundancy)
+
+**Graph Databases**
+- Nodes: represent an entity
+- Edge: represents relationship between nodes
+- Properties: describe attributes of the node or edge
+- Hyper graph: one edge can join multiple nodes
+
+</details>
+
+<details closed="">
+  <summary>Lecture Four: REST</summary>
+
+A REST service has the following benefits
+
+- Platform independent
+- Language independent
+- Standards based (runs on top of http)
+- Can easily be used in presence of firewalls
+- RESTful systems typically
+    * communicate over HTTP
+    * with the same HTTP verbs (GET, POST, PUT, DELETE)
+- Use URL to navigate between the `API` instances
+
+</details>

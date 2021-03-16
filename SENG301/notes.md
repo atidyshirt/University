@@ -82,7 +82,8 @@ Term 2 (Provisional, please check forum for latest updates)
 
 ### Lectures
 
-#### Lecture One
+<details close="">
+  <summary>Lecture One</summary>
 
 **SCRUM**
 
@@ -104,7 +105,10 @@ Here are the lead roles in a `SCRUM` environment workplace.
 
 Here is an [Overview of Scrum](https://www.scrum.org/resources/what-is-scrum) from Scrum.org.
 
-#### Lecture Two
+</details>
+
+<details close="">
+  <summary>Lecture Two</summary>
 
 **The Five Values Of Scrum**
 
@@ -145,7 +149,10 @@ Some bootstrap effort is needed before starting
 - the team knows the steps to implement each story 
 - the team knows what each task needs to produce
 
-#### Lecture Three
+</details>
+
+<details close="">
+  <summary>Lecture Three</summary>
 
 **Scrum Roles**
 
@@ -179,5 +186,28 @@ Product backlog:
 Sprint backlog:
 - items that will be handled within our current sprint
 - allocated from product backlog and estimated
+
+</details>
+
+<details close="">
+  <summary>Lecture Four</summary>
+
+**Dealing with Unplanned**
+- Distinguish between development issues and bugs
+    * issue: a problem identified at the latest before a review
+    * bug: a problem discovered at the earliest during later regression tests 
+
+**Dealing with impediments**
+- Long meetings: stick to essential stakeholders and keep them time-boxed
+- Illness: unavoidable, but refrain from ignoring it
+- broken builds: implicit top priority for the whole team to fix it
+- tools: always frustrating, but you need to fix it first
+- third parties: even more frustrating, consider alternatives
+- scope creep: pay special attention to review the stories and broken down tasks
+- unreliable PO: learn how to deal with them
+- team problems: retrospectives and seek for assistance
+- external incentives: remember Scrum is about teamwork
+
+</details>
 
 

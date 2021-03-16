@@ -12,6 +12,7 @@ SENG302 is all about putting all that you have learnt in other courses into a sy
 The focus will be on learning by doing. You will be working on a real-life year-long project with your team within the context of the larger SENG302 community. It will involve SE processes and methodologies, technical, organisational, people/team, leadership, and communication skills.Together, we will cultivate a safe environment for each other to grow (as SEs and as people).
 
 [Resources](https://learn.canterbury.ac.nz/course/view.php?id=10577&section=11)
+
 [Administration](https://learn.canterbury.ac.nz/course/view.php?id=10577&section=1)
 
 #### Grades
