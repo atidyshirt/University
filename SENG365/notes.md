@@ -402,3 +402,75 @@ A REST service has the following benefits
 - Use URL to navigate between the API instances
 
 </details>
+
+## Notes Summary First Semester (Mid-term Prep) Mar 23, 2021
+
+**HTTP Protocol**
+
+HTTP messages are how data is exchanged between a sever and a client. There
+are two types of messages: *requests* are sent by the client to trigger an action
+from the server. *responses* are the answer sent back from the server.
+
+HTTP messages are composed of **textual** information encoded in ASCII, and span
+over multiple lines. In HTTP/1.1 and earlier versions, these messages were openly
+sent across the connection.
+
+**Uniform Resource Identifiers (URI's)**
+
+1. URI (Uniform Resource Identifier)
+  a. String of characters to identify (name, or name and location) resource.
+2. URL (Uniform Resource Locator)
+  a. A URI that also specifies the means of acting apon or obtaining representation.
+3. URN (Uniform Resource Name)
+  a. Depreciated: historical name for URI
+
+**Some default Ports**
+
+- Default HTTP port: 80
+- Default HTTPS port: 433
+- Default MySQL port: 3306
+
+**The Path**
+
+- Path is increasingly becoming an abstraction
+- Not a physical path to a file location
+- A path to an HTML file is not the same thing as a path to an endpoint
+- An API endpoint uses the standard URI path structure to achieve something different
+  * In particular, parameter information
+- The path may need to include information about the version of the API
+
+**Query Parameters**
+
+The API can be designed to accept parameters via:
+- The URI `?` query parameters
+- The URI path (:id)
+- The body of the HTTP request (JSON)
+- Via some combination of the above
+
+**Anchors**
+
+- Anchors are used as bookmarks within a classic HTML webpage
+  * i.e. point to a subsection of the page
+- We don't need to use anchors for our APE requests
+
+**Headers**
+
+- General headers: required and `additional`
+- Entity headers: (that apply to the body of the request)
+- Request headers:
+- Response headers:
+- Cookies are implemented in the header
+  * Set-Cookie: <...> in the header of the servers HTTP response
+  * Cookie: <...> in the header of the subsequent client HTTP request
+- Use headers to:
+  * Maintain session
+  * Personalise
+  * Track (advertising)
+
+**Response codes**
+- 100: informational (rare)
+- 200: success
+- 300: redirections
+- 400: client errors (very common)
+- 500: server errors
+
