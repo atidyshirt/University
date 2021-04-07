@@ -1,12 +1,11 @@
 ---
-title: "Reflection Report on the article Programmer Test Principles"
+title: Reflection Report on the article Programmer Test Principles
 author:
 - Jordan Pyott
 - jpy19
 - 87433186
-date: Mar 18, 2021
-geometry: margin=2cm
-output: PDF_document
+left-header: SENG301
+right-header: \today
 ---
 
 The testing process of development is often a dreaded task with many different testing styles; it can be hard to narrow down how to test effectively. In the article "Programmer Test Principles" (June 2019), the author Kent Beck aims to switch the discussion from testing details to a more productive conversation about testing principles. Beck states that when we talk about testing details, we can agree on the fundamental principles, and despite this, our answers can still differ due to different contexts. However, if we discuss development principles, we create an environment that allows us to understand the differences in contexts and reach a conclusion.
