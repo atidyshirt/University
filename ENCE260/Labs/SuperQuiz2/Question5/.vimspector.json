@@ -1,0 +1,26 @@
+
+  {
+    "configurations": {
+      "Launch": {
+        "adapter": "vscode-cpptools",
+        "configuration": {
+          "request": "launch",
+          "program": "./Q5",
+          "args": [],
+          "cwd": "./",
+          "environment": [],
+          "externalConsole": true,
+          "MIMode": "lldb"
+        }
+      },
+      "Attach": {
+        "adapter": "vscode-cpptools",
+        "configuration": {
+          "request": "attach",
+          "program": "./Q5",
+          "MIMode": "lldb"
+        }
+      }
+    }
+  }
+

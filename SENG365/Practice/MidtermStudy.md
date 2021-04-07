@@ -16,11 +16,8 @@
   a. Single threaded
 6. Give output from segment
 
-```
-1
-
-3
-```
+> 1 \
+> 3
 
 1. Complete DOCTYPE statement from scripting snippet
   a. `<!DOCTYPE html>`
@@ -145,4 +142,162 @@ JavaScript is the following:
 - A data structure to maintain record of function calls
 - Call a function to execute: push something on to the stack
 
+Here is the coding example for async and await supplied by Uni:
+
+```JavaScript
+console.log("Start");
+
+function g(input) {
+  return input + 1;
+}
+
+let a_function = g;
+console.log(a_function);
+console.log("The result of g(2) is :", g(2));
+
+async function f(input) {
+  return input + 1;
+}
+
+let another_function = f;
+console.log(another_function);
+console.log("The result of f(2) is: ", f(2));
+
+f(10).then(function(result) {
+  console.log("The result of f() is: " + result);
+});
+
+another_function(100).then(function(result) {
+  console.log("The result of another_function (f()) is: " + result);
+});
+```
+
+**JSON**
+
+- lightweight data-interchange format
+- A syntax for serializing data
+- Not specific to JS
+- No versioning for JSON (to remain consistent)
+- Has variants and extentions (JASON-T)
+- keys must be double quoted 
+
+**Relational DB**
+
+- One of the few situations where a theoretical thesis led to innovation in the industry
+- Relational Model:
+  * Data is presented as relations
+  * Collections of tables with columns and rows (tuples
+  * Each tuple has the same attributes
+  * Unique key per tuple
+  * Relational algebra defines operations in a formal sense
+- ACID database transactions
+  * Atomicity: all or nothing
+  * Consistency: the database must be in a consistent state before and after the transaction has executed
+  * Isolation: One transaction should not see the effects of another transaction in progress
+  * Durability: ensures transactions once committed are persistent.
+
+Shared vs Shared nothing approaches 
+
+- Main RAM sizes: 1MiB, 2020: 4Tib
+- Resource control
+- Grid commuting
+- High availability 
+- Tuning
+- Many areas are moving towards a distributed model
+
+**CAP Theorem**
+
+- In distributed computing, choose two of:
+  * Consistency: every read receives the most recent data
+  * Availability: every read receives a response
+  * Partition tolerance: system continues if network goes down
+- Situation is actually more subtle than implied
+  * Can adaptively chose appropriate trade-offs
+  * Can understand semantics of data to choose safe operations
+
+**BASE**
+
+- Give up consistency and we get instead:
+  * Basic availability: through replication 
+  * Soft state: the state of the system may change over time
+  * Eventual consistency: data will be consistent eventually 
+
+**ACID vs BASE comparison**
+
+- Suppose we wanted to track peoples bank accounts
+  * CREATE TABLE user (uid,name,amt_sold,amt_bought)
+  * CREATE TABLE transaction (tid,seller_id,buyer_id,amount)
+- ACID transactions may look something like this:
+
+```sql
+BEGIN
+  INSERT INTO transaction (tid,seller_id,buyer_id,amount);
+  UPDATE user SET amt_sold=amt_sold + amount where id=seller_id;
+  UPDATE user SET amt_bought=amt_bought + amount where id=buyer_id;
+END
+```
+
+- A BASE transaction may be split as the following:
+
+```sql
+BEGIN
+  INSERT INTO transaction(tid, seller_id, buyer_id, amount);
+END
+
+BEGIN
+  UPDATE user SET amt_sold=amt_sold + amount WHERE id=seller_id;
+  UPDATE user SET amt_bought=amt_bought + amount WHERE id=buyer_id;
+END
+```
+
+REST
+
+- Platform independent
+- Language independent
+- Standards based (runs on HTTP)
+- Can be easily used with firewalls
+- RESTful systems are typically hypertext transfer protocols
+- with the same HTTP verbs (GPPD)
+- Goal: to retrieve web pages and send them over remote servers
+- subset of web-app's 
+- CRUD maps to REST
+- use PATCH for partial change, PUT maps to UPDATE in crud
+
+**Adding example:**
+
+1: bad
+
+2: xml is a bit cryptic to use
+
+3: best, uses JSON and correct HTTP `POST` method
+
+REST has no inbuilt security of QoS features
+These can be built on top of the REST api
+
+For encryption REST can use (secure sockets) ontop of HTTPS.
+
+REST has replaced SOAP, because it works nicely with AJAX / XHR, has network advantages
+
+**Stateless Requests**
+
+- A complete independent request doesn't require the server to while processing the request
+ to retrieve any kind of application context or state.
+- A RESTFUL web service or client includes within the HTTP headers and body of a request all of the parameters, context and data needed by the server side component to generate a response
+- The entire resource is returned not part of it.
+- Statelessness
+  * Improves web service performances
+  * Simplifies the design and implementation of server-side components
+  * because the absence of state on the server removes the need to synchronize session data with an external application
+  * Hide the server-side scripting technology file extensions within the URLS
+  * Be consistent in the singularity/plurality of resource names 
+  * keep everything lowercase
+  * use hyphens instead of spaces
+  * instead of using 404 not found code, if the request for a URI is for a partial path, always provide a default page or resource as a resonse
+    + Not required for assignment
+  * Tightly coupled to HTTP
+  * Request response format
+    + Multiple requests and responses needed
+    + Under fetching and over fetching
+    + Latency increases for full set of request and responses
+    + Implied tree-structure
 
