@@ -240,3 +240,82 @@ As explained previously, an LSU packet is simply a container for one or more LSA
 
 
 </details>
+
+### Midterm Practice and Information
+
+#### Link State Routing (OSPF, ISIS)
+
+**The basics of Link State Routing**
+
+
+**Problems seen in distance vector algorithms**
+
+- Distance vector protocols converge slowly *good news travels slow*
+  - Therefore link state routing is prone to the count to infinity problem
+
+> Packet structure consists of the following knowledge [destination, next_hop, cost] \
+> the packet does not contain any information about the entire topology of the network
+
+**By contrast**: in link-state routing each router possesses a local copy of a *link-state database*
+which contains information about all routers, IP networks reachable through these routers, it also stores
+the status, current cost, and has a full view of the topology of the network at each point in time.
+
+After each change to the *link-state database* a router performs a local shortest path calculation
+using the `Dijkstra's Algorithm`, each router also stores the status, cost changes to direct links
+and their directly attached IP sub-networks / prefixes. This information that is received is known
+as a `Link State Advertisement (LSA)`.
+
+When a router receives an `LSA` from a neighbour, it forwards it quickly to its neighbouring
+routers in order to *flood* the network with information from the advertisement. Each receiving
+router preforms a routing calculation in order to address its own routing table.
+
+> Routers send `LSA's` both periodically and upon changes in the link status or upon a change in
+> router cost.
+
+**How flooding a network works:**
+
+In flooding, a packet originating at a single node is to be disseminated into the entire network (i.e. to all nodes). The process starts by the source node sending the packet to each of its neighbours. A node receiving the packet over some link will, if it sees the packet for the first time, forward it to all its links except the one the packet has been received on. With this approach the packet will eventually reach every node in the network.
+
+
+
+##### Pro's and Con's
+
+**Distance Vector (RIP)** 
+
+The distance vector (DV) protocol is the oldest routing protocol in practice. With distance vector routes are advertised based upon the following characteristics:
+
+- Distance - How far the destination network is based upon a metric such as hop count.
+- Vector - The direction (next-hop router or egress interface) required to get to the destination.
+
+This routing information is exchanged between directly connected neighbours.[2] Therefore when a node receives a routing update, it has no knowledge of where the neighbour learned it from. In other words, the node has no visibility of the network past its own neighbour. This part of distance vector is also known as "routing by rumour".
+
+Furthermore, routing updates are sent in full (rather than delta-based updates) and at regular intervals, resulting in extremely slow convergence times - one of the key downfalls to distance vector protocols. In addition due to the slow convergence times and "routing by rumour", distance vector protocols are prone to routing loops.
+
+However, on the flipside, the resource consumption is low compared to link-state, due to not having to hold the full state of the entire topology.
+
+**Link State (OSPF, ISIS)**
+
+In contrast to distance vector routing, link state routing (OSPF, ISIS) relies on each node advertising/flooding the state (i.e. delay, bandwidth etc) of their links to every node within the link state domain. This results in each node building a complete map of the network (shortest path tree), with itself as the root using the shortest path first algorithm, also known as the Dijkstra algorithm.
+
+Unlike distance vector link-state neighbours only sends incremental routing updates (LSAs) rather than a full routing update. Also, these updates are only sent at the point a change in the network topology occurs, rather than at regular intervals.
+
+Link-state protocols provide extremely low convergence times and, due to each router having a complete view of the network, aren't prone to the same routing loops seen with DV-based protocols.
+
+However, due to the computation required for the algorithms to run across the shortest path trees upon each node, greater resources are consumed compared to that of distance vector, however, this really isn't a concern with the systems of today.
+
+**Path Vector (BGP)**
+
+Path vector (PV) protocols, such as BGP, are used across domains aka autonomous systems. In a path vector protocol, a router does not just receive the distance vector for a particular destination from its neighbor; instead, a node receives the distance as well as path information (aka BGP path attributes), that the node can use to calculate (via the BGP path selection process) how traffic is routed to the destination AS.
+
+**Hybrid (EIGRP)**
+
+A hybrid routing protocol consists of characteristics from both, link state and distance vector routing protocols.
+
+For example, EIGRP can be considered a hybrid routing protocol, as it displays characters of both. As shown below:
+
+| Distance Vector                                                                                                                            | Link State                                                     |
+| ---                                                                                                                                        | ---                                                            |
+| EIGRP routers only advertise the best route , not every route that is aware of.                                                            | An EIGRP router forms neighbour relationships.                 |
+| EIGRP routers do not have a complete network map of the topology, but only what it has been told by its neighbour aka "routing by rumour". | Triggered updates are sent only when a topology change occurs. |
+
+
