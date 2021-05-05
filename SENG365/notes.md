@@ -589,6 +589,61 @@ The testing framework has similar testing functions to those seen in `Jest`:
 
 More information can be found in the documentation with Chai and Mocha testing.
 
+</details>
 
+<details closed="">
+  <summary>Lecture 6: Security and Introduction to Web Clients</summary>
+
+Note, incorporating security on a advanced level is not in the scope of the course,
+the content covered here is more of a primer to encourage you to do your own reading
+of security content.
+
+**OWASP: The Open Web Application Security Project**
+
+
+This is an open source project that is about how to deal with security in web
+development, further can be found on the `OWASP` website, but here is a summary.
+
+| Top 10 Security issues                      |
+| Injection                                   |
+| Broken Authentication                       |
+| Sensitive Data Exposure                     |
+| Broken Access Control                       |
+| XML External Entities (XXE)                 |
+| Security Misconfiguration                   |
+| Cross-Site Scripting (XSS)                  |
+| Insecure De-serialization                   |
+| Using Components with Known Vulnerabilities |
+| Insufficent Logging and Monitoring          |
+
+> Note: Some of these topics will be explained later throughout the course
+
+One method to validate a field is to validate and re-validate.
+
+An input field is likely to be validated on the client side, that an `IDNumber`
+text field contains a number rather than a number on a malicious piece of code
+
+Definitions:
+- **Authentication:** Establish claimed identity
+- **Authorisation:** Establish permission to act
+
+We need to authenticate before we authorise a user. Authenticating a user means
+to check if the user is valid, i.e. *correct user name and password*, to authorise
+a user means to have the correct permissions i.e. *user is an administrator*
+
+The bear minimum for a secure network is to use `HTTPS` (the HTTP protocol with SSL)
+
+Steps to securing:
+- Verify architecture
+- Verify the implementation
+- Follow guidelines from `OWASP`
+
+> Note: JavaScript + Node does NOT EQUAL JavaScript + browser
+
+When dealing with JavaScript in the browser, you are dealing with the user, client side
+with indirect input and output via `HTML + CSS` and the `DOM`, when using JavaScript on 
+the server side, we are interacting with inputs and outputting responses to the front end
+data. *Another thing to realise is that a large number of npm packages won't work in you're
+browser*.
 
 </details>
