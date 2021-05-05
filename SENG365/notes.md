@@ -4,31 +4,27 @@
 
 ### Course Information
 
-### Grading Structure
+#### Grading Structure
 
 - Assignment One (25%)
-    * No extension
+  - No extension
 - Mid-semester test (20%)
-    * Wednesday 24 March, 7:00 pm
-    * Topics
-        + HTTP
-        + REST API
-        + JavaScript
-        + Web databases
-    * paper exam, closed book
-    * 24 short answer questions
-    * 2 hours (should take less)
+  - Wednesday 24 March, 7:00 pm
+  - Topics
+    - HTTP
+    - REST API
+    - JavaScript
+    - Web databases
+  - paper exam, closed book
+  - 24 short answer questions
+  - 2 hours (should take less)
 - Assignment 2 (25%)
-    * Compulsory lab in final week
-    * No extension
+  - Compulsory lab in final week
+  - No extension
 - Exam (30%)
-    * 2 hours
+  - 2 hours
 
-# Lab Notes
-
-<details close="">
-  <summary>Lab One</summary>
-</details>
+### Labs
 
 ### Lectures
 
@@ -284,7 +280,6 @@ functions to execute.
 It also has an event loop, this is the order of operations the heap is called in, understanding this
 is crucial to understanding odd errors that may occur.
 
-
 The term `Blocking` really just means, we don't want to fill the call stack, when we have blocking code is JS
 it is just when the call stack is too full (a while loop if it is not running too long will not be blocking)
 
@@ -297,11 +292,11 @@ Modular JavaScript files, we will be using the `CommonJS` approach.
 - maps well to `Node.js`
 
 We can use the `require()` function in order to use local modules, and we are able to install
-external modules using the Node Package Manager (`npm`) *commands - install, upgrade, status, -v*
+external modules using the Node Package Manager (`npm`) _commands - install, upgrade, status, -v_
 
 ```javascript
 // Syntax for require function
-var importJson = require('./path/to/data.json');
+var importJson = require("./path/to/data.json");
 ```
 
 We will use the `express` library as a public interface module to use the web.
@@ -317,61 +312,64 @@ We will use the `express` library as a public interface module to use the web.
 - A syntax for serializing data, objects, arrays, numbers, strings
 - Data only, does not support comments except as a data field
 - Non specific to JavaScript
-    * Was originally intended for data interchange between Java and JavaScript
+  - Was originally intended for data interchange between Java and JavaScript
 - No versioning for JSON
-    * Enables consistency
-    * Data gets updated all the time, it means that the syntax will always remain stable
+  - Enables consistency
+  - Data gets updated all the time, it means that the syntax will always remain stable
 - JSON has many variants (maintained by different people)
-    * JSON-T (template JSON)
-    * Many other forms of JSON
+  - JSON-T (template JSON)
+  - Many other forms of JSON
 - JSON rules:
-    * All key-names are double-quoted
-    * Values
-        + Strings are double quoted
-        + Non-strings are not quoted
-    * Escape uses \
-    * Works with a set of values contained (can be mapped to a large dictionary)
+  - All key-names are double-quoted
+  - Values
+    - Strings are double quoted
+    - Non-strings are not quoted
+  - Escape uses \
+  - Works with a set of values contained (can be mapped to a large dictionary)
 
 **Relational Databases**
 
 - One of the few situations where a theoretical contribution led to use case in the industry
 - Relational Model
-    * Data is presented as relations
-    * Collections of tables with columns and rows (tuples)
-    * Each tuple has attributes
-    * Unique key per row
-    * Relational model is built off of Relational Calculus (formal notation of key points)
+  - Data is presented as relations
+  - Collections of tables with columns and rows (tuples)
+  - Each tuple has attributes
+  - Unique key per row
+  - Relational model is built off of Relational Calculus (formal notation of key points)
 - ACID transactions
-    * Atomicity: if one part of a transaction fails, then transaction fails
-    * Consistency: the database is kept in a consistent state before and after transaction execution
-    * isolation: one transaction should not see the effects of another in progress
-    * Durability: ensures transactions, once committed, are persistent
+  - Atomicity: if one part of a transaction fails, then transaction fails
+  - Consistency: the database is kept in a consistent state before and after transaction execution
+  - isolation: one transaction should not see the effects of another in progress
+  - Durability: ensures transactions, once committed, are persistent
 
 **CAP Theorem**
+
 - In distributed computing, choose two of:
-    * Consistency - every read receives the most recent data
-    * Availability - every read receives a response
-    * Partition tolerance - system continues if network goes down
+  - Consistency - every read receives the most recent data
+  - Availability - every read receives a response
+  - Partition tolerance - system continues if network goes down
 - Situation is actually more subtle than implied
 - BASE
-    * Give up consistency and instead get:
-        + Basic Availability - through replication
-        + Soft state - state of the system may change over time
-        + Eventual consistency - the data will be consistent eventually
+  - Give up consistency and instead get:
+    - Basic Availability - through replication
+    - Soft state - state of the system may change over time
+    - Eventual consistency - the data will be consistent eventually
 
 **Memory Data Store**
+
 - Whole database stored in RAM
-    * Very fast access
-    * Useful for cached storage
+  - Very fast access
+  - Useful for cached storage
 - Key value store where the value can be complex data structure
-    * Strings, Bit arrays, lists, sets, hashes
-    * streams
-    * binary safe keys
-    * command set for optimized load, storing and changing data values
+  - Strings, Bit arrays, lists, sets, hashes
+  - streams
+  - binary safe keys
+  - command set for optimized load, storing and changing data values
 - Useful for logging
 
 **Document Databases**
-- Storing in local files (JSON/XML or any other unstructured data format) 
+
+- Storing in local files (JSON/XML or any other unstructured data format)
 - Tends to be stored with meta data (security, providence)
 - Builds index from contexts and meta data
 - storage of raw program types
@@ -380,6 +378,7 @@ We will use the `express` library as a public interface module to use the web.
 - Same data can be replicated (loads of redundancy)
 
 **Graph Databases**
+
 - Nodes: represent an entity
 - Edge: represents relationship between nodes
 - Properties: describe attributes of the node or edge
@@ -397,80 +396,199 @@ A REST service has the following benefits
 - Standards based (runs on top of http)
 - Can easily be used in presence of firewalls
 - RESTful systems typically
-    * communicate over HTTP
-    * with the same HTTP verbs (GET, POST, PUT, DELETE)
+  - communicate over HTTP
+  - with the same HTTP verbs (GET, POST, PUT, DELETE)
 - Use URL to navigate between the API instances
 
 </details>
 
-## Notes Summary First Semester (Mid-term Prep) Mar 23, 2021
+<details closed="">
+  <summary>Lecture Five: GraphQL and automated API testing</summary>
 
-**HTTP Protocol**
+Note that for the assignments that we are assigned within this course, the
+local port servers will be hosted via your local computer (and a database that
+is port forwarded through the university), this is different from the test server
+as the test server is set up using a docker container on a virtual machine with a
+series of automated tests run on a server. This is what allows us to build on the
+`eng-git` server with automated testing.
 
-HTTP messages are how data is exchanged between a sever and a client. There
-are two types of messages: *requests* are sent by the client to trigger an action
-from the server. *responses* are the answer sent back from the server.
+You can run the tests via local host if we change the deploy address to `localhost:9499`
+or what ever the local port that is allocated.
 
-HTTP messages are composed of **textual** information encoded in ASCII, and span
-over multiple lines. In HTTP/1.1 and earlier versions, these messages were openly
-sent across the connection.
+**Differences between the logic on the server and localhost**
 
-**Uniform Resource Identifiers (URI's)**
+1. Why can your local `HTTP` server pass your postman tests and fail the automated
+   server tests?
+2. What problems arise when you use automated testing on the testing server
 
-1. URI (Uniform Resource Identifier)
-  a. String of characters to identify (name, or name and location) resource.
-2. URL (Uniform Resource Locator)
-  a. A URI that also specifies the means of acting apon or obtaining representation.
-3. URN (Uniform Resource Name)
-  a. Depreciated: historical name for URI
+> These happen because of the raw number of requests that are being run onto the
+> local my SQL services. This is just a factor of how the University has the testing
+> server set up.
 
-**Some default Ports**
+Here is a diagram for how the `API` specification manages requests to the test server:
 
-- Default HTTP port: 80
-- Default HTTPS port: 433
-- Default MySQL port: 3306
+![Testing Server Structure](./Diagrams/testing-server-structure.png)
 
-**The Path**
+Example of formatting routes for an HTTP request from `users.routes.js`
+This is responsible for directing the endpoints to get the correct information
+for an end user
 
-- Path is increasingly becoming an abstraction
-- Not a physical path to a file location
-- A path to an HTML file is not the same thing as a path to an endpoint
-- An API endpoint uses the standard URI path structure to achieve something different
-  * In particular, parameter information
-- The path may need to include information about the version of the API
+```Javascript
+const users = require("../controllers/users.controller");
 
-**Query Parameters**
+module.exports = function (app) {
+  app.route(app.rootUrl + "/users/login").post(users.login);
+  app.route(app.rootUrl + "/users/logout").post(users.logout);
+};
+```
 
-The API can be designed to accept parameters via:
-- The URI `?` query parameters
-- The URI path (:id)
-- The body of the HTTP request (JSON)
-- Via some combination of the above
+Here is an example of a controller for an HTTP Request from `users.controller.js`
+This is where we handle all the logic for the request, checking inputs from the
+request and then gets the SQL request from the model and then returns the response
+to the user routes
 
-**Anchors**
+```Javascript
+const users = require("../models/users.model");
+const tokenCreate = require("rand-token");
+const passwords = require("../passwords");
+const bcrypt = require("bcrypt");
 
-- Anchors are used as bookmarks within a classic HTML webpage
-  * i.e. point to a subsection of the page
-- We don't need to use anchors for our APE requests
+exports.login = async function (req, res) {
+  try {
+    const email = req.body.email;
+    const password = await passwords.hash(req.body.password);
+    const token = tokenCreate.generate(32);
+    if (
+      !email.includes("@") ||
+      email == undefined ||
+      email.length < 1 ||
+      password == undefined ||
+      password.length < 1
+    ) {
+      res.status(400).send(`ERROR: Bad Request`);
+    } else {
+      const response = await users.loginAccount(email);
+      if (response == null) {
+        res.status(400).send(`ERROR: Bad Request`);
+      } else if (
+        (await bcrypt.compare(req.body.password, response.password)) == false
+      ) {
+        res.status(400).send(`ERROR: Bad Request`);
+      } else if (
+        (await bcrypt.compare(req.body.password, response.password)) == true
+      ) {
+        await users.setToken(token, response.id);
+        res.status(200).send({
+          userId: response.id,
+          token: token,
+        });
+        return token;
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(`ERROR: Internal Server Error`);
+  }
+};
 
-**Headers**
+exports.logout = async function (req, res) {
+  try {
+    const token = req.header("X-Authorization");
+    if (token == null || token == undefined) {
+      res.status(401).send(`ERROR: Unauthorized`);
+    } else {
+      const response = await users.logoutAccount(token);
+      if (response[0].affectedRows == 0) {
+        res.status(401).send(`ERROR: Unauthorized`);
+      } else {
+        res.status(200).send();
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(`ERROR: Internal Server Error`);
+  }
+};
+```
 
-- General headers: required and `additional`
-- Entity headers: (that apply to the body of the request)
-- Request headers:
-- Response headers:
-- Cookies are implemented in the header
-  * Set-Cookie: <...> in the header of the servers HTTP response
-  * Cookie: <...> in the header of the subsequent client HTTP request
-- Use headers to:
-  * Maintain session
-  * Personalise
-  * Track (advertising)
+Here is an example of the model code for an HTTP request, this is responsible
+for making the request to the SQL database.
 
-**Response codes**
-- 100: informational (rare)
-- 200: success
-- 300: redirections
-- 400: client errors (very common)
-- 500: server errors
+```javascript
+const db = require("../../config/db");
 
+exports.loginAccount = async function (email) {
+  try {
+    const post = `select email, password, id from user where email='${email}'`;
+    const conn = await db.getPool().getConnection();
+    const [[response]] = await conn.query(post);
+    conn.release();
+    if (response == undefined) {
+      return null;
+    }
+    return response;
+  } catch (err) {
+    return null;
+  }
+};
+
+exports.logoutAccount = async function (token) {
+  const update = `update user set auth_token=null where auth_token ='${token}'`;
+  const conn = await db.getPool().getConnection();
+  const response = await conn.query(update);
+  conn.release();
+  return response;
+};
+```
+
+**Overfetching**
+
+- You might download more information than you need
+
+**Underfetching**
+
+- You request less information that you need
+- making multiple small requests when we could have made one larger request at less cost
+
+**GraphQL**
+
+GraphQL is a _specification_ for how you specify data (strong typing) and how you
+go about querying that data.
+
+There are some reference implementations of GraphQL specification found at
+here: [GraphQL JavaScript Specification](https://github.com/graphql/graphql-js)
+
+When using GraphQL A query returns a 200 response code even if the request errors
+out. Errors are returned in user-defined fields, however Network errors can still return
+500 and 400 error codes.
+
+- GraphQL does not require you to think in terms of graphs
+  - Though relational tables are useful for understanding
+  - You think in terms of `JSON Objects` for a query
+- Is not querying the database directly
+  - Rather is a language specification for composing queries to a server
+- Still requires some kind of pre-defined data and queries on the server-side
+  - Objects, fields and allowable queries
+  - But these pre-defined are more `atomic` in their nature
+
+Chai and Mocha are two testing frameworks for JavaScript that we will be using
+in this class.
+
+We should use an Asynchronous approach for when we are creating testing:
+
+- Mocha, Chai and Chai-HTTP can handle callbacks, Promises and async/await
+- Don't get these mixed up in a given test
+  - Avoid the use of `return` together with `done()`
+
+Examples of defined tests can be found here: [Lecture timestamp: 1:15:55](https://echo360.org.au/lesson/G_0c1781e5-18d4-4145-8806-278aa32a3721_8cb25fb2-b0ca-42be-a65b-3d0d917c9027_2021-03-23T16:00:00.000_2021-03-23T17:55:00.000/classroom#sortDirection=desc)
+
+The testing framework has similar testing functions to those seen in `Jest`:
+- `beforeEach()`
+- `before()`
+- `after()`
+
+More information can be found in the documentation with Chai and Mocha testing.
+
+
+
+</details>
