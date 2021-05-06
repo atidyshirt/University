@@ -35,7 +35,7 @@ for profit rather then education (Snyder, 2012). Like Snyder, I think we have lo
 with how we report findings, and as Snyder said in her TED talk, Science should not only be
 for Scientists (Snyder, 2012).
 
----
+\newpage
 
 **Refrences**
 

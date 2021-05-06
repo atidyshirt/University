@@ -1,7 +1,7 @@
 ---
-title: "COSC364: Internet Technology and Engineering"
+title: "Internet Technology and Engineering"
 author: [Jordan Pyott]
-date: "2021-05-06 16:57"
+date: "2021-05-06"
 subject: "COSC364"
 lang: "en"
 titlepage: true
