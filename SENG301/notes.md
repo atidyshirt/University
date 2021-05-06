@@ -1,10 +1,15 @@
-> [TOC]
-
-<center>
-
-# Software Engineering II
-
-</center>
+---
+title: "Software Engineering II"
+author: [Jordan Pyott]
+date: "2021-05-06 17:02"
+subject: "SENG301"
+lang: "en"
+titlepage: true
+titlepage-color: "3C9F53"
+titlepage-text-color: "FFFFFF"
+titlepage-rule-color: "FFFFFF"
+titlepage-rule-height: 2
+...
 
 ### Course Information
 

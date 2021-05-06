@@ -1,6 +1,16 @@
-> [TOC]
-
-# Web Computing Architecture
+---
+title: "Web Computing Architecture"
+author: [Jordan Pyott]
+date: "2021-05-06"
+subject: "SENG365"
+subtitle: "This course explores web applications and the underlying distributed application architectures and technologies. Topics will include web fundamentals (HTML, HTTP, CSS, JavaScript), asynchronous events, data persistence, web application architectures, AJAX, web APIs, and web computing."
+lang: "en"
+titlepage: true
+titlepage-color: "3C9F53"
+titlepage-text-color: "FFFFFF"
+titlepage-rule-color: "FFFFFF"
+titlepage-rule-height: 2
+...
 
 ### Course Information
 
@@ -114,8 +124,6 @@ We use headers and cookies in order to:
 **Header structures**
 
 **Structure and example of `HTTP` requests**
-
-`HTTP` request form:
 
 ```
 HTTP-method SP Request-URL SP HTTP-Version CRLF
@@ -583,6 +591,7 @@ We should use an Asynchronous approach for when we are creating testing:
 Examples of defined tests can be found here: [Lecture timestamp: 1:15:55](https://echo360.org.au/lesson/G_0c1781e5-18d4-4145-8806-278aa32a3721_8cb25fb2-b0ca-42be-a65b-3d0d917c9027_2021-03-23T16:00:00.000_2021-03-23T17:55:00.000/classroom#sortDirection=desc)
 
 The testing framework has similar testing functions to those seen in `Jest`:
+
 - `beforeEach()`
 - `before()`
 - `after()`
@@ -598,13 +607,15 @@ Note, incorporating security on a advanced level is not in the scope of the cour
 the content covered here is more of a primer to encourage you to do your own reading
 of security content.
 
-**OWASP: The Open Web Application Security Project**
+\newpage
 
+**OWASP: The Open Web Application Security Project**
 
 This is an open source project that is about how to deal with security in web
 development, further can be found on the `OWASP` website, but here is a summary.
 
 | Top 10 Security issues                      |
+| ---                                         |
 | Injection                                   |
 | Broken Authentication                       |
 | Sensitive Data Exposure                     |
@@ -624,6 +635,7 @@ An input field is likely to be validated on the client side, that an `IDNumber`
 text field contains a number rather than a number on a malicious piece of code
 
 Definitions:
+
 - **Authentication:** Establish claimed identity
 - **Authorisation:** Establish permission to act
 
@@ -634,6 +646,7 @@ a user means to have the correct permissions i.e. *user is an administrator*
 The bear minimum for a secure network is to use `HTTPS` (the HTTP protocol with SSL)
 
 Steps to securing:
+
 - Verify architecture
 - Verify the implementation
 - Follow guidelines from `OWASP`
