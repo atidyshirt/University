@@ -93,7 +93,7 @@ Term 2 (Provisional, please check forum for latest updates)
 
 # Lectures
 
-## Lecture One
+## Lecture One: Course kickoff and recap of software development methods
 
 **SCRUM**
 
@@ -115,7 +115,7 @@ Here are the lead roles in a `SCRUM` environment workplace.
 
 Here is an [Overview of Scrum](https://www.scrum.org/resources/what-is-scrum) from Scrum.org.
 
-## Lecture Two
+## Lecture Two: Scrum software development framework
 
 **The Five Values Of Scrum**
 
@@ -156,7 +156,7 @@ Some bootstrap effort is needed before starting
 - the team knows the steps to implement each story 
 - the team knows what each task needs to produce
 
-## Lecture Three
+## Lecture Three: Decipher users, their expectations and plan the work
 
 **Scrum Roles**
 
@@ -191,7 +191,7 @@ Sprint backlog:
 - items that will be handled within our current sprint
 - allocated from product backlog and estimated
 
-## Lecture Four
+## Lecture Four: Leadership, team work and accountability
 
 **Dealing with Unplanned**
 - Distinguish between development issues and bugs
@@ -209,3 +209,221 @@ Sprint backlog:
 - team problems: retrospectives and seek for assistance
 - external incentives: remember Scrum is about teamwork
 
+
+## Lecture Six: Software architecture
+
+The reason to model is in order to raise the abstraction level, this is what
+we are trying to achieve in software engineering, because it is easier to work
+on abstractions than to work and the ground level.
+
+Representation are good (visual diagram), but you need the following:
+
+- to understand the notation
+- to understand the context and vocabulary
+- the purpose of the model must be distinct and clear
+- should be unambiguous
+
+In computer science we use class diagrams and domain models (used in Lecture 3)
+
+- Every organisation has their own rules
+- They manipulate their own vocabulary and concepts
+- concepts have relations to each others
+
+Domain concepts *domain driven design*
+
+- will be the one you logically manipulate
+- will be the one you store in the database
+- should be responsible for their states and logic *i.e. encapsulation*
+
+These diagrams is to understand the concepts, not to have an implementation of the logic
+
+Domain model example for a warrant of fitness system:
+
+![Domain model](./Diagrams/domain-model.png)
+
+Architecture tactics
+
+- Relating to one attribute or decision
+- tackle one concern at a time
+
+Architecture styles and design patterns
+
+- offer re usability
+- must be taken into account in the entire project
+- may encompass multiple tactics 
+
+Both are shaping the design of your system early
+
+> NOTE: Architecture drift occurs quicker and more often than you might expect \
+> Re-engineering may be impractical or painful to implement as a result of this
+
+**README files**
+
+- Explains the context and objectives
+- Authors, contributors, versioning and other pointers
+- specify deployment procedure, testing and dependencies
+- describe content and refer to licensing
+
+**Wiki pages**
+
+- put your external analysis, wire frames, architecture, decisions
+- manual tests
+- keep them organised in categories
+- keep it updated
+- terms and conditions
+
+## Lecture Seven: Staged and automated testing
+
+**Testing**
+
+![Testing model](./Diagrams/testing-model.png)
+
+Objectives of testing:
+
+- Validation: demonstrate the software fulfils its requirements 
+- Verification: identify erroneous behaviour of the system
+
+![Stages of testing](./Diagrams/stages-of-testing.png)
+
+**Unit testing**
+
+Any piece of code should be tested
+
+- every feature should be testable
+- should fake or simulate human input and should be self sufficient
+- *is hard because of the nature of code in a code-base*
+- code assertion are primordial for regression tests (making sure old tests are still working as expected)
+- explicit verification of pre/post conditions, (checking ranges of inputs)
+
+**Component testing**
+
+Testing of identifiable and isolated parts of a system
+
+- hidden and interchangeable implementation
+
+On top of being skeptical on input data
+
+- Make components fail, check for differing failures
+- Stress testing or message overflow
+- If a call order exists, try to call operations in the other order
+
+**System testing** 
+
+Finally, the last stage of testing
+
+- Integrate third-party components or systems
+- Should be preformed by *dedicated* testers and surely not only by the developers
+
+Scenario-based testing
+
+- main usages, full interaction flows and should be modelled
+- Start from graphical user interactions and go through to opposite end
+
+Trace and record tests executions (wiki or spreadsheet)
+
+- Input values, expected output and observed output
+- meta data like who and when issues occur, and a tracking issue associated with this issues id
+
+![Agile staged testing](./Diagrams/agile-staged-testing.png)
+
+> Make sure that tests handle Null values, this is an extremely common mistake \
+> cover invariant properties are valid, check incoming parameter's, assert are useful for regression testing 
+
+**Acceptance testing**
+
+User stories are always accompanied by acceptance criteria
+
+- do you remember about INVEST?
+- A story is a promise for a conversation, with examples of usage
+- define application interfaces *isolating UI*
+- use dependency injection, *inversion of control*
+  - *Dependency injection: a technique in which an object receives another object that it depends on*
+- Any `async` functions must be synchronous in order to test
+
+Automating acceptance testing:
+
+- use playback tools sometimes, *selenium, Serenity*
+- testing directly on a GUI may be time consuming
+
+As sprint reviews must be planned and prepared
+
+- ensure all acceptance criteria are running as expected
+- may need to rework some stories, avoid trying to fix nasty bugs last minute
+
+## Lecture Eight: Ethics and resilience engineering
+
+> NOTE: I am not sure if this will be assessed?
+
+Because we are using artificial intelligence for almost everything now from
+employment, academic integrity and almost anything else. Because of this as
+software developers, it is important to contain our personal bias into account
+when developing software.
+
+A problem with almost all codes of ethics is that they try to put people into
+boxes and categories, this is not always possible due to the individuality experienced
+by a set of users.
+
+The ethics behind things at the moment have blurred lines, e.g. for
+self driving cars, is it ethical to prioritise life inside the car
+rather than prioritise life outside the car.
+
+The environmental impact of software development and maintaining software, 
+block-chaining for example uses large amounts of power as we are constantly
+generating new hashes (computationally difficult to do). Note, their is a
+conversation that needs to be had about weighing up the pros and cons of this
+development.
+
+Don't catch unintentional errors in your code, due to the fact that this will
+allow you to miss unintentional errors being parsed.
+
+**Capacity management**
+
+*Programmers waste enormous amounts of time thinking about, or worrying about
+the speed of noncritical parts of their programs, and these attempts at efficiency
+actually have a strong negative impact when debugging and maintenance are considered.
+We should forget about small efficiencies, say about 97% of the time. A good programmer
+will not be lulled into complacency by such reasoning, he will be wise to look carefully
+at the critical code; but only after that code has been identified.*
+
+- Design code in a way that it can be traced (using loggers)
+- use threads carefully, *starvation and deadlocks are very bad*
+- write dedicated tests and monitor logs
+
+
+- Protection systems:
+  - system specialised in monitoring the execution of another, trigger alarms or invoke corrective programs
+
+- Multi version programming
+  - concurrent computation
+  - can be hardware with different items or providers
+  - can be software with different development teams
+  - mismatch detection with voting system
+  - triple redundancy:
+    - usually only one thing breaks at a time, if two cases are working correctly and a third is not, the problem is likely with the third
+
+**Visibility**
+
+- Programming contracts often define a *need-to-know* principle
+
+**Validity**
+
+- check formatting and domain of input values, including boundaries
+- explicitly or regression testing
+
+**Exceptions**
+
+- NEVER EVER display the stack trace to the user (500 errors should be handled)
+  - this is the easiest way to reverse engineer and hack into the server side system
+
+Both client side checking and server side checking are necessary, you cannot handle
+a request without both.
+
+The four R's of resilience engineering plan:
+
+- Recognition: how an attack may target an identified resource
+- Resistance: possible strateies to resist to each thread
+- Recovery: plan data, software and hardware recovery procedures
+- Reinstatement: define the process to bring the system back
+
+This means we should have **backup** and **reinstalling** procedures, that should be
+specified on top of deployment.
