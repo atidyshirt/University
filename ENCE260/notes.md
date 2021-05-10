@@ -1,10 +1,5 @@
-> [TOC]
-
-<center>
 
 # ENCE260 Notes - Computer Systems
-
-</center>
 
 ### General Info About Course
 

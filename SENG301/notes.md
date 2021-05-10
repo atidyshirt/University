@@ -11,7 +11,9 @@ titlepage-rule-color: "FFFFFF"
 titlepage-rule-height: 2
 ...
 
-### Course Information
+\newpage
+
+# Course Information
 
 The Software Engineering (Part II) builds on the material introduced in SENG201 (Introduction to Software Engineering) and is intended as a companion course to SENG302 (Software Engineering Group Project).
 
@@ -25,7 +27,7 @@ At the end of each lecture it is expected to finish the prep slides before the n
 
 [Assignment Submissions](https://learn.canterbury.ac.nz/course/view.php?id=10576&section=8)
 
-#### Course Outline
+## Course Outline
 
 **Lectures outline**
 
@@ -76,19 +78,22 @@ Term 2 (Provisional, please check forum for latest updates)
 - 01/04 Assignment 2 - Reflection report
 - 04/06 Assignment 3 - Acceptance testing and design patterns 
 
-#### Grades
+## Grades
 
 - Assignment 1: Scrum tutorial    15%
 - Assignment 2: Reflection report 5%
 - Assignment 3: Coding assignment 20%
 - Final Exam: 60%
 
-### Labs
+\newpage
 
-### Lectures
+# Labs
 
-<details close="">
-  <summary>Lecture One</summary>
+\newpage
+
+# Lectures
+
+## Lecture One
 
 **SCRUM**
 
@@ -110,10 +115,7 @@ Here are the lead roles in a `SCRUM` environment workplace.
 
 Here is an [Overview of Scrum](https://www.scrum.org/resources/what-is-scrum) from Scrum.org.
 
-</details>
-
-<details close="">
-  <summary>Lecture Two</summary>
+## Lecture Two
 
 **The Five Values Of Scrum**
 
@@ -154,10 +156,7 @@ Some bootstrap effort is needed before starting
 - the team knows the steps to implement each story 
 - the team knows what each task needs to produce
 
-</details>
-
-<details close="">
-  <summary>Lecture Three</summary>
+## Lecture Three
 
 **Scrum Roles**
 
@@ -192,10 +191,7 @@ Sprint backlog:
 - items that will be handled within our current sprint
 - allocated from product backlog and estimated
 
-</details>
-
-<details close="">
-  <summary>Lecture Four</summary>
+## Lecture Four
 
 **Dealing with Unplanned**
 - Distinguish between development issues and bugs
@@ -212,7 +208,4 @@ Sprint backlog:
 - unreliable PO: learn how to deal with them
 - team problems: retrospectives and seek for assistance
 - external incentives: remember Scrum is about teamwork
-
-</details>
-
 

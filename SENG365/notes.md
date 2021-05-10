@@ -12,9 +12,13 @@ titlepage-rule-color: "FFFFFF"
 titlepage-rule-height: 2
 ...
 
-### Course Information
+\newpage
 
-#### Grading Structure
+# Course Information
+
+This course explores web applications and the underlying distributed application architectures and technologies. Topics will include web fundamentals (HTML, HTTP, CSS, JavaScript), asynchronous events, data persistence, web application architectures, AJAX, web APIs, and web computing.
+
+## Grading Structure
 
 - Assignment One (25%)
   - No extension
@@ -34,12 +38,15 @@ titlepage-rule-height: 2
 - Exam (30%)
   - 2 hours
 
-### Labs
+\newpage
 
-### Lectures
+# Labs
 
-<details close="">
-  <summary> Lecture One: Introduction to HTTP and JavaScript</summary>
+\newpage
+
+# Lectures
+
+##  Lecture One: Introduction to HTTP and JavaScript
 
 **What is a web application?**
 
@@ -275,10 +282,7 @@ Use `this` keyword carefully, it references different objects depending on the c
 
 Chaining functions can make your code more readable.
 
-</details>
-
-<details close="">
-  <summary>Lecture Two: Asynchronous behaviour</summary>
+## Lecture Two: Asynchronous behaviour
 
 A problem that we commonly face is when we have some set of actions, but we do not know in what
 order these tasks/actions are going to be completed in. `JavaScript` is a single threaded language,
@@ -309,10 +313,7 @@ var importJson = require("./path/to/data.json");
 
 We will use the `express` library as a public interface module to use the web.
 
-</details>
-
-<details close="">
-  <summary>Lecture Three: data persistence with SQL, memory stores and Graph DB</summary>
+## Lecture Three: data persistence with SQL, memory stores and Graph DB
 
 **Using JSON data**
 
@@ -392,10 +393,7 @@ We will use the `express` library as a public interface module to use the web.
 - Properties: describe attributes of the node or edge
 - Hyper graph: one edge can join multiple nodes
 
-</details>
-
-<details closed="">
-  <summary>Lecture Four: REST</summary>
+## Lecture Four: REST
 
 A REST service has the following benefits
 
@@ -408,10 +406,7 @@ A REST service has the following benefits
   - with the same HTTP verbs (GET, POST, PUT, DELETE)
 - Use URL to navigate between the API instances
 
-</details>
-
-<details closed="">
-  <summary>Lecture Five: GraphQL and automated API testing</summary>
+## Lecture Five: GraphQL and automated API testing
 
 Note that for the assignments that we are assigned within this course, the
 local port servers will be hosted via your local computer (and a database that
@@ -660,3 +655,58 @@ data. *Another thing to realise is that a large number of npm packages won't wor
 browser*.
 
 </details>
+
+<details closed="">
+  <summary>Lecture 7: SPA's, Vue.js and Design patterns</summary>
+
+Vue.js uses all three of the main client-side technologies `Javascript,
+CSS, HTML`. One of the fundamental things that has changed in browser applications
+is the movement towards single page applications (SPA's). This allows us to have
+an improved user interaction because of the following reasons.
+
+- Users want responsiveness and interactivity; improved user experience
+  - Compare user experience with native and stand alone applications
+- Managing the user interactions with a user is much more complex than managing interaction with a server
+
+Single page applications are distinguished by their ability to redraw a small segment
+of the user interface rather than redrawing the entire page, in Vue these are known as
+`Vue Components`.
+
+**Goals and Features of SPA's**
+
+- Reduce server communication
+- Data binding
+- Content and representation (HTML, CSS, JS)
+- Page navigation and routing within an SPA
+  - routing represents the state of the application (often paired with a change of URL)
+  - Managing page history
+- CORS
+- Asynchronous background fetching of data by using web sockets or XHR
+
+**Design patterns**
+
+**Separation of concerns**
+
+- A design principle for separating software code into distinct sections, such that
+each section addresses a separate concern
+- A strategy for handling complexity
+  - Classes, objects and methods
+- Web computing
+  - HTML
+  - CSS
+  - JavaScript
+
+There are many different models and design patterns for code, `MVC, MVA, ...`.
+
+**MVC Model**
+
+- Multiple views
+- Synchronized views
+- Pluggable views and controllers
+- Exchangeable look and feel
+
+## Lecture 8: Communicating with servers in SPAs
+
+We use Asynchronous JavaScript and XML (AJAX) to retrieve data from the server
+or send data to the server, whilst the user is interacting with your web page
+on the browser.
