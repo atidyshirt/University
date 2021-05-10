@@ -710,3 +710,25 @@ There are many different models and design patterns for code, `MVC, MVA, ...`.
 We use Asynchronous JavaScript and XML (AJAX) to retrieve data from the server
 or send data to the server, whilst the user is interacting with your web page
 on the browser.
+
+The term `XMLHttpeRequest` is misleading as it refers to both XML and JSON
+formatting, and can also refer to protocols other than HTTP. This process is
+generally asynchronous, although it doesn't need to be asynchronous.
+
+**Cross Origin Requests (CORS)**
+
+Cross origin requests are set by the server, these act as a set of rules the
+server defines onto the browser and client in order to allow them to interact
+with the server. If the client does not follow these rules, the request will
+result in a `CORS Error`.
+
+The browser is responsible for enforcing cors errors, not the client itself.
+
+COR's effectively restricts the use of headers by the client in order to restrict
+the requests privileges of incoming clients.
+
+Here is an example of a `CORS` request:
+
+![cors](./Diagrams/cors.png)
+
+
