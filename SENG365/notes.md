@@ -725,10 +725,6 @@ result in a `CORS Error`.
 The browser is responsible for enforcing cors errors, not the client itself.
 
 COR's effectively restricts the use of headers by the client in order to restrict
-the requests privileges of incoming clients.
+the requests privileges of incoming clients. Here is an example of this:
 
-Here is an example of a `CORS` request:
-
-![cors](./Diagrams/cors.png)
-
-
+![Cross Origin Request Example](./Diagrams/cors.png){width=50%}
