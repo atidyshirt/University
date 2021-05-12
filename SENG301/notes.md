@@ -274,8 +274,6 @@ Both are shaping the design of your system early
 
 ## Lecture Seven: Staged and automated testing
 
-**Testing**
-
 ![Testing model](./Diagrams/testing-model.png)
 
 Objectives of testing:
@@ -352,7 +350,7 @@ As sprint reviews must be planned and prepared
 
 ## Lecture Eight: Ethics and resilience engineering
 
-> NOTE: I am not sure if this will be assessed?
+> NOTE: I am not sure how much of this will be assessed?
 
 Because we are using artificial intelligence for almost everything now from
 employment, academic integrity and almost anything else. Because of this as

@@ -12,10 +12,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -39,7 +39,7 @@ def dfs(adj_list, start):
     numOfVertices = len(adj_list)
     state = ["U"] * numOfVertices
     parent = [None] * numOfVertices
-    state[start] = "D" 
+    state[start] = "D"
     dfs_loop(adj_list, start, state, parent)
     return (parent, state)
 def dfs_loop(adj_list, u, state, parent, counter=0):
@@ -84,7 +84,7 @@ def next_vertex(in_tree, distance):
     mini = (float('inf'), None)
     for vertex in range(len(distance)):
         if distance[vertex] == 0:
-            parent = vertex    
+            parent = vertex
     for vertex in range(len(distance)):
         if distance[vertex] <= mini[0] and in_tree[vertex] == False:
             mini = distance[vertex], vertex
@@ -116,8 +116,8 @@ def distance_matrix(adj):
     dm = [
             [float('inf')
             if i != j
-            else 0 
-            for j in range(n)] 
+            else 0
+            for j in range(n)]
             for i in range(n)
         ]
 
