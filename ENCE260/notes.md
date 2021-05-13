@@ -1,3 +1,4 @@
+\newpage
 
 # ENCE260 Notes - Computer Systems
 

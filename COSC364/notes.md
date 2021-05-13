@@ -54,7 +54,7 @@ a one page hand written cheat sheet on an A4 sheet of paper, double sided.
 
 > NOTE: These assessments will be altered if lock down takes place, see details of adjustment on learn.
 
-# Lectures
+# Lectures Term One - Routing Protocols
 
 ## Lecture One: IPV4 Refresh
 
@@ -223,4 +223,124 @@ As explained previously, an LSU packet is simply a container for one or more LSA
 (see Routing 3.5)
 
 > NOTE: all fields are set in 32 bits, this is because the data bus size is 32 bits for LSA
+
+## Lecture Eight: Path Vector Routing and BGP
+
+Path vector routing method in `BGP`:
+
+![Convergance logic](./Diagrams/path-vector-routing-logic.png)
+
+This has a problem, that the protocol assumes that the neighbour will always
+receive the packet that has been sent. This is an issue due to the fact that
+in real world situations, packets get lost often.
+
+The issue with this is that path vector routing does not scale well due to the
+fact that with large networks there is simply too much traffic.
+
+`BGP` is currently the inter-autonomous system routing protocol that is currently
+in use in the internet today. This is because they view each AS as an individual
+node. This means that although it is played on a large scale, OSPF handles most of
+the traffic within autonomous systems (sometimes RIP also), and `BGP` handles the
+routing between autonomous systems.
+
+In `BGP` a router is known as a `BGP Speaker`, these advertise the available prefixes
+of a particular network.
+
+`BGP` takes place within a `BGP` session that is embedded into a `TCP` connection that
+allows us to communicate with neighbouring routers.
+
+> Note: *For routing packet structure of BGP messages, see the full notes on Learn*
+
+Definitions for BGP messages:
+
+- `AS-PATH`: this specifies the AS path or route through which all of the prefixes listed in the NLRI are reachable. Every BGP speaker sending an UPDATE to a peer prepends its known AS number
+- `ORIGIN`: identifies how an IP prefix has been injected into BGP. For example, a BGP router could have learned a prefix from an interior routing protocol running in its AS, or a prefix could have been manually configured
+- `NEXT-HOP`: this specifies the router in the speakers AS that routers in the neighboured AS should actually use to forward packets in order to reach an advertised prefix. This can be the same as the speaker, but can also be on a different machine
+- `MULTI-EXIT-DESCRIMINATOR`: two AS's can actually be connected by more than one pair of routers. For example, assume that two AS's are connected by two such routers, In some situations a destination prefix might be more preferably reached by one of the two router pairs. This attribute can be used to express such a preference.
+
+A specific Autonomous system can filter out specific prefixes that we do not
+want to send/receive on.
+
+- If import filtering indicates an unwanted prefix, discard it
+- If the IP prefix belongs our own AS, the speaker will prefer routes determined by its own interior routing protocol over learned routes
+- If there are several AS routes availible to the destination prefix, keep the ones with the fewest number of AS hops listed in the `AS-PATH`, if only a single router survives, then take this route
+- If there are still serveral candidate routes, choose the one having the highest preference, using the `MULTI-EXIT-DESCRIMINATOR` attribute
+
+In reality there are many more steps involved in producing a BGP routing protocol, however many of them
+are not nessasary to the core structure of the routing protocol.
+
+\newpage
+
+**Summarise my personal cheatsheet here (personal note)**
+
+\newpage
+
+# Lectures Term Two - Optimisation and Linear Programming
+
+## Lecture One: Intro to Linear Programming and ISP's
+
+An ISP is made up of routers, and the links that connect these routers. On long
+time frames, the ISP will have to make investment decisions, do we need new routers?
+where should I put these routers? Do I need new links? Where should these links be connected?
+
+This is important as routers and links are very expensive to replace.
+
+Many optimisation problems can be written in the form of linear programming problems.
+
+Calculating routes and the necessary traffic in a network:
+
+![context for lecture one](./Diagrams/context-for-lecture1.png)
+
+`Links` are parallel with capacities
+
+`Routes` are representative of traffic
+
+`Demand Volumes`:
+
+- Is a data we needed between two routes.
+- Traffic is continuous bit rate.
+- Can be split over different paths
+
+We are given a number of routers and a costs and number of routes to and from
+networks. We need to determine how much traffic of DV h to route to routes between
+`i` and `j`. These are known as path flows.
+
+Example: Assume single demand volume between nodes [1, 2]
+
+Demand volume is *h*
+
+Paths:
+
+$$ 1 \leftrightarrow 2 $$
+$$ 1 \leftrightarrow 3 \leftrightarrow 2 $$
+
+Links have capacities, Capacity of a path is the minimum of link capacities of involved links.
+Because in reality these capacities are the data rates of the link in question.
+
+Deduce path capacities:
+
+$$ C_{12} \quad for \quad path \quad 1 \leftrightarrow 2 $$
+$$ C_{132} \quad for \quad path \quad 1 \leftrightarrow 3 \leftrightarrow 2 $$
+
+We need to check path flows:
+
+$$ X_{12} \quad : \quad flow \quad on \quad path \quad 1 \leftrightarrow 2 $$
+$$ X_{132} \quad : \quad flow \quad on \quad path \quad 1 \leftrightarrow 3 \leftrightarrow 2 $$
+
+We can state some constraints for those decision variables:
+
+- Demand constraint: $X_{12} + X_{132} = h$
+    * If we split paths, we must have seporate paths from 1 - 2 adding up to *h*
+- Non-Negative constraint: $X_{12} \geq 0 \quad and \quad X_{132} \geq 0$
+- Capacity constraint: $X_{12} \leq C_{12} \quad and X_{132} \leq C_{132}$
+
+Suppose $C_{12} = C_{132} = G = 10$ and $h = 7$:
+
+Question: How many feasible solutions are there?
+
+Answer: Any value within the range of $0 \leftrightarrow h$ where *h* is 7 in this
+example, is a viable solution, therefore there are infinitely many solutions for this
+problem, to be precise there is an uncountably infinite solutions to this problem.
+
+Solution formally: let x be a viable solution such that $x \in (0, 7) \in \mathbb{R}$
 

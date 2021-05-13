@@ -406,7 +406,7 @@ A REST service has the following benefits
   - with the same HTTP verbs (GET, POST, PUT, DELETE)
 - Use URL to navigate between the API instances
 
-## Lecture Five: GraphQL and automated API testing
+## Lecture Five, Six, Seven: GraphQL and automated API testing
 
 Note that for the assignments that we are assigned within this course, the
 local port servers will be hosted via your local computer (and a database that
@@ -705,7 +705,7 @@ There are many different models and design patterns for code, `MVC, MVA, ...`.
 - Pluggable views and controllers
 - Exchangeable look and feel
 
-## Lecture 8: Communicating with servers in SPAs
+## Lecture Eight: Communicating with servers in SPAs
 
 We use Asynchronous JavaScript and XML (AJAX) to retrieve data from the server
 or send data to the server, whilst the user is interacting with your web page
