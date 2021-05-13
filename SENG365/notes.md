@@ -406,7 +406,7 @@ A REST service has the following benefits
   - with the same HTTP verbs (GET, POST, PUT, DELETE)
 - Use URL to navigate between the API instances
 
-## Lecture Five, Six, Seven: GraphQL and automated API testing
+## Lecture Five: automated API testing
 
 Note that for the assignments that we are assigned within this course, the
 local port servers will be hosted via your local computer (and a database that
@@ -553,7 +553,7 @@ exports.logoutAccount = async function (token) {
 - You request less information that you need
 - making multiple small requests when we could have made one larger request at less cost
 
-**GraphQL**
+## Lecture Six: GraphQL
 
 GraphQL is a _specification_ for how you specify data (strong typing) and how you
 go about querying that data.
@@ -654,10 +654,7 @@ the server side, we are interacting with inputs and outputting responses to the 
 data. *Another thing to realise is that a large number of npm packages won't work in you're
 browser*.
 
-</details>
-
-<details closed="">
-  <summary>Lecture 7: SPA's, Vue.js and Design patterns</summary>
+## Lecture Seven: SPA's, Vue.js and Design patterns
 
 Vue.js uses all three of the main client-side technologies `Javascript,
 CSS, HTML`. One of the fundamental things that has changed in browser applications
