@@ -419,9 +419,54 @@ a request without both.
 The four R's of resilience engineering plan:
 
 - Recognition: how an attack may target an identified resource
-- Resistance: possible strateies to resist to each thread
+- Resistance: possible strategies to resist to each thread
 - Recovery: plan data, software and hardware recovery procedures
 - Reinstatement: define the process to bring the system back
 
 This means we should have **backup** and **reinstalling** procedures, that should be
 specified on top of deployment.
+
+## Lecture Nine: Continuous Integration
+
+**The integration problem**:
+
+This is the process of combining `units` into a product
+
+- After you developed your part
+- ... and tested on our side
+
+**Phased Integration**:
+
+Multiple variables, interfaces and technologies
+
+- Global variables
+- Different error-handling assumption
+- Weak encapsulation
+
+These are where and how we define environment variables for testing, *DO NOT ADD THESE TO THE REPO*
+
+**Continuous Integration**:
+
+*Working software is the primary measure of success*, If we cannot run and see it, it is **not** progress.
+
+> This is when we have progress on our personal machine but it is not uploaded to any current repository
+
+There are eXtreme programing principles that were outlined by Martain Fowler known as Fowler's Principles.
+
+These are outlined here:
+
+![Fowlers Principlese](./Diagrams/fowlers-principles.png)
+
+Managing repositories if it is handled in a Single source repository, this makes it easier to maintain, helps to be
+`centralized` or use *subversion* and `distributed` *git* having two levels of commits. To be distributed means that
+each person working on the task is allowed to maintain their own branch `feature branches`, to be centralized is to have a `main` branch
+*maybe multiple main branches such as [dev, master, release]*. This helps with implementation, working in teams and 
+streamlining development. *Once again Linus Torvalds has made our life easy*.
+
+![Driessen's Branching and Merging](./Diagrams/merging-branching.png)
+
+Figure 6 shows a development strategy that we will be using within our SENG302 project, this is a good idea as it includes
+a release branch (only push to this at the end of each sprint), a dev branch (usually only modified after a story is fully
+complete), story branches (only merged into dev when finished), master branch (updated from dev when dev is pushable).
+
+

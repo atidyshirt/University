@@ -1,10 +1,18 @@
-> [TOC]
-
-<center>
+---
+title: "Networking"
+author: [Jordan Pyott]
+date: "2021-05-14"
+subject: "COSC264"
+subtitle: ""
+lang: "en"
+titlepage: true
+titlepage-color: "3C9F53"
+titlepage-text-color: "FFFFFF"
+titlepage-rule-color: "FFFFFF"
+titlepage-rule-height: 2
+...
 
 # COSC264 Notes - Networking
-
-</center>
 
 ### General Info About Course
 
