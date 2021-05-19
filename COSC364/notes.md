@@ -528,4 +528,45 @@ $$ \quad \quad \quad \sum^{m}_{j=1} a_i = B $$
 $$ \quad \quad \quad a_i \geq 0 $$
 $$ \quad \quad \quad a_i \leq B $$
 
+### Problem 4.2.1 Reduction to Standard Form
+
+$$ min \quad c^Tx $$
+$$ s.t. \quad Ax = b $$
+$$ \quad \quad x \geq 0 $$
+
+**Question:** Reduce the following problem to standard form
+
+$$ min \quad x_1 + 2x_2 + 3x_3 $$
+$$ s.t. \quad x_1 + 6x_2 - 4x_3 = 5 $$
+$$ \quad \quad 3x_1 + x_2 - 2x_3 = -8 $$
+$$ \quad \quad x_1 \geq 0, x_2 \geq 0, x_3 \geq 0 $$
+
+**Convert this to vector/matrix form**
+
+Constants on the objective function defines $C^T$ (constant vector)
+
+$$ C^T = (1,2,3) $$
+
+Decision vector is defined by the variables of the objective function $x^T$
+
+$$ x^T = (x_1, x_2, x_3) $$
+
+$A$ is defined by the system of equations within the constraints (problem in vector matrix form)
+
+$$ A = \begin{pmatrix}
+1 & 6 & -4 \\
+-3 & -1 & 2
+\end{pmatrix}
+$$
+
+$B^T$ is defined by the resultant vector, (results of the linear systems)
+
+$$ b^T = (5, 8) $$
+
+If we have in-equalities in the constraints of the problem, we can use surplus variables
+in order to turn them into an equality.
+
+$14 \geq 8$ turns into $14 - 6 = 8$ or for something we don't know, we use a variable named `y`.
+
+
 
