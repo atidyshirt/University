@@ -593,10 +593,7 @@ The testing framework has similar testing functions to those seen in `Jest`:
 
 More information can be found in the documentation with Chai and Mocha testing.
 
-</details>
-
-<details closed="">
-  <summary>Lecture 6: Security and Introduction to Web Clients</summary>
+## Lecture 6: Security and Introduction to Web Clients
 
 Note, incorporating security on a advanced level is not in the scope of the course,
 the content covered here is more of a primer to encourage you to do your own reading
@@ -725,3 +722,4 @@ COR's effectively restricts the use of headers by the client in order to restric
 the requests privileges of incoming clients. Here is an example of this:
 
 ![Cross Origin Request Example](./Diagrams/cors.png){width=50%}
+

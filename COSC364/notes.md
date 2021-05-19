@@ -344,3 +344,188 @@ problem, to be precise there is an uncountably infinite solutions to this proble
 
 Solution formally: let x be a viable solution such that $x \in (0, 7) \in \mathbb{R}$
 
+## Lecture Two: Linear Optimisation (Tutorial)
+
+The objective of our linear optimisation is either to find the optimal `load
+balancing` of a network or minimum cost of a network.
+
+Linear Optimisation problems are composed of two parts
+
+- **Objective Function** $\rightarrow$ The problem we are trying to solve *min cost or load balancing etc.*
+- **Constraints** $\rightarrow$ Network for the problem
+
+We denote the objective function with the following notation $minimise_{[x]}$ where
+we are minimising a set of `x` variables and our general notation consists of a transposed
+constant called C and a variable called x, the general format is considered the following:
+
+$$ minimise_{[x]} \quad C^{T}X $$
+$$ subject \ to \quad Ax = b $$
+$$ \quad \quad X \geq 0 $$
+
+> This is the general format of every linear programming problem
+
+### Problem 4.1.2 Wireless Communications
+
+![Wireless Communications](./Diagrams/wireless-comunication.png)
+
+Each user (ie u1) wants to transmit to its own base station (B1) and similar for
+u2, each user has transmit power denoted by the letter `p`, and we have an attenuation
+factor from u1 to base station 2 and vice versa for u2, this is denoted by $h_{1,2}$ for
+u1 and $h_{2,1}$ for u1.
+
+Therefore base station one recieves $h_{2,1}p_i$, this gives us the following equation
+seen in the figure below
+
+![Wireless Communications Worked](./Diagrams/wireless-comunication2.png)
+
+The right side of the equation is the `threshhold` ($y_i$) *i* refers to a user on the
+network, *p* indicates the power, $h_{j,i} denotes attenuation factor and *o* represents our noise factor, see this notated
+below.
+
+![Wireless Communications Worked](./Diagrams/wireless-comunication3.png)
+
+This then becomes the base equation for our problem. Our goal as outlined in the question
+is to find an allocation of transmit powers to the different users such that the total transmit
+power becomes minimal -> this means that the condition outlined above holds for **all** users on
+the network.
+
+This gives us our linear program:
+
+$$ minimise_{[x]} \quad p_1 + p_2 + ... + p_n$$
+$$ subject \ to \quad \frac{p_i h_{i,i}}{\sum_{j \neq i} (p_j h_{j,i}) + \sigma^2} \geq y_i \quad for \ all \ i \in [1 ... n]$$
+$$  \qquad \qquad p_i \geq 0 \quad for \ all \ i \in [1 ... n]$$
+
+The problem asks us to re-write this into matrix form
+
+**Matrix Form**: (in general)
+
+$$ minimise_{[p]} \quad C^{T}P $$
+$$ subject \ to \quad A_p \geq b $$
+$$ \quad \quad p \geq 0 $$
+
+To address this matrix with more accuracy we need to define what lies in each matrix
+
+**Where** (specific):
+
+We can re-arrange the following equation:
+
+$$ \frac{p_i h_{i,i}}{\sum_{j \neq i} (p_j h_{j,i}) + \sigma^2} \geq y_i $$
+
+To:
+
+$$ p_i h_{i,i} - y_i(\sum_{j \neq i} p_j h_{j,i}) \geq y_i \sigma^2 $$
+
+We now have all the information to find $C^T$ and $b$ in our equation:
+
+$$ C^T = (1, 1, ..., 1) \qquad b = \sigma^2 (y_1, y_2, ..., y_n)^T $$
+
+\newpage
+
+**Question**: Convert the above equation to matrix form. (Find A, p, and b in terms of matrices)
+
+We can translate this by putting in values for *i, j* into the equation outlined above.
+
+$$
+A = \begin{pmatrix}
+h_{1,1} & -y_1 h_{2,1} & -y_1 h_{3,1} & ... -y_1 h_{j,1} \\
+-y_2 h_{1,2} & h_{2,2} & -y_2 h_{3,2} & ... -y_1 h_{i,2} \\
+... & ... & ... & ...
+\end{pmatrix}
+$$
+
+
+### Problem 4.1.3 The Transportation Problem
+
+**Problem:** formulate the Transport problem from the given information below using the methods
+provided in class.
+
+**Given information:**
+
+- At $i$, produce $a_i$ units $m$ production locations $> i \in [1, m]$
+- At $j$, require $b_j$ units $n$ customer locations $> j \in [1,n]$
+- Expression: $\sum^{m}_{i=1} a_i = \sum^{n}_{j=1} b_j$
+
+> The expression above gives us the total number of units produced = total number of units required
+
+- We know that $C_{i,j}$ is the cost to ship form $i$ to $j$ (production (i) to customer (j))
+- variable $x_{i,j}$ units to ship from $i$ to $j$ (production (i) to customer (j))
+    * We denote this as $x$ to indicate that we have control over this variable
+
+Now we have all the information in order to define our objective function, we need to define
+this as a linear programming equation in the standard form.
+
+The minimum cost is defined by $\sum c_{i,j} x_{i,j}$
+
+So we can formulate this into our standard form for linear programming problems:
+
+$$ minimize_{[x]} \quad \sum^{m}_{i=1} \sum^{n}_{j=1} c_{i,j} x_{i,j} $$
+$$ subject \ to \quad \sum^{n}{j=1} x_{i,j} = a_i for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad \sum^{m}_{i=1} x_{i,j} = b_{j} \ for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad x_{i,j} \geq 0 \ for \ all \ i \in [1,m], j \in [1,n] $$
+
+Notice in our first constraint, we have a fixed value *i* and a variable *j*, in the
+second constraint we have a fixed value *j* and a variable value *i*.
+
+We can now convert these conditions to our linear programming expression:
+
+**Base expression**:
+
+$$ minimise_{[p]} \quad C^{T}P $$
+$$ subject \ to \quad A_p \geq b $$
+$$ \quad \quad p \geq 0 $$
+
+**Define variables:**
+
+$$ c^T = (c_{1,1}, c_{1,2}, ... c_{1,n}, c_{2,1}, c_{2,2}, ...c_{2,n}, ...c_{m,n}) $$
+$$ x = (x_{1,1}, x_{1,2}, ... x_{1,n}, x_{2,1}, x_{2,2}, ...x_{2,n}, ...x_{m,n}) $$
+
+> Note: that our variable x will always match our $c^T$ notation
+
+$$ 
+b = 
+\begin{pmatrix}
+a_1 \\
+a_2 \\
+... \\
+a_m \\
+b_1 \\
+b_2 \\
+... \\
+b_n
+\end{pmatrix}
+$$
+
+$$ A = \begin{pmatrix}
+a \ 1 \ where \ there \ is \ x_{1,j} \ exists \ else \ 0 \\
+have \ a \ 1 \ where \ there \ is \ x_{m,j} \\
+have \ a \ 1 \ where \ x_{m,1} \ exists \\
+have \ a \ 1 \ where \ x_{i,n} \ exists \\
+\end{pmatrix}
+$$
+
+### Problem 4.1.4 Minimise Transport Problem
+
+> Note: in this problem, $a_i$ is now a variable and can be changed, not a fixed value as stated before.
+
+$$ minimize_{[x]} \quad \sum^{m}_{i=1} \sum^{n}_{j=1} c_{i,j} x_{i,j} $$
+$$ subject \ to \quad \sum^{n}{j=1} x_{i,j} = a_i for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad \sum^{m}_{i=1} x_{i,j} = b_{j} \ for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad x_{i,j} \geq 0 \ for \ all \ i \in [1,m], j \in [1,n] $$
+
+We know that $\sum^{m}_{i=1} a_i = \sum^{n}_{j=1} b_j$ we now need to make sure that the
+amount produced is equal to the amount required, we must add this as a constraint.
+
+$$ let B = \sum^{n}_{j=1} b_j $$
+
+Our new linear expression is this, note that we have to add upper and lower bounds to our
+new variable $a_i$, this is because we cannot have non-negative values and $a_i \leq B$
+
+$$ minimize_{[x]} \quad \quad \quad \sum^{m}_{i=1} \sum^{n}_{j=1} c_{i,j} x_{i,j} $$
+$$ subject \ to \quad \sum^{n}{j=1} x_{i,j} = a_i for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad \sum^{m}_{i=1} x_{i,j} = b_{j} \ for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad x_{i,j} \geq 0 \ for \ all \ i \in [1,m], j \in [1,n] $$
+$$ \quad \quad \quad \sum^{m}_{j=1} a_i = B $$
+$$ \quad \quad \quad a_i \geq 0 $$
+$$ \quad \quad \quad a_i \leq B $$
+
+
