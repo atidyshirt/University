@@ -771,7 +771,7 @@ Because of this, it is possible to find a unique vector $x_B \in \mathbb{R}^m$ s
 
 $$ Bx_B = b $$
 
-- Then for the vector $x = [x_B, 0] \in \mathnn{R}^n$ we have:
+- Then for the vector $x = [x_B, 0] \in \mathbb{R}^n$ we have:
 
 $$A \dot x = [B, C] \dot [X_B, 0\ = b $$
 
@@ -784,17 +784,17 @@ So, we can do the following:
 - We can extend this to a general recipie to find further solutions to $Ax = b$
 - Pick any *m* linearly independent columns of *A*, collect them into a matrix *B*
 - Find a vector $X_B$ solving $Bx_B = b$
-- then the vector $x \in \mathbb{R}^n containing the entries of $X_B$ corresponding to the columns
+- then the vector $x \in \mathbb{R}^n$ containing the entries of $X_B$ corresponding to the columns
 chosen in the first step and ero elsewhere, is a solution of $Ax = b$
 
 ### The Fundamental Theorem of Linear Programming
 
-```
-For the linear program (1) with the above assumptions **A1** and **A2** the following holds:
-
-1. If the problem has a feasible solution then it also has a basic feasible solution
-2. If the problem has an optimal feasible solution, then it also has an optimal basic feasible solution
-```
+\fbox{\parbox{\textwidth}{
+For the linear program (1) with the above assumptions **A1** and **A2** the following holds: \\
+\\
+1. If the problem has a feasible solution then it also has a basic feasible solution \\
+2. If the problem has an optimal feasible solution, then it also has an optimal basic feasible solution \\
+}}
 
 This theorem underlies the operation of the simplex algorithm, which only considers basic feasible solutions
 to find an optimal solution to a linear program.
