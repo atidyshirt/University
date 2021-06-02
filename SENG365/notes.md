@@ -10,7 +10,7 @@ titlepage-color: "3C9F53"
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "FFFFFF"
 titlepage-rule-height: 2
-...
+---
 
 \newpage
 
@@ -37,10 +37,6 @@ This course explores web applications and the underlying distributed application
   - No extension
 - Exam (30%)
   - 2 hours
-
-\newpage
-
-# Labs
 
 \newpage
 
