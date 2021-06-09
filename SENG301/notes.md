@@ -877,6 +877,7 @@ This pattern ensures that a class only has one instance and provide a global poi
     * How should other code find the one instance
 - Solution
     - Make the *constructor private*
+      * Making this in-accessible prevents accidental making of the item
     - Use a *static attribute* in the class that holds *one instance*
     - Add a *static getter* For the instance
 
@@ -894,5 +895,244 @@ This is an example of a singleton object, that has static public methods and a p
 if the class has already been instantiated, note this is a lazy implementation of this design pattern for
 this class.
 
+## Lecture Fifteen: Specific Creation Design Patterns - continued
+
+**Factory Method**
+
+Define an interface for creating an object, but let subclasses decide which class
+to instantiate. Factory method lets a class defer instantiation to subclasses.
+
+- This allows for changing of how we instantiate a class and we do not need to change
+  code produced using the factory method.
+
+- **Problem**:
+  - Normally, code that expects an object of a particular class does not need to know which
+    subclass the object belongs to.
+  - Exception: when you create an object you need to know its exact class, the `new` operator
+    increases coupling! *don't use factory in this instance*.
+  - Need a way to create the right kind of object without knowing its exact class.
+
+> Here is an example of a Virtual constructor, (factory method)
+
+```mermaid
+classDiagram
+    Player <|-- Wizard
+    Player <|-- Warrior
+    Weapon <|-- Sword
+    Weapon <|-- Staff
+    class Player {
+      +stamina
+      +health
+      +attack()
+    }
+    class Wizard {
+      +mana
+      +spell()
+    }
+    class Warrior {
+      +heavyAttack()
+    }
+    class Weapon {
+      +hit()
+    }
+```
+
+If the players `attack()` function looks something like the following:
+
+```java
+if (player == Wizard) {
+  weapon = new Wand();
+} else if (player == Fighter) {
+  weapon = new Sword();
+}
+weapon.hit(enemy);
+```
+
+This is a problem, because now the player also has to have knowledge of the
+weapon class, therefor changing the weapons class will affect the player class.
+This is an example of coupling, and should be avoided if possible.
+
+- **Solution:**
+  - Move the *new* into an abstract method.
+  - *Override that method to create the right subclass object*.
+  - In practice this follows the general structure:
+
+```mermaid
+classDiagram
+  Creator <|-- ConcreteCreator
+  Product <|-- ConcreteProduct
+  class Creator {
+    +factoryMethod()
+    +doSomething()
+  }
+  class ConcreteCreator {
+    +factoryMethod()
+  }
+```
+
+As we can see, `factoryMethod()` is abstract in `Creator` class, and is being overwritten by the
+concrete creator.
+
+The concrete creator is linked to each concrete product in order to create these instances of classes.
+
+> Here is an implementation of the factory method
+
+```mermaid
+classDiagram
+  Player <|-- Wizard
+  Player <|-- Warrior
+  Weapon <|-- Sword
+  Weapon <|-- Staff
+  Wizard --* Staff
+  Warrior --* Sword
+
+  class Player {
+    <<AbstractCreator>>
+    +makeWeapon()
+    +attack()
+  }
+  class Weapon {
+    <<AbstractProduct>>
+    +smite()
+  }
+  class Sword {
+    <<AbstractProduct>>
+    +smite()
+  }
+  class Staff {
+    <<ConcreteProduct>>
+    +smite()
+  }
+  class Wizard {
+    <<ConcreteCreator>>
+    +makeWeapon()
+  }
+  class Warrior {
+    <<ConcreteCreator>>
+    +makeWeapon()
+  }
+```
+
+Now that we have implemented a design, we can see how it maps to the Gang of Four
+design pattern.
+
+| GoF              | Our Design    |
+| ---              | ---           |
+| AbstractCreator  | Player        |
+| Concrete Creator | Wizard        |
+| Concrete Creator | Warrior       |
+| AbstractProduct  | Weapon        |
+| ConcreteProduct  | Staff         |
+| ConcreteProduct  | Sword         |
+| FactoryMethod    | `makeWeapon() |
+
+We can have fancier methods with this design, `factoryMethods` can have parameters,
+and `factoryMethod()` is able to produce more than one type of product.
+
+We can also throw in the class itself `makeWeapon(self)` in order to make decisions
+based on things like height, level...
+
+**Abstract Factory**
+
+We might define an abstract class as a `Window`, and then we can provide other components
+to this family of components to draw the window, such that we create classes for `Scrollbar`,
+`Application` and allow them to both be drawn on the window, we end up with the following
+setup:
+
+```mermaid
+classDiagram
+  WidgetFactory <|-- MotifWidgetFactory
+  WidgetFactory <|-- WindowsXPWidgetFactory
+  Client --> Window
+  Client --> ScrollBar
+  ScrollBar <|-- WindowsXPScrollBar
+  ScrollBar <|-- MotifScrollBar
+  Window <|-- WindowsXPWindow
+  Window <|-- MotifWindow
+  MotifWidgetFactory --* MotifWindow
+  MotifWidgetFactory --* MotifScrollBar
+  class WidgetFactory {
+    +createScrollBar()
+    +createWindow()
+  }
+  class WindowsXPWidgetFactory {
+    +createScrollBar()
+    +createWindow()
+  }
+  class MotifWidgetFactory {
+    +createScrollBar()
+    +createWindow()
+  }
+```
+
+Here is how this abstract factory design maps to GoF
+
+| GoF               | Our Design             |
+| ---               | ---                    |
+| AbstractFactory   | WidgetFactory          |
+| ConcreteFactory1  | MotifWidgetFactory     |
+| ConcreteFactory2  | WindowsXPWidgetFactory |
+| AbstractProductA  | Window                 |
+| ConcreteProductA1 | MotifWindow            |
+| ConcreteProductA2 | WindowsXPWindow        |
+| AbstractProductB  | ScrollBar              |
+| ConcreteProductB1 | MotifScrollBar         |
+| ConcreteProductB2 | WindowsXPScrollBar     |
+| ...               | ...                    |
+
+
+**Observer Pattern**
+
+- Problem:
+  * Separate concerns into different classes, but keep them in sync
+    * Separate GUI code from model
+  * Avoid tight coupling
+
+- Solution:
+  * Separate into subject and observers
+    * Can have many observers for one subject
+  * The subject knows which objects are observing it, but does not know anything else about them
+  * when the subject changes, all observers are notified
+
+Here is an observer mapped to Gang of Four
+
+```mermaid
+classDiagram
+  Subject --> Observer
+  Subject <|-- ConcreteSubject
+  Observer <|-- ConcreteObserver
+  class Subject {
+    +attach(Observer)
+    +detach(Observer)
+    +notify()
+  }
+  class ConcreteSubject {
+    +doSomething()
+  }
+  class Observer {
+    <<interface>>
+    +update(Observable, Object)
+  }
+```
+
+Java was built onto the Observer pattern, however this is depreciated from `Java 9`
+onwards.
+
+- Allows many Observers to many subjects
+- Adds a *dirty* flag to help avoid notifications at wrong time
+- Swing `EventListner's` are another variant of Observer
+- Java 11 has 93 classes with `Listner` in their names
+
+This maps to Gang of Four as follows:
+
+| Gang Of Four                                     | Signal App                                     |
+| ---                                              | ---                                            |
+| Subject                                          | SignalFace                                     |
+| Observer                                         | SignalFaceObserver                             |
+| Concrete Subject                                 | SignalFace                                     |
+| doSomething()                                    | display()                                      |
+| getterA                                          | getColor()                                     |
+| Subject - Observer Relationship                  | SignalFace - SignalFaceObserver Relationship   |
+| Cocrete Subject - Concrete Observer Relationship | SignalFace - 2DSignalFaceGUI Relationship |
 
 

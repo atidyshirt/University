@@ -64,7 +64,7 @@ seen in the figure below
 ![Wireless Communications Worked](./Diagrams/wireless-comunication2.png)
 
 The right side of the equation is the `threshhold` ($y_i$) _i_ refers to a user on the
-network, _p_ indicates the power, $h\_{j,i} denotes attenuation factor and _o_ represents our noise factor, see this notated
+network, _p_ indicates the power, $h\_{j,i}$ denotes attenuation factor and _o_ represents our noise factor, see this notated
 below.
 
 ![Wireless Communications Worked](./Diagrams/wireless-comunication3.png)
@@ -703,7 +703,7 @@ the set that is optimal with respect to the question *minimum or maximum*.
 
 ## Lecture Four: Altering problems to canonical form
 
-**To vectorise a problem, we need to map the matrix to be contained in a single vector:
+**To vectorise a problem, we need to map the matrix to be contained in a single vector:**
 
 $$ x = {x_{1,1} x_{1,2} x_{1,3} ... x_{1,m} x_{2,1} x_{2,2} x_{2,3} ... ... x_{m,n}} $$
 $$ c = {c_{1,1} c_{1,2} c_{1,3} ... c_{1,m} c_{2,1} c_{2,2} c_{2,3} ... ... c_{m,n}} $$
@@ -821,12 +821,12 @@ The steps of the simplex algorithm are as follows:
 - A number *K* of demand volumes are placed on the network
 - The demand volumes are described by a table in the following form:
 
-| Index  | Involved Nodes | Demand Volume |
-| +----+ | +------------+ | +-----------+ |
-| 1      | 1:2            | $h_1$         |
-| 2      | 3:7            | $h_2$         |
-| ...    | ...            | ...           |
-| K      | 44:1           | $h_k$         |
+| Index | Involved Nodes | Demand Volume |
+| ----  | ------------   | -----------   |
+| 1     | 1:2            | $h_1$         |
+| 2     | 3:7            | $h_2$         |
+| ...   | ...            | ...           |
+| K     | 44:1           | $h_k$         |
 
 **Paths**
 
@@ -850,12 +850,12 @@ $$
 - Links are numbered from 1 to *L*, the numbering is arbitrary
 - The links and their capacities are described by a table in the following form:
 
-| Index  | Involved Nodes | Demand Volume |
-| +----+ | +------------+ | +-----------+ |
-| 1      | 6:9            | $c_1$         |
-| 2      | 74:75          | $c_2$         |
-| ...    | ...            | ...           |
-| L      | 2:4            | $c_L$         |
+| Index | Involved Nodes | Demand Volume |
+| ----  | ------------   | -----------   |
+| 1     | 6:9            | $c_1$         |
+| 2     | 74:75          | $c_2$         |
+| ...   | ...            | ...           |
+| L     | 2:4            | $c_L$         |
 
 **Link-Path table**
 
@@ -863,11 +863,11 @@ $$
 - Done through a table showing which links are involved in which paths for which volumes
 
 | Link Index | Flow *k=1* *p=1* | Flow *k=2* *p=2* |
-| ----     | ------------   | -----------    |
+| ----       | ------------     | -----------      | 
 | 1          | 1                | 0                |
 | 2          | 0                | 1                |
 | ...        | ...              | ...              |
-| K          | 0                | 0                | 
+| K          | 0                | 0                |
 
 Working with these tables is extremely clumsy, so we take another approach using *Capacity constraints*
 
@@ -882,8 +882,8 @@ $$ y_i = \sum^{K}_{k=1} \sum^{P_k}_{p=1} X_{kp} \delta{kpl} $$
 **Minimum Cost Routing Problem One**
 
 - For the minimum cost routing problem we first assume that costs are given per path
-- For each demand volume $k$ we have $p_k$  paths availible, numbered from 1 to $P_k$
-- We will need cost values with double indicies:
+- For each demand volume $k$ we have $p_k$  paths available, numbered from 1 to $P_k$
+- We will need cost values with double indecies:
 
 $$ \phi_{kp} $$
 
@@ -892,4 +892,13 @@ Indicating the cost per unit of data flow for the *p*-th path chosen for demand 
 - With these cost co-efficients the overall minimum cost routing problem becomes:
 
 ![Minimum Cost Routing](./Diagrams/cost-routing.png)
+
+## Lecture Seven: Specific Linear Programming Problems
+
+**Capacity Design Problems**
+
+- In a capacity design problem we are given the number of nodes and demand flows
+- We lease links between nodes and decide their capacities
+- We assume that the ISP can offer links of arbitrary capacity $C_i$
+
 
