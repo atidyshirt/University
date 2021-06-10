@@ -1125,14 +1125,176 @@ onwards.
 
 This maps to Gang of Four as follows:
 
-| Gang Of Four                                     | Signal App                                     |
-| ---                                              | ---                                            |
-| Subject                                          | SignalFace                                     |
-| Observer                                         | SignalFaceObserver                             |
-| Concrete Subject                                 | SignalFace                                     |
-| doSomething()                                    | display()                                      |
-| getterA                                          | getColor()                                     |
-| Subject - Observer Relationship                  | SignalFace - SignalFaceObserver Relationship   |
-| Cocrete Subject - Concrete Observer Relationship | SignalFace - 2DSignalFaceGUI Relationship |
+| Gang Of Four                                     | Signal App                                   |
+| ---                                              | ---                                          |
+| Subject                                          | SignalFace                                   |
+| Observer                                         | SignalFaceObserver                           |
+| Concrete Subject                                 | SignalFace                                   |
+| doSomething()                                    | display()                                    |
+| getterA                                          | getColor()                                   |
+| Subject - Observer Relationship                  | SignalFace - SignalFaceObserver Relationship |
+| Cocrete Subject - Concrete Observer Relationship | SignalFace - 2DSignalFaceGUI Relationship    |
+
+## Lecture Sixteen: State, Command, Template Patterns
+
+**State Pattern**
+
+The intention is to allow an object to alter its behaviour when its internal state changes. The object will
+appear to change its class.
+
+- State chart is a representation of an objects behaviour.
+  - How can we add states without updating the general behaviour?
+
+- State-specific behaviour encapsulated in concrete classes
+- State interface declares *one or more* state specific methods - should make sense to all concrete states
+- Context communicates via State interface
+
+```mermaid
+classDiagram
+  Context --> State
+  State <|-- COncreteStateA
+  State <|-- COncreteStateB
+  class Context {
+    void request1()
+    void request2e()
+  }
+  class State {
+    void handle1()
+    void handle2()
+  }
+  class ConcreteStateA {
+    void handle1()
+    void handle2()
+  }
+  class ConcreteStateB {
+    void handle1()
+    void handle2()
+  }
+```
+
+**Implementing State Pattern**
+
+- Context, create states can perform state transition - by replacing context's state object
+- If transition criteria fixed, then can be done in context - concrete state classes then can be independent
+- Initial state set in context
+- Explicit transitions prevent getting into inconsistent state
+
+> Here is how this would be implemented in practice
+
+```mermaid
+classDiagram
+  Context --> State
+  State <|-- COncreteStateA
+  State <|-- COncreteStateB
+  class Context {
+    +state : State
+    Context(initialState)
+    changeState(state)
+    void request1()
+    void request2e()
+  }
+  class State {
+    void handle1()
+    void handle2()
+  }
+  class ConcreteStateA {
+    +context
+    setContext(context)
+    void handle1()
+    void handle2()
+  }
+  class ConcreteStateB {
+    void handle1()
+    void handle2()
+  }
+```
+
+Here is a real implementation of this
+
+![State diagram for a document](./Diagrams/state-pattern.png)
+
+**Command Pattern**
+
+- Encapsulate a request in an object to:
+  * Parameterize clients with different requests
+  * queue or log requests
+  * support undoing operations
+
+Command pattern setup
+
+- Command
+  * Declares interface for executing operation
+- ConcreteCommand
+  * Implements `execute()`
+  * Defines binding between receiver object and an action
+- Client
+  * Creates ConcreteCommand and sets receiver
+- Invoker
+  * Asks command to carry out requests
+- Receiver
+  * knows how to carry out requests (can be any class)
+
+Here is how this maps to a class diagram:
+
+```mermaid
+classDiagram
+  Invoker o-- Command
+  Command <|-- ConcreteCommand
+  Client --* Receiver
+  Client --* ConcreteCommand
+  ConcreteCommand --> Receiver
+  class Command {
+    execute()
+    unexecute()
+  }
+  class ConcreteCommand {
+    state
+    execute()
+    unexecute()
+  }
+  class Receiver {
+    action()
+  }
+
+```
+
+Here is an example of how this might map to a real world case for a Smart Home.
+
+![Smart Home Example](./Diagrams/smart-home.png)
+
+| GoF             | Our Design (example) |
+| ---             | ---                  |
+| Command         | SmartHomeCommand     |
+| ConcreteCommand | LightOnCommand       |
+| ConcreteCommand | ListenToCDCommand    |
+| Receiver        | Stereo               |
+| Receiver        | Light                |
+| Invoker         | RemoteControl        |
+| Client          | Resident             |
+
+**Template Method: Encapsulating algorithms**
+
+We can use functions in order to define the actions within a game, we can have multiple games
+that follow the same general sequence. We can use abstract template classes in order to have an abstract
+game design that can be templated towards specific instances of game, i.e. `Chess, Monopoly`
+
+Here is an implementation of an abstract class to implement in this idea.
+
+```java
+abstract class Game {
+  protected int playersCount
+  abstract void initalizeGame();
+  abstract void makePlay(int player);
+  abstract boolean finishGame(); abstract void printWinner();
+}
+```
+
+**Hooks in template method**
+
+- Can include hooks so subclasses can hook into algorithm at suitable points
+- Hook declared in abstract class with empty or default implementation
+- Subclasses are free to ignore hook
+
+## Lecture Sixteen: State, Command, Template Patterns
 
 
