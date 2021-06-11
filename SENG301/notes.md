@@ -87,10 +87,6 @@ Term 2 (Provisional, please check forum for latest updates)
 
 \newpage
 
-# Labs
-
-\newpage
-
 # Lectures
 
 ## Lecture One: Course kickoff and recap of software development methods
@@ -1295,6 +1291,472 @@ abstract class Game {
 - Hook declared in abstract class with empty or default implementation
 - Subclasses are free to ignore hook
 
-## Lecture Sixteen: State, Command, Template Patterns
+## Lecture Sixteen: Strategy, Composite, Decorator Design Patterns
+
+**Strategy**
+
+- Problem
+  * Change an object's algorithm dynamically rather than through inheritance
+
+- Solution
+  * Move the algorithms into their own class hierarchy
+
+- Notes
+  * context know different strategies exist
+  * Strategy needs access to relevant context data *parameter or reference*
+
+```mermaid
+classDiagram
+  Context o-- Strategy
+  Strategy <|-- ConcreteStrategyA
+  Strategy <|-- ConcreteStrategyB
+  Strategy <|-- ConcreteStrategyC
+  class Strategy {
+    algorithm()
+  }
+  class ConcreteStrategyA {
+    algorithm()
+  }
+  class ConcreteStrategyB {
+    algorithm()
+  }
+  class ConcreteStrategyC {
+    algorithm()
+  }
+```
+
+Here is how this model could be mapped to a real example:
+
+![Festive Lights Strategy Implementation](./Diagrams/strategy-pattern-ex1.png)
+
+| GoF               | Our Design    |
+| ---               | ---           |
+| Context           | FestiveLight  |
+| Strategy          | LightStrategy |
+| ConcreteStrategyA | AllOnStrategy |
+| ConcreteStrategyB | BlinkStrategy |
+| ConcreteStrategyC | WaveStrategy  |
+
+**Composite Pattern**
+
+- Problem
+  * When an object contains other objects to form a tree, how can client code treat the 
+    composite objects and the atomic objects uniformly?
+- Solution
+  * Create an abstract superclass that represents **both** composite and atomic objects.
+  * Easy to add new components
+  * Common for child to know parent
+  * Can make containment too general
+
+![Composite Pattern Generic Mapping](./Diagrams/composite-pattern.png)
+
+Here is a real mapping to a real world scenario
+
+![Composite Pattern Example Mapping](./Diagrams/composite-example.png)
+
+We can see how the generic mapping maps directly to the composite example. \
+
+> Good exercise: Write out GoF mapping tables.
+
+**Decorator Pattern**
+
+The goal of this pattern is to attach additional responsibilities to an object dynamically.
+Decorators provide a flexible alternative to sub-classing for extending functionality
+
+- Problem
+  * What if we want to have multiple states?
+- Solution
+  * Using aggregation instead of sub-classing
+- Notes
+  * Decorator is asking *whats different?*
+  * Favour composition over inheritance [explanation](https://www.youtube.com/watch?v=wfMtDGfHWpA)
+    + Inheritance: designing types/classes over what they *are*
+    + Composition: designing types/classes over what they *do*
+  * Concrete decorator knows the component it decorates
+  * Business rules - e.g. number, order of decorations
+  * We can end up with a lot of classes, works best with large differences between classes
+
+![Class diagram of Decorator pattern](./Diagrams/decorator-pattern-.png)
+
+> Key parts of collections and design patterns is intent, problem, solutions
+
+### Combining Patterns
+
+**Abstract Factory meets Singleton**
+
+![Abstract factory + singleton](./Diagrams/abstract-factory-and-singleton.png)
+
+**Iterator meets Factory Method**
+
+The below implementation is a simple overview, not how they are actually mapped.
+
+![Factory + Iterator](./Diagrams/factory-and-iterator.png)
 
 
+## Lecture Seventeen: Design by Contract
+
+- Contract for `dbcLecture()`
+  * When the lecture begins, the *student* will:
+    * Be present
+    * Know OO
+    * Be conscious
+  * When the lecture ends, the *lecturer* will
+    + Teach and share knowledge with those in the lecture
+
+Lots of things are built on contracts, some of them implicit and some explicit, designing by contract is a mutual
+trust between two classes. For example a `Client` has some call to `Server` requesting a `service()` from the server.
+
+This is done by setting up the following:
+
+- **Setting preconditions:** before calling service, client checks its request is ready.
+- **Postconditions:** server promises it has done the job.
+- **Invariant:** Something the service promises will **always** be true.
+
+> If the server and client are expecting certain values, then they are bound by an implicit contract in design.
+
+One good method of documenting preconditions and postconditions is to do so in the docstrings, this will allow users
+to more easily see how to use external functions.
+
+```mermaid
+classDiagram
+  class Stack {
+    isEmpty()
+    isFull()
+    peek()
+    pop()
+    push(Object)
+  }
+```
+
+- Precondition: *stack is not empty*
+- Postcondition: *stack unchanged, returned last pushed object*
+
+Contracts can also be used when doing testing, we want to know what happens if we meet the preconditions or not,
+see what happens to our output values if the post conditions are not met. This comes with some side affects.
+
+- Unit Testing
+- AT's
+- Assertions
+  * Do preconditions hold?
+  * Are invariants invariant?
+  * Do post conditions hold?
+  * Are there side-effects?
+  * Do exceptions occur?
+
+**Contracts and Inheritance**
+
+```mermaid
+classDiagram
+  Plane <|-- NavyPlane
+  Plane <|-- FlyingBoat
+  class Plane {
+    lowerFlaps()
+    lowerLandingGear()
+    land()
+    openDOor()
+  }
+  class NavyPlane {
+    deployTailHook()
+    land()
+  }
+  class FlyingBoat {
+    lowerLandingGear()
+    land()
+  }
+```
+
+**Precondition in this example**
+
+- Precondition for `Plane`: Flaps down & gear down
+- Precondition for `NavyPlane`: Flaps down & gear down & hook down
+
+Because the precondition of the `NavyPlane` is different and requires more than the precondition for the parent class
+`Plane`, we would have to specifically ask if every plane is a navy plane in order to determine whether to put the
+hook down, this is a bad idea as it means that we must address different instances of the same parent class differently.
+
+> This is known as `not obeying the contract that has been inherited`, for more information about this visit Lecture Eighteen
+
+## Lecture Eighteen: Inheriting a Contract
+
+Contracts can be inherited from parent classes:
+
+**Inheriting a contract**
+
+- Contracts are inherited
+  * Preconditions can be loosened
+  * Postconditions can be tightened
+  * Postconditions can be tightened
+
+**Contract guidelines**
+
+- No preconditions on queries
+  * it should be safe to ask a question
+- No fine print
+  * Don't require something the client can't determine i.e. preconditions should be supported by public methods
+  * It is OK to have postconditions a client cannot verify
+    * This is the services problem, not us.
+- Use real code where possible
+  * Better to say `isEmpty()` rather than `the stack must not be empty`
+- Can't show all semantics in code
+  * `pop()` returns last pushed object
+- No hidden clauses
+  * The preconditions are sufficient and complete
+- No redundant checking
+  * Don't check that preconditions are satisfied inside server!
+
+**Redefining Inheritance**
+
+Previously we have described inheritance as the following `A ChildClass is a type of Parent`, we can better define
+a as inheritance as `a subclass that conforms to the contract of the parent class`.
+
+**Specifying Contracts: Formal Methods**
+
+- Mathematircally based
+- Z, B, VDM, ...
+- Pre-conditions, post conditions and inveriants specified
+- Reasoning
+- Code generation
+
+Here is an example of how we can specify a contract:
+
+![contract specification](./Diagrams/specify-contracts.png)
+
+Formal support for contracts is not commonly used, however it is supported in `UML` as a part of Object Constraint
+Language. It also can be shown in code, we can use the `assert` method in Java, *Note: not implemented in java by default*
+
+**A philosophy for using exceptions**
+
+- Use Java exceptions if a contract violation occurs
+- Handling violations
+  - If possible fix problem, otherwise
+  * if possible try an alternate approach, otherwise
+  * clean up and throw an exception
+- Interfaces **are** contracts
+  * whenever a contract can be recognised independent from a particular implementation, an interface should be considered
+  - Interfaces can be composed; one class may implement many interfaces.
+  * Interfaces can be extended to specialise contracts.
+
+**Contracts and state machines**
+
+Do we want ot represent state behaviour as apart of the contract?
+
+Here is an example of state being used as apart of a contract form to represent how traffic lights might change, 
+*orange before green*, *orange before red*.
+
+![state contract idea](./Diagrams/state-contract.png)
+
+**Inheritance: The Dark Side**
+
+- Inheritance for implementation
+  * No intention to honour the inherited contract
+- Is-a-role-of
+  * Merging of two contracts
+- Becomes
+  * Switching contracts
+- Over-specialization
+  * Contract more specific than necessary
+- Violating the LSP
+  * Breaking the contract
+
+
+## Lecture Nineteen: Code Smells
+
+**What are code smells?**
+
+Code smells are soft rules that determine whether code is well written or poorly written
+
+When we talk about code smells:
+
+- Code smells are built of huristics, not hard rules
+- Design/software rot: code left alone smells bad *gets bad over time*
+- We should prioritise when refactoring code to match our heuristics
+- Refactor catalog
+  * Split
+  * Join
+  * Move
+  * Extract
+  * Rename
+  * ...
+- How large is large?
+  * Code smells are subjective
+    * We can determine a code smell without evidence, however evidence will help in order to be justified in your smell
+    * Easier to detect in code we know rather than unfamiliar code
+  * Can be informed by metrics and measurements *code length, coverage etc.*
+  * Gather data, manually or automatically
+  * Analyse results, statistics, visualisation
+  * Percentiles
+
+We can look at the **Morphology** (Shape) of code, do we have too much information in our class? Am I called
+often enough to be justified in the code base? Am I redundant? Am I reusable?. These are important questions
+to answer in order to find redundancy and code smells.
+
+We can use terms to define these ideas:
+
+**Fan Out**
+
+- How many other functions do I call?
+- Am I too big?
+
+**Fan In**
+- How many others call me?
+- Am I reusable?
+
+
+We can group terms into *fan in* vs *fan out*, by doing this we can graph them in order to determine which
+functions are *better* than another.
+
+**Length Metrics** 
+
+- Number of lines of code (LOC)
+  * Number of statements? 
+  * Comments included?
+  * Declarations included?
+  * Whitespace included?
+- Amount of logic
+  * Branching and conditionals
+  * Number of decisions
+- Include nesting? 
+
+**Long Method Smell: Specific code smell**
+
+*Methods are too long*
+
+Problem because?
+
+- Methods are doing too many things
+- Single responsibility principle
+- Cohesion
+
+How long is *too* long?
+
+- Length Of Code, length metrics
+- Counting rules
+- Distribution analyses
+- Percentiles
+- Correlated metrics
+- Visualisation
+
+By removing long methods, we are likely to make code reusable due to the nature of removing long methods.
+
+*What should we do?*
+
+- Break into multiple methods
+- Refactoring: **Extract Method**
+
+**Large class smell**
+
+"A class with too much code is prime breeding ground for duplicated code, chaos and death" - Martin Fowler
+
+We can end up with the idea of a `GOD Class`, A class that knows far too much of the code base, this happens often
+if a class is not maintained correctly, we get difficult code to understand, maintain, and adds to the complexity
+of the code base. This also creates a single point of failure.
+
+Classes should have a single responsibility, to prevent coupling and cohesion.
+
+**Long parameter list**
+
+When this happens, we tend to have complex understanding of the code, generally a bad sign that the code is being
+implemented in a poor way.
+
+- If parameter list is too long, what does that tell us about the method?
+  * How complex is method?
+  * Single responsibility
+  * God method?
+  * Coupling
+- Solutions
+  * Introduce a parameter object
+  * Preserve whole object
+  * Replace parameter list with a method call
+
+**Duplicated code**
+
+- Once and only once, "there should be one single source of truth for an instance"
+  * We don't want to change multiple methods to achieve the same task in different instances
+
+This happens often when we end up copy and pasting without fully understanding code, or copy and pasting
+from other places in the Repository.
+
+- Solutions
+  * Extract Method
+
+## Lecture Twenty: Code Smells - continued
+
+![Dead unreachable, deactivated and commented code](./Diagrams/dead-code.png)
+
+**Switch statement smell**
+
+- Large switch/if statements
+- What does this mean
+- Conditional complexity
+- Code for switch may extend over the full code base
+- OOP should have rare switch statements
+  * Use polymorphism, Implement OOP correctly
+- LSP
+
+- Solution:
+  * Switch on types? Replace conditional with polymorphism
+  * Switch on type code? Replace type code with subclasses
+  * Often checking against null? Introduce null object
+
+If switch performs simple actions then leave it! There is a sweet spot where these are extremely useful.
+
+**Comments**
+
+- Comments are for humans
+- Integrity: are comments up-to-date? Can we trust them?
+- Comments vs Javadoc
+- Is the code to complex to understand
+- Time/energy in keeping comments up to date vs how much developers trust comments
+
+- Solutions
+  * If expression/method is too difficult and complex, extract variable
+
+**Type embedded in name**
+
+Using names like `strValue()` may be useful for identifying variables type. -> Can be achieved with normal lsp?
+
+**Speculative generality**
+
+- Making general solutions because you are speculating or anticipating what we might need in the future
+- Do not over-engineer your solution
+- Do not speculate about tomorrows problems
+- How do we balance this with planning for extensibility?
+  * Collapse of hierarchy
+  * Rename method
+  * In-line class (opposite of Extract class)
+
+**Inappropriate intimacy**
+
+- How much does one class know about another?
+- Coupled? 
+- Solutions:
+  * Move methods
+  * Move fields
+  * Change bi-directional association to unidirectional
+    + e.g. Stack/Vector example: composition vs inheritance
+
+**Indecent exposure**
+
+- Exposing your internals
+- OOP was under scrutiny for being slow, because we have to address an object rather than directly grab a variable
+  however this can be stopped by implementing OOP correctly.
+
+**Feature Envy**
+
+- Methods making extensive use of another class, they are *envious* of a specific method
+
+**Shotgun Surgery**
+
+- Changes made to many parts of a system
+- Single responsibility violated?
+- Move methods/data?
+- Create new class?
+
+*Opposite of divergent change - many changes in the same class* 
+
+**Can tests smell too?**
+
+Yes! There are many tests that are used to implement constraints for code smells, it is not uncommon in todays world
+that we can have testing files that are larger than the code base we are testing. As we push more towards testing, it
+is more and more likely we will start enforcing optional constraints for programmers to work within, in order to increase
+readability and understanding within the code base.
