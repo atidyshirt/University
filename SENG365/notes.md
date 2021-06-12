@@ -718,4 +718,3 @@ COR's effectively restricts the use of headers by the client in order to restric
 the requests privileges of incoming clients. Here is an example of this:
 
 ![Cross Origin Request Example](./Diagrams/cors.png){width=50%}
-

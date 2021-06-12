@@ -1171,5 +1171,3 @@ $$ \sum_{l=1}^L \kappa_l v_l + \sum_{m=1}^M \phi_m v_m + \sum_{l=1}^L c_l \omega
 > results, used in practice is something like MPLS, this is used in optical and high capacity
 > and backbone networks. There are other technologies that are also used in practice via packet
 > recognition in order to specify how to push packet flow over many paths.
-
-
