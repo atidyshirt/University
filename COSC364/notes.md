@@ -863,7 +863,7 @@ $$
 - Done through a table showing which links are involved in which paths for which volumes
 
 | Link Index | Flow *k=1* *p=1* | Flow *k=2* *p=2* |
-| ----       | ------------     | -----------      | 
+| ----       | ------------     | -----------      |
 | 1          | 1                | 0                |
 | 2          | 0                | 1                |
 | ...        | ...              | ...              |
@@ -893,12 +893,283 @@ Indicating the cost per unit of data flow for the *p*-th path chosen for demand 
 
 ![Minimum Cost Routing](./Diagrams/cost-routing.png)
 
-## Lecture Seven: Specific Linear Programming Problems
+## Lecture Seven: Network Flow Problems
 
-**Capacity Design Problems**
+> NOTE: Not sure where this goes?
 
 - In a capacity design problem we are given the number of nodes and demand flows
 - We lease links between nodes and decide their capacities
 - We assume that the ISP can offer links of arbitrary capacity $C_i$
+
+
+**Topology Design Problems**
+
+- In the problems considered so far, the network topology has been given in advance
+- We now consider some topology design problems
+- In the very early stages of planning a network, an operator has to make some decisions
+- In which locations to establish a presence where to install routers and access capacity?
+- What should the transport network between points of presence look like?
+- Suppose you are an NZ network operator
+  * You decided to open offices in Auckland, Hamilton, Christchurch, Wellington and Dunedin
+  * The main routers in these offices need to be connected by a transport network
+  * For reasons of reliability or cost it may be beneficial to install further routers which are not a source or destination
+    of any user traffic.
+
+![Example Topology Design Problem](./Diagrams/topology-problem-example1.png)
+
+- In the first diagram, we need to have three cables extending under the cook straight, this is likely to be more expensive
+  than having two transit routers like thus in the second diagram
+- In the first example, the only `access routers` in the five cities are connected to each other
+- In the second example there are two additional `transit routers` in Lower Hutt and Nelson
+- We call nodes which originate traffic or which are the destination of traffic **access nodes**
+  and routers that are used purely for transit **transit nodes**.
+
+**Placement of Transit Routers**
+
+- The first problem is the placement of transit routers
+- Suppose we are given *N* access nodes
+- We connect access nodes exclusively through transit routers, no direct connection between nodes
+- We have *M* different candidate locations for transit routers *called transit locations*, and we can place either zero or
+  one transit routers into any of these transit locations
+- In each transit location *j* we can handle only up to $K_j$ different access nodes, due to limitations on the number of ports we can afford the transit nodes
+- The cost of connecting access router *i* to a transit router in location *j* is given by $\delta_{ij}$
+- The cost of installing a transit router in transit location *j* is $\omega_j$.
+- Each access router shall be connected to exactly one transit router
+- Decision variables $x_j \in {0,1} \quad \forall \quad 1 \leq j \leq M$ are binary decision variables which tell whether there will be
+  a transit router installed in transit location *j*, $(x_j = 1)$ or not $(x_j = 0)$.
+- Decision variables $u_j \in {0,1} \quad \forall \quad 1 \leq i \leq N \quad and \quad 1 \leq j \leq M$ are binary
+  decision variables which tell whether an access router will be connected to a transit router in transit location
+  *j*, $(u_j = 1)$ or not $(u_j = 0)$.
+
+> This information allows us to formulate a linear programming problem
+
+### Problem 5.3.1 Formulate the problem for minimizing the installation cost (or capital cost)
+
+$$
+\begin{aligned}
+ \text{min}_{[u,x]} & \qquad \sum_{j=1}^{M} x_j \eta_j + \sum_{i=1}^N \sum_{j=1}^{M} u_{ij}  \xi_{ij}   \\
+ \text{s.t} & \qquad \sum_{j=i}^{M} u_{ij} = 1 \ i \in {1, ..., M}\\
+ & \quad \quad \sum_{i=1}^{N} u_{ij} \leq k_j \dot x_j \ j \in {1, ..., M} \\
+ & \quad \quad u_{ij} \in {0, 1} \ j \in {1, ..., M} \\
+ & \quad \quad x_{j} \in {0, 1} \ j \in {1, ..., M} \\
+\end{aligned}
+$$
+
+### Problem 5.3.2 Extension of the above problem
+
+- We consider an extension in which we take into account interconnecting of transit routers
+- This interconnection also has installation costs
+- The objective will be to minimize the total cost for placing transit routers into transit locations,
+  connecting access routers to transit routers, and interconnecting transit routers.
+- In addition to the cost values $\xi_{ij}$ and $\eta_{ij}$ introduced above, we also introduce
+  cost values $\eta_{mn}$ for interconnecting a transit router in location $m \ (1 \leq m \leq M)$ with a transit
+  router in location $n \ (1 \leq n \leq M)$.
+- We assume that the interconnection costs are symmetric i.e. $\zeta_{mn} = \zeta_{nm}$ and that the
+  `self-connection` costs are $zeta_{mn} = 0$ for $1 \leq m \leq M$.
+- We furthermore assume that there are exactly $P \in \mathbb{N}$ transit routers to be placed.
+
+![Problem Description](./Diagrams/5.3.2.png)
+
+**Solution's to Problem 5.3.2**
+
+We do not strictly need new decision variables: the cost of interconnecting transit location
+*m* to location *n* can be different for each pair *(m,n)*, total cost is:
+
+$$ \frac{1}{2} \sum_{m=1}^M \sum_{n=1}^M x_m x_n \zeta_{mn} $$
+
+This gives a nonlinear objective function, which can be fine if your tool supports
+it. Can this be linearised? 
+
+To linearise the objective function, we can introduce binary decision variables $v_{mn} \in {0,1}$
+telling whether two transit routers in locations $m$ and $n$ are connected.
+
+The overall objective function is given by:
+
+$$ \sum_{i=1}^M \sum_{j=1}^M u_{ij} \xi_{ij} + \frac{1}{2} \sum_{m=1}^M \sum_{n=1}^M v_{mn} \eta_{mn} $$
+
+An alternative solution could have been defined the following:
+
+$$ \sum_{m=1}^M \sum_{n=m+1}^M v_{mn} \eta_{mn} $$
+
+First constraints are the same as in Problem 5.3.1, address relationship between AN and TR 
+However we also need a constraint to express that the TR are completely interconnected with
+each other, this can be expressed as the following:
+
+$$ \sum_{m=1}^M \sum_{n=1}^M v_{mn} = P(P-1) $$
+
+Where each of the $P$ TR is interconnected to the remaining $P - 1$ ones.
+
+> What does this mean, go over this??
+
+Finally, we need to express that only TR are connected to which indeed AN are attatched
+
+For this we introduce the following constraint:
+
+$$ \sum_{n=1}^M v_{mn} = (P - 1)X_m \quad for \ m \in {1, ..., M} $$
+
+To understand the meaning of this constraint consider the following two cases:
+
+- $x_m = 0$: no TR is placed in transit location *m*, and there should be no interconnection at all to
+  this place, i.e. $\sum_{n=1}^{M} v_{mn} = 0$.
+- $x_m = 1$: A TR is placed in transit location *m*, and it must have $P - 1$ connections to other TR,
+  i.e. $\sum_{n=1}^{M} v_{mn} = P - 1$.
+
+With all of the above, we can formulate the following solution to problem 5.3.2
+
+$$
+\begin{aligned}
+ \text{min}_{[u,x,v]} & \qquad \sum_{j=1}^{M} v_j \dot \xi_{ij} + \sum_{j=1}^M x_j \sigma_{j} + \frac{1}{2} \sum_{m=1}^{M} \sum_{n=1}^{M} v_{mn} \zeta_{mn}   \\
+ \text{s.t} & \qquad \sum_{j=i}^{M} u_{ij} = 1 & i \in {1, ..., M}\\
+ & \quad \quad \sum_{i=1}^{N} u_{ij} \leq k_j \dot x_j & j \in {1, ..., M} \\
+ & \quad \quad \sum_{i=1}^{M} x_{ij} = P \\
+ & \quad \quad \sum_{m=1}^{M} \sum_{n=1}^{M} v_{mn} = P(P - 1) \\
+ & \quad \quad \sum_{m=1}^{M} \sum_{n=1}^{M} v_{mn} = (P - 1)x_m & m \in {1, ..., M} \\
+ & \quad \quad u_{ij} \in {0, 1} & i \in {1, ..., N} \ j \in {1, ..., M} \\
+ & \quad \quad v_{mn} \in {0, 1} & m \in {1, ..., M} \ n \in {1, ..., N} \\
+ & \quad \quad x_{j} \in {0, 1} & j \in {1, ..., M} \\
+\end{aligned}
+$$
+
+**Adding traffic to the problem**
+
+- We can further complicate this problem by adding traffic demands
+  * In the first design problem the number and locations of AN have already been decided
+  * The main design objective concerns the interconnection links between the TR
+  * The candidate links are indexed from 1 to L
+  * We assume that there are two different types of costs associated to a link
+  * The **Capital Cost** $\kappa_l$ of link $l$ refers to the one-time cost for the installation of the link
+  * The **Operational cost** of a link $l$ is calculated per unit flow for this link and adds up to $c_l \omega_l$
+    where $\omega_l$ is the unit cost per unit of flow and $c_l$ is the capacity of this link.
+  * Goal: design the interconnection network (including link capacities) such that operational costs are minimized
+    subject to the constraint that total installation cost $leq$ budget *B*.
+  * The demand volumes are labeled from $1$ to $k$
+  * For each demand volume $k$ we have $P_k$ different candidate paths, which are
+    realized through the links $1, ..., L$
+  * The constants $\delta_{kpl}$ indicate whether link $l$ is used on the *[-th* path for demand volume
+  * This is code for: we ignore the issue of ensuring connectivity, it is too hard to express
+  * A link $l$ can be used or not - we introduce a binary decision variable $u_l \in {0,1}$  for each link
+    and when a link is used, then it incurs installation cost.
+  * When a link is used, we need to decide its capacity $c_l$
+  * Furthermore, we have to decide for each demand volume $k$ the amount of flow $x_{kp}$
+    to send over path $p \in {1, ..., P_k}$
+  * The objective function for minimizing the operational cost is $\sum_{l=1}^L c_l \omega_l$
+  * The demand constraint is as usual
+  * The capacity constraints are also as usual
+  * Capital constraint: the sum of all link-install costs should not exceed the budget $B$
+    + $\sum_{l=1}^{L} \kappa_l u_l \leq B$
+  * We finally need a constraint which links the binary decision variable $u_l$ to the capacity $c_l$
+    expressing that the capacity of an un-installed link $(u_l = 0)$ has to be zero as well
+
+![Fully Formed First Problem](./Diagrams/traffic-demands.png)
+
+This is an example of a **mixed integer problem**.
+
+## Lecture Eight: Network Flow Problems - Continued
+
+### Problem 5.3.4: Adding Traffic Demands (Problem Two)
+
+![Problem Description](./Diagrams/traffic-demands-p2.png)
+
+To solve this problem, we need to adapt the problem seen in `Problem 5.3.2`:
+
+![Problem Formulation to adapt](./Diagrams/traffic-demands.png)
+
+
+We will need to do the following to the problem
+
+- Drop budget constraint
+- Modify the objective function
+  * by including a weighing factor $\alpha$, we can shift the balance in order
+    to turn the problem into a specific problem.
+    + If we choose a high number for $\alpha$ we for all intensive purposes turn this problem into
+      a problem where we only minimise *capital cost*.
+    + If we choose a low number for $\alpha$, we effectively only minimise the *operational costs*.
+
+$$
+\begin{aligned}
+ \text{min}_{[x]} & \qquad \sum_{l=1}^L c_l \omega_l + \alpha \sum_{l=1}^L \kappa_l u_l \\
+\end{aligned}
+$$
+
+### Problem 5.3.5: Minimise Operational and Capital Costs
+
+We will finally consider a problem in which the number and positions of the transit nodes,
+the links between them and their capacities have to be decided jointly
+
+- The access nodes are already in place
+- There are $M$ potential positions for transit nodes and the capital cost of installing
+  a transit router in position $m \in {1, ..., M}$ is $\phi_{m}$.
+- Furthermore, a transit node in location $m$ can have at most $G_m$ interconnections to
+  other transit nodes.
+- There are $L$ potential interconnection links between transit routers that can be installed
+- The installation/capital cost for a link $l$ is $\kappa_{l}$, the operational cost per unit of
+  flow for link $l$ is $\omega_{l}$.
+- Each potential link interconnects two transit locations that have been decided in advance.
+- The information of whether a link $l$ is available at transit location $m$ is captured in constants $\beta_{ml}$,
+  where $\beta_{ml} = 1$  indicates whether link $l$ is available in location $m$ $(\beta_{ml} = 1)$ or not $(\beta_{ml}) = 0$
+- The capacity $c_i$ of a link needs to be decided, and the operational costs of a link are
+  given by $c_l \omega_l$.
+- There are $K$ traffic demands, with $h_k$ being the demand volume for demand $k$
+- For each traffic demand $k$ a number $P_k$ different paths have been identified beforehand
+- The relationship between paths for flows and involved links is again given by the constants
+  $\delta_{kpl}$.
+
+**Problem Description**
+
+> Given the information above, give a formulation of this problem. Minimize both operational and capital cost.
+> Which decision variables will you need.
+
+**Solution**
+
+We need the following:
+
+- Decision variables
+  - $c_l \geq 0 \quad l \in {1, ..., L}$
+- Path flow
+  * $X_{kp} \geq 0 \quad k \in {1, ..., K}, \ p \in {1, ..., P_k}$
+- Binary constraints on paths
+  * $u_l \in {0,1}$ - indicates whether path $l$ is used $(u_l = 1)$
+- Binary constraint on transit routers
+  * $V_m \in {0,1}, \ m \in {1,...,M}$ - indicates whether to put TR in transit location $m$
+
+**Objective function:**
+
+- This defines the capital cost
+  * $\sum_{l=1}^L \kappa_l v_l + \sum_{m=1}^M \phi_m v_m$
+- This defines the operational cost
+  * $\sum_{l=1}^L c_l \omega_l$
+
+The combination of these defines the objective function:
+
+$$ \sum_{l=1}^L \kappa_l v_l + \sum_{m=1}^M \phi_m v_m + \sum_{l=1}^L c_l \omega_l $$
+
+**Constraints:**
+
+- Demand Constraint
+  * $\sum_{p=1}^{P_k} x_{kp} = k_l \quad k \in {1, ..., K}$
+- Capacity:
+  * $\sum_{k=1}^K \sum_{p=1}^{P_k} \delta_{kpl} x_{kp} \leq c_l \quad l \in {1, ..., L}$
+- Capacity Bounds *binary constraint*:
+  * $c_l \leq C_l u_l \quad l \in {1, ..., L}$
+- Connection between links and transit router locations:
+  * $\sum_{l=1}^L \beta_{ml} v_l \leq G_m v_m \quad m \in {1, ..., M}$
+  * This says, if $v_{ml} = 0$ then we don't put a transit router into location $m$, then the right hand
+    becomes 0, if $\beta_{ml}$ is 0, then the RHS is 0 no matter the value of $v_l$, if $\beta_{ml}$ is
+    non-zero, then $u_l$ is 0.
+    * A clearer explanation: if $v_{ml} = 0$, then there is no transit router in this location, if $v_{ml} = 1$,
+      then LHS cannot exceed RHS.
+
+> Note, when actually implementing this in practice, we also need to consider the
+> networking algorithm that is being used in practice, take `OSPF` for example, we
+> do not have all $P_k$ paths to toy with as `OSPF` only gives us one path (the best
+> path) in a system, this means that we are NOT free to pick all the links we want as
+> we are in these linear programs. This complicates the real world scenario substantially.
+> We can use this to get a good approximation via this method, but we may have to use this
+> in conjunction with some theory in order to get a viable result.
+
+> Another Note, we can use technologies that apply different methods in order to find these
+> results, used in practice is something like MPLS, this is used in optical and high capacity
+> and backbone networks. There are other technologies that are also used in practice via packet
+> recognition in order to specify how to push packet flow over many paths.
 
 
