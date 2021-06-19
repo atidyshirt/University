@@ -1148,11 +1148,11 @@ appear to change its class.
 ```mermaid
 classDiagram
   Context --> State
-  State <|-- COncreteStateA
-  State <|-- COncreteStateB
+  State <|-- ConcreteStateA
+  State <|-- ConcreteStateB
   class Context {
     void request1()
-    void request2e()
+    void request2()
   }
   class State {
     void handle1()
@@ -1760,7 +1760,3 @@ Yes! There are many tests that are used to implement constraints for code smells
 that we can have testing files that are larger than the code base we are testing. As we push more towards testing, it
 is more and more likely we will start enforcing optional constraints for programmers to work within, in order to increase
 readability and understanding within the code base.
-
-# Reading Summaries
-
-
