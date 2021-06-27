@@ -718,3 +718,179 @@ COR's effectively restricts the use of headers by the client in order to restric
 the requests privileges of incoming clients. Here is an example of this:
 
 ![Cross Origin Request Example](./Diagrams/cors.png){width=50%}
+
+## Lecture Nine: Web Storage and Progressive Web Applications
+
+**Web Storage**
+
+- Cookies have limitations
+  * Size limited to 4KB
+  * Send to server with each request
+  * sent back and forward between server and client
+- HTML5 web storage
+  * Allows up to approx 5MB
+  * Two types:
+    - Local Storage
+    - Session Storage
+  * Not more secure than cookies
+
+**Local Storage**
+
+- Stores *permanent* data for your site
+- Stores data in key, value pairs
+- Setters and getter functions
+  * `localStorage.setItem(key, value);`
+  * `localStorage.getItem(key);`
+
+We need to meet users expectations (deleting local storage on logout), that
+no information is saved after the user has left the website.
+
+Pure JavaScript example:
+
+```javascript
+if(localStorage) {
+  localStorage.setItem("first_name", "Jordan");
+} else {
+  alert("soory, the browser you are using does not support local storage");
+}
+```
+
+Doing this in `Vue.js`
+
+- can get local storage values in `mounted()`
+- Should probably not set local storage on data change
+- e.g. a `save` button and corresponding Vue method
+
+**Session storage**
+
+- stores temporary data for your site
+- Deleted when the session ends
+- same getters and setters as local storage
+
+```javascript
+if(sessionStorage) {
+  sessionStorage.setItem("first_name", "Jordan");
+} else {
+  alert("soory, the browser you are using does not support session storage");
+}
+```
+
+**IndexedDB**
+
+- Web API for creating indexed NoSQL databases in browser for a web page
+- Can create multiple object stores
+- Primary keys
+- Indexes
+- CRUD requests are asynchronous using promises
+
+**CacheStorage API**
+
+- Stores pairs of request and response objects
+- caches can be hundreds of megabytes
+- Access cache with `const cache = await caches.open('my-cache');`
+- Adding to cache:
+  * `cache.add(new Request('./data.json'));`
+  * can add multiple by supplying a list
+  * can put: `cache.put('/test.json', new Response('{"foo": "bar"}'));`
+- Retrieve from cache:
+  * `const response = await cache.match(request);`
+
+**Progressive Web Applications**
+
+What is a progressive web app?
+
+> It is essentially an app run within the browser, to mimick a native application
+> (looks and feels like a ios/android app, however is effectively a browser instance.
+
+By definition it needs to do the following:
+
+- Originate from a Secure Origin
+- Load while offline - *using cache to load page*
+- Reference a Web App Manifest
+  * name
+  * short_name
+  * start_url
+  * display
+  * icon (min 144x144 px .png)
+- In HTML must link to manifest (same as linking CSS)
+
+Service worker lifecycle
+
+- Javascript that runs in background
+- Must be started by the webpage
+
+![Service Worker Life Cycle](./Diagrams/service-worker.png)
+
+More information about Progressive Web Applications
+
+- Web applications designed to appear to be installed as native applications
+- Begin life in a browser tab
+- Rely on service workers
+  * Proxy servers that sit between web applications and the browser and network
+  * notifications
+  * background sync
+  * JavaScript that:
+    + Runs on its own thread: not blocking
+    + Is headless (no access to DOM)
+  * Rely on HTTPS, for security
+  * Associated with specific server/website
+- Mobile-friendly design
+- Near-instant loading times
+  * Interactive in less that 5 sec before service worker installed
+  * Once Service workker installed, should load with max time ~2 seconds 
+- Fluid animations
+
+**Running SPA's on devices**
+
+- Many forms of connection types
+- All have browser, but also applications
+- One option is to develop websites and native applications in parallel
+- Alternative is progressive web applications
+- Progressive web applications
+  * on mobile, a progressive web app is smaller
+  * Adaptable (no need for app store approvals when making changes)
+  * Automatic updates
+  * New operating systems
+  * Faster, more efficient development
+
+**Web Assembly**
+
+- Binary code that is pre-compiled to Web Assembly (wasm) from other languages
+- Ahead of time or just in time compilation of wasm in browser
+- 2019 W3C recommendation
+- Can be supporting technology for PWA, but designed for any high-performance web page
+
+## Lecture Ten: Testing in Web Development
+
+**Automating testing**
+
+- Having 125 students implementing a server to an api spec is like:
+  * having 125 companies implementing a reference specification
+  * Example: Implementers of GraphGL Specfications
+- Having 125 students implementing a client to interact via an api is like:
+  * Having 125 companies developing products to interact with an ecosystem
+  * Example: Customers of Google Maps API
+
+## Lecture Eleven: Recap
+
+> This lecture is just explaining the exam/end of year test.
+
+Testing on:
+
+- Be able to look at given client-side scripts and fill in gaps and explain
+- Understand how JS changes HTML
+- SPA's
+- Vue.js
+  * Be able to look at given vue scripts and fill in gaps/explain
+  * Basics of Vue also learned in Labs 4-6
+  * how to mount an element, template HTML and CSS styling and functional JS
+- XML http requests
+  * How to make an ASync requests
+  * Concurrency in Javascript
+  * AJAX
+  * CORS
+    * How it works
+    * Headers - What are cors headers
+    * Origin
+  * Web sockets
+    * Differences to HTTP

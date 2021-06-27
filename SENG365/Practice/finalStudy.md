@@ -2,7 +2,7 @@
 
 1. AJAX 
 
-AJAX stands for Asyncronous Javascript And XML
+AJAX stands for `Asyncronous Javascript And XML`
 
 - The X part of this is no longer true due to the fact that most people have
   switched from using XML to JSON.
@@ -43,21 +43,20 @@ setTimeout(() => console.log("2"), 0);
 console.log("3");
 ```
 
-> Output: 1 \n 2 \n 3 \n
+> Output: 1 3 2
 
 7. Complete DOCTYPE
 
-<!DOCTYPE HTML>
+`<!DOCTYPE HTML>`
 
 8. Provide css rule in line 8 to set color of input field to yellow
 
 ```javascript
 <style>
-  .score {
+  #score {
     background-color: yellow;
   }
 </style>
-<input id='score' type='number' min=1 max=5 value=3 name='score'>
 ```
 
 9. If the user did not enter a value into the form, and simply pressed the 
@@ -66,23 +65,82 @@ console.log("3");
 > 3 would be parsed in
 
 10. `use strict` at the top of a function will enable strict mode, meaning
-    that certain things JS will treat as errors, such as undefined variables
+    that certain things JS will treated with more strict rules, such as undefined variables
     within the function. Leads to nicer code and conforms to more best practices.
 
 11. Identify the part or parts of the code fragment that indicate that this is ES6 code
 
-Line 18: `const addScore = () => {}`
+> Line 18: const addScore = () => {}
 
 12. Complete the onclick attribute in the button element in line 15:
 
-```<button onclick=’addScore()' name='button'>Go</button>```
+```javascript
+<button onclick='addScore()' name='button'>Go</button>
+```
 
 13. Complete the onScore() function, displays on line 10
 
 ```javascript
 function onScore() {
-
+  const a = document.getElementById("score").value;
+  document.getElementById("result").innerHtml = a;
 }
 ```
 
+14. Please tick or mark beside each URL which is considered to be the same origin
+    under SOP as the URL for the ExperienceThis! app:
 
+| | http://experiencethis.co.nz:4941
+| | https://experiencethis.com,:4941
+| | https://experiencethis.co.nz:80
+|x| https://experiencethis.co.nz/awesomevenus:4941
+
+15. What are legitimate reasons for an application to make a cross-site request?
+
+You may want to make a cross origin request to fetch some information from a
+certain domain, such as fetching a country from the rest countries API.
+
+16. What is the primary purpose of CORS to safeguard the user of an application
+    or the backend server?
+
+CORS primary purpose is to prevent cross origin requests from being made
+to the domain by unfriendly services, *we may want to stop a service making
+large amount of requests as this could be detrimental to the service*.
+
+17. Which of browser, server, or client app responsible for enforcing the restrictions
+    imposed by the CORS headers?
+
+The browser is responsible for enforcing CORS headers, the server specifies what
+headers to be checked
+
+18. A request is blocked by cors, what data is received by the web app? 
+
+Error provided by the browser, the data received by the client side error
+will be blocked request.
+
+19. Access-Control-Origin is an example of a forbidden header. What is a forbidden header in CORS?
+
+A forbidden header in CORS is an HTTP error that the server specifies cannot be modified
+
+20. Give a brief reason why CSRF is no longer included in the latest OWASP top 10
+
+idk
+
+21. provide a one line description of the XSS vulnerability
+
+A XSS vulnerability is when an attacker can use script injection into the webpage with malicious intent
+
+22. which are safe?
+
+1. not safe - grabbing innerHtml is shit
+2. safe - JSON.parse() is odv fine
+3. not safe - idk why this one but its apparently bad
+4. safe - grabbing innerText is fine
+
+23. Provide three breif advantages of automated testing over manual testing
+
+1. More manageable to run large numbers of test cases
+2. Ensures that past changes remain the same when future code changes occur
+3. Eliminates human error from the testing process
+
+24. 
