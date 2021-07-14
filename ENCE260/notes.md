@@ -4,7 +4,8 @@
 
 ### General Info About Course
 
-The goal of this course is to introduce and get familiar with Linux and to teach you how to program in C. In this course the notes will be split into 3 major chunks throughout the year.
+The goal of this course is to introduce and get familiar with Linux and to teach you how to program in C. 
+In this course the notes will be split into 3 major chunks throughout the year.
 
 1. C Programming
 2. Computer Architecture
