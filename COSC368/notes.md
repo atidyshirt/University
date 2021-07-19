@@ -16,9 +16,9 @@ titlepage-rule-height: 2
 
 # Humans and Computers
 
-### Course Information
+## Course Information
 
-**Lecturers Details**
+### Lecturers Details
 
 - Lecturer: Andy Cockburn 
   * Email: andy.cockburn@canterbury.ac.nz
@@ -29,5 +29,18 @@ titlepage-rule-height: 2
     + Email: stewart.dowding@canterbury.ac.nz
 - Team alias: team368@cosc.canterbury.ac.nz
 
-#### Grades
+![Course Schedule](./Diagrams/schedule.png)
+
+### Assessment Structure
+
+- Labs (9%)
+  * 1% per lab
+- Usability analysis and storyboard (25%)
+  * Wed 22nd September 5:00 pm
+- Design Specification and Rationale (15%)
+  * Wed 20th October 5:00 pm
+- Exam (51%)
+  * TBA
+
+## Lectures
 
