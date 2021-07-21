@@ -122,3 +122,131 @@ provided not storing/selling data.
   * Public key infrastructure
   * Secure email
   * TLS (HTTPS)
+
+### Lecture Two - Course Overview
+
+**What is cyber security?**
+
+Definition from the NIST computer security handbook:
+
+- The protection afforded to an automated information system in order to attain the applicable objectives of preserving the
+  integrity, availability and confidentiality of information system resources.
+  * Some literature might differentiate between *computer security and cyber security*
+
+**Definitions**
+
+- A threat
+  * Represents a potential security harm to an asset
+- An attack
+  * is a threat that is carried out
+- The threat agent
+  * carrying out the attack is referred to as an attacker
+- A countermeasure
+  * Any means taken to deal with an attack
+- A residual level of risk to the assets
+  * represented by vulnerabilities possibly exploited by threat agents
+- **Assets**
+  * Computer systems and other data processing, storage and data communication devices
+  * OS, system utilities and applications
+  * Files and databases and further data
+  * Local and wide area network links
+- **Vulnerabilities**
+  * A computer system can be:
+    + Leaky
+      - meaning gives access to information through the network, violates confidentiality
+    + Corrupted
+      - meaning that it does the wrong thing, violates integrity principle
+    + Unavailable
+      - meaning that it becomes impossible or impractical to use, violates availability 
+- Passive attacks
+  * Interception
+  * Traffic analysis
+    + Spoofing, finding information and observing traffic
+- Active attacks
+  * Altering information and system resources
+  * May be hard to prevent but easy to detect
+  * Masquerade
+    + the attacker claims to be someone else *authorized*
+  * Falsification (Man in middle)
+    + the attacker changes messages during transmission
+  * Misappropriation (DDOS)
+    + the attacker prevents legitimate users from accessing resources
+- Inside attacks
+  * initiated by an entity INSIDE the security perimeter
+  * authorization to access system resources but use of them in a malicious way
+  * Exposure
+    + the attacker intentionally releases sensitive information to an outsider.
+  * Falsification
+    + the attacker alters or replaces valid data or introduces false data into a file or database.
+- Outside attacks
+  * initiated from OUTSIDE the perimeter, by an unauthorised or illegitimate user of the system
+  * Obstruction
+    + the attacker disables communication links or alters communication control information.
+  * Intrusion
+    + the attacker gains unauthorised access to sensitive data by overcoming the access control protections.
+
+**Security functional requirements**
+
+- Information security management requires to:
+  1. Identify threats
+  2. Classify all threats according to liklihood and severity
+  3. Apply security controls based on cost benefit analysis
+- Countermeasures to vulnerabilities and threats comprise:
+  1. Computer security technical measures
+    + access control, authentication and system protection
+  2. Management measures
+    + awareness and training
+  3. Both
+    + configuration management
+
+**Defining Information Security**
+
+Definition from the NIST computer security handbook:
+
+- The term security is used in the sense of minimizing the vulnerabilities of assets and 
+  resources. An asset is anything of value. A vulnerability is any weakness that could be 
+  exploited to violate a system or the information it contains. A threat is a potential 
+  violation of security.
+
+**The CIA Triad**
+
+- Confidentiality
+  * Preventing unauthorised disclosure of information
+- Integrity
+  * Preventing modification or destruction of information
+- Availability
+  * ensuring resources are accessible when required
+
+**Information Security Definitions**
+
+- Security Service
+  * a processing or communication service to give a specific kind of protection to system resources.
+  * Types of security services [Lecture Two - Slide 20/27]:
+    + Peer entity authentication
+    + Data origin authentication
+    + Access control
+    + Data confidentiality
+    + Traffic flow confidentiality
+    + Data integrity
+    + Non-repudiation
+    + Availability
+- Security Mechanism
+  * a method of implementing one or more security services.
+  * Types of security mechanisms
+    + Encipherment
+    + Digital signature
+    + Access control
+      - access control lists, password or tokens which may be used to indicate access rights
+    + Data integrity
+    + Authentication exchange
+    + Traffic padding
+    + Routing control
+    + Notarization
+
+**Risk Management** 
+
+A key tool in information security management:
+
+1. Identify threats
+2. Classify all treats according to likelihood and severity
+3. Apply security controls based on cost benefit analysis
