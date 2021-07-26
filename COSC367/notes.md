@@ -54,7 +54,7 @@ Grading structure for course
 
 ## Lectures
 
-### Searching the State Space
+### Lecture One: Searching the State Space
 
 **What is state?**
 
@@ -191,3 +191,126 @@ Assume a finite search tree of depth *d* and branching factor of *b*:
 > NOTE: For an example of this queue, see Lecture One: 1:45 time stamp
 
 ![LCFS trace generic](./diagrams/LCFS-trace-generic.png)
+
+### Lecture Two: Searching the State Space (part two)
+
+**Pruning**
+
+- This is our method to deal with cycles and multiple paths.
+- this means we can have wasted computation and cycles in our graph
+
+> Principle: Do not expand paths to nodes that have already been expanded
+
+**Pruning Implementation**
+
+- The frontier keeps track of expanded or *closed* nodes
+- When adding a new path to the frontier, it is only added if another path to the same end-node
+  has not already been expanded, otherwise the new path is discarded (*pruned*)
+- When asking for the **next path** to be returned by the frontier, a path is selected and 
+  removed but it is returned only if the end-node has not been expanded before, otherwise 
+  the path is discarded (pruned) and not returned. The selection and removal is repeated 
+  until a path is returned (or the frontier becomes empty). If a path is returned, its 
+  end-node will be remembered as an expanded node. 
+
+In frontier traces every time a path is pruned, we add an explanation mark `!` at the end of the line
+
+![Example: LCFS with pruning](./Diagrams/LCFS-with-pruning-example.png)
+
+**How does LCFS behave?**
+
+- LCFS explores increasing cost contours
+  * Finds an optimal solution always
+  * Explores options in every direction
+  * No information about goal location
+
+We are going to use a search heuristic, function `h()` is an estimate of the cost for the shortest path
+from node *n* to a goal node. 
+
+- *h* needs to be efficient to compute
+- *h* can be extended to paths: $h(<n_0, ..., n_k) = h(n_k)$
+- *h* is said to be admissible if and only if:
+  * $\forall n \ h(n) \geq 0$, *h* is non-negative and $h(n) \leq C$ where C is the optimal cost of getting
+    from *n* to a goal node
+
+> NOTE: We will have to come up with our own heuristic for the assignment as it depends on context.
+
+**Best-first Search**
+
+- Idea: select the path whose end is closest to a goal node according to the heuristic function.
+- Best-first search is a greedy strategy that selects a path on the frontier with minimal *h*-value 
+- Main drawback: this does not guarentee finding an optimal solution.
+
+![Tracing best-first search](./Diagrams/tracing-best-first-search-example.png)
+
+**A\* search strategy**
+
+Properties:
+
+- Always finds an optimal solution as long as:
+  * there is a solution
+  * there is no pruning
+  * the heuristic function is admissible
+- Does it halt on every graph?
+
+Idea:
+
+- Don't be as wasteful as LCFS
+- Don't be as greedy as best-first search
+- Estimate the cost of paths as if they could be extended to reach a goal in the best possible way.
+
+Evaluation function: $f(p) = cost(p) + h(n)$
+
+- $p$ is a path, $n$ is the last node on $p$
+- $cost(p)$ = cost of path $p$ *this is the actual cost from the starting node to node n*
+- $h(n)$ = an estimate of the cost from $n$ to goal node
+- $f(p)$ = estimated total cost of path through $p$ to goal node
+
+The frontier is a priority queue ordered by $f(p)$
+
+![](./Diagrams/tracing-a-search-one-example.png)
+![Tracing A\* search](./Diagrams/asearch-two-example.png)
+![Proof of optimality](./Diagrams/proof-for-a-search.png)
+![Pruning on A\* Search](./Diagrams/pruning-on-a-search.png)
+
+**What went wrong when pruning A\* Search**
+
+- An expensive path, *sa* was expanded before a cheaper path *sba* could be discovered, because
+  $f(sa) < f(sb)$
+- Is the heuristic function *h* admissible?
+  * Yes
+- So what can we do?
+  * We need a stronger condition than admissibility to stop this from happening
+
+> Principle: When we are removing nodes, we are essentially saying we have found a cheaper solution, in this
+> case, this was not true and hence why the algorithm fails, we need to use a stronger condition as
+> outlined below
+
+**Monotonicity**
+
+A heuristic function is monotone or consistent if for every two nodes $n$ and $n'$ which is reachable from $n$:
+
+$$h(n) \leq cost(n,n') + h(n')$$
+
+With the monotone restriction, we have:
+
+$$
+\begin{aligned}
+f(n') &= cost(s, n') + h(n') \\
+&= cost(s, n) + cost(n, n') + h(n') \\
+&\geq cost(s, n) + h(n) \\
+&\geq f(n) \\
+\end{aligned}
+$$
+
+How about using the actual cost as a heuristic?
+
+- Would it be a valid heuristic?
+- Would we save on nodes expanded?
+- What's wrong with it?
+  * It becomes as computationally expensive as it is to just do the problem
+
+Choosing a heuristic: a trade-off between quality of estimate and work per node!
+
+![Dominance Relation](./Diagrams/dominance-relation.png)
+
+
