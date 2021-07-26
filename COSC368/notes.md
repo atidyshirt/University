@@ -91,3 +91,34 @@ use, and with the study of major phenomena surrounding them.
   * Mostly encapsulated in Learnability
 5. *Errors*
   * Opposite of Efficiency
+
+### Lecture Two - Goals of HCI
+
+**Knowing the user: Preliminary Factors**
+
+- safety considerations
+- need for throughput
+- Frequency of use
+- Physical space, lighting, noise, pollution
+- Social context
+- Cognitive factors: age, fatigue, stress, focus
+
+**Managing complexity**
+
+- Poorly designed interfaces amplify complexity
+- Well designed UI's make interfaces as simple as possible, but no simpler
+- Sometimes it may be appropriate to over-simplify *cater to an audience*
+
+**Models of Interaction**
+
+- A model is a simplification of reality
+- They are useful when they help us understand a complex artifact
+
+**Don Norman's Model of Interaction**
+
+- Helps understand the designer's role in creating a system that is used by a thinking person
+- Generally designers have a design model that is incomplete
+- Then we get a system image, that is working, but in high incite, we would have
+  built it differently
+- The user has a model, that is weak, we need to try to map the designers model
+  with the user model to create a mapping of the system image.
