@@ -355,3 +355,83 @@ multiple threads can access the same process data space.
   * Threads and processes in the kernel are not run by the scheduler, nor handled in the user space
 
 ![User-level vs Kernal implementation](./Diagrams/kernel-vs-user-level.png)
+
+### Lecture Three - Processes and Threads (2.3, 2.4, 2.5)
+
+**Critical Regions**
+
+- Mechanism to provide "mutual exclusion" of critical regions
+- No two processes in critical region at the same time
+- No assumptions about CPU's
+
+**Mutual Exclusion**
+
+Four conditions to provide workable mutual exclusion:
+
+- No two processes simaltainously in critical region
+- No assumptions made about speeds or numbers of CPU's
+- No process running outside its critical region may block another process
+- No process must wait forever to enter its critical region
+
+Non-solutions, these violate the above conditions
+
+1. Bocking process disables interrupts on CPU
+2. Lock variable, updated just before entering the critical region
+3. *strict alternation* (*lecture slide 6*)
+  - Loops on block 
+  - What happens if one process is much slower than the other, or halts?
+    * Which condition is violated?
+4. *Peterson's solution*
+  - Each process hands off the "turn" to the other process
+  - Blocking occurs in the critical region only
+  - Still "busy waiting" - prone to CPU "priority inversion problem"
+  - Some systems reorder memory access
+    * Simpler solutions exist in hardware, this system is sometimes built into the CPU
+
+**Block on wait - mutual exclusion**
+
+- Sends signals between process to wakeup the other process, we then sleep our own process
+  * Uses a counter, when it reaches 0, it sleeps itself and parses a signal to the other process
+- What happens when a wakeup signal is sent to a process that isn't asleep?
+  * This is because we are assuming that this is an atomic operation, however it is not, 
+
+**Semaphores - An actual used solution to solve mutual exclusion**
+
+**Atomic** operations to raise or lower their value
+
+> NOTE: fix this up from the slides
+
+Implementation:
+
+- Setting lock by decrementing semaphore
+- Releases by incrementing semaphore
+
+**POSIX thread implementation**
+
+- Mutex atomically locks/unlocks
+  * Uses for access to critical region
+
+| Operation                   | POSIX Threads              |
+| ---                         | ---                        |
+| Create condition variable   | `pthread_cond_init()`      |
+| Destroy condition variable  | `pthread_cond_destroy()`   |
+| Block waiting for signal    | `pthread_cond_wait()`      |
+| signal and wake one thread  | `pthread_cond_signal()`    |
+| signal and wake all threads | `pthread_cond_broadcast()` |
+
+> NOTE: add code example from lecture slides
+
+This is a good solution, however it falls apart when we are using Distributed CPU's, the solution to this is using
+**message passing**.
+
+We can also use **Barriers** in order to solve synchronisation problems, this is the use of signals to wait for multiple threads
+to complete before we can continue executing on a particular thread.
+
+**Readers and Writers**
+
+- Multiple readers can access the area at the same time
+- Writers require exclusive access
+  * All readers need to exit before the writer can gain the lock
+  * New readers may arrive while writer is waiting
+
+> Is there a better solution to make this system more fair for the writer using Semaphores or Mutex's
