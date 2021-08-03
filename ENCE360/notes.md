@@ -16,6 +16,10 @@ titlepage-rule-height: 2
 
 # Operating Systems
 
+These notes are designed to be used in conjunction with the slide sets provided in the course, the slides will be more
+helpful for use in the labs *due to including code examples*, these notes will provide a good outline for studying for
+the final exam.
+
 ## Course Information
 
 The course covers core topics.
@@ -435,3 +439,49 @@ to complete before we can continue executing on a particular thread.
   * New readers may arrive while writer is waiting
 
 > Is there a better solution to make this system more fair for the writer using Semaphores or Mutex's
+
+### Lecture Four - Deadlocks and Starvation 
+
+We use semaphores such as `mutex`, in order to prevent deadlocks and starvation.
+
+**How to make single-threaded code into multi-threaded code**
+
+This is reasonably difficult to do, here are some of the issues:
+
+- Local variables are fine; global variables may need to be thread specific
+  * Some languages implement *thread_local* declarations (C++) 
+- Libraries called may not be thread-safe
+  * Who consumes signals?
+  * Memory access needs to be atomic
+  * Can be solved via mutual exclusion libraries (locking)
+  * If they are thread safe, this will be outlined in the man pages
+- Kernel processes may not be thread-aware (stacks)
+
+#### Thread Patterns
+
+**Dispatcher/worker thread pattern**
+
+- Dispatcher thread handles incoming requests and farms out to pool of worker threads
+- Workers get woken to perform their task
+- Example of this layout is a Web Server
+
+**Team/pool**
+
+- All team members are equal:
+  * wait for incoming requests and grab one to process
+- Managed pool: threads in pool created and destroyed by library
+- Can be specialised too (running different code)
+  * place inappropriate requests into an internal queue (to redirct to other threads)
+
+**Pipeline**
+
+- Chain of consumer/producers
+  * Each thread consumes a request and produces a new one for the next thread
+  * Specialised threads designed to minimise latency
+
+**pop-up threads**
+
+- Thread created when needed to handle new request
+  * starts a fresh thread, this is faster than context switching in threads
+
+

@@ -122,3 +122,66 @@ use, and with the study of major phenomena surrounding them.
   built it differently
 - The user has a model, that is weak, we need to try to map the designers model
   with the user model to create a mapping of the system image.
+
+### Lecture Three - The Human
+
+**Don Norman's Execute-Evaluate Cycle**
+
+- Execute:
+  * Goal > Intention > Actions > Exeution
+  * Gulf of Execution: Problem arrives when executing intention/action
+- Evaluate:
+  * Perceive > Interpret > Evaluate
+  * Gulf of Evaluation: Problem assessing state, determining effect, etc.
+**UISO Interaction Framework**
+
+- Emphasises translations during interaction - This is a cycle
+  1. Articulation: user's task language to input language
+  2. Performance: callbacks, etc.
+  3. Presentation: show new state
+  4. Observation: interpretation
+  5. Back to step one
+
+**Mappings**
+
+- Good mappings (relationships) between User and I/O, increasing Usability.
+- We can try to allocate real world relationships by using mappings to real world items
+  * We can also use spacing and different design to make things more intuative
+
+**Affordance**
+
+- Objects afford particular actions to users
+  * Buttons afford pushing, chairs for sittings, sliders for sliding, dials for turning, handles for pulling.
+  * Poor affordance encourages incorrect actions
+  * Strong affordance may stifle efficiency
+
+**Over and Under-Determined Dialogues**
+
+- Ideally dialogue is well-determined, natural translation from task to input language
+- **Under-determined** - User knows what they want to do, but not how to do it
+- **Over-determined** - User forced through unnecessary or unnatural steps
+
+**Direct Manipulation**
+
+- Visibility of object
+- Direct, rapid, incremental, reversible actions
+  * This allows users to learn the interface and experiment without loss of data or risk
+  * Unix's `sudo rm -rf / --no-preserve-root` is **NOT** an example of this as it is not reversible
+- Rapid feedback
+- Syntactic correctness
+  * Disable illegal actions
+- Replace language with action
+
+- Advantages:
+  * Easy to learn
+  * Low memory
+  * Easy to undo
+  * Immediate feedback to user actions
+  * Enables user to use spatial cues
+- Disadvantages:
+  * Consumes screen real estate
+  * High graphical system requirements
+  * May trap user in *beginner mode*
+
+### Lecture Four - 
+

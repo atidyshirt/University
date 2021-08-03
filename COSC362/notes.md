@@ -23,6 +23,12 @@ titlepage-rule-height: 2
 - Tutor: Ryan Beaumont
   * Email: rbe72@uclive.ac.nz
 
+**Weekly Lab Times**
+
+- Tuesday, 16:00–18:00, Jack Erskine 136 Lab 4.
+- Wednesday, 14:00–16:00, Jack Erskine 136 Lab 1.
+- Friday, 16:00–18:00, Jack Erskine 136 Lab 4.
+
 **Other Information**
 
 - Labs and Quiz's will be available on learn
@@ -250,3 +256,90 @@ A key tool in information security management:
 1. Identify threats
 2. Classify all treats according to likelihood and severity
 3. Apply security controls based on cost benefit analysis
+
+### Lecture Three - Number Theory and Finite Fields
+
+**Factorisation**
+
+The set of all integers is denoted by $\mathbb{Z} = {..., -3, -2, -1, 0, 1, 2, 3, ...}$,
+given $a, b \in \mathbb{Z}$, $a$ divides $b$ if there exists $k \in \mathbb{Z} \quad s.t \quad ak = b$.
+
+- This means that $a$ is a factor of $b$
+- $a | b$
+
+We use $p$ to denote a prime, an integer $p \geq 1$ is a *prime* if its divisors are
+$(1, p)$.
+
+- Testing a prime number $p$ by trial numbers up to the square root of $p$
+= There are more efficient ways to check for primality *later in the course*
+
+**Properties of factorisation and useful formulae:**
+
+- If $a | b$ and $a | c$, then $a | bc$
+- If $p$ is prime and $p | ab$ then either $p | a$ or $p | b$
+- **Division algorithm**
+  * given $a, b \in \mathbb{Z}, \quad s.t \quad a > b$, then there exists $q, r \in mathbb{Z} \quad s.t \quad a = bq + r$
+  * $a = bq + r$ and $0 \leq r \ leq b$, we can use this to show $r < \frac{a}{2}$.
+- **Greatest common divisor (GCD)**
+  * $gcd(a, b) = d$ if $d | a$ and $d | b$
+  * if $c | a$ and $c | b$ then $c | d$
+  * $a$ and $b$ are *relatively prime / co-prime* when $gcd(a, b) = 1$
+- **Euclidean Algorithm**
+  * Find $d = gcd(a, b)$
+
+$$ a = bq_1 + r_1 \quad for \quad 0 < r_1 < b $$
+$$ b = r_1q_1 + r_2 \quad for \quad 0 < r_2 < r_1 $$
+$$ r_1 = r_2q_1 + r_3 \quad for \quad 0 < r_3 < r_2 $$
+$$ ... $$
+$$ f_{k - 3} = r_{k-2}q_{k-1} + r_{k-1} \quad for \quad 0 < f_{k-1} < f_{k-2} $$
+$$ f_{k - 2} = r_{k-1}q_{k} + r_{k} \quad for \quad 0 < f_{k} < f_{k-1} $$
+$$ f_{k - 1} = r_{k}q_{k+1} + r_{k+1} \quad with \quad r_{k+1} = 0$$
+
+  * Hence $d = r_k = gcd(a, b)$
+
+- **Back Substitution - Extending Euclidean Algorithm**
+  * Finding x, y in $ax + ay = d = r_k$
+  * This is essentially reversing the Euclidean algorithm
+
+- **Modular Arithmetic:**
+
+- Given $a \equiv b$ (mod n) and $c \equiv d$ (mod n), then the following conditions hold: 
+  * $a + b \equiv c + d$ (mod n)
+  * $ac \equiv bd$ (mod n)
+  * $ka \equiv kb$ (mod n)
+
+- **Groups**
+  * A group $\mathbb{G}$ is a set with *binary operation* and:
+    + Closure: $a \cdot b \in \mathbb{G}$ for $a, b \in \mathbb{G}$
+    * Identity: there is an element 1, s.t. $a \cdot 1 = 1 \cdot a = a$ for $a \in \mathbb{G}$
+    * Inverse: there is an element $b$ s.t. $a \cdot b = 1$ for $a \in \mathbb{G}$
+    * Associativity: $(a \cdot b) \cdot c = a \cdot (b \cdot c)$ for $a,b,c \in \mathbb{G}$
+    * Commutativity: $a \cdot b = b \cdot a$ for $a, b \in \mathbb{G}$
+      + If this condition holds, the group is said to be *abelian*.
+- **Cyclic Groups**
+  * the order $|\mathbb{G}|$ of a group $\mathbb{G}$ is the number of elements in $\mathbb{G}$
+  * $g^k$ denote the repeated application of $g \in \mathbb{G}$, using the group operation
+  * The order $|g|$ of $g \in \mathbb{G}$ is the smallest integer $k$ s.t. $g^k = 1$
+  * $g$ is a generator of $\mathbb{G}$
+  * A group is said to be *cyclic* if it has a generator
+- **Finding inverse**
+  * Use extended Euclidean algorithm if GCD is 1.
+
+- **Fields**
+  * A field $\mathbb{F}$ is a set with binary operations:
+  * $\mathbb{F}$ is an *abelian group* under the operation $+$ with identity
+    element of 0.
+* **Finite Fields**
+  + Setting up secure communications requires fields with a finite number of elements.
+  + Notation is $GF(p) = \mathbb{Z}\_p$
+  + Addition modulo 2: XOR LOGIC
+
+### Lecture Four - CrypTool
+
+What is cryptool?
+
+- Open source program that focuses on the free e-learning software, illustrating
+  cryptographic concepts.
+- We will be using CrypTool 2
+
+[Video to go back and watch](https://www.youtube.com/watch?v=dELT2-Vgsr8)

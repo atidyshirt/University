@@ -32,7 +32,6 @@ int main() {
     else { /* Parent code */
         global--;
         local--;
-        /* waitpid(childPid, NULL, 0); */
         printf("[Parent] childPid: 0x%x  parent: 0x%x\n", childPid, getpid());
         printf("[Parent] global: %d  local: %d\n", global, local);
         sleep(2); /* Wait 2 seconds */
