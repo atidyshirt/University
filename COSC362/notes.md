@@ -343,3 +343,111 @@ What is cryptool?
 - We will be using CrypTool 2
 
 [Video to go back and watch](https://www.youtube.com/watch?v=dELT2-Vgsr8)
+
+### Lecture Five - Classic Encryption (Part One)
+
+**Goals:**
+
+- Study historical ciphers
+- Establish basic notation and terminology
+- Introduce basic cryptographic operations
+- Explore typical attacks and adversary capabilities
+
+**Terminology:**
+
+- Cryptography: The study of designing crypto-systems, key components are:
+  * Confidentiality: A key is needed to *read* the message
+  * Authentication: A key is needed to *write* the message
+- Cryptanalysis: The study of breaking crypto-systems
+- Stenography: The study of concealing information
+- Crypto-system
+  * A set of plain-texts
+  * A set of cipher-texts
+  * A set of keys
+  * A function called *encryption* which transforms plain text to cipher text
+  * An inverse function called *decryption*, which reverses the encrypted message to plain-text
+- Symmetric and Asymmetric Cryptography
+  * Symmetric key cipher:
+    + Encryption and decryption keys are known to the sender and receiver
+    + Secure channel for transmission of the keys
+  * Asymmetric key cipher
+    + Each participant has a public key and a private key
+    + Possibly working for both encryption of messages and the creation of digital signatures
+
+#### Symmetric Encryption
+
+**Notation for Symmetric Encryption Algorithms:**
+
+- Encryption function: $E$
+- Decryption function: $D$
+- Message or plain-text: $M$
+- Cipher-text: $C$
+- Shared secret key: $K$
+
+Encryption is denoted as $C = E(M, K)$ \
+Decryption is denoted as $M = D(C, K)$
+
+**Methods to break Symmetric encryption:**
+
+An adversary has access to many methods to break a cryptosystem, however such methods depend on some conditions and
+known knowledge, such as:
+
+- What are the resources available to the adversary?
+  * Examples: *computational capability, inputs/outputs, knowledge of the crypto-system*
+- What does the adversary want?
+  * Do we want to know the secret key, distinguish two messages, **what are we trying to achieve?**.
+
+**Exhaustive Key Search:**
+
+This is a brute force attack, that checks all combinations of possible keys, note there is no way to prevent such
+an attack, our best option is just to raise complexity to where it is to combinationally difficult to compute, however
+this does not stop people from getting lucky when breaking your system.
+
+- We may be able to break the system without exhaustive search.
+- We may be able to break the system without finding the key.
+
+**Attack classifications:**
+
+These are ordered from the least powerful to the most dangerous information an attacker could have. 
+
+1. Cipher-text Only Attack - the attacker only has access to intercepted encrypted messages
+2. Known Plain-text Attack - The attacker knows some of the plain text
+3. Chosen Plain-text Attack - The attacker can obtain the cypher-text from some plain-text that has been selected
+4. Chosen Cipher-text Attack - The attacker can obtain the plain-text from some cipher-text that it has selected
+
+Which of these should be prevented?
+
+- A crypto-system is seen as very insecure if it can be practically attacked using only intercepted cypher texts
+- A crypto-system should be secure against chosen plain-text and chosen cipher-text attacks (*this is the modern standard*)
+- History shows that chosen cipher-text attacks are practical to set up for an attacker
+
+**Kerchhoffs' Principle**: We assume an attacker has complete knowledge of the cipher, the only item that is
+unknown about the crypto-system is the private key.
+
+- Using a secret, non-standard algorithm can cause severe problems
+  * This would be an example of *security through obscurity* (note this is a bad habit)
+
+**Statistical Attacks:**
+
+- Depends on using the redundancy of the alphabet
+- Information from distribution of letters
+- Recognising patterns to guess information about the crypto-system
+
+**Basic cipher operations:**
+
+Historical ciphers combine two basic operations:
+
+- Transposition: Characters on the plain-text are mixed up with each other
+  * Permutating characters in a fixed period $d$ and a permutation $f$
+  * Plain-text is seen as a matrix of rows of length $d$
+  * Key is $(d, f)$
+  * Each block of $d$ characters is re-ordered using permutation $f$
+  * Complexity is $d!$
+  * We will go through how to do this by hand and a formulation of how to automate this process using Crypt Tool
+- Substitution: Characters are replaced by a different character (or set of characters)
+  * Each character in the plain-text alphabet replaced by a character in the cipher-text alphabet, following a
+    cypher-text table.
+  * *Caesar cipher* is a simple example of a substitution cipher
+    + Functions for encryption $C_i = (M_i + j) mod n$
+    + Functions for decryption $M_i = (C_i + j) mod n$
+    + To break this we can do a frequency analysis in order to find common characters (*example, use ' ' as most common letter*)
