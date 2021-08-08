@@ -27,7 +27,7 @@ int main(void) {
         dup2(fd[OUTP], STDIN_FILENO);
         close(fd[OUTP]);
         close(fd[INP]);
-        execl("/usr/bin/sort", "sort", "-k", "+8", NULL);
+        execl("/usr/bin/sort", "sort", "+8", NULL);
         /* Note: The location of sort depends on your distribution.
          * Use 'which sort' to find the correct location */
         perror("The exec of sort failed");

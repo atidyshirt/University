@@ -6,7 +6,7 @@ subject: "COSC367"
 subtitle: "This course introduces major concepts and algorithms in Artificial Intelligence. Topics include problem solving, reasoning, games, and machine learning."
 lang: "en"
 titlepage: true
-titlepage-color: "3C9F53"
+titlepage-color: "62554A"
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "FFFFFF"
 titlepage-rule-height: 2
@@ -242,7 +242,7 @@ from node *n* to a goal node.
 
 ![Tracing best-first search](./Diagrams/tracing-best-first-search-example.png)
 
-**A\* search strategy**
+$A^{\*}$ **search strategy**
 
 Properties:
 
@@ -272,7 +272,7 @@ The frontier is a priority queue ordered by $f(p)$
 ![Proof of optimality](./Diagrams/proof-for-a-search.png)
 ![Pruning on A\* Search](./Diagrams/pruning-on-a-search.png)
 
-**What went wrong when pruning A\* Search**
+**What went wrong when pruning** $A^\*$ **Search**
 
 - An expensive path, *sa* was expanded before a cheaper path *sba* could be discovered, because
   $f(sa) < f(sb)$

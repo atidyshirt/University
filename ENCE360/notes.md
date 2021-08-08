@@ -6,7 +6,7 @@ subject: "ENCE360"
 subtitle: ""
 lang: "en"
 titlepage: true
-titlepage-color: "3C9F53"
+titlepage-color: "62554A"
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "FFFFFF"
 titlepage-rule-height: 2
@@ -440,7 +440,7 @@ to complete before we can continue executing on a particular thread.
 
 > Is there a better solution to make this system more fair for the writer using Semaphores or Mutex's
 
-### Lecture Four - Deadlocks and Starvation 
+### Lecture Four - Deadlocks, Starvation and Thread Patterns
 
 We use semaphores such as `mutex`, in order to prevent deadlocks and starvation.
 
@@ -483,5 +483,127 @@ This is reasonably difficult to do, here are some of the issues:
 
 - Thread created when needed to handle new request
   * starts a fresh thread, this is faster than context switching in threads
+
+### Lecture Five - Signals and Pipes
+
+#### Signals
+
+Signals are a simple route of communication, that is primarily for exception handling, but there are also signals for other things
+
+- Fixed set of signals (Unix):
+  * `SIGINT`: The process is being interrupted; terminates quietly
+  * `SIGQUIT`: Forces the process to end and core dump
+  * `SIGILL`: FIXME - fill here
+  * `SIGSTOP`: which stops the process from executing (*This cannot be stopped*)
+  * `SIGKILL`: which kills the process (*This cannot be stopped*)
+
+Signals are implemented in hardware (division by zero), handled by the OS, (file size limit exceeded), and is primarily handled by the
+user (via keystrokes)
+
+Other processes such as a child process notifying its parent that it has terminated (`SIGCHLD`), or sending a signal.
+
+- Signal numbers range from {0, ..., 31}
+  * We will refer to these signals by name rather than reference code
+
+- uses `PID`: process or processes to receive a signal
+- if `pid = -1`: all processes user has permission over
+  * Elevated user (*such as sudo or root privileges*)
+  * All processes with same user ID
+- if `pid < -1`: All processes in *process group*
+
+
+Multiple types of signals can be handled from one signal handler, `SIGCHLD` signal is sent to a parent process when one of it's child
+processes terminates.
+
+Signal Overview:
+
+- They do not carry information
+- Participating processes must know each others `pid's`
+
+#### Pipes
+
+
+
+Pipes allows one process to pass information to another process via a `pseudofile`
+
+- One-way queues that the OS kernel maintains in memory
+- Guaranteed to provide FIFO delivery of information
+- Two types: [futher info found here](http://www.cs.fredonia.edu/zubairi/s2k2/csit431/pipes.html):
+  * Unnamed pipes
+    + Can only be used between two related processes *child/parent, child/child*
+  * Named pipes
+    + Once a named pipe is created, processes can `open(),` `read()` and `write()` them just like any other file. Unless you specify `O_NONBLOCK,` or `O_NDELAY,` on the open: opens for reading will block until a process opens if for writing.
+
+
+- Pipe properties:
+  * synchronised byte stream
+  * Operated as a bounded buffer with blocking
+  * Each pipe is one-way stream
+  * one to one mapping
+  * No way to test a pupe for data
+
+**Code Example of an unnamed pipe**
+
+```c
+#include <stdio.h>
+#define READ 0
+/* The index of the “read” end of the pipe */
+#define WRITE 1
+/* The index of the “write” end of the pipe */
+char * phrase = “Stuff this in your pipe and smoke it”;
+main ()
+{
+  int fd[2], bytesRead;
+  char message [100]; /* Parent process’s message buffer */
+  pipe ( fd ); /*Create an unnamed pipe*/
+ if ( fork ( ) == 0 ) /* Child Writer */
+  {
+    close (fd[READ]); /* Close unused end*/
+    write (fd[WRITE], phrase, strlen ( phrase) +1); /* include NULL*/
+    close (fd[WRITE]); /* Close used end*/
+  }
+  else /* Parent Reader */
+  {
+    close (fd[WRITE]); /* Close unused end*/ bytesRead = read ( fd[READ], message, 100);
+    printf ( “Read %d bytes: %s\n”, bytesRead, message);
+    close ( fd[READ]); /* Close used end */
+  }
+}
+```
+
+**Code Example of an named pipe**
+
+```c
+/* Writer */
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+char * phrase = “Stuff this in your pipe and smoke it”;
+int main () { 
+  int fd1; fd1 = open ( “mypipe”, O_WRONLY ); write (fd1, phrase, strlen ( phrase)+1 ); close (fd1);
+}
+
+/* Reader */
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+int main ()
+{
+  int fd1;
+  char buf [100];
+  fd1 = open ( “mypipe”, O_RDONLY ); read ( fd1, buf, 100 ); printf ( “%s\n”, buf ); close (fd1);
+}
+```
+
+We can use `popen()` and `pclose()` macro functions in order to create a pipe, fork the child process and invokes the child in the shell and
+runs command (visit the man pages for more information).
+
+Named pipes in the shell are created by the `mknod(), mkfifo()` commands/functions, can be accessed with name permissions.
+
+Opening and closing using the standard `fopen/fclose`, each pipe is used as a buffer.
 
 

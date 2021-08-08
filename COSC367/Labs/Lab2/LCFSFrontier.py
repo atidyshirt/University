@@ -1,4 +1,4 @@
-import heapq
+import heapq as heap
 from search import *
 
 
@@ -42,15 +42,18 @@ class LCFSFrontier(Frontier):
 
     def __init__(self):
         """The constructor takes no argument. It initialises the
-        container to an empty stack."""
+        container to an empty heap."""
         self.heap = []
 
     def add(self, path):
-        heapq.heappush(self.heap, path)
+        total_cost = 0
+        for arc in path:
+            total_cost += arc.cost
+        heap.heappush(self.heap, (total_cost, path))
 
     def __next__(self):
         if len(self.heap) > 0:
-            return heapq.heappop(self.heap)
+            return heap.heappop(self.heap)[1]
         else:
             raise StopIteration
 

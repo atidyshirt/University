@@ -2,7 +2,7 @@
 
 # define a new task named "file-build"
 [file-build]
-command:c,cpp=gcc -O2 -Wall "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)" -lstdc++ -lm -msse3
+command:c,cpp=gcc -O -Wall "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)" -lm
 command:go=go build -o "$(VIM_PATHNOEXT)" "$(VIM_FILEPATH)"
 command:make=make -f "$(VIM_FILEPATH)"
 output=quickfix
