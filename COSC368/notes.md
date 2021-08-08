@@ -351,5 +351,3 @@ calculate letter acuity in order to see if text will be visible to a whole stadi
 - Extensively researched in psychology
 - Linear complexity $O(n)$, unless we can create a pop out effect, then complexity is $O(1)$
 - We should try to avoid this if possible, because it is slow with large values of $n$
-
-
