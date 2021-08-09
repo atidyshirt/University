@@ -522,7 +522,7 @@ Signal Overview:
 
 #### Pipes
 
-
+A pipe is nothing more than a byte stream.
 
 Pipes allows one process to pass information to another process via a `pseudofile`
 
@@ -605,5 +605,68 @@ runs command (visit the man pages for more information).
 Named pipes in the shell are created by the `mknod(), mkfifo()` commands/functions, can be accessed with name permissions.
 
 Opening and closing using the standard `fopen/fclose`, each pipe is used as a buffer.
+
+### Lecture Six - Sockets
+
+| Stream Sockets        | Datagram Sockets          |
+| ---                   | ---                       |
+| TCP                   | UDP                       |
+| reliable delivery     | unreliable delivery       |
+| In-order guaranteed   | no order guarantees       |
+| connection-orientated | no notion of a connection |
+| bidirectional         | can send or receive       |
+
+
+![Phone Example: socket streams](./Diagrams/phone-example.png)
+
+![Datagram Example: socket streams](./Diagrams/datagram.png)
+
+> Note this will not be locked at further, we will focus mostly on Socket streams (TCP)
+
+**Networking basics**
+
+- Application layer
+  * Standard applications
+  * User applications
+- Transport layer - we will be looking at this more in-depth
+  * TCP
+    + Connection orientated
+    + Provides a reliable flow of data between systems
+  * UDP
+    + Clock server
+    + Ping
+  * Programming interface
+    + Sockets
+- Network layer
+  * IP
+- Link layer
+  * Device drivers
+
+Webb protocols and services
+
+- All resources are identified by a URL, the URL has four parts
+  * Protocol
+  * Host
+  * Port
+  * Resources
+- Applications can refer to destination by name rather than IP
+- Within the communication domain sockets are referred to by address
+
+![Sockets and ports](./Diagrams/sockets-ports.png)
+
+**Establishing a connection**
+
+1. Client sends a request to the server by hostname and port number
+2. Server accepts the connection, creating a new socket bond to a different port
+  * Common to service the actual connection in a separate thread/process
+3. The original server port is again ready to listen for other connection requests
+- We use Big Endian with networking byte order
+
+![Socket descriptor and data structure](./Diagrams/socket-descriptor.png)
+
+![](./Diagrams/client-server-model.png)
+![Client, Server model](./Diagrams/client-server-model-2.png)
+
+> Next week we will delve into the code for this part of the course
 
 

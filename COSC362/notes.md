@@ -462,3 +462,70 @@ Historical ciphers combine two basic operations:
     - Functions for encryption $C_i = (M_i + j) mod n$
     - Functions for decryption $M_i = (C_i + j) mod n$
     - To break this we can do a frequency analysis in order to find common characters (_example, use ' ' as most common letter_)
+
+### Lecture Six - Classic Encryption (Part Two)
+
+**Defining Polyalphabetic Substitution**
+
+- Using multiple mappings from plaintext to ciphertext
+- The effect with multiple alphabets is to smooth frequency distrabution
+  * Direct frequency analysis should no longer be effective
+- Typical polyalphabetic ciphers are periodic substitution ciphers based on period $d$
+- Given $d$ ciphertext alphabets $C_0, C_1, ..., C_{d-1}$ let $f_i: A \rightarrow C_i$ be a mapping
+  from the plaintext alphabet $A$ to the $i_{th}$ ciphertext alphabet $C_i \forall 0 \leq i \leq d - 1$
+
+- Encryption Process:
+  * Plaintext: $M = M_0 ... M_{d-1}M_d...M_{2d-1}M_{2d}...$
+  * is encrypted to:
+    + $E(K, M) = f_0((M_0))...f_{d-1}(M_{d-1})f_0(M_d)...f_{d-1}(M_{2d-1})f_0(M_{2d})...$
+  * Special case with $d = 1$: the cipher is monoalphabetic (simple substitution cipher)
+
+- Key generation:
+  * Select a block $d$
+  * Generate $d$ random simple substitution table
+- Encryption:
+  * Encrypting the character by using the substitution table number $j$ such that $i \equiv j (mod d)$ 
+- Decryption
+  * Using the same substitution table as in encryption in order to reverse the simple substitution
+
+![Polyalphabetic example](./Diagrams/example-polyalphabetic.png)
+
+**Vigenere Cipher**
+
+- Popular form of periodic substitution ciphers based on *shifted* alphabets
+- The key $K$ is a sequence of characters
+  * $K = K_0K_1...K_{d-1}$
+
+![Vigenere example](./Diagrams/example-vigenere.png)
+
+Crypto-analysis:
+
+- Identify the period length
+  * Kasiski method
+  * Cryptool uses autocorrelation to estimate the period
+- Attack separately $d$ substitution tables
+  * Each substitution is just a shift
+    + If there is sufficient ciphertext then it is trivial
+
+**Autocorrelation method**
+
+- Method used to find the period length $d$ of any periodic polyalphabetic cipher
+- Given ciphertext $C$, computing the correlation between $C$ and its shift $C_i$ for all values of $i$, of the period
+- Seeing peaks in the value will help to find $i$
+
+**Hill Cipher**
+
+- THe americal mathematition Lester S. Hill published his cipher in 1929
+- *Polygram cipher*
+  * Simple substitution cipher on an extended alphabet consisting of multiple characters
+  * Example: Diagram substatution in which the alphabet consists of all pairs of characters
+- Major weakness: its linearity, hence known plaintext attacks are easy
+
+Performing a linear transformation on $d$ plaintext characters to get $d$ ciphertext characters:
+
+- Encryption involves multiplying a $d \times d$ matrix $K$ by the block of plaintext $M$.
+  * $C = KM$
+- Decryption involves multiplying the matrix $K^{-1}$ by the block of ciphertext $C$
+  * $M = K^{-1}C$
+
+
