@@ -10,7 +10,6 @@ import sys
 
 CENTER = 400
 
-
 class Board:
     def __init__(self, distances, widths, reps):
         # Inputs

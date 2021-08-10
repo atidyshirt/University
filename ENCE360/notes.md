@@ -545,6 +545,7 @@ Pipes allows one process to pass information to another process via a `pseudofil
 **Code Example of an unnamed pipe**
 
 ```c
+
 #include <stdio.h>
 #define READ 0
 /* The index of the “read” end of the pipe */
@@ -569,6 +570,7 @@ main ()
     close ( fd[READ]); /* Close used end */
   }
 }
+
 ```
 
 **Code Example of an named pipe**
