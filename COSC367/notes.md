@@ -39,9 +39,9 @@ Standard Computer science policy applies
 Grading structure for course
 
 - Assignments (5%)
-  * Two Super Quiz's
+  - Two Super Quiz's
 - Quizzes (16.5%)
-  * Weekly Quiz Assessments (1.5% ea)
+  - Weekly Quiz Assessments (1.5% ea)
 - Lab Test (20%)
 - Final Exam (58.5%)
 
@@ -58,13 +58,13 @@ Grading structure for course
 
 **What is state?**
 
-- A state is a data structure that represents a possible configuration of the world *agent and environment*
+- A state is a data structure that represents a possible configuration of the world _agent and environment_
 - The **state space** is the set of all possible states for that problem
 - actions change the state of the world
 
 ![State space example one](./Diagrams/state-space.png)
 
-State can also be represented as a graph *both directed and undirected*
+State can also be represented as a graph _both directed and undirected_
 
 ![State space graph simplified](./Diagrams/state-space-graph.png)
 
@@ -75,32 +75,32 @@ State can also be represented as a graph *both directed and undirected*
 
 - In **explicit graphs** nodes and arcs are readily available, they are read from the input and stored
   in a data structure such as an adjacency list/matrix.
-  * the entire graph is in memory.
-  * the complexity of algorithms are measured in the number of nodes and/or arcs.
+  - the entire graph is in memory.
+  - the complexity of algorithms are measured in the number of nodes and/or arcs.
 - In **implicit graphs** a procedure `outgoing_arcs` is defined that given a node, returns a set
   of directed arcs that connect node to other nodes.
-  * The graph is generated as needed *due to the complexity of the graphs.*
-  * The complexity is measured in terms of the depth of the goal state node or *how far do we
-    have to get into the graph to find a solution*.
+  - The graph is generated as needed _due to the complexity of the graphs._
+  - The complexity is measured in terms of the depth of the goal state node or _how far do we
+    have to get into the graph to find a solution_.
 
 **Explicit graphs in quizzes**
 
 - In some exercises we use small explicit graphs to stydy the behaviour of various frontiers
 - Nodes are specified in a set
 - Edges are specified in a list
-  * pairs of nodes, or triples of nodes (in a tuple)
+  - pairs of nodes, or triples of nodes (in a tuple)
 
 **Searching graphs**
 
 - We will use generic search algorithms: given a graph, start nodes, and goal nodes, incrementally
   explore paths from the start nodes.
 - Maintain a **frontier** of paths that have been explored
-  * frontier: paths that we have already explored
+  - frontier: paths that we have already explored
 - As search proceeds, the frontier is updated and the graph is explored until a goal node is found.
 - The order in which paths are removed and added to the frontier defines the search strategy
 - A **search tree** is a tree drawn out of all the possible actions in terms of a tree.
-  * How do we handle loops? *Covered in next lecture*
-  * In the search tree outlined below, you can see that the *end of paths on frontier* represents a BFS relationship
+  - How do we handle loops? _Covered in next lecture_
+  - In the search tree outlined below, you can see that the _end of paths on frontier_ represents a BFS relationship
     note this is not always the case.
 
 ![search tree](./diagrams/search-tree.png)
@@ -112,16 +112,16 @@ State can also be represented as a graph *both directed and undirected*
 > NOTE: you will have to use what ever data structure for the seach you are using (BFS use
 > a queue), (DFS use a stack).
 
-In the generic algorithm, neighbours are going to use the method `outgoing_arcs`, we are 
+In the generic algorithm, neighbours are going to use the method `outgoing_arcs`, we are
 given this algorithm in the form of a python module.
 
 **Depth-first search**
 
-- In order to perform DFS, the generic graph search must be used with a stack frontier *LIFO*
+- In order to perform DFS, the generic graph search must be used with a stack frontier _LIFO_
 - If the stack is a python list, where each element is a path, and has the form [..., p, q]
-  * *q* is selected and popped
-  * of the algorithm continues then paths that extend *q* are pushed (appended) to the stack
-  * *p* is only selected when all paths from *q* have been explored.
+  - _q_ is selected and popped
+  - of the algorithm continues then paths that extend _q_ are pushed (appended) to the stack
+  - _p_ is only selected when all paths from _q_ have been explored.
 - As a result, at each stage the algorithm expands the deepest path
 - The orange nodes in the graph below are considered the frontier nodes
 
@@ -132,12 +132,12 @@ given this algorithm in the form of a python module.
 
 **A note on complexity**
 
-Assume a finite search tree of depth *d* and branching factor of *b*:
+Assume a finite search tree of depth _d_ and branching factor of _b_:
 
 - What is the time complexity?
-  * It will be exponential: $O(b^d)$
+  - It will be exponential: $O(b^d)$
 - What is the space complexity?
-  * It will be linear: $O(bd)$
+  - It will be linear: $O(bd)$
 
 **How do we trace the frontier**
 
@@ -145,7 +145,7 @@ Assume a finite search tree of depth *d* and branching factor of *b*:
   to add or get a path we dedicate one line per call
 - When we ask the frontier to add a path, we start the line with a `+` followed by the path that has been added
 - When we ask for a path from the frontier we start the line with a `-` followed by the path being removed
-- When using a priority queue, the path is followed by a comma and then the key *e.g, cost, heuristic, f-value, ...*
+- When using a priority queue, the path is followed by a comma and then the key _e.g, cost, heuristic, f-value, ..._
 - The lines of the trace should match the following regular expression `^[+-][a-z]+(,\d+)?!?$`
 - We stop when we **remove** a path from the trace
 
@@ -153,26 +153,26 @@ Assume a finite search tree of depth *d* and branching factor of *b*:
 
 **Breath-first search**
 
-- In order to perform BFS, the generic graph search must be used with a queue frontier *FIFO*.
+- In order to perform BFS, the generic graph search must be used with a queue frontier _FIFO_.
 - If the queue is a python deque of the form [p,q,...,r], then
-  * p is selected (dequeued)
-  * if the algorithm continues then paths that extend *p* are enqueued *appended* to the queue after *r*
+  - p is selected (dequeued)
+  - if the algorithm continues then paths that extend _p_ are enqueued _appended_ to the queue after _r_
 - As a result, at each state the algorithm expands the shallowest path.
 
 ![BFS Illustration of search tree](./Diagrams/BFS.png)
 
 - BFS **does** guarantee to find a solution with the fewest arcs if there is a solution
 - It will complete
-- It will not halt due to some graphs having *cycles, with no pruning*
+- It will not halt due to some graphs having _cycles, with no pruning_
 
 **A note on complexity**
 
 > BFS has higher complexity than DFS
 
 - What is the time complexity?
-  * It will be exponential: $O(b^d)$
+  - It will be exponential: $O(b^d)$
 - What is the space complexity?
-  * It will be linear: $O(b^d)$
+  - It will be linear: $O(b^d)$
 
 ![BFS trace using generic algorithm](./diagrams/BFS-trace-generic.png)
 
@@ -182,11 +182,11 @@ Assume a finite search tree of depth *d* and branching factor of *b*:
 - This algorithm is very similar to Dijkstra's except modified for larger graphs
 - LCFS selects a path on the frontier with the lowest cost
 - The frontier is a priority queue ordered by path cost
-  * A priority queue is a container in which each element has a priority *cost*
-  * An element with a higher priority is always selected/removed before an element with a lower priority
-  * In python we can use the `heapq` you will need to store objects in a way that these properties hold
+  - A priority queue is a container in which each element has a priority _cost_
+  - An element with a higher priority is always selected/removed before an element with a lower priority
+  - In python we can use the `heapq` you will need to store objects in a way that these properties hold
 - LCFS finds an optimal solution: a least-cost path to a goal node.
-- Another name for this algorithm is *uniform-cost search*.
+- Another name for this algorithm is _uniform-cost search_.
 
 > NOTE: For an example of this queue, see Lecture One: 1:45 time stamp
 
@@ -203,14 +203,14 @@ Assume a finite search tree of depth *d* and branching factor of *b*:
 
 **Pruning Implementation**
 
-- The frontier keeps track of expanded or *closed* nodes
+- The frontier keeps track of expanded or _closed_ nodes
 - When adding a new path to the frontier, it is only added if another path to the same end-node
-  has not already been expanded, otherwise the new path is discarded (*pruned*)
-- When asking for the **next path** to be returned by the frontier, a path is selected and 
-  removed but it is returned only if the end-node has not been expanded before, otherwise 
-  the path is discarded (pruned) and not returned. The selection and removal is repeated 
-  until a path is returned (or the frontier becomes empty). If a path is returned, its 
-  end-node will be remembered as an expanded node. 
+  has not already been expanded, otherwise the new path is discarded (_pruned_)
+- When asking for the **next path** to be returned by the frontier, a path is selected and
+  removed but it is returned only if the end-node has not been expanded before, otherwise
+  the path is discarded (pruned) and not returned. The selection and removal is repeated
+  until a path is returned (or the frontier becomes empty). If a path is returned, its
+  end-node will be remembered as an expanded node.
 
 In frontier traces every time a path is pruned, we add an explanation mark `!` at the end of the line
 
@@ -219,25 +219,25 @@ In frontier traces every time a path is pruned, we add an explanation mark `!` a
 **How does LCFS behave?**
 
 - LCFS explores increasing cost contours
-  * Finds an optimal solution always
-  * Explores options in every direction
-  * No information about goal location
+  - Finds an optimal solution always
+  - Explores options in every direction
+  - No information about goal location
 
 We are going to use a search heuristic, function `h()` is an estimate of the cost for the shortest path
-from node *n* to a goal node. 
+from node _n_ to a goal node.
 
-- *h* needs to be efficient to compute
-- *h* can be extended to paths: $h(<n_0, ..., n_k) = h(n_k)$
-- *h* is said to be admissible if and only if:
-  * $\forall n \ h(n) \geq 0$, *h* is non-negative and $h(n) \leq C$ where C is the optimal cost of getting
-    from *n* to a goal node
+- _h_ needs to be efficient to compute
+- _h_ can be extended to paths: $h(<n_0, ..., n_k) = h(n_k)$
+- _h_ is said to be admissible if and only if:
+  - $\forall n \ h(n) \geq 0$, _h_ is non-negative and $h(n) \leq C$ where C is the optimal cost of getting
+    from _n_ to a goal node
 
 > NOTE: We will have to come up with our own heuristic for the assignment as it depends on context.
 
 **Best-first Search**
 
 - Idea: select the path whose end is closest to a goal node according to the heuristic function.
-- Best-first search is a greedy strategy that selects a path on the frontier with minimal *h*-value 
+- Best-first search is a greedy strategy that selects a path on the frontier with minimal _h_-value
 - Main drawback: this does not guarentee finding an optimal solution.
 
 ![Tracing best-first search](./Diagrams/tracing-best-first-search-example.png)
@@ -247,9 +247,9 @@ $A^{\*}$ **search strategy**
 Properties:
 
 - Always finds an optimal solution as long as:
-  * there is a solution
-  * there is no pruning
-  * the heuristic function is admissible
+  - there is a solution
+  - there is no pruning
+  - the heuristic function is admissible
 - Does it halt on every graph?
 
 Idea:
@@ -261,25 +261,25 @@ Idea:
 Evaluation function: $f(p) = cost(p) + h(n)$
 
 - $p$ is a path, $n$ is the last node on $p$
-- $cost(p)$ = cost of path $p$ *this is the actual cost from the starting node to node n*
+- $cost(p)$ = cost of path $p$ _this is the actual cost from the starting node to node n_
 - $h(n)$ = an estimate of the cost from $n$ to goal node
 - $f(p)$ = estimated total cost of path through $p$ to goal node
 
 The frontier is a priority queue ordered by $f(p)$
 
 ![](./Diagrams/tracing-a-search-one-example.png)
-![Tracing A\* search](./Diagrams/asearch-two-example.png)
+![Tracing A* search](./Diagrams/asearch-two-example.png)
 ![Proof of optimality](./Diagrams/proof-for-a-search.png)
-![Pruning on A\* Search](./Diagrams/pruning-on-a-search.png)
+![Pruning on A* Search](./Diagrams/pruning-on-a-search.png)
 
-**What went wrong when pruning** $A^\*$ Search**
+**What went wrong when pruning** $A^{\*}$ **Search**
 
-- An expensive path, *sa* was expanded before a cheaper path *sba* could be discovered, because
+- An expensive path, _sa_ was expanded before a cheaper path _sba_ could be discovered, because
   $f(sa) < f(sb)$
-- Is the heuristic function *h* admissible?
-  * Yes
+- Is the heuristic function _h_ admissible?
+  - Yes
 - So what can we do?
-  * We need a stronger condition than admissibility to stop this from happening
+  - We need a stronger condition than admissibility to stop this from happening
 
 > Principle: When we are removing nodes, we are essentially saying we have found a cheaper solution, in this
 > case, this was not true and hence why the algorithm fails, we need to use a stronger condition as
@@ -307,10 +307,85 @@ How about using the actual cost as a heuristic?
 - Would it be a valid heuristic?
 - Would we save on nodes expanded?
 - What's wrong with it?
-  * It becomes as computationally expensive as it is to just do the problem
+  - It becomes as computationally expensive as it is to just do the problem
 
 Choosing a heuristic: a trade-off between quality of estimate and work per node!
 
 ![Dominance Relation](./Diagrams/dominance-relation.png)
 
+> Further algorithms are discussed in this segment of the and lecture _boarders onto lecture three_
+> however this content will not be assessed in the duration of this course.
+
+### Lecture Three: Knowledge Base and Information
+
+**How to represent information in a knowledge base**
+
+| Information                                                                           | Knowledge Base                                                                        |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| ![Electrical Environment: Information (Input)](./Diagrams/electrical-environment.png) | ![Electrical Environment: Knowledge Base](./Diagrams/electrical-environment-base.png) |
+
+- The computer doesn't know the meaning of the symbols (logical and etc...)
+- The user can interpret the symbol using their meaning
+- There is no specific syntax for this, it is just what ever is readable for the user/writer
+
+**Simple language and definitions**
+
+- An **atom** is a symbol starting with a lower case letter
+- A **body** is an atom or is of the form $b_1 \land b_2$ where $b_1$ and $b_2$ are bodies
+- A **definite clause** is an atom or a rule of the form $h \leftarrow b$ where $h$ is an atom and $b$ is a body
+- A **knowledge base** is a set of definite clauses
+- An **interpretation** $i$ assigns a truth value to each atom
+- A **body** $b_1 \land b_2$ is true in $i$ if $b_1$ is true in $i$ and $b_2$ is true in $i$
+- A **rule** $h \leftarrow b$ is false in $i$ if $b$ is true in $i$ and $h$ is false in $i$, the rule is true otherwise
+- A **knowledge base** $KB$ is true in $i$ if and only if every clause in $KB$ is true in $i$
+- A **model** of a set of clauses is an interpretation in which all the clauses are _true_
+- If $KB$ is a set of clauses and $g$ is a conjunction of atoms, $g$ is a **logical consequence** of $KB$, this is denoted
+  as $KB \models g$, if $g$ is _true_ in every model of $KB$
+  - That is, $KB \models g$ if there is no interpretation in which $KB$ is _true_ and $g$ is _false_.
+- A **Proof procedure** is a -possibly non-deterministic - algorithm for deriving consequences of a knowledge
+- Given a proof procedure, $KB \vdash g$ means $g$ can be derived from knowledge base $KB$
+- Recall $KB \models g$ means $g$ is *true* in all models of $KB$
+- A proof procedure is **sound** if $KB \vdash g \implies KB \models g$
+- A proof procedure is **complete** if $KB \models g \implies KB \vdash g$
+
+![simple example question](./Diagrams/simple-example-interpretations.png)
+
+Answers to the questions:
+
+> We have four atoms {p,q,r,s}, because we have 4 atoms, there are 16 permutations in our truth table ($2^4$), therefore we have 16 interpretations
+
+**Bottom-up proof procedure**
+
+Rule of derivation:
+
+if $h \leftarrow b_1 \land ... \land ... b_m$ is a clause in the knowledge base, and each $b_i$ has been derived, then $h$ can be derived
+
+- This is **Forward chaining** on this clause (this rule also covers the case when $m = 0$)
+- $KB \vdash g$ if $g \in C$ at the end of the below algorithmic procedure
+- [Tracing tutorial: 1:13:30](https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-03T09:00:00.000_2021-08-03T10:55:00.000/classroom#sortDirection=desc)
+
+![Bottom-up proof procedure algorithm pseudo code](./Diagrams/bottom-up-proof-algorithm.png)
+
+**Top-down proof procedure**
+
+Idea: search backward from a query to determine if it is a logical concequence of $KB$
+
+An **answer clause** is of the form:
+
+- $yes \leftarrow a_i \land ... \land a_m$
+
+The SLD Resolution of this answer clause on atom $a_i$ with the clause:
+
+- $a_i \leftarrow b_1 \land ... \land b_p$
+- [Tracing tutorial: 1:31:00](https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-03T09:00:00.000_2021-08-03T10:55:00.000/classroom#sortDirection=desc)
+
+An **answer** is an answer clause with $m = 0$. That is the answer clause $yes \leftarrow$.
+
+A **Derivation** of query $? q_1 \land ... \land q_k$ from $KB$ is a sequence of answer clauses $\lambda_0, \lambda_1, ... \lambda_n$
+
+- $\lambda_0$ is the answer clause $yes \leftarrow q_1 \land ... \land q_k$
+- $\lambda_1$ is obtained by resolving $\lambda_{i-1}$ with a clause in $KB$
+- $\lambda_n$ is the answer
+
+![Top-down proof procedure algorithm pseudo code](./Diagrams/top-down-algorithm-proof.png)
 

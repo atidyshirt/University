@@ -520,12 +520,62 @@ Crypto-analysis:
   * Simple substitution cipher on an extended alphabet consisting of multiple characters
   * Example: Diagram substatution in which the alphabet consists of all pairs of characters
 - Major weakness: its linearity, hence known plaintext attacks are easy
+- Let $d = 2$ so encryption takes diagrams as input and output blocks
+- Each plaintext pair is written as a column vector, letters are encoded as numbers
 
 Performing a linear transformation on $d$ plaintext characters to get $d$ ciphertext characters:
 
 - Encryption involves multiplying a $d \times d$ matrix $K$ by the block of plaintext $M$.
   * $C = KM$
+  * [tutorial: 27:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
 - Decryption involves multiplying the matrix $K^{-1}$ by the block of ciphertext $C$
   * $M = K^{-1}C$
+
+![encryption example](./Diagrams/hill-cipher-encryption.png)
+
+Crypto analysis:
+
+- Known plaintext attacks possible given $d$
+- Given blocks $m_i$ and $C_i$ for $0 \leq i \leq d-1$
+- [example: 29:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+
+**Block Cipher**
+
+- Block ciphers are the main bulk encryption algorithm in commercial applications
+- AES and legacy cipher DES are widely used
+- Symmetric key ciphers where each block is encrypted with the same key
+- A block is a set of plaintext symbols of a fixed size
+- length of plaintext and ciphertext is the same
+
+Product cipher:
+
+- Cryptosystem where encryption is formed by applying several sub-encryption functions
+- Most block ciphers are a composition of simple functions
+
+Iterated cipher:
+
+Most modern block ciphers are special product ciphers
+  * encryption is divided into $r$ smaller rounds
+  * sub-encryption functions are all same function, called a *round function*
+  * key $K_i$ is derived from overall master key $K$
+  * [tutorial: 38:40](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+  * Decrypt by taking the inverse
+
+Types of iterated ciphers:
+
+- Substitution-Permutation network
+  * Block length $n$ mst allow each block to be split into $m$ sub-blocks
+  * we have two operations:
+    + Substitution: $\Pi_S : {0, 1}^' \rightarrow {0,1}^'$
+    + Permutation: $\Pi_P : {1, ..., n} \rightarrow {1, ..., n}$
+    + [tutorial: 45:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+
+Feistel Cipher:
+
+- Round function swaps two blocks and forms a new right hand half
+- Can be mapped to a network where two halves plaintext travels through
+- [tutorial: 50:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+
+![Feistel graphic](./Diagrams/feist-cipher.png)
 
 

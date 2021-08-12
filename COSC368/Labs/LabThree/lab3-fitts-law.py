@@ -45,9 +45,7 @@ class Board:
                 self.index += 1
                 if self.index == len(self.dist_x_width):
                     self.log_file.close()
-                    end = messagebox.showinfo('You have finished the test')
-                    self.root.destroy()
-                    return end
+                    sys.exit("You have finished the test")
                 pos = (self.dist_x_width[self.index][0],
                        self.dist_x_width[self.index][1])
                 self.stored[pos] = 0
@@ -73,7 +71,6 @@ class Board:
         self.log_file.write(str(self.dist_x_width[self.index][0]) + " " + str(
             self.dist_x_width[self.index][1]) + " " + str(self.stored[pos]) + " " + str(round(self.total, 1)) + "\n")
         self.start = time.time()
-
 
 class Bar:
     """ Green bar acts as a controller for both bars """
@@ -111,7 +108,6 @@ class Bar:
             self.color = "blue"
             self.board.left.tag = "left"
             self.board.left.color = "green"
-        return
 
 
 reps = 2

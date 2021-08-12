@@ -352,4 +352,23 @@ calculate letter acuity in order to see if text will be visible to a whole stadi
 - Linear complexity $O(n)$, unless we can create a pop out effect, then complexity is $O(1)$
 - We should try to avoid this if possible, because it is slow with large values of $n$
 
+### Lecture Seven - Human Processing: Visual Search Time
+
+- Extensively researched in psychology
+- Visual search time is a linear function
+- Pop-out effects can reduce linearity to O(1)
+
+**Hick/Hyman Law of Decision Time**
+
+- $T = a + b \times H$
+- $H$ is information entropy
+- With $H_i = log(\frac{1}{p_i})$
+- For all $n$ with equal probabilities $H = log_2(n)$
+- We make frequent decisions quickly
+- Decision times are fast $O(log \ n)$
+- Applies to name retrieval and location retrieval
+- In GUI's replace visual search with decision from spacial stability
+
+We want to design for novice users to be able to transition to expert users.
+
 
