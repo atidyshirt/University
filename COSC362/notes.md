@@ -355,7 +355,7 @@ What is cryptool?
 
 [Video to go back and watch](https://www.youtube.com/watch?v=dELT2-Vgsr8)
 
-### Lecture Five - Classic Encryption (Part One)
+### Lecture Five - Classic Encryption
 
 **Goals:**
 
@@ -463,49 +463,50 @@ Historical ciphers combine two basic operations:
     - Functions for decryption $M_i = (C_i + j) mod n$
     - To break this we can do a frequency analysis in order to find common characters (_example, use ' ' as most common letter_)
 
-### Lecture Six - Classic Encryption (Part Two)
+### Lecture Six - Classic Encryption: Block ciphers
 
 **Defining Polyalphabetic Substitution**
 
 - Using multiple mappings from plaintext to ciphertext
 - The effect with multiple alphabets is to smooth frequency distrabution
-  * Direct frequency analysis should no longer be effective
+  - Direct frequency analysis should no longer be effective
 - Typical polyalphabetic ciphers are periodic substitution ciphers based on period $d$
 - Given $d$ ciphertext alphabets $C_0, C_1, ..., C_{d-1}$ let $f_i: A \rightarrow C_i$ be a mapping
   from the plaintext alphabet $A$ to the $i_{th}$ ciphertext alphabet $C_i \forall 0 \leq i \leq d - 1$
 
 - Encryption Process:
-  * Plaintext: $M = M_0 ... M_{d-1}M_d...M_{2d-1}M_{2d}...$
-  * is encrypted to:
-    + $E(K, M) = f_0((M_0))...f_{d-1}(M_{d-1})f_0(M_d)...f_{d-1}(M_{2d-1})f_0(M_{2d})...$
-  * Special case with $d = 1$: the cipher is monoalphabetic (simple substitution cipher)
+
+  - Plaintext: $M = M_0 ... M_{d-1}M_d...M_{2d-1}M_{2d}...$
+  - is encrypted to:
+    - $E(K, M) = f_0((M_0))...f_{d-1}(M_{d-1})f_0(M_d)...f_{d-1}(M_{2d-1})f_0(M_{2d})...$
+  - Special case with $d = 1$: the cipher is monoalphabetic (simple substitution cipher)
 
 - Key generation:
-  * Select a block $d$
-  * Generate $d$ random simple substitution table
+  - Select a block $d$
+  - Generate $d$ random simple substitution table
 - Encryption:
-  * Encrypting the character by using the substitution table number $j$ such that $i \equiv j (mod d)$ 
+  - Encrypting the character by using the substitution table number $j$ such that $i \equiv j (mod d)$
 - Decryption
-  * Using the same substitution table as in encryption in order to reverse the simple substitution
+  - Using the same substitution table as in encryption in order to reverse the simple substitution
 
 ![Polyalphabetic example](./Diagrams/example-polyalphabetic.png)
 
 **Vigenere Cipher**
 
-- Popular form of periodic substitution ciphers based on *shifted* alphabets
+- Popular form of periodic substitution ciphers based on _shifted_ alphabets
 - The key $K$ is a sequence of characters
-  * $K = K_0K_1...K_{d-1}$
+  - $K = K_0K_1...K_{d-1}$
 
 ![Vigenere example](./Diagrams/example-vigenere.png)
 
 Crypto-analysis:
 
 - Identify the period length
-  * Kasiski method
-  * Cryptool uses autocorrelation to estimate the period
+  - Kasiski method
+  - Cryptool uses autocorrelation to estimate the period
 - Attack separately $d$ substitution tables
-  * Each substitution is just a shift
-    + If there is sufficient ciphertext then it is trivial
+  - Each substitution is just a shift
+    - If there is sufficient ciphertext then it is trivial
 
 **Autocorrelation method**
 
@@ -516,9 +517,9 @@ Crypto-analysis:
 **Hill Cipher**
 
 - THe americal mathematition Lester S. Hill published his cipher in 1929
-- *Polygram cipher*
-  * Simple substitution cipher on an extended alphabet consisting of multiple characters
-  * Example: Diagram substatution in which the alphabet consists of all pairs of characters
+- _Polygram cipher_
+  - Simple substitution cipher on an extended alphabet consisting of multiple characters
+  - Example: Diagram substatution in which the alphabet consists of all pairs of characters
 - Major weakness: its linearity, hence known plaintext attacks are easy
 - Let $d = 2$ so encryption takes diagrams as input and output blocks
 - Each plaintext pair is written as a column vector, letters are encoded as numbers
@@ -526,10 +527,10 @@ Crypto-analysis:
 Performing a linear transformation on $d$ plaintext characters to get $d$ ciphertext characters:
 
 - Encryption involves multiplying a $d \times d$ matrix $K$ by the block of plaintext $M$.
-  * $C = KM$
-  * [tutorial: 27:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+  - $C = KM$
+  - [tutorial: 27:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
 - Decryption involves multiplying the matrix $K^{-1}$ by the block of ciphertext $C$
-  * $M = K^{-1}C$
+  - $M = K^{-1}C$
 
 ![encryption example](./Diagrams/hill-cipher-encryption.png)
 
@@ -555,20 +556,21 @@ Product cipher:
 Iterated cipher:
 
 Most modern block ciphers are special product ciphers
-  * encryption is divided into $r$ smaller rounds
-  * sub-encryption functions are all same function, called a *round function*
-  * key $K_i$ is derived from overall master key $K$
-  * [tutorial: 38:40](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
-  * Decrypt by taking the inverse
+
+- encryption is divided into $r$ smaller rounds
+- sub-encryption functions are all same function, called a _round function_
+- key $K_i$ is derived from overall master key $K$
+- [tutorial: 38:40](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+- Decrypt by taking the inverse
 
 Types of iterated ciphers:
 
 - Substitution-Permutation network
-  * Block length $n$ mst allow each block to be split into $m$ sub-blocks
-  * we have two operations:
-    + Substitution: $\Pi_S : {0, 1}^' \rightarrow {0,1}^'$
-    + Permutation: $\Pi_P : {1, ..., n} \rightarrow {1, ..., n}$
-    + [tutorial: 45:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
+  - Block length $n$ mst allow each block to be split into $m$ sub-blocks
+  - we have two operations:
+    - Substitution: $\Pi_S : {0, 1}^' \rightarrow {0,1}^'$
+    - Permutation: $\Pi_P : {1, ..., n} \rightarrow {1, ..., n}$
+    - [tutorial: 45:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
 
 Feistel Cipher:
 
@@ -578,4 +580,150 @@ Feistel Cipher:
 
 ![Feistel graphic](./Diagrams/feist-cipher.png)
 
+**Differential Crypto-analysis**
 
+- Chosen plaintext attack
+- Based on the idea that the difference between two input plaintext can be correlated to the difference between the output text
+
+**Linear Crypto-analysis**
+
+- Known plaintext attack
+- Theoretically used to break DES
+
+### Lecture Seven: Block ciphers continued
+
+- Encryption and decryption definitions are public property
+- Security resides in the difficulty of decryption without the key
+
+![Encryption steps: 08:00](https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc)
+
+![S-box Example](./Diagrams/s-box.png)
+
+**Key schedule**
+
+- Each of the 16 rounds involves 48 bits of the 56-bit key
+- Each 48-bit subkey is defined by a series of permutations
+
+**Breaking DES**
+
+- Testing all possible $2^k$ keys in order to find the key $K$
+- Key identified by using small number of cipher-text blocks or by looking for low entropy in decrypted plain-text
+- $2^{56}$ DES keys to test
+- Short DES key size was criticised from the start
+  - Realistically brute force is a good method to break a 56-bit key
+  - In 2017 we could find the keys in < 25 seconds
+- To deal with the lack of security they created a double encryption
+  - Having two keys $K_1, K_2$ be two block cipher keys
+
+**MITM attack**
+
+Let (P, C) be a single plaintext-ciphertext pair:
+
+1. For each key $K$ store $C' = E(P,K)$ in memory
+2. Check if $D(C,K') = C'$ for any key $k'$
+3. Check if any key values in 2. work for other $(P, C)$ pairs
+
+> we need to store plain-text, single encryption keys and decryption key
+
+> We can just add more layers of encryption to get even better security (triple encryption), this will protect against MITM attacks, it is just too expensive and
+> time restricted to be feasible
+
+> this is only used in legacy code now, other block ciphers are better
+
+**AES, Advanced Encryption Standard**
+
+- Designed in an open competition due to DES being bad
+- Process over several years with much public debate
+
+- 128-bit data block (fixed)
+- Can have any sized master key (128, 192, 256)
+- Byte-based design
+- uses a state matrix
+- [Information on AES: 33:00](https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc)
+
+![State matrix AES](./Diagrams/state-matrix.png)
+
+![AES vs DES](./Diagrams/aes-vs-des.png)
+
+- Block ciphers are the workhorses of secure communication
+- AES is the current choice, Triple DES is still used
+- Block ciphers are used as building blocks fore confidentiality and authentication
+
+### Lecture Eight: Block cipher's Modes of Operation
+
+**Why different modes?**
+
+Designed to provide confidentiality for data OR authentication for data OR both
+
+Different modes have:
+
+- Different efficiency properties
+- Different communication properties
+
+**Problem with randomised encryption:**
+
+- The same plaintext block is encrypted to the same ciphertext block
+- Prevention:
+  - By using an initialisation vector which propagates through the entire ciphertext ($IV$)
+  * $IV$ may require to be either unique or random
+- Features impacting on efficiency:
+  - Parallel processing
+    - Multiple plaintext blocks are encrypted in parallel
+    - Multiple ciphertext blocks are decrypted in parallel
+  - Error propagation
+    - Bit errors can be an issue
+- Padding:
+  - Requiring the plaintext to complete of complete blocks
+  - NIST suggests a padding method
+  - Padding bits removed unabiguously if usage of this padding method is known
+    - Remove all trailing `0` bits after the last `1` bit
+    - Remove the single `1` bit
+- Notations:
+
+  - Plaintext message $P$
+  - $t-th$ plaintext block $P_t$
+  - Ciphertext $C$ $t-th$ ciphertext block $C_t$
+  - Key $K$
+  - initialisation vector $IV$
+
+  **Confidentiality Modes**
+
+- ECB Mode encryption
+  - Basic mode of a block cipher
+  - Encryption: $C_t = E(P_t, K)$
+  - Decryption: $P_t = E(C_t, K)$
+  - Padding required
+  - Not randomised
+  - No IV
+  - Allows for parallel encryption and decryption
+- CBC Mode Encryption
+  - Encryption: $C_t = E(P_t \bigoplus C_{t-1}) s.t $P_0 = IV$
+  - Decryption: $P_t = E(C_t \bigoplus C_{t-1}) s.t $C_0 = IV$
+  - Randomised
+  - Padding required
+  - IV must be random
+  - Parallel decryption allowed
+  - Common choice for channel protection in TLS
+- CTR Mode:
+  - Synchronous stream cipher mode
+  - A counter and a nonce are used initialised using a randomly selected value $N$
+  - Encryption: $C_t = O_t \bigoplus P_t$
+  - Plaintext block $P_t$ is XOR'd with $O_t$
+  - Decryption: $P_t = O_t \bigoplus C_t$
+  - Don't require padding
+  - randomised
+  - error propagation: occurs in specific bits of current block
+
+**Authentication Modes**
+
+> NOTE: I got bored of typing here, should probably go back over this content
+
+![MAC Properties](./Diagrams/MAC.png)
+
+- Using a block cipher to create a MAC providing message integrity, not confidentiality
+- $IV$ must be fixed and public, can be set to all `0`'s
+- $P$ is the message
+- $T = CBC-MAC(P,K)$
+- Unforgeable as long as the message length is fixed
+
+![CMAC](./Diagrams/CMAC.png)

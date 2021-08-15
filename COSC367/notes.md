@@ -389,3 +389,93 @@ A **Derivation** of query $? q_1 \land ... \land q_k$ from $KB$ is a sequence of
 
 ![Top-down proof procedure algorithm pseudo code](./Diagrams/top-down-algorithm-proof.png)
 
+> There is more information on SLD Resolution at the end of this lecture, this will
+> be needed in the assignment
+
+### Lecture Four: Declarative Programming
+
+**What is declarative programming?**
+
+Declarative programming is the use of mathematical logic to describe the logic of computation without describing its control flow
+
+- Knowledge bases and queries in propositional logic are made up of propositions and connectives
+- Predicate logic adds the notion of *predicates* and *variables*
+- We take a non-theoretical approach to predicate logic by introducing *declarative programming*
+- useful for: expert systems, diagnostics, machine learning, parsing text, theorem proving, ...
+
+**Datalog**
+
+- Prolog is a declarative programming language and stand for PROgramming in LOGic
+- we only look at a sybset of the language which is equal to Datalog
+- Think declaratively, not procedurally
+- High level, interpreted language
+- We will have a file that contains a knowledge base, and we will have an interpreter where we can ask queries
+
+Here is an example of a knowledge base in Datalog:
+
+```
+woman(mia)
+woman(jody)
+woman(yolanda)
+playesAirGuitar(yolanda)
+```
+
+Here is how we may query data using the interpreter:
+
+```
+$ woman(mia)
+yes
+```
+
+> Further examples of this are in the slides of lecture four
+
+Operators
+
+- Implication :-
+- Conjunction: , (AND)
+- Disjunction ; (OR)
+- We will later talk about how to simulate the (NOT) operator
+
+Interpreter Operands and rules:
+
+- Variables: X, Y, Z, Cam, AnythingThatStartswithUppercase
+  * Acts as a `wildcard` to match with when querying
+- Order of arguments matters
+- `Arity` is important
+- Unification/matching:
+  * Two terms unify or match if they are the same term or if the contain variables that can be uniformly
+    instanciated with terms in such a way that the resulting terms are equal (this is how we query)
+  * Example: $l(s(g), Z) = k(X, t(Y))
+
+With only Unification we can do some programming
+
+```
+vertical(line(point(X,Y), point(X,Z))
+horizontal(line(point(X,Y), point(Z,Y))
+```
+
+**Proof Search**
+
+- Prolog has a specific way of answering queries
+  - Search knowledge base from top to bottom
+  - Processes clauses from left to right
+  - Backtracking to recover from bad choices
+- [Further examples using prolog: 1:10:00](https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-10T09:00:00.000_2021-08-10T10:55:00.000/classroom#sortDirection=desc)
+
+**Recursive Programming**
+
+```
+child(anna, bridget)
+child(bridget, caroline)
+child(caroline, donna)
+child(donna, emily)
+decendent(X,Y):-child(X,Y)
+decendent(X,Y):-child(X,Z), decendent(Z,Y)
+```
+
+If we make the following query with the above knowledge base, we get a positive response
+
+```
+$- decendent(anna, donna)
+yes
+```

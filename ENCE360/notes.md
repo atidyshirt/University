@@ -17,8 +17,12 @@ titlepage-rule-height: 2
 # Operating Systems
 
 These notes are designed to be used in conjunction with the slide sets provided in the course, the slides will be more
-helpful for use in the labs *due to including code examples*, these notes will provide a good outline for studying for
+helpful for use in the labs _due to including code examples_, these notes will provide a good outline for studying for
 the final exam.
+
+## Topics
+
+Lectures 1-8: Multiprocessing
 
 ## Course Information
 
@@ -47,10 +51,10 @@ Grading structure for course
 - Lab Test (20%)
 - Assignment (20%)
 - Lab quizzes (10%)
-  * Weekly Quiz Assessments
+  - Weekly Quiz Assessments
 - Final Exam (50%)
-  * Closed book and no calculator
-  * Cheat sheet Double sided A4
+  - Closed book and no calculator
+  - Cheat sheet Double sided A4
 
 ### Textbooks / Resources
 
@@ -69,7 +73,7 @@ Grading structure for course
 
 - Called the Analytical engine
 - Charles Babbage 1972-1871
-- Digital, programmable, *Turing complete*
+- Digital, programmable, _Turing complete_
 - Punch card IO
 - Unable to be engineered
 - Would be very slow
@@ -89,9 +93,9 @@ had storage, this is the initial life of an operating system.
 **3rd Generation computers**
 
 - Multiprogramming
-  * the ability to run multiple jobs at once
+  - the ability to run multiple jobs at once
 - First real operating systems
-  * MULTICS/Unix/Linux, VMS and others
+  - MULTICS/Unix/Linux, VMS and others
 
 This bought the first initial need for security and segregation between
 users on the same machine.
@@ -102,7 +106,7 @@ This is the first view of **personal computers**, bringing the `BASIC` interpret
 using Machine code, complexity hidden from the user, one program could be held
 in memory.
 
-Usually had ~8 kb of memory to run the entire operating system. 
+Usually had ~8 kb of memory to run the entire operating system.
 
 Eventually got a GUI, use of mouse and the initial real world of what we call
 computers, could also store multiple applications in memory at once.
@@ -111,7 +115,7 @@ Then finally, we have modern day computers
 
 - Personal
 - Multiple applications at once
-- Modern OS, *(Linux, MacOS and Windows)*
+- Modern OS, _(Linux, MacOS and Windows)_
 
 **5th Generation computers**
 
@@ -186,7 +190,7 @@ Modern operating systems have **Virtual Memory**
 
 - Multiple programs in memory at once
 - Idle memory can be paged and swapped to disk
-- Give an illusion of unlimited memory (*at a price*)
+- Give an illusion of unlimited memory (_at a price_)
 
 **Sample exam question**
 
@@ -195,15 +199,15 @@ Which of the following is NOT an operating system?
 - Linux
 - Windows
 - Android - NOT
-  * Is using Linux kernel
+  - Is using Linux kernel
 - ROS - NOT
-  * Is using Linux kernel
-  * Is a set of libraries to use with an OS to make system calls
+  - Is using Linux kernel
+  - Is a set of libraries to use with an OS to make system calls
 - MacOS
 - DOS
 - iOS
 - Arduino - NOT
-  * Is a package
+  - Is a package
 
 ### Lecture Two - Processes and Threads (2.1, 2.2)
 
@@ -222,7 +226,7 @@ This is an example of **Pseudo parallelism**
 
 ![Process switching - Interruption](./Diagrams/process-switching.png)
 
-*This is building up the stack*
+_This is building up the stack_
 
 **What is the stack?**
 
@@ -243,28 +247,28 @@ calls.
 
 **Termination**
 
-1. Normal exit *voluntary*
-2. Error exit *voluntary*
-3. Fatal error *involuntary*
-4. Killed by another process *Involuntary*
+1. Normal exit _voluntary_
+2. Error exit _voluntary_
+3. Fatal error _involuntary_
+4. Killed by another process _Involuntary_
 
 **Linux Process Hierarchy**
 
 - Linux processes are a tree like structure of daemons and foreground processes
-- All processes belong to a parent *except the init process*
-  * Process group receives all signals from the creator
+- All processes belong to a parent _except the init process_
+  - Process group receives all signals from the creator
 - Running a program starts a new process
 - Windows has no concept of process hierarchy
-  * Process is independent of its creator
+  - Process is independent of its creator
 - Each process has a process table
-  * we will need to save this table in order to store state of a specific process
-  * These are called process control blocks (PCB's)
+  - we will need to save this table in order to store state of a specific process
+  - These are called process control blocks (PCB's)
 
 ![Create Process](./Diagrams/create-process.png)
 
 In the above block of code, the `fork()` function is being called to create our
-process. We then can see our process ID and the process is now a *clone of its
-parent* at the point of creation.
+process. We then can see our process ID and the process is now a _clone of its
+parent_ at the point of creation.
 
 **The wait() function**
 
@@ -277,31 +281,31 @@ parent* at the point of creation.
 We can use the `exec()` to run a new process as a child of the current process.
 
 This is extremely useful for re-directing output, for logging, helpful output and
-more versatile output to play with. 
+more versatile output to play with.
 
 **Process summary**
 
 - A process is an independent resource group running a single program
 - Unix: all processes are created and owned by a parent
-- Forking a new process creates a clone of the parent *including the same program counter*
+- Forking a new process creates a clone of the parent _including the same program counter_
 - Exec\*(file...) replaces the current program context with the new program file contents
-  * Operations such as redirecting and piping output can be run before the program loads
+  - Operations such as redirecting and piping output can be run before the program loads
 - The code in a process runs sequentially
-  * or, does it???
+  - or, does it???
 
 **Why concurrent applications?**
 
-- Allows parallelism of independent operations in a single program *that share common data*
+- Allows parallelism of independent operations in a single program _that share common data_
 - Example: word processor (basic):
-  * Task 1: respond to user input (updating model)
-  * Task 2: reformat document when model changes
-  * Task 3: save periodically to disk
-  * Task 4: spell check
+  - Task 1: respond to user input (updating model)
+  - Task 2: reformat document when model changes
+  - Task 3: save periodically to disk
+  - Task 4: spell check
 
 Concurrent applications will allow us to treat these as all independent tasks, treating these
 as processes will run into issues as they do not know when other processes have completed tasks
 this means we will have to use signals every time that we want to achieve something that requires
-information from another process. *we can do this, and will, but not today*.
+information from another process. _we can do this, and will, but not today_.
 
 We can use a **finite state machine**
 
@@ -315,7 +319,7 @@ Threads have there own thread table, this is called a process data space,
 multiple threads can access the same process data space.
 
 - Threads have access to process data space
-  * but not direct access to each other
+  - but not direct access to each other
 - The thread is not a clone, it runs a callback function
 - Waits for completion
 - The order on the stack can vary as each thread has its own stack
@@ -325,23 +329,23 @@ multiple threads can access the same process data space.
 **POSIX threads API**
 
 - Standard runtime library calls for managing threads:
-  * `pthread_create`
-    + creates a thread to execute a specified function
-  * `pthread_exit`
-    + Causes the calling thread to terminate without the whole process terminating
-  * `pthread_kill`
-    + sends a *kill* signal to a specified thread.
-  * `pthread_join`
-    + Causes the calling thread to wait for the specified thread to exit. Similar to `waitpid()` for processes
-    + Waits for the child thread to finish
+  - `pthread_create`
+    - creates a thread to execute a specified function
+  - `pthread_exit`
+    - Causes the calling thread to terminate without the whole process terminating
+  - `pthread_kill`
+    - sends a _kill_ signal to a specified thread.
+  - `pthread_join`
+    - Causes the calling thread to wait for the specified thread to exit. Similar to `waitpid()` for processes
+    - Waits for the child thread to finish
     * Generated by `pthread_join()` from `pthread_exit()` after the thread has exited
     * Need to be vary careful about how you return values from a thread
-    + We need to return to the heap not the stack in order to make it global, note this will need to be freed
-  * `pthread_self`
-    + Returns the callers identity *The thread ID*
-  * `pthread_yeild`
-    + Yields the CPU to another thread
-  * There are many more calls available in the **man pages**
+    - We need to return to the heap not the stack in order to make it global, note this will need to be freed
+  - `pthread_self`
+    - Returns the callers identity _The thread ID_
+  - `pthread_yeild`
+    - Yields the CPU to another thread
+  - There are many more calls available in the **man pages**
 
 **Threads vs Processes**
 
@@ -350,13 +354,13 @@ multiple threads can access the same process data space.
 - Possible performance gains from switching withing a possible process
 - Can be spread across CPU's for further parallelisation
 - Difficult to write and debug the code
-  * Ordering issues
-  * Data access issues
+  - Ordering issues
+  - Data access issues
 
 **How are threads and processes implemented?**
 
 - Threads and processes can be implemented both at the User level and in the kernel.
-  * Threads and processes in the kernel are not run by the scheduler, nor handled in the user space
+  - Threads and processes in the kernel are not run by the scheduler, nor handled in the user space
 
 ![User-level vs Kernal implementation](./Diagrams/kernel-vs-user-level.png)
 
@@ -381,23 +385,26 @@ Non-solutions, these violate the above conditions
 
 1. Bocking process disables interrupts on CPU
 2. Lock variable, updated just before entering the critical region
-3. *strict alternation* (*lecture slide 6*)
-  - Loops on block 
-  - What happens if one process is much slower than the other, or halts?
-    * Which condition is violated?
-4. *Peterson's solution*
-  - Each process hands off the "turn" to the other process
-  - Blocking occurs in the critical region only
-  - Still "busy waiting" - prone to CPU "priority inversion problem"
-  - Some systems reorder memory access
-    * Simpler solutions exist in hardware, this system is sometimes built into the CPU
+3. _strict alternation_ (_lecture slide 6_)
+
+- Loops on block
+- What happens if one process is much slower than the other, or halts?
+  - Which condition is violated?
+
+4. _Peterson's solution_
+
+- Each process hands off the "turn" to the other process
+- Blocking occurs in the critical region only
+- Still "busy waiting" - prone to CPU "priority inversion problem"
+- Some systems reorder memory access
+  - Simpler solutions exist in hardware, this system is sometimes built into the CPU
 
 **Block on wait - mutual exclusion**
 
 - Sends signals between process to wakeup the other process, we then sleep our own process
-  * Uses a counter, when it reaches 0, it sleeps itself and parses a signal to the other process
+  - Uses a counter, when it reaches 0, it sleeps itself and parses a signal to the other process
 - What happens when a wakeup signal is sent to a process that isn't asleep?
-  * This is because we are assuming that this is an atomic operation, however it is not, 
+  - This is because we are assuming that this is an atomic operation, however it is not,
 
 **Semaphores - An actual used solution to solve mutual exclusion**
 
@@ -413,10 +420,10 @@ Implementation:
 **POSIX thread implementation**
 
 - Mutex atomically locks/unlocks
-  * Uses for access to critical region
+  - Uses for access to critical region
 
 | Operation                   | POSIX Threads              |
-| ---                         | ---                        |
+| --------------------------- | -------------------------- |
 | Create condition variable   | `pthread_cond_init()`      |
 | Destroy condition variable  | `pthread_cond_destroy()`   |
 | Block waiting for signal    | `pthread_cond_wait()`      |
@@ -435,8 +442,8 @@ to complete before we can continue executing on a particular thread.
 
 - Multiple readers can access the area at the same time
 - Writers require exclusive access
-  * All readers need to exit before the writer can gain the lock
-  * New readers may arrive while writer is waiting
+  - All readers need to exit before the writer can gain the lock
+  - New readers may arrive while writer is waiting
 
 > Is there a better solution to make this system more fair for the writer using Semaphores or Mutex's
 
@@ -449,12 +456,12 @@ We use semaphores such as `mutex`, in order to prevent deadlocks and starvation.
 This is reasonably difficult to do, here are some of the issues:
 
 - Local variables are fine; global variables may need to be thread specific
-  * Some languages implement *thread_local* declarations (C++) 
+  - Some languages implement _thread_local_ declarations (C++)
 - Libraries called may not be thread-safe
-  * Who consumes signals?
-  * Memory access needs to be atomic
-  * Can be solved via mutual exclusion libraries (locking)
-  * If they are thread safe, this will be outlined in the man pages
+  - Who consumes signals?
+  - Memory access needs to be atomic
+  - Can be solved via mutual exclusion libraries (locking)
+  - If they are thread safe, this will be outlined in the man pages
 - Kernel processes may not be thread-aware (stacks)
 
 #### Thread Patterns
@@ -468,21 +475,21 @@ This is reasonably difficult to do, here are some of the issues:
 **Team/pool**
 
 - All team members are equal:
-  * wait for incoming requests and grab one to process
+  - wait for incoming requests and grab one to process
 - Managed pool: threads in pool created and destroyed by library
 - Can be specialised too (running different code)
-  * place inappropriate requests into an internal queue (to redirct to other threads)
+  - place inappropriate requests into an internal queue (to redirct to other threads)
 
 **Pipeline**
 
 - Chain of consumer/producers
-  * Each thread consumes a request and produces a new one for the next thread
-  * Specialised threads designed to minimise latency
+  - Each thread consumes a request and produces a new one for the next thread
+  - Specialised threads designed to minimise latency
 
 **pop-up threads**
 
 - Thread created when needed to handle new request
-  * starts a fresh thread, this is faster than context switching in threads
+  - starts a fresh thread, this is faster than context switching in threads
 
 ### Lecture Five - Signals and Pipes
 
@@ -491,11 +498,11 @@ This is reasonably difficult to do, here are some of the issues:
 Signals are a simple route of communication, that is primarily for exception handling, but there are also signals for other things
 
 - Fixed set of signals (Unix):
-  * `SIGINT`: The process is being interrupted; terminates quietly
-  * `SIGQUIT`: Forces the process to end and core dump
-  * `SIGILL`: FIXME - fill here
-  * `SIGSTOP`: which stops the process from executing (*This cannot be stopped*)
-  * `SIGKILL`: which kills the process (*This cannot be stopped*)
+  - `SIGINT`: The process is being interrupted; terminates quietly
+  - `SIGQUIT`: Forces the process to end and core dump
+  - `SIGILL`: FIXME - fill here
+  - `SIGSTOP`: which stops the process from executing (_This cannot be stopped_)
+  - `SIGKILL`: which kills the process (_This cannot be stopped_)
 
 Signals are implemented in hardware (division by zero), handled by the OS, (file size limit exceeded), and is primarily handled by the
 user (via keystrokes)
@@ -503,14 +510,14 @@ user (via keystrokes)
 Other processes such as a child process notifying its parent that it has terminated (`SIGCHLD`), or sending a signal.
 
 - Signal numbers range from {0, ..., 31}
-  * We will refer to these signals by name rather than reference code
+
+  - We will refer to these signals by name rather than reference code
 
 - uses `PID`: process or processes to receive a signal
 - if `pid = -1`: all processes user has permission over
-  * Elevated user (*such as sudo or root privileges*)
-  * All processes with same user ID
-- if `pid < -1`: All processes in *process group*
-
+  - Elevated user (_such as sudo or root privileges_)
+  - All processes with same user ID
+- if `pid < -1`: All processes in _process group_
 
 Multiple types of signals can be handled from one signal handler, `SIGCHLD` signal is sent to a parent process when one of it's child
 processes terminates.
@@ -528,49 +535,49 @@ Pipes allows one process to pass information to another process via a `pseudofil
 
 - One-way queues that the OS kernel maintains in memory
 - Guaranteed to provide FIFO delivery of information
-- Two types: [futher info found here](http://www.cs.fredonia.edu/zubairi/s2k2/csit431/pipes.html):
-  * Unnamed pipes
-    + Can only be used between two related processes *child/parent, child/child*
-  * Named pipes
-    + Once a named pipe is created, processes can `open(),` `read()` and `write()` them just like any other file. Unless you specify `O_NONBLOCK,` or `O_NDELAY,` on the open: opens for reading will block until a process opens if for writing.
+- Two types: [futher info found here](http://www.cs.fredonia.edu/zubairi/s2k2/csit431/pipes.html)
 
+  - Unnamed pipes
+    - Can only be used between two related processes _child/parent, child/child_
+  - Named pipes
+    - Once a named pipe is created, processes can `open(),` `read()` and `write()` them just like any other file. Unless you specify `O_NONBLOCK,` or `O_NDELAY,` on the open: opens for reading will block until a process opens if for writing.
 
 - Pipe properties:
-  * synchronised byte stream
-  * Operated as a bounded buffer with blocking
-  * Each pipe is one-way stream
-  * one to one mapping
-  * No way to test a pupe for data
+  - synchronised byte stream
+  - Operated as a bounded buffer with blocking
+  - Each pipe is one-way stream
+  - one to one mapping
+  - No way to test a pipe for data
 
 **Code Example of an unnamed pipe**
 
 ```c
-
 #include <stdio.h>
 #define READ 0
 /* The index of the “read” end of the pipe */
 #define WRITE 1
 /* The index of the “write” end of the pipe */
 char * phrase = “Stuff this in your pipe and smoke it”;
+
 main ()
 {
   int fd[2], bytesRead;
-  char message [100]; /* Parent process’s message buffer */
-  pipe ( fd ); /*Create an unnamed pipe*/
- if ( fork ( ) == 0 ) /* Child Writer */
+  char message [100]; /* parent processes message buffer */
+  pipe ( fd ); /* Create an unnamed pipe */
+  if ( fork ( ) == 0 ) /* Child Writer */
   {
     close (fd[READ]); /* Close unused end*/
     write (fd[WRITE], phrase, strlen ( phrase) +1); /* include NULL*/
     close (fd[WRITE]); /* Close used end*/
   }
-  else /* Parent Reader */
+  else
   {
+    /* Parent Reader */
     close (fd[WRITE]); /* Close unused end*/ bytesRead = read ( fd[READ], message, 100);
     printf ( “Read %d bytes: %s\n”, bytesRead, message);
     close ( fd[READ]); /* Close used end */
   }
 }
-
 ```
 
 **Code Example of an named pipe**
@@ -583,7 +590,7 @@ main ()
 #include <sys/stat.h>
 #include <fcntl.h>
 char * phrase = “Stuff this in your pipe and smoke it”;
-int main () { 
+int main () {
   int fd1; fd1 = open ( “mypipe”, O_WRONLY ); write (fd1, phrase, strlen ( phrase)+1 ); close (fd1);
 }
 
@@ -611,13 +618,12 @@ Opening and closing using the standard `fopen/fclose`, each pipe is used as a bu
 ### Lecture Six - Sockets
 
 | Stream Sockets        | Datagram Sockets          |
-| ---                   | ---                       |
+| --------------------- | ------------------------- |
 | TCP                   | UDP                       |
 | reliable delivery     | unreliable delivery       |
 | In-order guaranteed   | no order guarantees       |
 | connection-orientated | no notion of a connection |
 | bidirectional         | can send or receive       |
-
 
 ![Phone Example: socket streams](./Diagrams/phone-example.png)
 
@@ -628,29 +634,29 @@ Opening and closing using the standard `fopen/fclose`, each pipe is used as a bu
 **Networking basics**
 
 - Application layer
-  * Standard applications
-  * User applications
+  - Standard applications
+  - User applications
 - Transport layer - we will be looking at this more in-depth
-  * TCP
-    + Connection orientated
-    + Provides a reliable flow of data between systems
-  * UDP
-    + Clock server
-    + Ping
-  * Programming interface
-    + Sockets
+  - TCP
+    - Connection orientated
+    - Provides a reliable flow of data between systems
+  - UDP
+    - Clock server
+    - Ping
+  - Programming interface
+    - Sockets
 - Network layer
-  * IP
+  - IP
 - Link layer
-  * Device drivers
+  - Device drivers
 
 Webb protocols and services
 
 - All resources are identified by a URL, the URL has four parts
-  * Protocol
-  * Host
-  * Port
-  * Resources
+  - Protocol
+  - Host
+  - Port
+  - Resources
 - Applications can refer to destination by name rather than IP
 - Within the communication domain sockets are referred to by address
 
@@ -660,15 +666,172 @@ Webb protocols and services
 
 1. Client sends a request to the server by hostname and port number
 2. Server accepts the connection, creating a new socket bond to a different port
-  * Common to service the actual connection in a separate thread/process
+
+- Common to service the actual connection in a separate thread/process
+
 3. The original server port is again ready to listen for other connection requests
+
 - We use Big Endian with networking byte order
 
 ![Socket descriptor and data structure](./Diagrams/socket-descriptor.png)
 
 ![](./Diagrams/client-server-model.png)
+
 ![Client, Server model](./Diagrams/client-server-model-2.png)
 
 > Next week we will delve into the code for this part of the course
 
+### Lecture Seven - Socket Coding
 
+![Simple socket client](./Diagrams/simple-socket-example.png)
+
+![Simple socket server](./Diagrams/simple-socket-server.png)
+
+> This lecture just goes over the code seen above and further examples, for further details on what this code does, consider visiting man pages or watch the lecture while implementing
+> (this is reasonably familiar, however if I am battling to understand, refer to the lecture).
+
+**Sockaddr**
+
+Three different types of sockaddr:
+
+- Unix Domain sockets
+- Generic address
+- Internet domain sockets
+
+### Lecture Eight - Scheduling
+
+**Introduction to scheduling**
+
+- How to schedule a mixture of process behaviours?
+- How to best use resources?
+- What are we trying to optimise?
+- How are we going to make it fair?
+
+**Systems and process types**
+
+- Nonpreemptive: Every job runs to completion
+- Preemptive: Jobs can be interrupted
+
+**System types and scheduler requirements**
+
+- Batch
+  - No users waiting
+  - Nonpreemptive
+- Interactive
+  - User waiting
+  - User workstations/devices and _servers_
+  - Preemtion is essential
+- Real-time
+  - Dominated by periodic and need to meet deadline
+  - Process designed in advance to work together
+  - Can be nonpreemptive or preemptive depending on load
+
+**Scheduling goals and policy**
+
+All systems:
+
+- Fairness
+- Policy enforcement: seeing that stated policy is followed
+- Balance: Keeping all parts of system busy
+
+Batch systems:
+
+- Throughput maximising
+- Turnaround time (minimise)
+- CPU utilization
+
+Interactive systems:
+
+- Response time
+- Proportionality
+
+Real-time systems:
+
+- Meeting deadlines
+- Predictability
+
+**Scheduling in batch systems**
+
+- Requires knowledge of job lengths
+- Nonpreemptive
+  - Assumes some jobs arrive at the same time so can choose
+- Preemptive: shortest time to complete next
+  - Allows new short jobs to interrupt longer ones
+- Sometimes we use _First come first served (FCFS)_ or _shortest job first (SJF)_
+
+Incorporating I/O
+
+- Each CPU burst treated as a new job
+- Long job fills I/O
+
+**Interactive Schedulers**
+
+_Very complex_
+
+Some solutions:
+
+- Round-robin scheduling _(simple solution)_
+  - Preemptive switch every $m$ seconds
+  - Assumes _equal importance_
+  - Can be dominated by process switching time
+- Priority scheduling with multiple queues
+  - Each queue only runs when higher empty
+  - Round robin scheduling of each level
+  - Lower queues can starve
+    - Answer: dynamic priority allocation
+  - Dynamic scheduling:
+    - New jobs start with highest priority
+    - Job using up its time slice downgraded
+    - Job _not_ using time slice stays the same
+    - Essentially light tasks go to top, heavy CPU tasks go to bottom
+    - A better method is to replace rules two and three do downgrade based on how much CPU has been used _(# of slices)_, neutral strategic I/O
+  - Further tuning strategies
+    - Increase time period for lower priority jobs
+    - Calculate _ad hoc_ priority based on past job times, weighted sum decaying over time $T = \frac{(T_0 + T_1)}{2}$
+    - User hints
+    - Scheduler parameters
+- Shortest process next
+- Guaranteed scheduling
+- Fair-share scheduling
+
+**Schedule fairness**
+
+- Allocate CPU time per _user_, not per process
+- Track CPU usage and schedule accordingly
+- Lottery scheduling:
+  - Each user given $\frac{1}{n}$ tickets (priority adjusted)
+  - Distribute amongst processes
+  - Randomly select a ticket and schedule the owning process
+  - Can give tickets away
+    - e.g. client to server process
+
+**Real-time scheduling**
+
+![Real time scheduling](./Diagrams/real-time-scheduling.png)
+
+- Example: multimedia server
+  - Different periodicity (deadline) and processing time requirements
+  - How to schedule so deadlines always met?
+
+**Rate monotonic scheduling**
+
+- Priority = 1/deadline frequency
+- Always runs highest priority process
+- strict conditions:
+  - Each process completes within period
+  - No inter-process dependencies
+
+**Earlies deadline first**
+
+- Process with earlier deadline preempts the current process
+  - Relaxes the constant frequency requirement
+
+> Note that RMS is load-dependent, EDF always works but we have to calculate deadlines (more complex)
+
+**Policy vs Mechanism**
+
+Separate what is allowed to be done with how it is done
+
+- A process knows which of its children threads are important and need priority
+- Scheduling algorithm parameterized
+- Parameters filled in by the user processes
