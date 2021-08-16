@@ -352,8 +352,7 @@ What is cryptool?
 - Open source program that focuses on the free e-learning software, illustrating
   cryptographic concepts.
 - We will be using CrypTool 2
-
-[Video to go back and watch](https://www.youtube.com/watch?v=dELT2-Vgsr8)
+- [Video to go back and watch](https://www.youtube.com/watch?v=dELT2-Vgsr8)
 
 ### Lecture Five - Classic Encryption
 
@@ -568,7 +567,7 @@ Types of iterated ciphers:
 - Substitution-Permutation network
   - Block length $n$ mst allow each block to be split into $m$ sub-blocks
   - we have two operations:
-    - Substitution: $\Pi_S : {0, 1}^' \rightarrow {0,1}^'$
+    - Substitution: $\Pi_S : {0, 1}^{'} \rightarrow {0,1}^{'}$
     - Permutation: $\Pi_P : {1, ..., n} \rightarrow {1, ..., n}$
     - [tutorial: 45:00](https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc)
 
@@ -594,8 +593,7 @@ Feistel Cipher:
 
 - Encryption and decryption definitions are public property
 - Security resides in the difficulty of decryption without the key
-
-![Encryption steps: 08:00](https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc)
+- [Encryption steps: 08:00](https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc)
 
 ![S-box Example](./Diagrams/s-box.png)
 
@@ -697,8 +695,8 @@ Different modes have:
   - No IV
   - Allows for parallel encryption and decryption
 - CBC Mode Encryption
-  - Encryption: $C_t = E(P_t \bigoplus C_{t-1}) s.t $P_0 = IV$
-  - Decryption: $P_t = E(C_t \bigoplus C_{t-1}) s.t $C_0 = IV$
+  - Encryption: $C_t = E(P_t \bigoplus C_{t-1})$ s.t $P_0 = IV$
+  - Decryption: $P_t = E(C_t \bigoplus C_{t-1})$ s.t $C_0 = IV$
   - Randomised
   - Padding required
   - IV must be random
@@ -721,9 +719,83 @@ Different modes have:
 ![MAC Properties](./Diagrams/MAC.png)
 
 - Using a block cipher to create a MAC providing message integrity, not confidentiality
-- $IV$ must be fixed and public, can be set to all `0`'s
+- $IV$ must be fixed and public, can be set to all 0's
 - $P$ is the message
 - $T = CBC-MAC(P,K)$
 - Unforgeable as long as the message length is fixed
 
 ![CMAC](./Diagrams/CMAC.png)
+  
+### Lecture Nine: Stream ciphers and Randomization
+
+**Randomness**
+
+- Defining randomness is difficult
+- We want any specific string of bits to be as random as any other string
+- Generators of random strings are used
+- Using a `TRNG` to provide a seed for a `PRNG`
+
+**True Random number generator (TRNG)**
+
+- The entropy source includes:
+  * A physical noise source
+  * A digitalization process
+  * Post-processing stages
+- The output of the entropy source is any requested number of bits
+- Periodic health test to ensure continuing reliable operation
+- Intel introduces TRNG to Ivy Bridge processors in 2012
+
+**Pseudo random Number generator (PRNG)**
+
+- Each generator takes a seed as input
+- It outputs a bit string before its state
+
+These random number generators are made using a set of functions *outlined in lecture slides*
+
+**CTR_DRBG**
+
+![Example Implementation: CTR_DRBG](./Diagrams/CTR.png)
+
+Update function:
+
+- Each request DRBG generates up to $2^{19}$ bits
+- From the function generate
+- Updating provides backtracking resistance
+- Restriction: up to $2^{48}$ seed bits
+- Each re-seed provides forward prediction and backtracking resistance
+
+![Duel_EC_DRBG](./Diagrams/duel_ec.png)
+
+**Stream Ciphers**
+
+- Characterised by the generation of a keystream using a short key and an initialisation value $IV$
+- Synchronous stream ciphers
+  - The keystream is generated independently of the plaintext
+  - Both sender and receiver need to generate the same keystream and sync its usage
+  - Vigenere cipher seen as a periodic synchronous stream sipher where each shift is defined by a key letter
+  - CTR mode of operation for a block cipher is one method of generating a keystream
+- Binary synchronous stream ciphers
+  * Encryption: $C(t) = p(t) \bigoplus s(t)$
+  * Decryption: $P(t) = C(t) \bigoplus s(t)$
+
+**One time pad**
+
+- Key is random sequence of characters, all of them are independently generated
+- Each char in the key is used once
+- Relies on perfect secrecy
+- Is the only unbreakable cipher
+- Practical usage is possible for pre-assigned communications between fixed parties
+- How to deal with key management of completely random keys
+
+![Perfect Secrecy](./Diagrams/perfect-secrecy.png)
+
+**Visual Cryptography**
+
+- Application of one time pad: visual splits an image into two shares
+- Decryption works by overlaying the two shared images
+- Many generalisations are possible
+- Each pixel is shared in a random way, similar to splitting a bit in the one time pad
+
+![Visual Encryption](./Diagrams/visual-encryption.png)
+
+![Visual Decryption](./Diagrams/visual-decryption.png)
