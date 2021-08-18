@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 import getpass
 import time
+import math
 import random
 import operator
 import itertools
@@ -68,8 +69,10 @@ class Board:
         pos = (self.dist_x_width[self.index][0],
                self.dist_x_width[self.index][1])
         self.total = (time.time() - self.start) * 1000
-        self.log_file.write(str(self.dist_x_width[self.index][0]) + " " + str(
-            self.dist_x_width[self.index][1]) + " " + str(self.stored[pos]) + " " + str(round(self.total, 1)) + "\n")
+        self.log_file.write(str(self.dist_x_width[self.index][0])
+            + "\t" + str(self.dist_x_width[self.index][1])
+            + "\t" + str(math.log2((self.dist_x_width[self.index][0] - self.dist_x_width[self.index][1]) + 1))
+            + "\t" + str(round(self.total, 1)) + "\n")
         self.start = time.time()
 
 class Bar:
@@ -111,7 +114,7 @@ class Bar:
 
 
 reps = 2
-distances = [64, 128, 256, 212]
-widths = [4, 8, 16, 32]
+distances = [64, 128, 256]
+widths = [8, 16, 32]
 board = Board(distances, widths, reps)
 board.root.mainloop()
