@@ -371,4 +371,51 @@ calculate letter acuity in order to see if text will be visible to a whole stadi
 
 We want to design for novice users to be able to transition to expert users.
 
+### Lecture Eight - Human Memory
 
+**Zipf's Law, Pareto Principle**
+
+- Frequency of words (Zipf 1932)
+  - $P_n = n^{-a}$
+  - $P_n$ is a scaling factor of frequency of $n^{th}$ rank word
+  - $a = 1$
+  * Models fequency of commands, URL's, apps, windows, etc.
+
+![Human Memory: Simplified Model](./Diagrams/human-sensory-model.png)
+
+**Short-term memory**
+
+- Input from sensory or long-term memory
+- Capacity up to 7 (+/-) 2 chunks
+- Chunks used to aid storage and reconstruction
+- Fast access, rapid decay
+- Constant update and interference
+- Maintenance rehearsal
+
+**Human Error: Mistakes**
+
+- Errors of conscious decision making
+- Due to incorrect or incomplete model of system
+- Only detected with feedback
+
+**Human Error: Slips**
+
+- Errors of automatic and skilled behaviour
+  - Capture error
+    - Two action sequences with common starting point
+  - Description error
+    - More than one object allowing the same/similar action
+  - Data-driven error
+    - External data interferes with STM
+  - Loss-of-activation error
+    - Goal displaced/decayed
+  - Mode Error
+    - Right action, wrong system state
+  - Mode slip
+    - Pointing or steering error
+  - Premature closure error
+    - Dangling UI actions required after perceived goal completion
+  - What is a mode?
+    - system partition
+    - Modal dialog
+    - Ensure modes are visible and noticeable

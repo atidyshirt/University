@@ -344,7 +344,7 @@ Choosing a heuristic: a trade-off between quality of estimate and work per node!
   - That is, $KB \models g$ if there is no interpretation in which $KB$ is _true_ and $g$ is _false_.
 - A **Proof procedure** is a -possibly non-deterministic - algorithm for deriving consequences of a knowledge
 - Given a proof procedure, $KB \vdash g$ means $g$ can be derived from knowledge base $KB$
-- Recall $KB \models g$ means $g$ is *true* in all models of $KB$
+- Recall $KB \models g$ means $g$ is _true_ in all models of $KB$
 - A proof procedure is **sound** if $KB \vdash g \implies KB \models g$
 - A proof procedure is **complete** if $KB \models g \implies KB \vdash g$
 
@@ -392,15 +392,15 @@ A **Derivation** of query $? q_1 \land ... \land q_k$ from $KB$ is a sequence of
 > There is more information on SLD Resolution at the end of this lecture, this will
 > be needed in the assignment
 
-### Lecture Four: Declarative Programming
+### Lecture Four: Declarative Programming (Part One)
 
 **What is declarative programming?**
 
 Declarative programming is the use of mathematical logic to describe the logic of computation without describing its control flow
 
 - Knowledge bases and queries in propositional logic are made up of propositions and connectives
-- Predicate logic adds the notion of *predicates* and *variables*
-- We take a non-theoretical approach to predicate logic by introducing *declarative programming*
+- Predicate logic adds the notion of _predicates_ and _variables_
+- We take a non-theoretical approach to predicate logic by introducing _declarative programming_
 - useful for: expert systems, diagnostics, machine learning, parsing text, theorem proving, ...
 
 **Datalog**
@@ -439,13 +439,13 @@ Operators
 Interpreter Operands and rules:
 
 - Variables: X, Y, Z, Cam, AnythingThatStartswithUppercase
-  * Acts as a `wildcard` to match with when querying
+  - Acts as a `wildcard` to match with when querying
 - Order of arguments matters
 - `Arity` is important
 - Unification/matching:
-  * Two terms unify or match if they are the same term or if the contain variables that can be uniformly
+  - Two terms unify or match if they are the same term or if the contain variables that can be uniformly
     instanciated with terms in such a way that the resulting terms are equal (this is how we query)
-  * Example: $l(s(g), Z) = k(X, t(Y))
+  - Example: $l(s(g), Z) = k(X, t(Y))
 
 With only Unification we can do some programming
 
@@ -478,4 +478,121 @@ If we make the following query with the above knowledge base, we get a positive 
 ```
 $- decendent(anna, donna)
 yes
+```
+
+### Lecture Five: Declarative Programming (Part Two)
+
+**Lists in Prolog**
+
+- A list is a finite sequence of elements
+- List elements are enclosed in square brackets
+- we can think of non-empty lits as a head and tail
+  - Head is first item
+  - Tail is the rest of the list
+- Empty list has no head or tail
+- Here are some examples of lists in prolog
+
+```
+[mia, vincent, jules, yolanda]
+[mia, robber(honeybunny), X, 2, mia]
+[]
+```
+
+**Pipe Operand**
+
+- Can be used for creating a list
+- Example:
+
+```
+[head|tail] = [mia, vincent, jules, yolanda].
+Head = mia
+tail = [vincent, jules, yolanda].
+```
+
+- We can have anonymous variables denoted with the `_`
+- These do not get recorded and assigned to variables
+
+```
+[_,X2,_,X4|_] = [mia, vincent, jules, yolanda].
+X2 = vincent
+X4 = Jody
+```
+
+**Defining Members of a list**
+
+- One of the most basic things we would like to know is whether something is an element of a list or not
+- So let's write a predicate that when given a term X and a list L, tells us whether $X \in L$
+- We can define member as the following:
+
+```
+member(X,[X,_]).
+member(X,_),T]):-member(X,T).
+```
+
+**Defining Append**
+
+- We can define an important predixate, append whose arguements are all lists
+- Declaratively, append(L1,L2,L3) is true if list L3 is the result of concat L1, L2
+- Recursive definition,
+  - Base case: appending the empty list to any list produces the same list
+  - The recursive step says that when concatenating non-empty list $[H|T]$ with list $L$, the result is a list with head $H$ and the result of concatenating $T$ and $L$
+
+Definition:
+
+```
+append([],L,L).
+append([H|L1],L2,[H|L3]):-append(L1,L2,L3).
+```
+
+Expected Output:
+
+```
+$- append([a,b,c],[d,e,f], Z).
+$- Z = [a,b,c,d,e,f].
+yes
+```
+
+**Sublist**
+
+- Now it is very easy to write a predicate that finds sub-lists of lists
+- The sub-lists of a list L are simply the prefixes of suffixes of `L`
+- Checks if a list is a subset of another list
+
+```
+sublist(Sub,List):-suffix(Suffix,List),prefix(Sub,Suffix).
+```
+
+**Reversing a list**
+
+- Recursive definition
+  1. If we reverse the empty list, we obtain the empty list
+  2. If we reverse the list $[H|T]$, we end up with the list obtained by reversing $T$
+  3. This solution works, but is extremely inefficient, _Quadratic time_
+
+```
+reverse([], []).
+reverse([H|T],R) :- reverse(T,RT), append(RT,[H],R).
+```
+
+- Here is a much more efficient solution:
+- We can use an accumulator (list to append the reverse to) in order to make this faster
+
+```python
+accReverse([],L,L).
+accReverse([H,T],Acc,Rev):-accReverse(T,[H|Acc],Rev).
+
+reverse(L1,L2):-accReverse(L1,[],L2). # Wrapper for accReverse function
+```
+
+> The above is a more efficient solution
+
+**Negation as Failure**
+
+- We need to use the cut operator (!) to suppress backtracking
+- The fail predicate always fails
+- They can be combined to get a negation as failure
+
+```
+neg(Goal):-Goal,!,fail.
+neg(Goal).
 ```
