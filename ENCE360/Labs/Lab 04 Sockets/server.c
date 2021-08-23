@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <netdb.h> 
+#include <netdb.h>
 #include <errno.h>
 #include <unistd.h>
 
-#define MAXDATASIZE 1024 // max buffer size 
+#define MAXDATASIZE 1024 // max buffer size
 #define SERVER_PORT 2000
 
 int listen_on(int port)
@@ -40,7 +40,7 @@ int accept_connection(int s) {
     /////////////////////////////////////////////
     // TODO: Implement in terms of 'accept'
 
-    /////////////////////////////////////////////  
+    /////////////////////////////////////////////
 
     return 0; // DELETE THIS !!
 }
@@ -73,7 +73,7 @@ void handle_fork(int msgsock) {
     //TODO: run this line inside a forked child process
     handle_request(msgsock);
 
-    // Be very careful to close all sockets used, 
+    // Be very careful to close all sockets used,
     // and exit any processes or threads which aren't used
       // Note that sockets open BEFORE a fork() are open in BOTH parent/child
 
