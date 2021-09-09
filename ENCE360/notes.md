@@ -837,4 +837,233 @@ Separate what is allowed to be done with how it is done
 - Parameters filled in by the user processes
 
 
-### Lecture Nine:
+### Lecture Nine: Deadlocks
+
+**Resources**
+
+- Various sorts
+  * Physical devices: printers, tape drives
+  * Database and data structures
+  * Locks (e.g. *semaphores*) 
+- Sequence of events: request, use, release
+- Must wait if request is denied
+  * requesting process may block
+  * May fail with error code (and retry)
+- Two types
+  * Preemptable: can be taken away from a prcess with no ill effects
+  * Non-preemptable: will cause the process to fail if taken away
+
+**Four conditions for a deadlock**
+
+- **Mutual exclusion condition**
+  * each resource assigned to one process or is available
+- **Hold and wait condition**
+  * Process holding resources can request additional ones
+- **No preemption condition**
+  * Previously granted resources cannot be forcibly taken away
+- **Circular wait condition**
+  * Must be a circular chain of two or more processes
+  * Each is waiting for resource held by next member of the chain
+
+![Deadlock modeling](./Diagrams/deadlock-modling.png)
+
+![Tracing deadlocks: Example](./Diagrams/tracing-deadlocks.png)
+
+**Deadlock Strategies**
+
+- Ostrich algorithm
+  * Ignore the problem (let deadlocks happen)
+- Detection and recovery
+  * Take action when detected
+- Dynamic avoidance
+  * Detect future deadlocks and take action to avoid them
+- Prevention
+  * Break one of the four conditions for a deadlock
+
+**The Ostrich Algorithm**
+
+- Pretend there is no problem
+- Deadlocks occuring are rare
+- Both Unix and Windows take this approach
+- Trade off between frequency and seriousness of deadlock and efficiency/cost of avoiding them
+  * *It is very expensive to avoid deadlocks*
+
+**Deadlock detection**
+
+- Periodically chechs resources held and requested to look for impasses
+  * When resources requested
+  * Every *n* minutes
+  * When CPU usage stalls
+- Takes steps to recover from deadlocks if they are detected
+- Practical limitations
+  * Requires visibility of process resource requirements
+  * Space-time expensive (order $O(processes \ \times \ resources)$)
+  * Resolving deadlocks can be high complexity
+
+![Deadlock detection](./Diagrams/deadlock-detection.png)
+
+![Deadlock detection: Multiple Resources](./Diagrams/detection-multiple-resources.png)
+
+**Recovery from deadlock**
+
+- Preemption: take a resource from another process
+- Rollback
+  * Checkpoint a process periodically
+  * Use this saved state
+  * Restart the process if it is found deadlocked
+- Recovery through killing processes
+  * Kill one of the processes in the deadlock cycle or another resource holder
+  * The other processes gets its resources
+  * Choose process that can be re-run from the beginning
+
+**Deadlock Avoidance**
+
+- Tries to predict when deadlocks may occur
+- Checks required resources requested to determine how to avoid deadlocks
+  * Process scheduling: suspending one or more processes to avoid a resource clash
+  * Resource scheduling: grant resources in a manner that avoids *unsafe states*
+- Strong assumptions make implementation difficult
+  * Requires visibility of process *future* resource requirements
+  * Assume resources requested will be *held to completion* (this is just not true in most cases)
+
+![Resource state trajectories](./Diagrams/resource-state-trajectories.png)
+
+![Safe vs unsafe states](./Diagrams/safe-unsafe-states.png)
+
+![The Bankers Algorithm](./Diagrams/bankers-alogrithm.png)
+
+**Deadlock Prevention**
+
+- Attacking hold and wait condition
+  * Require processes to request resources before starting
+    + A process not allowed to wait for further resources
+  - Problems
+    * May not know required resources at start of run also ties up resources other processes could be using
+  - Dynamic variation: drop and reacquire
+    * Release all currently held resources
+    * Request all required (old/new)
+- Attacking the no preemption condition
+  * Not always practical or visible
+    * Take a printer away halfway through a job
+- Attacking the circular wait condition (*The way it is actually used in applications*)
+  * Strict ordering of resource allocation
+    * not allowed a resource lower than current resources
+  - Examples:
+    * Linux memory mapping code enforces locking partial orderings
+    * Database exclusive write locks on tables: order alphabetically by table name to avoid deadlock
+
+### Lecture Ten: File Systems
+
+**The logical file system**
+
+Essential requirements of long-term storage:
+
+1. Must store large amounts of data
+2. Information stored must survive the termination of the process using it
+3. Multiple processes must be able to access the information concurrently
+
+Considerations:
+
+1. How do you find the information you want?
+  - Find a file on disk
+  - Find information within a file
+2. How do you control data file access by users
+3. How do you know which disk areas (blocks) are free?
+
+**File structure**
+
+- The three kinds of files
+  * Byte sequence: no inherent structure (Operating Systems)
+  * Record sequence: fixed length records (not used)
+  * Tree: indexed records (some mainframes)
+
+![Internal file struture](./Diagrams/internal-file-structure.png)
+
+**How do we access files?**
+
+- Sequential access
+  * Read all bytes/records from start
+  * Convenient when medium was mag tape
+  * Still relevant for small files and multimedia
+- Random access
+  * Bytes/records read in any order
+  * Essential for database systems and caching
+  * Two methods
+    * Read from a specified position
+    * Move file marker (seek), then read
+
+Files were implemented using blocks, this is simple and efficient as we only need to know the starting block
+and the size of a file, (how many blocks it uses), However it rapidly becomes fragmented.
+
+Windows approach: Now we use linked lists and file allocation tables:
+
+![How these are implemented](./Diagrams/allocation-tables.png)
+
+Unix approach: Using *i-nodes*
+
+![How this is implemented](./Diagrams/i-nodes.png)
+
+The only downside to this is we can have variable length, and we will need to have a block of pointers for larger
+files
+
+**File operations (API)**
+
+- Create
+- Delete
+- Open
+- Close
+- Read
+- Write
+- Append
+- Seek
+- Get attributes
+- Set attributes
+- Rename
+
+**Directories**
+
+> NOTE: Directories are handled in a tree structure (I am not copying this down, common knowledge)
+
+Operations:
+
+- Create
+- Delete
+- Opendir
+- Closedir
+- Readdir
+- Rename
+- Link: *Talking about Referencing files/directories using symlinks*
+- Unlink
+
+**Partitions**
+
+Have the following:
+
+- Boot block
+  * Loads OS
+- Super block
+  * File/system information
+- Free space management
+- I-nodes
+- Root directory
+- Files and directories
+
+**Implementing directories: name storage**
+
+- In-line space-inefficient
+- Names in heap: complex
+- Performance enhancements
+  - Hash table per directory (for large dirs)
+  * Cache frequent searches
+
+**Shared files (linking)**
+
+![Shared files (Linking)](./Diagrams/linking-files.png)
+
+Problems:
+
+- Link is another directory entry to the same i-node
+- Deleting new directory entry creates ownership issues
+- Alternative: link is itself a file
+  * UNIX soft links
+  * Windows shortcuts
