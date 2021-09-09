@@ -43,7 +43,7 @@ def bfs_tree(adj, s):
     state[s] = 'D'
     Q.append(s)
     return bfs_loop(adj, Q, state, parent)
-    
+
 def bfs_loop(adj, Q, state, parent):
     while len(Q) != 0:
         u = Q.popleft()
@@ -70,6 +70,8 @@ def starting_order(dependencies):
 
 def stripped(x):
   return list(dict.fromkeys(x))
+
+bit_stream = "\b2\b2\b4\b5\f2\22\54\56"
 
 dependencies = """\
 D 7

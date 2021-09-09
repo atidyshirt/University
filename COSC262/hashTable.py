@@ -107,7 +107,7 @@ class HashTable:
 				self.buckets[index] = node.next # May be None, or the next match
 			else:
 				prev.next = prev.next.next # LinkedList delete by skipping over
-			# Return the deleted result 
+			# Return the deleted result
 			return result
 
 

@@ -2,10 +2,10 @@ from graphTools import *
 
 def path_length(parent, s, t):
     if s == t:
-        return s 
+        return s
     elif is_none(parent[t]) and is_none(parent[s]):
         return float('inf')
-    else: 
+    else:
         return len(list(path_length(parent, s, parent[t]))), t
 
 def is_none(val):

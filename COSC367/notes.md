@@ -596,3 +596,4 @@ reverse(L1,L2):-accReverse(L1,[],L2). # Wrapper for accReverse function
 neg(Goal):-Goal,!,fail.
 neg(Goal).
 ```
+

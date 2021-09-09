@@ -20,19 +20,19 @@ def should_prune(candidate):
 
 def is_solution(candidate, input_data):
     return len(candidate) == len(input_data)
-        
+
 def children(candidate, input_data):
-    if len(input_data) == 0: 
-        return [] 
-    if len(input_data) == 1: 
-        return [tuple(input_data)] 
+    if len(input_data) == 0:
+        return []
+    if len(input_data) == 1:
+        return [tuple(input_data)]
     candidates = []
     input_data = list(input_data)
-    for i in range(len(input_data)): 
-       cand = input_data[i] 
-       listx = input_data[:i] + input_data[i+1:] 
-       for perm in children(candidate, listx): 
-           candidates.append(tuple([cand]) + tuple(perm)) 
+    for i in range(len(input_data)):
+       cand = input_data[i]
+       listx = input_data[:i] + input_data[i+1:]
+       for perm in children(candidate, listx):
+           candidates.append(tuple([cand]) + tuple(perm))
     return candidates
 
 print(sorted(permutations({1,2,3})))

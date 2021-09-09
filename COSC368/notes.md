@@ -419,3 +419,150 @@ We want to design for novice users to be able to transition to expert users.
     - system partition
     - Modal dialog
     - Ensure modes are visible and noticeable
+
+### Lecture Nine: Deadlocks and the Ostrich Algorithm
+
+**What is a deadlock?**
+
+A set of processes is deadlocked if each process in the set is waiting for an event that only another process in the set can cause.
+
+- Usually the event is release of an exclusively held resource
+- None of the processes can:
+  * run
+  * release resources
+  * be awakened
+- **Resources:**
+  - Various sorts
+    * Physical devices: printers, tape drives
+    * Database/data structures: tables
+    * Locks (e.g. semaphores)
+  - Sequence of events: request, use, release
+  - Must wait if request is denied
+  - Two types:
+    * Preemptable, can be taken awar from a process with no ill effects
+    * Nonpreemptable: will cause the process to fail if taken away
+- **Four conditions for a deadlock:**
+  * Mutual exclusion condition: each resources assigned to one process.
+  * Hold and wait condition: process holding resources can request additional ones.
+  * No preemption condition: previously granted resources cannot be forcibly taken away.
+  * **Circular wait condition:** must be a circular chain of two or more processes, each is waiting for resources held by next member of the chain. *(this is the main condition)*
+- **Deadlock modeling**
+  * Modeled with directed graphs
+    * Resources `R` assigned to process `A`
+    * Process `B` is requested/waiting for resource `S`
+    * Process `C` and `D` are in deadlock over resources `T` and `U`
+
+![Deadlocked Philosophers](./Diagrams/deadlock-philosophers)
+
+![Tracing a deadlock](./tracing-deadlocks)
+
+Because there is a circular dependency (at the end of the above trace), this means we now have a deadlock in the system.
+
+**Deadlock Strategies**
+
+- Ostrich algorithm
+  * Ignores the problem
+- Detection and recovery
+  * Take action when detected
+- Dynamic avoidance
+  * Avoidance by scheduling
+  * careful resource allocation
+- Prevention
+  - Negate one of the four necessary conditions
+
+**The Ostrich Algorithm**
+
+- Pretend there is no problem
+- Reasonable if:
+  * Deadlocks occur very rarely
+  * Cost of prevention is high
+- UNIX and Windows take this approach
+- Trade off between
+  * Frequency and seriousness of deadlock
+  * Cost/difficulty avoiding
+
+**Deadlock detection**
+
+- Periodically chechs resources held and requested to look for impasses
+  * when resources requested
+  * every *n* minutes
+  * When CPU usage stalls
+- Takes steps to recover from deadlocks if detected
+- Practical limitations
+  * Requires visibility of process resource requirements
+    * Usually known to the resource scheduler
+  - Space-time expensive: order $O(Processes \times Resoures)$
+    * This is why most OS's avoid it
+
+![Deadlock Detection](./Diagrams/deadlock-detection)
+
+![How deadlock detection works (finding cycles)](./Diagrams/how-dd-works)
+
+![Detection: multiple resources](./Diagrams/detection-multiple-resources)
+
+Deadlock detection, only works on the currently evaluated processes, it does **not** look into future deadlocks in order to prevent them if they are going to occur.
+
+![Example: Deadlock detection with multiple resources](./Diagrams/detection-example)
+
+**Recovery from deadlock**
+
+- Preemption: take a resource from another process
+- Rollback
+  * checkpoint a process periodically
+  * use this saved state
+  * Restart the process if it is found deadlocked
+- Recovery through killing processes
+  * kill one of the processes in the deadlock cycle or *another resource holder*
+  * the other processes get its resources
+  * choose process that can be rerun from the beginning
+
+**Deadlock Avoidance** 
+
+- Tries to predict when deadlocks may occur
+- Checks required resources requested to determine how to avoid deadlocks
+  * Process scheduling: suspend one or more processes to avoid resource clash
+  * Resource scheduling: grant resources in a manner that avoids *unsafe state*
+- Strong assumptions make implementation difficult and impractical
+  * Requires visibility of process future resource requirements (*static scheduling*)
+  * Assumes resources requested will be *held to completion* (*most pessimistic outlook*)
+
+![Resource state trajectories (2D)](./Diagrams/resource-state-trajectories)
+
+In order to map the availible resources in a way that we ensure that there are no deadlocks, comes down to a topology question, *can we allocate the resources in such a way that we avoid unsafe states?* We also make some assumptions, outlined in the figure below.
+
+A state is considered **safe** if it can allocate all the resources to processes without locking.
+
+![Safe and unsafe states](./Diagrams/safe-unsafe-states)
+
+**Bankers Algorithm**
+
+This solves the problem, however it requires two major assumptions
+
+- Static number of processes
+- Known usage requirements
+
+In a practical sense on an OS level, these are unrealistic assumptions to have, as it is impractical to have a static number of processes and we will not always know the usage of an individual process.
+
+**Prevention: break one of the four conditions**
+
+We could do one of the following:
+
+- Remove competition over resource
+- Don't allow additional resources to be requested
+- Allow processes to surrender resources
+- Avoid order issues
+
+In practice it is difficult to break the four conditions for a deadlock.
+
+**Deadlock Prevention: Attacking the hold and wait condition**
+
+- Require processes to request resources before starting
+  * A process not allowed to wait for further resources
+- Problems:
+  * May not know required resources at start of run
+  * also ties up resources other processes could be using
+- Dynamic variation: drop and reacquire
+  * Release all currently held resources
+  * Request all required (old and new)
+
+

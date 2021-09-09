@@ -1,3 +1,13 @@
+"""This module contains classes and functions related to graph
+search. It is specifically written for the course COSC367: Artificial
+Intelligence. Most of the code here is abstract.  The normal usage is
+to write concrete subclasses for particular problems.
+
+Author: Kourosh Neshatian
+Last modified: 13 Jul 2019
+
+"""
+
 from abc import ABCMeta, abstractmethod
 from collections import namedtuple
 
@@ -7,6 +17,7 @@ def generic_search(graph, frontier):
     frontier object.
 
     """
+
     for starting_node in graph.starting_nodes():
         # Paths are tuples and the first arc on each path is a dummy
         # arc to a starting node
@@ -21,6 +32,7 @@ def generic_search(graph, frontier):
         for arc in graph.outgoing_arcs(node_to_expand):
             frontier.add(path + (arc,)) # add back a new extended path
 
+
 class Arc(namedtuple('Arc', 'tail, head, action, cost')):
     """Represents an arc in a graph.
 
@@ -31,6 +43,7 @@ class Arc(namedtuple('Arc', 'tail, head, action, cost')):
              order to get from the source state to the destination state.
     cost -- a number that specifies the cost of the action
     """
+
 
 class Graph(metaclass=ABCMeta):
     """This is an abstract class for graphs. It cannot be directly
@@ -48,6 +61,7 @@ class Graph(metaclass=ABCMeta):
         starting node but even then the function returns a sequence
         with one element. It can be implemented as an iterator if
         needed.
+
         """
 
     @abstractmethod
@@ -64,6 +78,7 @@ class Graph(metaclass=ABCMeta):
         meets the required criteria for heuristics."""
 
         raise NotImplementedError
+
 
 class ExplicitGraph(Graph):
     """This is a concrete subclass of Graph where vertices and edges
@@ -111,6 +126,7 @@ class ExplicitGraph(Graph):
     def outgoing_arcs(self, node):
         """Returns a sequence of Arc objects that go out from the given
         node. The action string is automatically generated.
+
         """
         arcs = []
         for edge in self.edge_list:
@@ -123,31 +139,42 @@ class ExplicitGraph(Graph):
                 arcs.append(Arc(tail, head, str(tail) + '->' + str(head), cost))
         return arcs
 
+
+
 class Frontier(metaclass = ABCMeta):
     """This is an abstract class for frontier classes. It outlines the
     methods that must be implemented by a concrete subclass. Concrete
     subclasses determine the search strategy.
+
     """
+
 
     @abstractmethod
     def add(self, path):
         """Adds a new path to the frontier. A path is a sequence (tuple) of
         Arc objects. You should override this method.
+
         """
+
 
     def __iter__(self):
         """We don't need a separate iterator object. Just return self. You
         don't need to change this method."""
         return self
 
+
     @abstractmethod
     def __next__(self):
+
         """Selects, removes, and returns a path on the frontier if there is
         any.Recall that a path is a sequence (tuple) of Arc
         objects. Override this method to achieve a desired search
         strategy. If there nothing to return this should raise a
         StopIteration exception.
+
         """
+
+
 
 def print_actions(path):
     """Given a path (a sequence of Arc objects), prints the actions that
@@ -161,3 +188,4 @@ def print_actions(path):
         print("Total cost:", sum(arc.cost for arc in path))
     else:
         print("There is no solution!")
+

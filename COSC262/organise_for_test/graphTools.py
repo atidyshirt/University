@@ -1,12 +1,12 @@
 """
-   _____                 _       _______          _     
-  / ____|               | |     |__   __|        | |    
- | |  __ _ __ __ _ _ __ | |__      | | ___   ___ | |___ 
+   _____                 _       _______          _
+  / ____|               | |     |__   __|        | |
+ | |  __ _ __ __ _ _ __ | |__      | | ___   ___ | |___
  | | |_ | '__/ _` | '_ \| '_ \     | |/ _ \ / _ \| / __|
  | |__| | | | (_| | |_) | | | |    | | (_) | (_) | \__ \
   \_____|_|  \__,_| .__/|_| |_|    |_|\___/ \___/|_|___/
-                  | |                                   
-                  |_|                                
+                  | |
+                  |_|
 """
 
 """ GENERATING AN ADJACENCY LIST """
@@ -43,10 +43,10 @@ def check_graph(header, lines):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     return directed, weighted
 
@@ -62,7 +62,7 @@ def check_graph(header, lines):
     """
     print(adjacency_list(graph_string))
 
-""" RETURNING PARENT ARRAY WITH BFS """ 
+""" RETURNING PARENT ARRAY WITH BFS """
 from collections import deque
 def adjacency_list(string):
     """ generates an adj_list when given a string in correct
@@ -79,10 +79,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -136,10 +136,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -186,10 +186,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -229,10 +229,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -277,7 +277,7 @@ def bfs_loop(adj, Q, state, parent):
 def shortest_path(graph, source, destination):
     """ Takes in a graph string and returns shortest path """
     def tree_path(parent, s, t):
-        """ returns path from s, t """ 
+        """ returns path from s, t """
         result.append(t)
         if s == t:
             return result
@@ -285,7 +285,7 @@ def shortest_path(graph, source, destination):
             return tree_path(parent, s, parent[t])
     result = []
     tree_path(bfs(graph, source), source, destination)
- 
+
     return tuple(result)
 
 """ FINDING A VALID TOPOLOGICAL ORDERING OF GRAPH """
@@ -303,10 +303,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -331,7 +331,7 @@ def dfs_loop_topological(listx, u, state, stack):
 def topological_ordering(info):
     """ Returns a valid topological ordering, note that a topological
         ordering is the reverse of the final stack, if asked to return
-        the stack, give opposite of topological ordering 
+        the stack, give opposite of topological ordering
     """
     n = len(info)
     state = ["U" for _ in range(n)]
@@ -341,7 +341,6 @@ def topological_ordering(info):
         if state[i] == "U":
             dfs_loop_topological(info, i, state, stack)
     return stack[::-1]
-
 
 """ Generating a Distance Matrix from Adjacency list """
 def adjacency_list(string):
@@ -358,10 +357,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -382,8 +381,8 @@ def distance_matrix(adj):
     dm = [
             [float('inf')
             if i != j
-            else 0 
-            for j in range(n)] 
+            else 0
+            for j in range(n)]
             for i in range(n)
         ]
 
@@ -407,10 +406,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -431,8 +430,8 @@ def distance_matrix(adj):
     dm = [
             [float('inf')
             if i != j
-            else 0 
-            for j in range(n)] 
+            else 0
+            for j in range(n)]
             for i in range(n)
         ]
 
@@ -470,10 +469,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -496,7 +495,7 @@ def next_vertex(in_tree, distance):
     for vertex in range(len(distance)):
         if distance[vertex] == 0:
             parent = vertex
-    
+
     for vertex in range(len(distance)):
         if distance[vertex] <= mini[0] and in_tree[vertex] == False:
             mini = distance[vertex], vertex
@@ -517,10 +516,10 @@ def adjacency_list(string):
         directed = True
     else:
         directed = False
-        
+
     if len(header) > 2:
         weighted = True
-    else: 
+    else:
         weighted = False
     # Generates output based on info above
     for vertex in range(0, len(lines) - 1):
@@ -543,7 +542,7 @@ def next_vertex(in_tree, distance):
     for vertex in range(len(distance)):
         if distance[vertex] == 0:
             parent = vertex
-    
+
     for vertex in range(len(distance)):
         if distance[vertex] <= mini[0] and in_tree[vertex] == False:
             mini = distance[vertex], vertex

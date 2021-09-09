@@ -1,21 +1,21 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <netdb.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <netdb.h>
 #include <unistd.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
 
 
-#define MAXDATASIZE 1024 // max buffer size 
+#define MAXDATASIZE 1024 // max buffer size
 #define SERVER_PORT 2000
 
 int client_socket(char *hostname)
 {
     char port[20];
     struct addrinfo their_addrinfo; // server address info
-    struct addrinfo *their_addr = NULL; // connector's address information  
+    struct addrinfo *their_addr = NULL; // connector's address information
     int sockfd;
 
     int n = snprintf(port, 20, "%d", SERVER_PORT); // Make a string out of the port number
@@ -27,10 +27,9 @@ int client_socket(char *hostname)
 
     /////////////////////////
 
-    //TODO: 
-    // 1) initialise socket using 'socket'
-    // 2) initialise 'their_addrinfo' and use 'getaddrinfo' to lookup the IP from host name
-    // 3) connect to remote host using 'connect'
+    // TODO: 1) initialise socket using 'socket'
+    // TODO: 2) initialise 'their_addrinfo' and use 'getaddrinfo' to lookup the IP from host name
+    // TODO: 3) connect to remote host using 'connect'
 
     ///////////////////////////////
 

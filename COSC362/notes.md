@@ -796,6 +796,6 @@ Update function:
 - Many generalisations are possible
 - Each pixel is shared in a random way, similar to splitting a bit in the one time pad
 
-![Visual Encryption](./Diagrams/visual-encryption.png)
 
+![Visual Encryption](./Diagrams/visual-encryption.png)
 ![Visual Decryption](./Diagrams/visual-decryption.png)

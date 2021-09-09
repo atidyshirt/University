@@ -835,3 +835,6 @@ Separate what is allowed to be done with how it is done
 - A process knows which of its children threads are important and need priority
 - Scheduling algorithm parameterized
 - Parameters filled in by the user processes
+
+
+### Lecture Nine:
