@@ -468,4 +468,58 @@ and will be covering refining design and implementing next term. Below is the fu
   * delays commitment
 - Annotations/sequence to shoe UI progression
 
+### Lecture Ten: Early UI Concepts
+
+**Sequential sketches/storyboards**
+
+- Show state transitions in your wireframes, *how the user changes from page to page*
+- Focus on *main* interactions (Zipf's law)
+
+**Medium fidelity prototypes**
+
+- Functionality is mimicked by a person
+- The wizard must know the algorithm 
+- Good for complex/futuristic ideas
+- Facilitates motion paths
+- Links between states, etc.
+- There are lots of wire-framing tools
+  * moqups.com
+  * balsamiq.com
+
+Must have:
+
+- Series of key frames
+- State progression is clear
+- Walk-through evaluation 
+
+First we can use wireframes, secondly we can use simulations and animations in order to have a better visual representation of how it will work when implemented.
+
+Watch out for when doing further mock ups:
+
+- Giving perception of `nearly completed`
+- Reluctance to change
+- Excessive focus on presentation rather than approach
+
+**System Centered System Design (A bad approach)**
+
+- Focusses on the system and designers needs
+- Asks the question, what is easy?
+
+**Task-Centred System Design**
+
+- HCI equivalent of requirement analysis
+- Exactly and specifically who are the users and what they will use the system for?
+- Critical difference between:
+  * "The User": a pretend person who will adapt to the system
+  * "Mary": A reality-based sanity check for designers
+- User Identification
+  * Identify categories of end-users, with specific exemplars:
+    * Casuals
+    * Power users
+- Record what the users wants to do, but minimize a description of how they do it (*Vim is an example of this*)
+- Record the complete task: input source, output destination
+- Uniquely enumerate tasks for identification
+- Identify broad coverage of users and use cases
+
+
 
