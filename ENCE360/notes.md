@@ -837,120 +837,151 @@ Separate what is allowed to be done with how it is done
 - Parameters filled in by the user processes
 
 
+
 ### Lecture Nine: Deadlocks
 
-**Resources**
+**What is a deadlock?**
 
-- Various sorts
-  * Physical devices: printers, tape drives
-  * Database and data structures
-  * Locks (e.g. *semaphores*) 
-- Sequence of events: request, use, release
-- Must wait if request is denied
-  * requesting process may block
-  * May fail with error code (and retry)
-- Two types
-  * Preemptable: can be taken away from a prcess with no ill effects
-  * Non-preemptable: will cause the process to fail if taken away
+A set of processes is deadlocked if each process in the set is waiting for an event that only another process in the set can cause.
 
-**Four conditions for a deadlock**
+- Usually the event is release of an exclusively held resource
+- None of the processes can:
+  * run
+  * release resources
+  * be awakened
+- **Resources:**
+  - Various sorts
+    * Physical devices: printers, tape drives
+    * Database/data structures: tables
+    * Locks (e.g. semaphores)
+  - Sequence of events: request, use, release
+  - Must wait if request is denied
+  - Two types:
+    * Preemptable, can be taken awar from a process with no ill effects
+    * Nonpreemptable: will cause the process to fail if taken away
+- **Four conditions for a deadlock:**
+  * Mutual exclusion condition: each resources assigned to one process.
+  * Hold and wait condition: process holding resources can request additional ones.
+  * No preemption condition: previously granted resources cannot be forcibly taken away.
+  * **Circular wait condition:** must be a circular chain of two or more processes, each is waiting for resources held by next member of the chain. *(this is the main condition)*
+- **Deadlock modeling**
+  * Modeled with directed graphs
+    * Resources `R` assigned to process `A`
+    * Process `B` is requested/waiting for resource `S`
+    * Process `C` and `D` are in deadlock over resources `T` and `U`
 
-- **Mutual exclusion condition**
-  * each resource assigned to one process or is available
-- **Hold and wait condition**
-  * Process holding resources can request additional ones
-- **No preemption condition**
-  * Previously granted resources cannot be forcibly taken away
-- **Circular wait condition**
-  * Must be a circular chain of two or more processes
-  * Each is waiting for resource held by next member of the chain
+![Deadlocked Philosophers](./Diagrams/deadlock-philosophers)
 
-![Deadlock modeling](./Diagrams/deadlock-modling.png)
+![Tracing a deadlock](./tracing-deadlocks)
 
-![Tracing deadlocks: Example](./Diagrams/tracing-deadlocks.png)
+Because there is a circular dependency (at the end of the above trace), this means we now have a deadlock in the system.
 
 **Deadlock Strategies**
 
 - Ostrich algorithm
-  * Ignore the problem (let deadlocks happen)
+  * Ignores the problem
 - Detection and recovery
   * Take action when detected
 - Dynamic avoidance
-  * Detect future deadlocks and take action to avoid them
+  * Avoidance by scheduling
+  * careful resource allocation
 - Prevention
-  * Break one of the four conditions for a deadlock
+  - Negate one of the four necessary conditions
 
 **The Ostrich Algorithm**
 
 - Pretend there is no problem
-- Deadlocks occuring are rare
-- Both Unix and Windows take this approach
-- Trade off between frequency and seriousness of deadlock and efficiency/cost of avoiding them
-  * *It is very expensive to avoid deadlocks*
+- Reasonable if:
+  * Deadlocks occur very rarely
+  * Cost of prevention is high
+- UNIX and Windows take this approach
+- Trade off between
+  * Frequency and seriousness of deadlock
+  * Cost/difficulty avoiding
 
 **Deadlock detection**
 
 - Periodically chechs resources held and requested to look for impasses
-  * When resources requested
-  * Every *n* minutes
+  * when resources requested
+  * every *n* minutes
   * When CPU usage stalls
-- Takes steps to recover from deadlocks if they are detected
+- Takes steps to recover from deadlocks if detected
 - Practical limitations
   * Requires visibility of process resource requirements
-  * Space-time expensive (order $O(processes \ \times \ resources)$)
-  * Resolving deadlocks can be high complexity
+    * Usually known to the resource scheduler
+  - Space-time expensive: order $O(Processes \times Resoures)$
+    * This is why most OS's avoid it
 
-![Deadlock detection](./Diagrams/deadlock-detection.png)
+![Deadlock Detection](./Diagrams/deadlock-detection)
 
-![Deadlock detection: Multiple Resources](./Diagrams/detection-multiple-resources.png)
+![How deadlock detection works (finding cycles)](./Diagrams/how-dd-works)
+
+![Detection: multiple resources](./Diagrams/detection-multiple-resources)
+
+Deadlock detection, only works on the currently evaluated processes, it does **not** look into future deadlocks in order to prevent them if they are going to occur.
+
+![Example: Deadlock detection with multiple resources](./Diagrams/detection-example)
 
 **Recovery from deadlock**
 
 - Preemption: take a resource from another process
 - Rollback
-  * Checkpoint a process periodically
-  * Use this saved state
+  * checkpoint a process periodically
+  * use this saved state
   * Restart the process if it is found deadlocked
 - Recovery through killing processes
-  * Kill one of the processes in the deadlock cycle or another resource holder
-  * The other processes gets its resources
-  * Choose process that can be re-run from the beginning
+  * kill one of the processes in the deadlock cycle or *another resource holder*
+  * the other processes get its resources
+  * choose process that can be rerun from the beginning
 
-**Deadlock Avoidance**
+**Deadlock Avoidance** 
 
 - Tries to predict when deadlocks may occur
 - Checks required resources requested to determine how to avoid deadlocks
-  * Process scheduling: suspending one or more processes to avoid a resource clash
-  * Resource scheduling: grant resources in a manner that avoids *unsafe states*
-- Strong assumptions make implementation difficult
-  * Requires visibility of process *future* resource requirements
-  * Assume resources requested will be *held to completion* (this is just not true in most cases)
+  * Process scheduling: suspend one or more processes to avoid resource clash
+  * Resource scheduling: grant resources in a manner that avoids *unsafe state*
+- Strong assumptions make implementation difficult and impractical
+  * Requires visibility of process future resource requirements (*static scheduling*)
+  * Assumes resources requested will be *held to completion* (*most pessimistic outlook*)
 
-![Resource state trajectories](./Diagrams/resource-state-trajectories.png)
+![Resource state trajectories (2D)](./Diagrams/resource-state-trajectories)
 
-![Safe vs unsafe states](./Diagrams/safe-unsafe-states.png)
+In order to map the availible resources in a way that we ensure that there are no deadlocks, comes down to a topology question, *can we allocate the resources in such a way that we avoid unsafe states?* We also make some assumptions, outlined in the figure below.
 
-![The Bankers Algorithm](./Diagrams/bankers-alogrithm.png)
+A state is considered **safe** if it can allocate all the resources to processes without locking.
 
-**Deadlock Prevention**
+![Safe and unsafe states](./Diagrams/safe-unsafe-states)
 
-- Attacking hold and wait condition
-  * Require processes to request resources before starting
-    + A process not allowed to wait for further resources
-  - Problems
-    * May not know required resources at start of run also ties up resources other processes could be using
-  - Dynamic variation: drop and reacquire
-    * Release all currently held resources
-    * Request all required (old/new)
-- Attacking the no preemption condition
-  * Not always practical or visible
-    * Take a printer away halfway through a job
-- Attacking the circular wait condition (*The way it is actually used in applications*)
-  * Strict ordering of resource allocation
-    * not allowed a resource lower than current resources
-  - Examples:
-    * Linux memory mapping code enforces locking partial orderings
-    * Database exclusive write locks on tables: order alphabetically by table name to avoid deadlock
+**Bankers Algorithm**
+
+This solves the problem, however it requires two major assumptions
+
+- Static number of processes
+- Known usage requirements
+
+In a practical sense on an OS level, these are unrealistic assumptions to have, as it is impractical to have a static number of processes and we will not always know the usage of an individual process.
+
+**Prevention: break one of the four conditions**
+
+We could do one of the following:
+
+- Remove competition over resource
+- Don't allow additional resources to be requested
+- Allow processes to surrender resources
+- Avoid order issues
+
+In practice it is difficult to break the four conditions for a deadlock.
+
+**Deadlock Prevention: Attacking the hold and wait condition**
+
+- Require processes to request resources before starting
+  * A process not allowed to wait for further resources
+- Problems:
+  * May not know required resources at start of run
+  * also ties up resources other processes could be using
+- Dynamic variation: drop and reacquire
+  * Release all currently held resources
+  * Request all required (old and new)
 
 ### Lecture Ten: File Systems
 
