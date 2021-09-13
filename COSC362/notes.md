@@ -277,13 +277,9 @@ given $a, b \in \mathbb{Z}$, $a$ divides $b$ if there exists $k \in \mathbb{Z} \
 We use $p$ to denote a prime, an integer $p \geq 1$ is a _prime_ if its divisors are
 $(1, p)$.
 
-- Testing a prime number $p$ by trial numbers up to the square root of $p$
-  = There are more efficient ways to check for primality _later in the course_
+- Testing a prime number $p$ by trial numbers up to the square root of $p$ 
+  - There are more efficient ways to check for primality *later in the course*.
 
-**Properties of factorisation and useful formulae:**
-
-- If $a | b$ and $a | c$, then $a | bc$
-- If $p$ is prime and $p | ab$ then either $p | a$ or $p | b$
 - **Division algorithm**
   - given $a, b \in \mathbb{Z}, \quad s.t \quad a > b$, then there exists $q, r \in mathbb{Z} \quad s.t \quad a = bq + r$
   - $a = bq + r$ and $0 \leq r \ leq b$, we can use this to show $r < \frac{a}{2}$.
@@ -304,20 +300,16 @@ $$ f*{k - 1} = r*{k}q*{k+1} + r*{k+1} \quad with \quad r*{k+1} = 0$$
 
 - Hence $d = r_k = gcd(a, b)$
 
-* **Back Substitution - Extending Euclidean Algorithm**
-
+- **Back Substitution - Extending Euclidean Algorithm**
   - Finding x, y in $ax + ay = d = r_k$
   - This is essentially reversing the Euclidean algorithm
-
-* **Modular Arithmetic:**
-
-* Given $a \equiv b$ (mod n) and $c \equiv d$ (mod n), then the following conditions hold:
-
+- **Modular Arithmetic:**
+- Given $a \equiv b$ (mod n) and $c \equiv d$ (mod n), then the following conditions hold:
   - $a + b \equiv c + d$ (mod n)
   - $ac \equiv bd$ (mod n)
   - $ka \equiv kb$ (mod n)
 
-* **Groups**
+- **Groups**
   - A group $\mathbb{G}$ is a set with _binary operation_ and:
     - Closure: $a \cdot b \in \mathbb{G}$ for $a, b \in \mathbb{G}$
     * Identity: there is an element 1, s.t. $a \cdot 1 = 1 \cdot a = a$ for $a \in \mathbb{G}$
@@ -325,17 +317,17 @@ $$ f*{k - 1} = r*{k}q*{k+1} + r*{k+1} \quad with \quad r*{k+1} = 0$$
     * Associativity: $(a \cdot b) \cdot c = a \cdot (b \cdot c)$ for $a,b,c \in \mathbb{G}$
     * Commutativity: $a \cdot b = b \cdot a$ for $a, b \in \mathbb{G}$
       - If this condition holds, the group is said to be _abelian_.
-* **Cyclic Groups**
+- **Cyclic Groups**
   - the order $|\mathbb{G}|$ of a group $\mathbb{G}$ is the number of elements in $\mathbb{G}$
   - $g^k$ denote the repeated application of $g \in \mathbb{G}$, using the group operation
   - The order $|g|$ of $g \in \mathbb{G}$ is the smallest integer $k$ s.t. $g^k = 1$
   - $g$ is a generator of $\mathbb{G}$
   - A group is said to be _cyclic_ if it has a generator
-* **Finding inverse**
+- **Finding inverse**
 
   - Use extended Euclidean algorithm if GCD is 1.
 
-* **Fields**
+- **Fields**
   - A field $\mathbb{F}$ is a set with binary operations:
   - $\mathbb{F}$ is an _abelian group_ under the operation $+$ with identity
     element of 0.
@@ -799,3 +791,65 @@ Update function:
 
 ![Visual Encryption](./Diagrams/visual-encryption.png)
 ![Visual Decryption](./Diagrams/visual-decryption.png)
+
+###Lecture Twelve: Public Key Cryptography (Part One)
+
+**Motivation**
+
+- Public key cryptography (PKC) has features that symmetric key cryptography does not.
+- Applied for key management in protocols such as TLS and IPsec.
+- RSA is one of the best known public key cryptosystems, widely used.
+- Alternatives include discrete log based ciphers, also widely deployed and standardised.
+
+**One-way Functions**
+
+- A function $f$ is a one-way function if $f(x) = y$ is easily computed given $x$, but if $f^{-1}(y) = x$ is computationally difficult to compute given $y$
+- Open problem: *Do one-way functions actually exist?*
+- Example of functions believed to be one-way
+  * Multiplication of large primes:
+
+**Trapdoor One-way Functions**
+
+- A trapdoor one-way function $f$ is a one-way function s.t $f^{-1}(y)$ is easily computed given an additional piece of information called a *trapdoor*.
+
+**Asymmetric Cryptography**
+
+- Asymmetry: encryption and decryption keys are different
+- Encryption key is public
+- Decryption key is private
+- Advantage: Key management is simple, can share public key to anyone, secret key still needs to be handled with care
+
+**RSA Algorithms**
+
+- Public key cryptosystem and digital signature scheme
+  * Anyone can check if the signature is valid using public encryption key
+- Based on the `integer factorisation problem`
+- RSA patent expired in 2000
+
+Key Generation:
+
+- Randomly choose two distinct primes $p, q$ from the set of all primes of a certain size
+- Compute $n = pq$
+- Randomly choose $e$ s.t. $gcd(e, \phi(n)) = 1$
+  - Here, $\phi(n) = \phi(pq) = (p - 1)(q - 1)$
+- Compute $d = e^{-1} \mod \phi(n)$
+- Set the public key $K_E$ ad $(n,e)$
+- Set the private key $K_D$ as $(p,q,d)$
+
+Encryption:
+
+- Public encryption key $K_E = (n,e)$
+- Input is a value $M$ s.t. $0 \leq M \leq n$
+- Compute $C = Enc(M, K_E)$
+
+Decryption:
+
+- Private decryption key is $K_D = (p,q,d)$ 
+- Compute $Dec(C, K_D) = C^d \mod n$
+
+Any message requires to be pre-processes to become $M$
+
+- Coding it as a number
+- Adding randomness
+
+> This lecture is basically a recap of RSA, see last years lectures for more information

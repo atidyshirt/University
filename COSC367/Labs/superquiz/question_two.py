@@ -1,7 +1,6 @@
 import math
 import heapq
-from search import *
-from markdown_writer.markdown_writer import MarkdownWriter
+from .search import *
 
 INF = math.inf
 
@@ -110,22 +109,6 @@ def print_map(map_graph: RoutingGraph, frontier: AStarFrontier, solution):
     print(out)
     return out
 
-def report(graph, frontier, solution):
-    md = MarkdownWriter("./report.md")
-    md.header1("Map Algorithm Data")
-    md.paragraph("""Here is an example of the A\*
-    algorithm traversing a map string, the agent
-    can pick up fuel, traverse the space until it reaches
-    a goal node, note the border and X characters are
-    considered walls and cannot be moved through,
-    `.` identifies places popped and `*` identifies the
-    selected path.
-    """)
-    md.codeblock(graph.map_str)
-    md.paragraph("""The output (traversed graph) is as follows:""")
-    md.codeblock(print_map(graph, frontier, solution))
-
-
 if __name__ == "__main__":
     map_str = """\
     +------------+
@@ -141,4 +124,3 @@ if __name__ == "__main__":
     frontier = AStarFrontier(map_graph)
     solution = next(generic_search(map_graph, frontier), None)
     print_map(map_graph, frontier, solution)
-    report(map_graph, frontier, solution)
