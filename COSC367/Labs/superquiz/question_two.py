@@ -1,6 +1,6 @@
 import math
 import heapq
-from .search import *
+from search import *
 
 INF = math.inf
 
