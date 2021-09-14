@@ -445,7 +445,7 @@ Interpreter Operands and rules:
 - Unification/matching:
   - Two terms unify or match if they are the same term or if the contain variables that can be uniformly
     instanciated with terms in such a way that the resulting terms are equal (this is how we query)
-  - Example: $l(s(g), Z) = k(X, t(Y))
+  - Example: $l(s(g), Z) = k(X, t(Y))$
 
 With only Unification we can do some programming
 
@@ -597,3 +597,93 @@ neg(Goal):-Goal,!,fail.
 neg(Goal).
 ```
 
+### Lecture Five: Local and Global Search (Optimisation)
+
+**Optimisation Problems**
+
+Given:
+
+- A set of variables and their domains; and
+- An objective function (aka a cost function),
+
+Find an assignment (of each value to each variable) that optimises (max or min) the value of the objective function.
+
+- Optimisation usually involves searching
+- CSP's and optimisation problems can be converted (reduced) to each other
+- There are special algorithms for certain kind of optimisation problems (linear programming, convex optimisation)
+- In this lecture we will look at two families of algorithms (local and global)
+
+**Local Search for Optimisation**
+
+- A **Local search** algorithm is an iterative algorithm that keeps a single current state and in each iteration tries to improve it by moving to one of its neighbouring states.
+- Two key aspects to decide:
+  * Neighbourhood: which states are the neighbours of a given state
+  * Movement: which neighbouring state should the algorithm go to
+- Asearch algorithm is considered to be greedy if it always moves to the best neighbour. Two variants happen to have special names:
+  * *Hill climbing*: for maximisation
+  * *Greedy descent*: for minimisation
+
+![Example of local search](./Diagrams/local-search-for-tsp.png)
+
+Local search for CSP's:
+
+- A constrained satisfaction problem can be reduced to an optimisation problem
+- Given an assignment, a conflict is an unsatisfied constraint
+- Heuristic function: the number of conflicts produced by an assignment
+- Optimisation problem: find an assignment that minimises this heuristic function
+
+Local search for CSP's in neighbourhood:
+
+- Neighbours of a given state can be defined in many ways
+  * All possible assignments except the current one
+  * Select a variable that appears in any conflict, neighbours are assignment in which that variable takes a different value from its domain
+  * Select a variables in the current assignment that participates in the most number of conflicts. Neighbours are assignments in which that variable takes a different value from its domain
+  * [n-queens example (35:00)](https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-14T09:00:00.000_2021-09-14T10:55:00.000/classroom#sortDirection=desc)
+
+**Global Search**
+
+Parallel search:
+
+- A total assignment is called an **individual**
+- Idea: maintain a population of $k$ individuals instead of one
+- At every stage, update each individual in the population
+- Like $k$ restarts, but uses $k$ times the minimum number of steps
+- A basic form of global search
+
+Simulating Annealing:
+
+- Pick a variable at random and a new value at random
+- If it is an improvement, adopt it
+- If it isn't an improvement adopt it probabilistically depending on a temperature parameter, $T$
+- Temperature can be reduced
+
+| Temperature | 1-worse | 2-worse | 3-worse |
+| ---         | ---     | ---     | ---     |
+| 10          | 0.91    | 0.81    | 0.74    |
+| 1           | 0.37    | 0.14    | 0.05    |
+| 0.25        | 0.02    | 0.003   | 0.00005 |
+| 0.1         | 0.00005 | 0       | 0       |
+
+**Gradient Descent**
+
+- A widely used local search algorithm in numeric optimisation (machine learning)
+- Used when the variagles are numeric and continous
+- The objective function must be differentiable (mostly)
+
+![Gradient descent algorithm](./Diagrams/gradient-descent.png)
+
+**Genetic Algorithms**
+
+- Genetic algorithms and the whole family of evolutionary algorithms are inspired by natural selection
+- They are in the global search family
+- The algorithm maintains a population of individuals which evolves over time
+- We can make an individual to represent anything we want
+- A fitness function is needed. The function takes an individual as input and returns a numeric number indicating how good/bad the individual is
+- A mechanism is needed to create the initial population
+- A mechanism is needed to `evolve` the current population to the next one. This involves the following mechanisms:
+  * Selection: decide which individuals survive or can reproduce
+  * Crossover: given a number of parent individuals, create a number of children
+  * Mutation: make some random changes to individuals
+  * [How this works (1:20:00)](https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-14T09:00:00.000_2021-09-14T10:55:00.000/classroom#sortDirection=desc)
+
+> TODO: Watch lecture from 1:20:00 onwards and finish notes

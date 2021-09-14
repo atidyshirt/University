@@ -1,5 +1,5 @@
 import math
-from search import *
+from search import Graph, Arc
 
 def get_key(val, dic):
     for key, value in dic.items():
