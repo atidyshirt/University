@@ -21,13 +21,12 @@ typedef struct {
 
 /*
 * Create a new buffer, reserving an initial amount of memory
-* length starts at zero.
 */
 Buffer *new_buffer(size_t reserved) {
   Buffer* buffer = malloc(sizeof(Buffer));
   buffer->reserved = reserved;
   buffer->length = 0;
-  buffer->data = malloc(reserved); // create room for the null terminator
+  buffer->data = malloc(reserved);
   return buffer;
 }
 
