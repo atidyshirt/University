@@ -41,7 +41,7 @@
 
 typedef struct {
 
-    // Read and write semaphores for our channel 
+    // Read and write semaphores for our channel
     sem_t read;
     sem_t write;
 
@@ -52,7 +52,7 @@ typedef struct {
 
 void write_channel(Chan *channel, void *message) {
 
-    // _wait_ until the channel becomes empty, then write new contents 
+    // _wait_ until the channel becomes empty, then write new contents
     // signal any consumers waiting to read the channel
     //
     // You will need sem_post, sem_wait
@@ -61,7 +61,7 @@ void write_channel(Chan *channel, void *message) {
 
   //   assert(channel->message == NULL && "channel should be empty!");
 
-    //write to the message  
+    //write to the message
     channel->message = message;
 
     // TODO: signal to any readers that there's an update
@@ -74,7 +74,7 @@ void write_channel(Chan *channel, void *message) {
 void *read_channel(Chan *channel) {
 
     // TODO:
-    // _wait_ until the channel becomes full, then read from the channel and take the contents 
+    // _wait_ until the channel becomes full, then read from the channel and take the contents
     // signal any producers waiting to write to the channel
     //
     // You will need sem_post, sem_wait

@@ -521,5 +521,23 @@ Watch out for when doing further mock ups:
 - Uniquely enumerate tasks for identification
 - Identify broad coverage of users and use cases
 
+### Lecture Eleven: Task-Centered System Design
+
+**What is TCSD?**
+
+- HCI equivilent of requirements analysis/use cases
+- Exactly and specifically who are the users and what will they use the system for?
+- Critical difference between:
+  * Our percieved user
+  * An actual user
+- TCSD: A reality-based sanity check for system designers
+- Focus is on generating the designs
+
+**Cautions using TCSD**
+
+- Tasks and task scenarios often embody process
+- Hard to record identified tasks and write task scenarios that are independent of interface or workflow prescription
+- This may hinder identification of alternate ways to achieve tasks
+- Can be hard to find people `responsible` for new tasks in a system
 
 
