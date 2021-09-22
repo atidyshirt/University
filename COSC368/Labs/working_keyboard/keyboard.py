@@ -1,14 +1,21 @@
+"""
+This version of the working keyboard was given to me
+by Fletcher Dick (Fellow course mate) as mine was not
+fully functional from lab two.
+"""
+
 import time
 from tkinter import *
 import random
 import string
 import csv
 
+
 class keyboard:
 
     def __init__(self):
         self.isStatic = True
-        self.name = "Fletcher"
+        self.name = "Jordan"
         self.goal = 6
         self.iter = 0
         self.block_count = 1
@@ -72,8 +79,8 @@ class keyboard:
 
         random.shuffle(self.alpha)
         board = [self.alpha[:10],
-                 self.alpha[10:19],
-                 self.alpha[19:]]
+            self.alpha[10:19],
+            self.alpha[19:]]
 
         self.input_frame.pack(side="bottom", fill="x", padx=5, pady=5)
 
@@ -82,7 +89,7 @@ class keyboard:
                 ch = board[row][col]
 
                 key_frame = Frame(self.input_frame, height=32, width=32)
-                key_frame.pack_propagate(False)  # don't shrink
+                key_frame.pack_propagate(0)  # don't shrink
                 key_frame.grid(row=row, column=col * 2 + row, columnspan=2)
                 key = Button(key_frame, text=ch, command=lambda x=ch: self.check_correct(x))
                 key.pack(fill=BOTH, expand=1)

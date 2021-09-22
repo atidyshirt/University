@@ -8,10 +8,7 @@
 
 int main (int argc, char* argv[]) {
   int id = fork();
-  if (PARENT(id)) {
-    // NOTE: to get three processes we must do this, so that the parent process does not fork again
-    id = fork();
-  }
+  if (PARENT(id)) id = fork();
   if (CHILD(id)) {
     printf("Hello from child process %d\n", id);
   } else {
