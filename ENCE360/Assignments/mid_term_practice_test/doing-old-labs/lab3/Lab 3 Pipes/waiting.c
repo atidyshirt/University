@@ -46,15 +46,15 @@ int main(int argc, const char * argv[]) {
         sleep(1); /* Give the child some time to set up its signal handlers */
         kill(child_pid, SIGHUP);
         sleep(3); /* pause for 3 secs */
-
+        
         printf("\nPARENT: sending SIGINT\n\n");
         kill(child_pid, SIGINT);
         sleep(3); /* pause for 3 secs */
-
+        
         printf("\nPARENT: sending SIGQUIT\n\n");
         kill(child_pid, SIGQUIT);
         wait(&child_status);
-
+        
         printf("\nPARENT: doing something\n\n");
         sleep(3);
     }

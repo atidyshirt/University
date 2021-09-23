@@ -30,12 +30,16 @@ int client_socket(char *hostname)
   // 2) initialise 'their_addrinfo' and use 'getaddrinfo' to lookup the IP from host name
   // 3) connect to remote host using 'connect'
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  memset(&their_addrinfo, 0, sizeof(struct addrinfo));
+  memset(&their_addrinfo, 0, sizeof(struct addrinfo)); // stops the fuckin segfault
   their_addrinfo.ai_family = AF_INET;
   their_addrinfo.ai_socktype = SOCK_STREAM;
   getaddrinfo(hostname, port, &their_addrinfo, &their_addr);
   int rc = connect(sockfd, their_addr->ai_addr, their_addr->ai_addrlen);
-  if (rc == -1) perror("connect"); exit(1);
+
+  if (rc == -1) {
+    perror("Fuck this client, please work");
+    exit(1);
+  }
   ///////////////////////////////
 
   return sockfd;
@@ -45,31 +49,21 @@ int client_socket(char *hostname)
 int main(int argc, char *argv[])
 {
   char buffer[MAXDATASIZE];
-
   if (argc != 2) {
     fprintf(stderr, "usage: client hostname\n");
     exit(1);
   }
-
   int sockfd = client_socket(argv[1]);
-
   int numbytes = 0;
   char *line;
-
   do {
-
     line = readline(">> ");
     write(sockfd, line, strlen(line));
-
     numbytes = read(sockfd, buffer, MAXDATASIZE - 1);
     buffer[numbytes] = '\0';
-
     printf("server: %s\n", buffer);
-
   } while (numbytes > 0);
-
   free(line);
   close(sockfd);
-
   return 0;
 }
