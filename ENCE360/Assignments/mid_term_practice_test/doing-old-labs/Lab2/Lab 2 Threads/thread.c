@@ -12,21 +12,17 @@ int global = 5;
 
 void* child(void* arg) {
     int local = 10;
-
     global++;
     local++;
     printf("[Child]  child thread id: 0x%x\n", (unsigned int)pthread_self());
     printf("[Child]  global: %d  local: %d\n", global, local);
-
     pthread_exit(NULL);
 }
 
 int main() {
     pthread_t  childPid;
-    int       local = 10;
-
+    int local = 10;
     printf("[At start]  global: %d  local: %d\n", global, local);
-
     /* create a child thread */
     if (pthread_create(&childPid, NULL, child, NULL) != 0)
     {

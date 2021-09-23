@@ -37,7 +37,9 @@ int listen_on(int port)
 int accept_connection(int s) {
   /////////////////////////////////////////////
   struct sockaddr_in caller;
-  return accept(s, (struct sockaddr *)&caller, (socklen_t *)sizeof(caller));
+  int length = sizeof(caller);
+  int msgsock = accept(s, (struct sockaddr *)&caller, (socklen_t *)&length);
+  return msgsock;
   /////////////////////////////////////////////
 }
 
@@ -47,49 +49,35 @@ void handle_request(int msgsock) {
   int num_read = 0;
   num_read = read(msgsock, buffer, MAXDATASIZE - 1);
   printf("read a message %d bytes: %s\n", num_read, buffer);
-  while (num_read > 0) {
-    buffer[num_read] = 0;
+  while(num_read > 0) {
     write(msgsock, buffer, num_read);
     num_read = read(msgsock, buffer, MAXDATASIZE - 1);
+    buffer[num_read] = '\0';
+    printf("read a message %d bytes: %s\n", num_read, buffer);
   }
   close(msgsock);
 }
 
-
 // handle request by forking a new process
 void handle_fork(int msgsock) {
-
-  ///////////////////////////////////////////
-  if (fork() == 0) { // if in child
+  if (fork() == 0) {
     handle_request(msgsock);
-    exit(0); // exit child
+    exit(0);
   } else {
     close(msgsock);
   }
-  ///////////////////////////////////////////
 }
 
-
-
-
-
 int main(int argc, char *argv[]) {
-
-
   printf("\nThis is the server with pid %d listening on port %d\n", getpid(), SERVER_PORT);
-
   // setup the server to bind and listen on a port
   int s = listen_on(SERVER_PORT);
-
   while (1) { // forever
-
     int msgsock = accept_connection(s); // wait for a client to connect
-    printf("Got connection from client!");
-
+    printf("Got connection from client!\n");
     // handle the request with a new process
     handle_fork(msgsock);
   }
-
   close(s);
   exit(0);
 }
