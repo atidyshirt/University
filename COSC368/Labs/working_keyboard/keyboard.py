@@ -14,11 +14,11 @@ import csv
 class keyboard:
 
     def __init__(self):
-        self.isStatic = True
+        self.isStatic = False
         self.name = "Jordan"
         self.goal = 6
         self.iter = 0
-        self.block_count = 1
+        self.block_count = 6
         self.start = time.time()
 
         # Create block and current block
