@@ -277,7 +277,7 @@ given $a, b \in \mathbb{Z}$, $a$ divides $b$ if there exists $k \in \mathbb{Z} \
 We use $p$ to denote a prime, an integer $p \geq 1$ is a _prime_ if its divisors are
 $(1, p)$.
 
-- Testing a prime number $p$ by trial numbers up to the square root of $p$ 
+- Testing a prime number $p$ by trial numbers up to the square root of $p$
   - There are more efficient ways to check for primality *later in the course*.
 
 - **Division algorithm**
@@ -717,7 +717,7 @@ Different modes have:
 - Unforgeable as long as the message length is fixed
 
 ![CMAC](./Diagrams/CMAC.png)
-  
+
 ### Lecture Nine: Stream ciphers and Randomization
 
 **Randomness**
@@ -844,7 +844,7 @@ Encryption:
 
 Decryption:
 
-- Private decryption key is $K_D = (p,q,d)$ 
+- Private decryption key is $K_D = (p,q,d)$
 - Compute $Dec(C, K_D) = C^d \mod n$
 
 Any message requires to be pre-processes to become $M$
@@ -853,3 +853,314 @@ Any message requires to be pre-processes to become $M$
 - Adding randomness
 
 > This lecture is basically a recap of RSA, see last years lectures for more information
+
+**RSA Security**
+
+Attacks:
+
+- Most of existing attacks avoided by using standardised padding mechanisms
+  * Factorisation of the modulus $n$
+  * Finding $d$ from $n$ and $e$
+- An attacker factorises $n$ into its prime factors p,q and thus recover $d$
+- Breaking RSA is shown to be as hard as the RSA problem
+  * It is unknown if RSA problem is as hard as factorising $n$
+- **Quantum computing**:
+  * If we get commercial quantum computing, by Shor's algorithm, we can break RSA in polynomial time
+
+### Lecture Thirteen: Public Key Cryptography (Part Two)
+
+**Diffie-Hellman Key Exchange**
+
+- Two users, Alice and bob, share a secret using only public communication.
+- Public elements:
+  * Large prime $p$
+  * Generator $g \in \mathbb{Z}^{*}_p$
+- Alice and bob each selects random values $a$ and $b$ respectively
+- Alice and Bob both compue the secret key $Z = g^{ab}$
+
+![Diffie-Hellman Protocol](./Diagrams/diffie-hellman-example.png)
+
+Here is the protocol using signatures to authenticate Diffie-Hellman:
+
+![](./Diagrams/auth-diffie-hellman.png)
+
+**Static and Ephemeral Diffie-Hellman**
+
+- The above protocol uses *ephemeral keys*
+  - Key used once and then discarded
+- In the *static* Protocol:
+  * Alice chooses a long term private key $X_A$ and a public key $Y_A = g^{X_B} \mod p$
+  * Bob chooses a long term private key $X_B$ and a public key $Y_B = g^{X_A} \mod p$
+- Alice and bob find a shared secret key $S = g^{X_A X_B} \mod p$ that is static:
+  * $S$ stays the same until Alice and Bob change their public keys
+
+**Elgamal Cryptosystem**
+
+- Diffie-Hellman turned into a cryptosystem
+
+- Key generation:
+  * Select a prime $p$ and a generator $g \in \mathbb{Z}^{*}_p$
+  * Select a long term private key $K_D = x$ where $1 < x < p$
+  * Compute $y = g^x \mod p$
+  * Set the long term public key as $K_E = (p,g,y)$
+
+![Elgamal Encryption and Decryption](./Diagrams/elgamal-encryp.png)
+
+![Worked Elgamal Example](./Diagrams/example-elgamal.png)
+
+**Identity-Based Cryptography**
+
+- Extensively researched in the 2000's, with the use of elliptic curve *pairings*
+- Public keys and certificates are not needed
+  * Identity of the key owner replaces the public key
+  * Message encryption using public parameters and recipients identity
+- Limitation: Need of trusted key generation process
+- Generalisation with functional cryptography
+  * General access policies used to define who may decrypt the cipher text
+
+### Lecture Fourteen: Digital Signatures
+
+**Motivation behind signatures**
+
+- Digital signatures are one of them main benefits of public key cryptosystems
+- In some countries, digital signatures are legally binding in the same way as handwritten signatures
+
+**Confidentiality and Authentication**
+
+- Message authentication codes (MAC) only allow for entity with shared secret to generate a valid tag:
+  * Providing data integrity and data authentication
+- Digital signatures use public key cryptography to provide properties of a MAC and more
+
+**Algorithms**
+
+- Key generation
+  * Outputs two keys
+    + Private *signing key* $K_S$
+    + Public *verification key* $K_V$
+- Signature Generation
+- Signature Validation
+
+**Signature Generation Algorithm**
+
+- Inputs:
+  * Alice private signing key $K_S$
+  * Message $M$
+- Output:
+  * Signature $s = Sig(M, K_S)$
+- Only alice the owner of $K_S$ should be able to generate a valid signature
+- The message should be any bit string
+- The set of all signatures is usually a set of fixed size
+
+**Signature Validation**
+
+- Inputs:
+  * Alice's public verification key $K_V$
+  * Message $M$
+  * Claimed signature $s$
+- Outputs:
+  * $Ver(M, s, K_V) = Boolean$
+- Anyone should be able to verify the signature
+
+**Discrete Logarithm Signatures**
+
+- Security relying on difficulty of discrete logarithm property
+- Three versions:
+  1. Original Elgamal signatures
+  2. Digital signature algorithm (DSA)
+  3. DSA based on elliptic curve groups, known as ECDSA
+
+**Elgamal**
+
+Signature generation:
+
+1. Alice selects a random $k$ s.t. $gcd(k, p-1) = 1$ and computes
+
+$$ r = g^k \mod p $$
+
+2. Alice solves $M = xr + ks \mod (p - 1)$ for $s$ by computing
+
+$$ s = k^{-1}(M - xr) \mod (p - 1) $$
+
+3. Alice outputs the tuple (M,r,s).
+
+Signature verification:
+
+- Bob checks if $g^M \equiv y^r r^s \mod p = ((g^x)^r(g^k)^s)$
+
+
+**Digital Signature Algorithm (DSA)**
+
+- Prime $p$ is chosen s.t. $p - 1$ has a prime divisor $q$ of much smaller size (~256 bits)
+- A generator $g$ used in Elgamal signatures replaced by $g = h\frac{p-1}{q} \mod p$
+  * $g$ has order $q$ since $g^q \mod p = 1$
+
+- Differences with Elgamal signatures:
+  - Message is hashed using SHA hash algorithm
+  - $g$ is chosen to be the order of $q$
+
+**Elliptic Curve DSA (ECDSA)**
+
+- Parameters chosen from NIST approved curves
+- Signature generation and verification are the same, except that:
+  * q becomes the order of the elliptic curve group
+  * multiplication mod $p$ is replaced by the elliptic curve group operation
+  - After operations on group elements, only the x coordinate is kept from the pair
+- Signatures are generally not shorter than DSA at the same security level
+  - Size varies with underlying curve
+
+### Lecture Fifteen: PKI and Certificates
+
+**Motivation**
+
+- Public key infrastructure implies the use of public digital certificates
+- Digital signatures provide these certificates
+- X.509 certificates are standardized and used in most network security applications
+
+**What is a public key infrastructure (PKI)**
+
+- A public key infrastructure is the key management environment for public key information of a public key cryptosystem - `NIST`
+- Key management concerned with *lifecycle* of cryptographic keys
+  * Generation, distribution, storage and destruction of keys
+
+**Digital certificates**
+
+- How to be confident of the correct binding between a public key and its owner?
+  * When using a public key to encrypt a message or to verify a digital signature
+- Achieved through the use of *digital certificates*
+  * They contain the public key and the owner identity
+  * There is other information such as signature algorithm and validity period
+- Certificate digitally signed by a certification authority (CA):
+  * CA should be trusted by the certificate verifier
+- Certificates play a central role in key management for PKI's
+
+
+**Using a certificate**
+
+- Verifying a certificate
+  - By checking that the CA's signature is valid
+  * Check that any conditions set in the certificate are correct
+- In order to verify the certificate:
+  * The user of the certificate must have the correct public key of the CA
+- It does not matter who obtains the certificate
+- Public directories may store certificates
+
+![certification paths](./Diagrams/cetification-paths.png)
+
+**Phishing Attack on Certificates**
+
+- The victim connects securely to a bogus site with the wrong certificate
+- The attacker makes the URL similar and the interface identical to the genuine site
+- Not always easy to tell if a certificate is one for a genuine site
+  * Especially for the average user
+- Certificates can be revoked from a website, and this is logged on the `Certificate Revocation List (CRL)`
+
+![Heirarchical PKI](./Diagrams/pki-example1.png)
+
+**Browser PKI**
+
+- Multiple hierarchies with preloaded public keys as root CA's
+- Intermediate CA's can be added
+- Users can also add their own certificates
+- Most servers send their public key and certificate to the browser at the start of a secure communication using TLS protocol
+
+**OpenPGP PKI**
+
+- Used in PGP email security
+- Certificate includes ID, Public key, validity period and *self-signature*
+- There is NO certification authorities
+- Various key servers store keys
+- Often known as *web of trust*
+
+### Lecture Sixteen: Key Establishment
+
+**Motivation**
+
+- Distribution of cryptographic keys to protect subsequent communication sessions
+- Key establishment in TLS uses public keys to allow clients and servers to share a new communication key
+
+**Key management**
+
+- Critical aspect of any cryptographic system
+- Phases:
+  * Key generation: keys should be generated such that they are equally likely to occur
+  * Key distribution: Keys should be distributed in a secure fashion
+  * Key protection: Keys should be accessible for use in relevant algorithms, but not accessible to unauthorised parties
+  * Key destruction: once a ley has performed its function, it should be destroyed s.t. it is of no value to an attacker
+
+**Key types**
+
+Keys are often organized in a hierarchy:
+
+- **Long term keys**
+  * Also called static keys
+  * Intended to be used for a long time
+  * depending upon the application, from a few hours to a few years
+  * Used to protect distribution of session keys
+* **Short term keys**
+  * Also called session keys
+  * Intended to be used for a short time
+  * depending upon the application, from a few seconds to a few hours
+  * Used to protect communications in a session
+
+**Key Distribution Security**
+
+- In practice, session keys are symmetric keys used with ciphers
+- Long term keys can be either symmetric or asymmetric keys depending on how they are used
+- How to establish secret session keys among communicating parties using the long term keys
+  * Common approaches:
+    + Key pre-distribution
+    + Using an online server with symmetric long term keys
+    + Using asymmetric long term keys
+- **Goals of key distribution**
+  * Authentication
+  * Confidentiality
+
+**Mutual and Unilateral Authentication**
+
+- If both parties achieve the authentication goal, then the protocol provides *mutual authentication*
+- If only one party achieves it, then the protocol provides *unilateral authentication*
+- Many real world key establishment protocols achieve only unilateral authentication
+  * Typically, clients can authenticate servers.
+  * Client authentication often happens later, protected with the establishment key
+
+**Adversary Capabilities**
+
+Let a strong adversary know the details of the cryptosystem algorithms involved and be able to:
+
+- Eavesdrop on all messages sent in a protocol
+- Alter all messages sent in a protocol using any information available to him/her
+- Re-route any messages to any other party
+- Obtain the value of previous session keys used to run the protocol
+
+**Key distribution using symmetric keys**
+
+- Key distribution through an online server
+- The TA shares a long-term shared key with each user
+- An online TA generates and distributes session keys to users when requested
+
+**Key distribution using asymmetric keys**
+
+- No online TA is required
+- Public keys used for authentication
+- Public keys managed by PKI
+- Users are trusted to generate good session keys
+
+**Forward secrecy**
+
+What happens when a long term key is compromised?
+
+- The attacker can now act as the owner of the long term key
+- Previous session keys may also be compromised
+  * This can be the case with key transport
+  * This can be prevented with key agreement
+
+A protocol provides *(perfect) forward secrecy* if compromise of long term secret keys does not reveal session keys previously agreed using those long-term keys
+
+**Key transport**
+
+- User chooses key material and sends it encrypted to another party
+  * Sometimes, the message is also signed by the sender
+- TLS includes options for key transport
+- Not providing *forward secrecy*
+
+[Examples of session key distribution Timestamp (24:11)](https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-09-27T10:00:00.000_2021-09-27T10:55:00.000/classroom#sortDirection=desc)
