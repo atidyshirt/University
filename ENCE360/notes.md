@@ -934,7 +934,7 @@ Deadlock detection, only works on the currently evaluated processes, it does **n
   * the other processes get its resources
   * choose process that can be rerun from the beginning
 
-**Deadlock Avoidance** 
+**Deadlock Avoidance**
 
 - Tries to predict when deadlocks may occur
 - Checks required resources requested to determine how to avoid deadlocks
@@ -983,7 +983,7 @@ In practice it is difficult to break the four conditions for a deadlock.
   * Release all currently held resources
   * Request all required (old and new)
 
-### Lecture Ten: File Systems
+### Lecture Ten & Eleven: File Systems
 
 **The logical file system**
 
@@ -1098,3 +1098,39 @@ Problems:
 - Alternative: link is itself a file
   * UNIX soft links
   * Windows shortcuts
+
+**File system performance: Disk drives**
+
+![File system performance](./Diagrams/disk-drive-performance.png)
+
+- Disk time dominated by seeks
+  * 5-10 ms to move between tracks (cylinders)
+  * 5-10 ms to rotate to correct sector
+  * Read speed: 50-160 MB/sec
+
+![Minimising disk seeks](./Diagrams/disk-seeks.png)
+
+- Allocate blocks in chunks
+- Allocate blocks physically close together (same cylinder)
+- Place i-nodes in the middle of the disk
+- Interleave i-nodes and file blocks in *cylinder groups*
+
+**Log structured file systems**
+
+- Takes advantages of CPU and memory advancements in recent years
+  * Disk caches can be large
+  * increasing number of read requests from cache
+  * Most disk accesses will be writes
+- Structure the entire disk as a log
+  * Goal: maximise consecutive writes
+  * have all writes initially buffered in memory
+  * periodically write these to the *end* of the disk log
+  - when file opened, locate i-node, then finds block
+    + I-node map in memory
+    + Periodic cleaning to deal with deletes
+
+![MS-DOS file system](./Diagrams/msdos-filesystem.png)
+
+![UNIX file system](./Diagrams/unix-filesystem.png)
+
+

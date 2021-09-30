@@ -54,7 +54,7 @@ titlepage-rule-height: 2
   - Design Specification and Rationale (15%)
     - Wed 20th October 5:00 pm
 - Exam (56%)
-  - TBA 
+  - TBA
   - *weighting changed due to COVID*
 
 ### Textbooks/Resources
@@ -450,7 +450,7 @@ and will be covering refining design and implementing next term. Below is the fu
 
 **Early design**
 
-- Is when we start prototyping 
+- Is when we start prototyping
 - We must have:
   * brainstormed different representations
   * choose a representation
@@ -478,7 +478,7 @@ and will be covering refining design and implementing next term. Below is the fu
 **Medium fidelity prototypes**
 
 - Functionality is mimicked by a person
-- The wizard must know the algorithm 
+- The wizard must know the algorithm
 - Good for complex/futuristic ideas
 - Facilitates motion paths
 - Links between states, etc.
@@ -490,7 +490,7 @@ Must have:
 
 - Series of key frames
 - State progression is clear
-- Walk-through evaluation 
+- Walk-through evaluation
 
 First we can use wireframes, secondly we can use simulations and animations in order to have a better visual representation of how it will work when implemented.
 
@@ -532,6 +532,7 @@ Watch out for when doing further mock ups:
   * An actual user
 - TCSD: A reality-based sanity check for system designers
 - Focus is on generating the designs
+- should be based around user's needs, abilities, context, work, etc
 
 **Cautions using TCSD**
 
@@ -540,4 +541,86 @@ Watch out for when doing further mock ups:
 - This may hinder identification of alternate ways to achieve tasks
 - Can be hard to find people `responsible` for new tasks in a system
 
+**Phases of task centered system design**
 
+1. User Identification
+  - Identify categories of end-users with specific examples
+    * Including typical users and extreme users (edge cases)
+2. Task Identification
+  * Record what the user wants to do, but minimise description of how
+    + No interface assumptions
+    + Can be used to compare alternative designs
+  * Record the complete task, input source, output destination
+  * Identify Users
+    - design success depends on what users know
+    - Tested against specific individuals
+  - Uniquely enumerate tasks for identification
+  - Identified tasks are circulated for validation
+  - Identify broad coverage of users and tasks
+
+**Participatory Design - an extension of UCSD**
+
+- Problem:
+  * institutions can be wrong
+  * Interviews lack precision/context and can mislead
+  * Designers cannot know user's needs sufficiently well to answer all questions likely to arise during design
+
+- Solution:
+  * Designers need access to a pool of representative end users
+  * Not managers, union-reps; real users
+  * These users are full members of the design process
+
+- Talk to users
+- Interviews with users
+  * discover users culture, requirements, expectations
+- Explain designs
+  * get output at all design stages
+  * important to have visuals/demos: prototypes
+- Walk-through with the user
+  * *Let them demo an interface idea or sketch*
+
+### Lecture Twelve: Heuristics
+
+![Design Process Lifecycle](./Diagrams/design-process-full.png)
+
+**Usability Heuristics**
+
+- Encapsulate best practice in `rules of thumb`
+- Identify common pitfalls
+- Are highly redundant
+
+Types of Usability Heuristics:
+
+- Formative: guide's design decisions
+- Summative: evaluate systems
+
+**Nielsen's Heuristics**
+
+1. Simple and natural dialogue
+  * Managing complexiity: as simple as possible but no simpler
+  * Organisation of the interface:
+    + Presentation: simple and natural?
+    + Navigation: simple and natural?
+  * Graphic design
+    + Organise, Economise, Communicate
+    + Employ a graphic designer
+  * Use windows frugally
+  * Less is more
+
+2. Speak the user's language
+
+3. Minimise user memory load
+
+4. Consistency
+
+5. Feedback
+
+6. Clearly marked exits
+
+7. Shortcuts
+
+8. Good error messages
+
+9. Prevent errors
+
+10. Help and documentation
