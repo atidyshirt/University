@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "http.h"
+#include "../src/http.h"
 
 /*
 ./http_test www.thomas-bayer.com restnames/countries.groovy
