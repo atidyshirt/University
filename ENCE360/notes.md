@@ -983,6 +983,7 @@ In practice it is difficult to break the four conditions for a deadlock.
   * Release all currently held resources
   * Request all required (old and new)
 
+
 ### Lecture Ten & Eleven: File Systems
 
 **The logical file system**
@@ -1099,6 +1100,7 @@ Problems:
   * UNIX soft links
   * Windows shortcuts
 
+<<<<<<< Updated upstream
 **File system performance: Disk drives**
 
 ![File system performance](./Diagrams/disk-drive-performance.png)
@@ -1132,5 +1134,51 @@ Problems:
 ![MS-DOS file system](./Diagrams/msdos-filesystem.png)
 
 ![UNIX file system](./Diagrams/unix-filesystem.png)
+### Lecture Eleven: Input/Output
+
+**I/O Hardware device types**
+
+- Block
+  * Data stored in fixed size blocks
+  * Blocks addressed and read independently
+- Characters
+  * Generates or receives a character stream
+- Other
+  * Clocks are held on the IO bus
+
+**Hardware devices and controllers**
+
+- Mechanical interface is low level
+  * Stream of bytes
+- OS deals with device controller
+  * Convert serial stream of blocks of bytes
+  * Perform error correction
+  * Copy to main memory
+
+![Kernal I/O Structure](./Diagrams/kernal-io.png)
+
+**Memory mapped I/O**
+
+- Direct I/O: CPU accesses controller registers and data buffer separately from memory
+  * IN REG, PORT
+  * OUT PORT, REG
+- Memory-mapped I/O: map I/O ports to memory addresses
+  * Can perform I/O using standard languages
+  * Can perform same operations
+  * Easy to control access
+- Some drawbacks
+  * Caching needs to be disabled
+  * Requires second bus (for speed)
+
+![Pentium architecture](./Diagrams/pentium-architecture.png)
+
+**Bus architectures**
+
+- Serial bus
+  * Single pair of wires for unidirectional data transmission
+  * USB ports, keyboard/mouse
+- Parallel bus
+  * multiple wires for high speed bi-directional data transfers
+  * disk drives, graphics cards
 
 
