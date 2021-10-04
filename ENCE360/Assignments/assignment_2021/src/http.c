@@ -11,45 +11,45 @@
 
 #define BUF_SIZE 1024
 
+/* initilizes a new buffer of a specified length
+* @param int size        -- length of new buffer
+* @return Buffer* buffer -- pointer to a new buffer
+*/
 Buffer* initilize_buffer(int size) {
-  /* initilizes a new buffer of a specified length
-  * @param int size        -- length of new buffer
-  * @return Buffer* buffer -- pointer to a new buffer
-  */
   Buffer* buffer = malloc(sizeof(Buffer));
   buffer->data = malloc(sizeof(char) * size);
   buffer->length = size;
   return buffer;
 }
 
-Buffer* concat_buffer(Buffer* source, Buffer* extend) {
-  /* append a buffer two another buffer
-  * @param Buffer* source  -- the buffer to append data to
-  * @param Buffer* extend  -- the buffer to append
-  * @return Buffer* source -- pointer the resulting buffer
-  */
-  int tmp_length = source->length + extend->length + 1;
+/* append a buffer two another buffer
+* @param Buffer* source  -- the buffer to append data to
+* @param Buffer* extend  -- the buffer to append
+* @return Buffer* source -- pointer the resulting buffer
+*/
+Buffer* extend_buffer(Buffer* source, char* extend, int extend_length) {
+  int tmp_length = source->length + extend_length + 1;
   source->data = realloc(source->data, tmp_length);
-  memset(source->data + source->length, '\0', extend->length + 1);
-  memcpy(source->data + source->length, extend->data, extend->length);
+  memset(source->data + source->length, '\0', extend_length + 1);
+  memcpy(source->data + source->length, extend, extend_length);
   source->length = tmp_length - 1;
   return source; // this is just incase we want to return the buffer
 }
 
+/* free memory associated with a given buffer
+* @param Buffer* buffer -- buffer to free
+*/
 void free_buffer(Buffer* buffer) {
-  /* free memory associated with a given buffer
-  * @param Buffer* buffer -- buffer to free
-  */
   free(buffer->data);
   free(buffer);
 }
 
+/* Initilizes new TCP socket
+* @param char* host -- hostname to connect to
+* @param int port   -- port to connect on
+* @return int fd    -- file descriptor of new socket
+*/
 int initilize_socket(char* host, int port) {
-  /* Initilizes new TCP socket
-  * @param char* host -- hostname to connect to
-  * @param int port   -- port to connect on
-  * @return int fd    -- file descriptor of new socket
-  */
   int rc;
   int their_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -78,68 +78,60 @@ int initilize_socket(char* host, int port) {
   return their_sockfd;
 }
 
+/* makes an http 1.0 query to a given website and returns response string
+* @param char* host      -- hostname of website
+* @param char* page      -- page to request
+* @param int port        -- port to connect on
+* @return Buffer* buffer -- request response in buffer
+*/
 Buffer* http_query(char *host, char *page, int port) {
-  /* makes an http 1.0 query to a given website and returns response string
-  * @param char* host      -- hostname of website
-  * @param char* page      -- page to request
-  * @param int port        -- port to connect on
-  * @return Buffer* buffer -- request response in buffer
-  */
-
   int stream_length = 0;
   char recieve_line[BUF_SIZE + 1], send_line[BUF_SIZE + 1];
   int fd = initilize_socket(host, port);
-  Buffer* buffer = initilize_buffer(BUF_SIZE); // NOTE: freed in the test file
-  Buffer* stream_buffer = initilize_buffer(BUF_SIZE);
+  Buffer* buffer = initilize_buffer(0);
 
   snprintf(send_line, BUF_SIZE,
-    "GET /%s HTTP/1.0\r\n"
-    "Host: %s\r\n"
-    "User-Agent: getter\r\n\r\n", page, host
+  "GET /%s HTTP/1.0\r\n"
+  "Host: %s\r\n"
+  "User-Agent: getter\r\n\r\n", page, host
   );
 
-
   if (write(fd, send_line, strlen(send_line)) >= 0) {
-    stream_length = read(fd, recieve_line, BUF_SIZE);
-    recieve_line[stream_length] = '\0';
-    buffer->data = recieve_line;
     while ((stream_length = read(fd, recieve_line, BUF_SIZE)) > 0) {
       recieve_line[stream_length] = '\0';
-      stream_buffer->data = recieve_line;
-      concat_buffer(buffer, stream_buffer);
+      extend_buffer(buffer, recieve_line, stream_length);
     }
   }
-  free_buffer(stream_buffer);
+  close(fd);
   return buffer;
 }
 
 char* http_get_content(Buffer *response) {
-    char* header_end = strstr(response->data, "\r\n\r\n");
+  char* header_end = strstr(response->data, "\r\n\r\n");
 
-    if (header_end) {
-        return header_end + 4;
-    }
-    else {
-        return response->data;
-    }
+  if (header_end) {
+    return header_end + 4;
+  }
+  else {
+    return response->data;
+  }
 }
 
 
 Buffer *http_url(const char *url) {
-    char host[BUF_SIZE];
-    strncpy(host, url, BUF_SIZE);
+  char host[BUF_SIZE];
+  strncpy(host, url, BUF_SIZE);
 
-    char *page = strstr(host, "/");
-    if (page) {
-        page[0] = '\0';
+  char *page = strstr(host, "/");
+  if (page) {
+    page[0] = '\0';
 
-        ++page;
-        return http_query(host, page, 80);
-    }
-    else {
+    ++page;
+    return http_query(host, page, 80);
+  }
+  else {
 
-        fprintf(stderr, "could not split url into host/page %s\n", url);
-        return NULL;
-    }
+    fprintf(stderr, "could not split url into host/page %s\n", url);
+    return NULL;
+  }
 }
-

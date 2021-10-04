@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 
-#include "queue.h"
+#include "../src/queue.h"
 
 #define NUM_THREADS 16
 #define N 1000000
