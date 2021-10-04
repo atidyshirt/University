@@ -17,7 +17,7 @@ Buffer* initilize_buffer(int size) {
   * @return Buffer* buffer -- pointer to a new buffer
   */
   Buffer* buffer = malloc(sizeof(Buffer));
-  buffer->data = malloc((sizeof(char)) * size);
+  buffer->data = malloc(sizeof(char) * size);
   buffer->length = size;
   return buffer;
 }
@@ -53,8 +53,9 @@ int initilize_socket(char* host, int port) {
   int rc;
   int their_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
+  // set port to char for getaddrinfo
   char port_char[20];
-  sprintf(port_char, "%d", port); // set port to char for getaddrinfo
+  sprintf(port_char, "%d", port);
 
   // set address information
   struct addrinfo their_addrinfo;
@@ -71,7 +72,9 @@ int initilize_socket(char* host, int port) {
     perror("Failed to connect"); exit(1);
   }
 
-  freeaddrinfo(our_addrinfo); // free address info
+  // free address info
+  freeaddrinfo(our_addrinfo);
+
   return their_sockfd;
 }
 
@@ -86,7 +89,8 @@ Buffer* http_query(char *host, char *page, int port) {
   int stream_length = 0;
   char recieve_line[BUF_SIZE + 1], send_line[BUF_SIZE + 1];
   int fd = initilize_socket(host, port);
-  Buffer* buffer = initilize_buffer(0);
+  Buffer* buffer = initilize_buffer(BUF_SIZE); // NOTE: freed in the test file
+  Buffer* stream_buffer = initilize_buffer(BUF_SIZE);
 
   snprintf(send_line, BUF_SIZE,
     "GET /%s HTTP/1.0\r\n"
@@ -96,13 +100,16 @@ Buffer* http_query(char *host, char *page, int port) {
 
 
   if (write(fd, send_line, strlen(send_line)) >= 0) {
+    stream_length = read(fd, recieve_line, BUF_SIZE);
+    recieve_line[stream_length] = '\0';
+    buffer->data = recieve_line;
     while ((stream_length = read(fd, recieve_line, BUF_SIZE)) > 0) {
-      Buffer* stream_buffer = initilize_buffer(stream_length);
       recieve_line[stream_length] = '\0';
       stream_buffer->data = recieve_line;
       concat_buffer(buffer, stream_buffer);
     }
   }
+  free_buffer(stream_buffer);
   return buffer;
 }
 
