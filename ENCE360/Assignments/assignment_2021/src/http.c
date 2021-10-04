@@ -12,7 +12,8 @@
 #define BUF_SIZE 1024
 
 Buffer* initilize_buffer(int size) {
-  /* initilizes a new buffer of length 0
+  /* initilizes a new buffer of a specified length
+  * @param int size        -- length of new buffer
   * @return Buffer* buffer -- pointer to a new buffer
   */
   Buffer* buffer = malloc(sizeof(Buffer));
@@ -21,16 +22,18 @@ Buffer* initilize_buffer(int size) {
   return buffer;
 }
 
-Buffer* append_buffer(Buffer* source, Buffer* extend) {
+Buffer* concat_buffer(Buffer* source, Buffer* extend) {
   /* append a buffer two another buffer
   * @param Buffer* source  -- the buffer to append data to
-  * @param Buffer* edtend  -- the buffer to append
+  * @param Buffer* extend  -- the buffer to append
   * @return Buffer* source -- pointer the resulting buffer
   */
-  source->length += extend->length;
-  source->data = realloc(source->data, source->length);
-  source->data = strncat(source->data, extend->data, source->length);
-  return source; // this is just for if we do want to return the buffer
+  int tmp_length = source->length + extend->length + 1;
+  source->data = realloc(source->data, tmp_length);
+  memset(source->data + source->length, '\0', extend->length + 1);
+  memcpy(source->data + source->length, extend->data, extend->length);
+  source->length = tmp_length - 1;
+  return source; // this is just incase we want to return the buffer
 }
 
 void free_buffer(Buffer* buffer) {
@@ -97,15 +100,13 @@ Buffer* http_query(char *host, char *page, int port) {
       Buffer* stream_buffer = initilize_buffer(stream_length);
       recieve_line[stream_length] = '\0';
       stream_buffer->data = recieve_line;
-      append_buffer(buffer, stream_buffer);
+      concat_buffer(buffer, stream_buffer);
     }
   }
   return buffer;
 }
 
-// split http content from the response string
 char* http_get_content(Buffer *response) {
-
     char* header_end = strstr(response->data, "\r\n\r\n");
 
     if (header_end) {

@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
         printf("Content:\n%s\n", content);
     }
 
+    free(response->data);
     free(response);
     return 0;
 }
