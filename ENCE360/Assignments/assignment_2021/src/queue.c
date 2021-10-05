@@ -13,29 +13,21 @@
 #define handle_error(msg) \
         do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
-/* Node structure
-* @Attribute void* data -- data of node
-* @Attribute Node* next -- pointer to next node
-*/
-struct Node {
-  void* data;
-  struct Node* next;
-};
-
 /* Queue structure
 * @Attribute pthread_mutex_t lock
 * @Attribute sem_t enqueue
 * @Attribute sem_t dequeue
-* @Attribute Node* head  -- head of queue
-* @Attribute Node* tail  -- tail of queue
+* @Attribute int head  -- head of queue
+* @Attribute int tail  -- tail of queue
 * @Attribute size_t size -- size of the queue
 */
 typedef struct QueueStruct {
   pthread_mutex_t lock;
   sem_t enqueue;
   sem_t dequeue;
-  struct Node* head;
-  struct Node* tail;
+  int head;
+  int tail;
+  void** queue;
   size_t size;
 } Queue;
 
@@ -44,13 +36,13 @@ typedef struct QueueStruct {
 * @param int size -- size of the initilized queue
 */
 Queue *queue_alloc(int size) {
-  Queue* queue = (Queue*) malloc(sizeof(Queue));
-  queue->size = 0;
-  queue->head = NULL;
-  queue->tail = NULL;
+  Queue* queue = malloc(sizeof(Queue));
+  queue->queue = malloc(sizeof(void *) * size);
+  queue->size = size;
+  queue->head = queue->tail = 0;
   pthread_mutex_init(&queue->lock, NULL);
-  sem_init(&queue->dequeue, 0, size);
-  sem_init(&queue->enqueue, 0, 0);
+  sem_init(&queue->enqueue, 0, size);
+  sem_init(&queue->dequeue, 0, 0);
   return queue;
 }
 
@@ -58,9 +50,13 @@ Queue *queue_alloc(int size) {
 * @param Queue* queue -- queue to free
 */
 void queue_free(Queue *queue) {
+
+  int sem_value;
+  sem_getvalue(&queue->dequeue, &sem_value);
   pthread_mutex_destroy(&queue->lock);
   sem_destroy(&queue->enqueue);
   sem_destroy(&queue->dequeue);
+  free(queue->queue);
   free(queue);
 }
 
@@ -71,15 +67,11 @@ void queue_free(Queue *queue) {
 void queue_put(Queue *queue, void *item) {
   sem_wait(&queue->enqueue);
   pthread_mutex_lock(&queue->lock);
-  struct Node* node = (struct Node*)malloc(sizeof(struct Node));
-  node->data = item;
-  node->next = NULL;
-  if (queue->size == 0) {
-    queue->head = item;
-    queue->tail = item;
-  }
-  queue->tail->next = item;
-  queue->tail = queue->tail->next;
+
+  queue->tail++;
+  queue->queue[queue->tail] = item;
+  queue->tail = queue->tail % queue->size;
+
   pthread_mutex_unlock(&queue->lock);
   sem_post(&queue->dequeue);
 }
@@ -92,16 +84,12 @@ void queue_put(Queue *queue, void *item) {
 void* queue_get(Queue *queue) {
   sem_wait(&queue->dequeue);
   pthread_mutex_lock(&queue->lock);
-  if (queue->size == 0) {
-    return 0;
-  }
-  struct Node* head = queue->head;
-  queue->head = queue->head->next;
-  queue->size--;
-  void* data = head->data;
-  free(head);
+
+  queue->head++;
+  void* data = queue->queue[queue->head];
+  queue->head = queue->head % queue->size;
+
   pthread_mutex_unlock(&queue->lock);
   sem_post(&queue->enqueue);
   return data;
 }
-
