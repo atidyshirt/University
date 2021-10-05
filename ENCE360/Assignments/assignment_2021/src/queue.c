@@ -17,8 +17,8 @@
 * @Attribute pthread_mutex_t lock
 * @Attribute sem_t enqueue
 * @Attribute sem_t dequeue
-* @Attribute int head  -- head of queue
-* @Attribute int tail  -- tail of queue
+* @Attribute int head    -- head of queue
+* @Attribute int tail    -- tail of queue
 * @Attribute size_t size -- size of the queue
 */
 typedef struct QueueStruct {
