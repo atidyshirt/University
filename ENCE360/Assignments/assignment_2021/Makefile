@@ -1,5 +1,5 @@
 LIBS = -lpthread
-CC = gcc -Iinclude -I./src
+CC = gcc -Iinclude -ggdb3 -I./src
 CFLAGS = -g -Wall --std=gnu99
 
 .PHONY: default all clean

@@ -16,16 +16,18 @@
 * @return Buffer* buffer -- pointer to a new buffer
 */
 Buffer* initilize_buffer(int size) {
-  Buffer* buffer = malloc(sizeof(Buffer));
-  buffer->data = malloc(sizeof(char) * size);
+  Buffer* buffer = (Buffer *)malloc(sizeof(Buffer));
+  buffer->data = (char *)calloc(size, sizeof(char));
+  memset(buffer->data, '\0', size);
   buffer->length = size;
   return buffer;
 }
 
-/* append a buffer two another buffer
-* @param Buffer* source  -- the buffer to append data to
-* @param Buffer* extend  -- the buffer to append
-* @return Buffer* source -- pointer the resulting buffer
+/* append an array of chars to an existing buffer and re-allocate memory
+* @param Buffer* source     -- the buffer to append data to
+* @param char* extend       -- the array to append
+* @param int extend_length  -- the length of the array to append
+* @return Buffer* source    -- pointer the resulting buffer
 */
 Buffer* extend_buffer(Buffer* source, char* extend, int extend_length) {
   int tmp_length = source->length + extend_length + 1;
@@ -87,18 +89,26 @@ int initilize_socket(char* host, int port) {
 Buffer* http_query(char *host, char *page, int port) {
   int stream_length = 0;
   char recieve_line[BUF_SIZE + 1], send_line[BUF_SIZE + 1];
+  memset(send_line, '\0', BUF_SIZE + 1);
   int fd = initilize_socket(host, port);
-  Buffer* buffer = initilize_buffer(0);
+  Buffer* buffer = initilize_buffer(BUF_SIZE);
 
-  snprintf(send_line, BUF_SIZE,
+  snprintf(send_line, BUF_SIZE + 1,
   "GET /%s HTTP/1.0\r\n"
   "Host: %s\r\n"
   "User-Agent: getter\r\n\r\n", page, host
   );
 
-  if (write(fd, send_line, strlen(send_line)) >= 0) {
+  if (write(fd, send_line, BUF_SIZE + 1) >= 0) {
+
+    /* this is to fill the initilized buffer, as it is not being `extended`
+     * note that size is changed due to the initial buffer being set to BUF_SIZE
+     */
+    stream_length = read(fd, recieve_line, BUF_SIZE);
+    buffer->length = stream_length;
+    memcpy(buffer->data, recieve_line, stream_length);
+
     while ((stream_length = read(fd, recieve_line, BUF_SIZE)) > 0) {
-      recieve_line[stream_length] = '\0';
       extend_buffer(buffer, recieve_line, stream_length);
     }
   }

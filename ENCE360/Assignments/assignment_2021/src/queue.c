@@ -50,9 +50,11 @@ Queue *queue_alloc(int size) {
 * @param Queue* queue -- queue to free
 */
 void queue_free(Queue *queue) {
-
   int sem_value;
   sem_getvalue(&queue->dequeue, &sem_value);
+  if (sem_value != 0) {
+    handle_error("Error: queue still contains some data");
+  }
   pthread_mutex_destroy(&queue->lock);
   sem_destroy(&queue->enqueue);
   sem_destroy(&queue->dequeue);
@@ -68,16 +70,15 @@ void queue_put(Queue *queue, void *item) {
   sem_wait(&queue->enqueue);
   pthread_mutex_lock(&queue->lock);
 
-  queue->tail++;
   queue->queue[queue->tail] = item;
+  queue->tail++;
   queue->tail = queue->tail % queue->size;
 
   pthread_mutex_unlock(&queue->lock);
   sem_post(&queue->dequeue);
 }
 
-/* pops the head of the queue and returns value if the queue is empty
-* it will return 0
+/* pops the head of the queue and returns value if the queue is empty it will return 0
 * @param Queue* queue -- queue to pop from
 * @return void* data  -- data from queue
 */
@@ -85,8 +86,8 @@ void* queue_get(Queue *queue) {
   sem_wait(&queue->dequeue);
   pthread_mutex_lock(&queue->lock);
 
-  queue->head++;
   void* data = queue->queue[queue->head];
+  queue->head++;
   queue->head = queue->head % queue->size;
 
   pthread_mutex_unlock(&queue->lock);
