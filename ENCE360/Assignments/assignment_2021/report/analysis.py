@@ -34,42 +34,12 @@ def main():
             '../bin/downloader test_small.txt 12 download',
             '../bin/downloader test_small.txt 13 download',
             '../bin/downloader test_small.txt 14 download',
-            '../bin/downloader test_small.txt 15 download'
-            '../bin/downloader test_small.txt 16 download'
-            '../bin/downloader test_small.txt 17 download'
-            '../bin/downloader test_small.txt 18 download'
-            '../bin/downloader test_small.txt 19 download'
-            '../bin/downloader test_small.txt 20 download'
-            '../bin/downloader test_small.txt 21 download'
-            '../bin/downloader test_small.txt 22 download'
-            '../bin/downloader test_small.txt 23 download'
-            '../bin/downloader test_small.txt 24 download'
-            '../bin/downloader test_small.txt 25 download'
-            '../bin/downloader test_small.txt 26 download'
-            '../bin/downloader test_small.txt 27 download'
-            '../bin/downloader test_small.txt 28 download'
-            '../bin/downloader test_small.txt 29 download'
-            '../bin/downloader test_small.txt 30 download'
-            '../bin/downloader test_small.txt 31 download'
-            '../bin/downloader test_small.txt 32 download'
-            '../bin/downloader test_small.txt 33 download'
-            '../bin/downloader test_small.txt 34 download'
-            '../bin/downloader test_small.txt 35 download'
-            '../bin/downloader test_small.txt 36 download'
-            '../bin/downloader test_small.txt 37 download'
-            '../bin/downloader test_small.txt 38 download'
-            '../bin/downloader test_small.txt 39 download'
-            '../bin/downloader test_small.txt 40 download'
-            '../bin/downloader test_small.txt 41 download'
-            '../bin/downloader test_small.txt 42 download'
-            '../bin/downloader test_small.txt 43 download'
-            '../bin/downloader test_small.txt 44 download'
-            '../bin/downloader test_small.txt 45 download'
-            '../bin/downloader test_small.txt 46 download'
-            '../bin/downloader test_small.txt 47 download'
-            '../bin/downloader test_small.txt 48 download'
-            '../bin/downloader test_small.txt 49 download'
-            '../bin/downloader test_small.txt 50 download'
+            '../bin/downloader test_small.txt 15 download',
+            '../bin/downloader test_small.txt 16 download',
+            '../bin/downloader test_small.txt 17 download',
+            '../bin/downloader test_small.txt 18 download',
+            '../bin/downloader test_small.txt 19 download',
+            '../bin/downloader test_small.txt 20 download',
         ],
         "large": [
             '../bin/downloader test_large.txt 1 download',
@@ -86,42 +56,13 @@ def main():
             '../bin/downloader test_large.txt 12 download',
             '../bin/downloader test_large.txt 13 download',
             '../bin/downloader test_large.txt 14 download',
-            '../bin/downloader test_large.txt 15 download'
+            '../bin/downloader test_large.txt 15 download',
             '../bin/downloader test_large.txt 16 download',
             '../bin/downloader test_large.txt 17 download',
             '../bin/downloader test_large.txt 18 download',
             '../bin/downloader test_large.txt 19 download',
             '../bin/downloader test_large.txt 20 download',
-            '../bin/downloader test_large.txt 21 download',
-            '../bin/downloader test_large.txt 22 download',
-            '../bin/downloader test_large.txt 23 download',
-            '../bin/downloader test_large.txt 24 download',
-            '../bin/downloader test_large.txt 25 download',
-            '../bin/downloader test_large.txt 26 download',
-            '../bin/downloader test_large.txt 27 download',
-            '../bin/downloader test_large.txt 28 download',
-            '../bin/downloader test_large.txt 29 download',
-            '../bin/downloader test_large.txt 30 download',
-            '../bin/downloader test_large.txt 31 download',
-            '../bin/downloader test_large.txt 32 download',
-            '../bin/downloader test_large.txt 33 download',
-            '../bin/downloader test_large.txt 34 download',
-            '../bin/downloader test_large.txt 35 download',
-            '../bin/downloader test_large.txt 36 download',
-            '../bin/downloader test_large.txt 37 download',
-            '../bin/downloader test_large.txt 38 download',
-            '../bin/downloader test_large.txt 39 download',
-            '../bin/downloader test_large.txt 40 download',
-            '../bin/downloader test_large.txt 41 download',
-            '../bin/downloader test_large.txt 42 download',
-            '../bin/downloader test_large.txt 43 download',
-            '../bin/downloader test_large.txt 44 download',
-            '../bin/downloader test_large.txt 45 download',
-            '../bin/downloader test_large.txt 46 download',
-            '../bin/downloader test_large.txt 47 download',
-            '../bin/downloader test_large.txt 48 download',
-            '../bin/downloader test_large.txt 49 download',
-            '../bin/downloader test_large.txt 50 download',
+            ],
     }
     commands = {
         "small": [
@@ -139,42 +80,12 @@ def main():
             '../downloader test_small.txt 12 download',
             '../downloader test_small.txt 13 download',
             '../downloader test_small.txt 14 download',
-            '../downloader test_small.txt 15 download'
+            '../downloader test_small.txt 15 download',
             '../downloader test_small.txt 16 download',
             '../downloader test_small.txt 17 download',
             '../downloader test_small.txt 18 download',
             '../downloader test_small.txt 19 download',
             '../downloader test_small.txt 20 download',
-            '../downloader test_small.txt 21 download',
-            '../downloader test_small.txt 22 download',
-            '../downloader test_small.txt 23 download',
-            '../downloader test_small.txt 24 download',
-            '../downloader test_small.txt 25 download',
-            '../downloader test_small.txt 26 download',
-            '../downloader test_small.txt 27 download',
-            '../downloader test_small.txt 28 download',
-            '../downloader test_small.txt 29 download',
-            '../downloader test_small.txt 30 download',
-            '../downloader test_small.txt 31 download',
-            '../downloader test_small.txt 32 download',
-            '../downloader test_small.txt 33 download',
-            '../downloader test_small.txt 34 download',
-            '../downloader test_small.txt 35 download',
-            '../downloader test_small.txt 36 download',
-            '../downloader test_small.txt 37 download',
-            '../downloader test_small.txt 38 download',
-            '../downloader test_small.txt 39 download',
-            '../downloader test_small.txt 40 download',
-            '../downloader test_small.txt 41 download',
-            '../downloader test_small.txt 42 download',
-            '../downloader test_small.txt 43 download',
-            '../downloader test_small.txt 44 download',
-            '../downloader test_small.txt 45 download',
-            '../downloader test_small.txt 46 download',
-            '../downloader test_small.txt 47 download',
-            '../downloader test_small.txt 48 download',
-            '../downloader test_small.txt 49 download',
-            '../downloader test_small.txt 50 download',
         ],
         "large": [
             '../downloader test_large.txt 1 download',
@@ -197,37 +108,7 @@ def main():
             '../downloader test_large.txt 18 download',
             '../downloader test_large.txt 19 download',
             '../downloader test_large.txt 20 download',
-            '../downloader test_large.txt 21 download',
-            '../downloader test_large.txt 22 download',
-            '../downloader test_large.txt 23 download',
-            '../downloader test_large.txt 24 download',
-            '../downloader test_large.txt 25 download',
-            '../downloader test_large.txt 26 download',
-            '../downloader test_large.txt 27 download',
-            '../downloader test_large.txt 28 download',
-            '../downloader test_large.txt 29 download',
-            '../downloader test_large.txt 30 download',
-            '../downloader test_large.txt 31 download',
-            '../downloader test_large.txt 32 download',
-            '../downloader test_large.txt 33 download',
-            '../downloader test_large.txt 34 download',
-            '../downloader test_large.txt 35 download',
-            '../downloader test_large.txt 36 download',
-            '../downloader test_large.txt 37 download',
-            '../downloader test_large.txt 38 download',
-            '../downloader test_large.txt 39 download',
-            '../downloader test_large.txt 40 download',
-            '../downloader test_large.txt 41 download',
-            '../downloader test_large.txt 42 download',
-            '../downloader test_large.txt 43 download',
-            '../downloader test_large.txt 44 download',
-            '../downloader test_large.txt 45 download',
-            '../downloader test_large.txt 46 download',
-            '../downloader test_large.txt 47 download',
-            '../downloader test_large.txt 48 download',
-            '../downloader test_large.txt 49 download',
-            '../downloader test_large.txt 50 download',
-        ]
+        ],
     }
 
     md = MarkdownWriter("./analysis.md")
@@ -242,10 +123,13 @@ def main():
     output = []
 
     for command in commands['large']:
-        print(command)
-        out, time = execute(command)
-        output.append(out)
-        times.append(time)
+        time_average = 0
+        for _ in range(0, 3):
+            print(command)
+            out, time = execute(command)
+            output.append(out)
+            time_average += time
+        times.append(time_average / 3)
 
     our_figure = plt.figure()
 
@@ -255,10 +139,13 @@ def main():
     output = []
 
     for command in commands['small']:
-        print(command) # just for status
-        out, time = execute(command)
-        output.append(out)
-        times.append(time)
+        time_average = 0
+        for i in range(0, 3):
+            print(command)
+            out, time = execute(command)
+            output.append(out)
+            time_average += time
+        times.append(time_average / 3)
 
     plt.plot(threads, times, "b", label="Small Text")
 
@@ -273,10 +160,13 @@ def main():
     output = []
 
     for command in theirs_commands['large']:
-        print(command)
-        out, time = execute(command)
-        output.append(out)
-        times.append(time)
+        time_average = 0
+        for i in range(0, 3):
+            print(command)
+            out, time = execute(command)
+            output.append(out)
+            time_average += time
+        times.append(time_average / 3)
 
     their_figure = plt.figure()
 
@@ -286,10 +176,13 @@ def main():
     output = []
 
     for command in theirs_commands['small']:
-        print(command) # just for status
-        out, time = execute(command)
-        output.append(out)
-        times.append(time)
+        time_average = 0
+        for i in range(0, 3):
+            print(command)
+            out, time = execute(command)
+            output.append(out)
+            time_average += time
+        times.append(time_average / 3)
 
     plt.plot(threads, times, "b", label="Small Text")
 
