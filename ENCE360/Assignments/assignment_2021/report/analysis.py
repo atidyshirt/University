@@ -140,7 +140,7 @@ def main():
 
     for command in commands['small']:
         time_average = 0
-        for i in range(0, 3):
+        for _ in range(0, 3):
             print(command)
             out, time = execute(command)
             output.append(out)
@@ -161,7 +161,7 @@ def main():
 
     for command in theirs_commands['large']:
         time_average = 0
-        for i in range(0, 3):
+        for _ in range(0, 3):
             print(command)
             out, time = execute(command)
             output.append(out)
@@ -177,7 +177,7 @@ def main():
 
     for command in theirs_commands['small']:
         time_average = 0
-        for i in range(0, 3):
+        for _ in range(0, 3):
             print(command)
             out, time = execute(command)
             output.append(out)
