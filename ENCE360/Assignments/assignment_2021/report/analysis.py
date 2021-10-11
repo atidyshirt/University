@@ -1,5 +1,5 @@
 """
-File: alalysis.py
+File: analysis.py
 Author: Jordan Pyott
 Description: I will use a python module I wrote a while back to generate a markdown report using matplotlib and python
 Module: https://github.com/atidyshirt/MarkdownWriter
@@ -40,6 +40,14 @@ def main():
             '../bin/downloader test_small.txt 18 download',
             '../bin/downloader test_small.txt 19 download',
             '../bin/downloader test_small.txt 20 download',
+<<<<<<< Updated upstream
+=======
+            '../bin/downloader test_small.txt 21 download',
+            '../bin/downloader test_small.txt 22 download',
+            '../bin/downloader test_small.txt 23 download',
+            '../bin/downloader test_small.txt 24 download',
+            '../bin/downloader test_small.txt 25 download',
+>>>>>>> Stashed changes
         ],
         "large": [
             '../bin/downloader test_large.txt 1 download',
@@ -62,7 +70,16 @@ def main():
             '../bin/downloader test_large.txt 18 download',
             '../bin/downloader test_large.txt 19 download',
             '../bin/downloader test_large.txt 20 download',
+<<<<<<< Updated upstream
             ],
+=======
+            '../bin/downloader test_large.txt 21 download',
+            '../bin/downloader test_large.txt 22 download',
+            '../bin/downloader test_large.txt 23 download',
+            '../bin/downloader test_large.txt 24 download',
+            '../bin/downloader test_large.txt 25 download',
+        ]
+>>>>>>> Stashed changes
     }
     commands = {
         "small": [
@@ -86,6 +103,14 @@ def main():
             '../downloader test_small.txt 18 download',
             '../downloader test_small.txt 19 download',
             '../downloader test_small.txt 20 download',
+<<<<<<< Updated upstream
+=======
+            '../downloader test_small.txt 21 download',
+            '../downloader test_small.txt 22 download',
+            '../downloader test_small.txt 23 download',
+            '../downloader test_small.txt 24 download',
+            '../downloader test_small.txt 25 download',
+>>>>>>> Stashed changes
         ],
         "large": [
             '../downloader test_large.txt 1 download',
@@ -108,7 +133,16 @@ def main():
             '../downloader test_large.txt 18 download',
             '../downloader test_large.txt 19 download',
             '../downloader test_large.txt 20 download',
+<<<<<<< Updated upstream
         ],
+=======
+            '../downloader test_large.txt 21 download',
+            '../downloader test_large.txt 22 download',
+            '../downloader test_large.txt 23 download',
+            '../downloader test_large.txt 24 download',
+            '../downloader test_large.txt 25 download',
+        ]
+>>>>>>> Stashed changes
     }
 
     md = MarkdownWriter("./analysis.md")
@@ -118,7 +152,7 @@ def main():
     md.header3("Performance analysis")
     md.header4("Comparison between assessment implementation and provided binary")
 
-    threads = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    threads = [i for i in range(1, 26)]
     times = []
     output = []
 
@@ -156,9 +190,10 @@ def main():
 
     md.plot(our_figure, file_name='ours_threads_vs_times.png', description='Assessment Implementation: Threads Vs Times')
 
-    times = []
-    output = []
+    # times = []
+    # output = []
 
+<<<<<<< Updated upstream
     for command in theirs_commands['large']:
         time_average = 0
         for _ in range(0, 3):
@@ -167,14 +202,22 @@ def main():
             output.append(out)
             time_average += time
         times.append(time_average / 3)
+=======
+    # for command in theirs_commands['large']:
+    #     print(command)
+    #     out, time = execute(command)
+    #     output.append(out)
+    #     times.append(time)
+>>>>>>> Stashed changes
 
-    their_figure = plt.figure()
+    # their_figure = plt.figure()
 
-    plt.plot(threads, times, "r", label="Large Text")
+    # plt.plot(threads, times, "r", label="Large Text")
 
-    times = []
-    output = []
+    # times = []
+    # output = []
 
+<<<<<<< Updated upstream
     for command in theirs_commands['small']:
         time_average = 0
         for _ in range(0, 3):
@@ -183,14 +226,21 @@ def main():
             output.append(out)
             time_average += time
         times.append(time_average / 3)
+=======
+    # for command in theirs_commands['small']:
+    #     print(command) # just for status
+    #     out, time = execute(command)
+    #     output.append(out)
+    #     times.append(time)
+>>>>>>> Stashed changes
 
-    plt.plot(threads, times, "b", label="Small Text")
+    # plt.plot(threads, times, "b", label="Small Text")
 
-    plt.title("Provided Implementation: Short vs Long text execution time")
-    plt.xlabel("Number of threads")
-    plt.ylabel("Execution times")
-    plt.legend()
+    # plt.title("Provided Implementation: Short vs Long text execution time")
+    # plt.xlabel("Number of threads")
+    # plt.ylabel("Execution times")
+    # plt.legend()
 
-    md.plot(their_figure, file_name='theirs_threads_vs_times.png', description='Provided Implementation: Threads Vs Times')
+    # md.plot(their_figure, file_name='theirs_threads_vs_times.png', description='Provided Implementation: Threads Vs Times')
 
 main()
