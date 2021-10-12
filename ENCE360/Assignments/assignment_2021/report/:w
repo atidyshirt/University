@@ -5,38 +5,23 @@ Student ID: 87433186
 
 ### Algorithm analysis
 
+The algorithm found in the main routine of the `downloader.c` file (lines 175 and onwards) initially takes in a URL, the number of worker threads and an output directory as parameters to the program.
 
-The algorithm found in the main routine of the `downloader.c` file (lines 175 and onwards) initially takes in
-a URL, the number of worker threads and an output directory as parameters to the program. The program then
-creates a new directory with the name provided as an argument, the program then opens a file, spawns working
-threads.
+The program then creates a new directory with the name provided as an argument, the program then opens a file, spawns working threads and allocates memory to each worker.
 
-From here the program starts its main event loop, this will run as long as we keep receiving a new URL from
-the URL file, then it will return the size of the line and assign the line to a variable called `line`, note
-this size does not include a null terminator character. Upon receiving an end-of-file signal, the `getline()`
-function will return `-1` and break out of the loop.
+From here the program starts its main event loop, this will run as long as we keep receiving a new URL from the URL file, then it will return the size of the line and assign the line to a variable called `line`, note this size does not include a null terminator character. Upon receiving an end-of-file, the `getline()` function will return `-1` and break out of the loop.
 
-If end-of-file is not received, the algorithm will have received the size of the URL, and the URL itself. The
-main routine will then create new tasks and add them to the `context->todo` queue, these tasks are used to
-download a section of the file. After these tasks are added to the `context->todo` queue, the worker threads
-will then get an item from the `context->todo` queue (removing it from `context->todo`) and process the task,
-the received bytes will be then placed into the task's buffer `task->result` and the task will be placed into
-`context->done` to establish that the task has been completed.
+If end-of-file is not received, the algorithm will have received the size of the URL chunk, and the URL itself.The main routine will then create new tasks and add them to the `context->todo` queue, these tasks are used to download a section of the file. After these tasks are added to the `context->todo` queue, the worker threads will then get an item from the `context->todo` queue (removing it from `context->todo`) and process the task, the received bytes will be then placed into the task's buffer `task->result` and the task will be placed into `context->done` to establish that it has been completed.
 
-The dispatcher thread (initial thread that is started by the user) gets tasks from the `context->done` queue
-that have been processed and writes the downloaded bytes from `task->result` into a file on disk corresponding
-to the URL provided, this will happen one by one until the file is fully written.
+The dispatcher thread (the initial thread that is started by the user) gets tasks from the `context->done` queue that have been processed and writes the downloaded bytes from `task->result` into a temporary download file that contains the sub-section of downloaded bytes and then combines them to form the complete file and deletes these temporary files.
 
-The final stages of the main routine is to free excess memory and workers and close the open file, finally
-the process terminates and the program has concluded.
 
-### Mapping to a design pattern and performance improvements
 
-The algorithm above is using the dispatcher/worker pattern, as we have shown above, the initial thread that is created by the user, acts as a dispatcher allocating tasks to a pool of worker threads, the method of allocation is assigning the work to the todo queue, where the worker threads get woken to perform the hard work of downloading the data.
+The final stages of the main routine is to free excess memory and workers and close the open file, finally the process terminates and the program has concluded.
 
-One performance fault found in the program is where the dispatcher thread is writing the files, at this point in the program, the worker threads will remain idle as the worker thread continues to work, this is a bottleneck
+### Performance Improvements
 
-> TODO: finish this section
+TODO: Write up performance improvements
 
 ### Performance analysis
 
