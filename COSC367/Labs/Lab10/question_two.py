@@ -31,3 +31,24 @@ for k in range(1, 6, 2):
         print(x, knn_predict([x], examples, distance, combine, k))
     print()
 
+examples = [
+    ([1], 5),
+    ([2], -1),
+    ([5], 1),
+    ([7], 4),
+    ([9], 8),
+]
+
+def average(values):
+    return sum(values) / len(values)
+
+distance = euclidean_distance
+combine = average
+
+for k in range(1, 6, 2):
+    print("k =", k)
+    print("x", "prediction")
+    for x in range(0,10):
+        print("{} {:4.2f}".format(x, knn_predict([x], examples, distance, combine, k)))
+    print()
+

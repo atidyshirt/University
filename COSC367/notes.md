@@ -830,37 +830,168 @@ If a probabilistic model has multiple distributions, the number of its free para
 
 [Example: Lecture (1:27:30)]
 
-  [State space example one]: ./Diagrams/state-space.png
-  [State space graph simplified]: ./Diagrams/state-space-graph.png
-  [search tree]: ./Diagrams/search-tree.png
-  [Generic Search]: ./Diagrams/generic-graph-search.png
-  [DFS]: ./Diagrams/DFS.png
-  [DFS trace using generic algorithm]: ./Diagrams/DFS-trace-generic.png
-  [BFS Illustration of search tree]: ./Diagrams/BFS.png
-  [BFS trace using generic algorithm]: ./Diagrams/BFS-trace-generic.png
-  [LCFS trace generic]: ./Diagrams/LCFS-trace-generic.png
-  [Example: LCFS with pruning]: ./Diagrams/LCFS-with-pruning-example.png
-  [Tracing best-first search]: ./Diagrams/tracing-best-first-search-example.png
-  [1]: ./Diagrams/tracing-a-search-one-example.png
-  [Tracing A\* search]: ./Diagrams/asearch-two-example.png
-  [Proof of optimality]: ./Diagrams/proof-for-a-search.png
-  [Pruning on A\* Search]: ./Diagrams/pruning-on-a-search.png
-  [Dominance Relation]: ./Diagrams/dominance-relation.png
-  [Electrical Environment: Information (Input)]: ./Diagrams/electrical-environment.png
-  [Electrical Environment: Knowledge Base]: ./Diagrams/electrical-environment-base.png
-  [simple example question]: ./Diagrams/simple-example-interpretations.png
-  [Tracing tutorial: 1:13:30]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-03T09:00:00.000_2021-08-03T10:55:00.000/classroom#sortDirection=desc
-  [Bottom-up proof procedure algorithm pseudo code]: ./Diagrams/bottom-up-proof-algorithm.png
-  [Top-down proof procedure algorithm pseudo code]: ./Diagrams/top-down-algorithm-proof.png
-  [Further examples using prolog: 1:10:00]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-10T09:00:00.000_2021-08-10T10:55:00.000/classroom#sortDirection=desc
-  [Example of local search]: ./Diagrams/local-search-for-tsp.png
-  [n-queens example (35:00)]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-14T09:00:00.000_2021-09-14T10:55:00.000/classroom#sortDirection=desc
-  [Gradient descent algorithm]: ./Diagrams/gradient-descent.png
-  [Crossover Example]: ./Diagrams/crossover.png
-  [Tree representation example]: ./Diagrams/tree-rep.png
-  [2]: ./Diagrams/marginalization.png
-  [Normalization trick example]: ./Diagrams/normalization-example.png
-  [Example]: ./Diagrams/inference-enumeration-example.png
-  [Conditional Independence: Example]: ./Diagrams/conditional-independence-example.png
-  [3]: ./Diagrams/conditional-independence-example2.png
-  [Example: Lecture (1:27:30)]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-21T09:00:00.000_2021-09-21T10:55:00.000/classroom#sortDirection=desc
+**Can we have reverse causality in a network?**
+
+- Can we express the same joint distribution by a network where arrows no longer mean causality?
+  * Yes, but the network is now harder for humans to read and understand
+
+**Non-causal arrows?**
+
+- when belief nets reflect the true casual patterns:
+  * Often simpler
+  * Often easier to think about
+  * Often easier to elicit from experts
+- BN's need not actually be causal
+  * Sometimes no casual net exists over the domain
+- What do the arrows really mean?
+  * They define/allow dependence
+  * This means that we can construct a table between the two nodes
+
+
+### Lecture Eight: Introduction to machine learning
+
+**what is learning?**
+
+Learning is the ability to improve one's behaviour based on experience
+
+- The range of behaviours is expanded: the agent can do more
+- The accuracy on tasks is improved: the agent can do things better
+- The speed is improved: the agent can do things faster
+
+**Components of a learning problem**
+
+The following components are part of any learning problem:
+
+- Task: the behaviour or task that's being improved, for example classification, acting in an environment
+- Data: the experiences that are being used to improve performance in the task
+- Measure of improvement: how can the improvement be measured?
+
+![Learning Architecture (high level overview)](./Diagrams/learning-architecture.png)
+
+**Supervised Learning**
+
+Given:
+
+- a set of input attributes (features)
+- A target attribute (feature)
+- A set of training examples (instances) where the value of input and the target variables are given;
+
+Automatically build a predictive model that takes a new instance and returns a prediction of the value for the target feature for the given instance
+
+> Note: The terms feature, attribute and random variable are used with the same meaning in this context
+
+![Example of supervised learning: classification](./Diagrams/classification.png)
+
+Another example of supervised learning is a Regression, (see lecture for more information)
+
+![Measure of performance in supervised learning](./Diagrams/measure-of-performance.png)
+
+**Training and testing sets**
+
+A given set of examples is divided into:
+ 
+- Training examples: that are used to train a model
+- Test examples that are used to evaluate the model
+  * THESE MUST BE KEPT SEPARATE
+
+**How overfitting affects prediction**
+
+It allows the model to take more turns, if the model is too complex, the dispersion on the test data
+from the training data will be much larger, this can be seen by the below model
+
+![How overfitting affects prediction](./Diagrams/overfitting.png)
+
+**Naive Bayes Models**
+
+![Model](./Diagrams/naive-bayes-models.png)
+
+**Features** X are conditionally independent given the **class** variable C
+
+- $P(C)$: Prior distributions of C, the random variable
+- $P(X_i|C)$: Likelihood conditional distributions
+- $P(C|X_1,...X_n)$: Posterior distribution
+
+Widely used in machine learning as conditional probabilities $P(X_i | C)$ can easily be estimated from labeled data
+
+**Building a classifier**
+
+Determine whether a patient is susceptible to heart disease, given the following information:
+
+- Whether they have a family history (T/F)
+- Fasting blood sugar level (low/high)
+- BMI (low, normal, high)
+
+Classification (Heart disease): Yes or no
+
+Given a set of data about past patients classification by experts, construct a classifier that will output the likely
+prediction (class) when given a new (unseen) patient (instance).
+
+![Sample dataset (far to small to realistically use)](./Diagrams/sample-dataset.png)
+
+**Naive Bayes Classification**
+
+How to classify?
+
+1. Find P(Class | an input vector) for different classes
+2. Pick the class with the highest probability as the result of the prediction
+
+Problem: Hard to learn P(Class | Evidence)
+
+- A lot of data is required; enough for each possible assignment of evidence
+- For example P(Class=No | Hist = true, BG = high, BMI = low) needs lots of examples of (Hist = true, 
+  BG = high, BMI = low). Then count a fraction that are "no". This is often infeasible, specifically when
+  are many attributes.
+
+A solution (compromise): assume input features are conditionally independent (Naive Bayes)
+
+- Often the assumption is not entirely true, but nethertheless yields reasonable performance.
+
+![Using the classifier](./Diagrams/using-bayes-classifier.png)
+
+**Laplace Smoothing**
+
+Problem: zero count (in small data sets) lead to zero probabilities (i.e. impossible) which is too strong a claim
+based on only a small sample.
+
+Solution: add a non-negative *pseudo-count* to the counts
+
+![Laplace Smoothing](./Diagrams/laplace-smoothing.png)
+
+![Classification after Smoothing](./Diagrams/classification-after-smoothing.png)
+
+
+
+[State space example one]: ./Diagrams/state-space.png
+[State space graph simplified]: ./Diagrams/state-space-graph.png
+[search tree]: ./Diagrams/search-tree.png
+[Generic Search]: ./Diagrams/generic-graph-search.png
+[DFS]: ./Diagrams/DFS.png
+[DFS trace using generic algorithm]: ./Diagrams/DFS-trace-generic.png
+[BFS Illustration of search tree]: ./Diagrams/BFS.png
+[BFS trace using generic algorithm]: ./Diagrams/BFS-trace-generic.png
+[LCFS trace generic]: ./Diagrams/LCFS-trace-generic.png
+[Example: LCFS with pruning]: ./Diagrams/LCFS-with-pruning-example.png
+[Tracing best-first search]: ./Diagrams/tracing-best-first-search-example.png
+[1]: ./Diagrams/tracing-a-search-one-example.png
+[Tracing A\* search]: ./Diagrams/asearch-two-example.png
+[Proof of optimality]: ./Diagrams/proof-for-a-search.png
+[Pruning on A\* Search]: ./Diagrams/pruning-on-a-search.png
+[Dominance Relation]: ./Diagrams/dominance-relation.png
+[Electrical Environment: Information (Input)]: ./Diagrams/electrical-environment.png
+[Electrical Environment: Knowledge Base]: ./Diagrams/electrical-environment-base.png
+[simple example question]: ./Diagrams/simple-example-interpretations.png
+[Tracing tutorial: 1:13:30]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-03T09:00:00.000_2021-08-03T10:55:00.000/classroom#sortDirection=desc
+[Bottom-up proof procedure algorithm pseudo code]: ./Diagrams/bottom-up-proof-algorithm.png
+[Top-down proof procedure algorithm pseudo code]: ./Diagrams/top-down-algorithm-proof.png
+[Further examples using prolog: 1:10:00]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-08-10T09:00:00.000_2021-08-10T10:55:00.000/classroom#sortDirection=desc
+[Example of local search]: ./Diagrams/local-search-for-tsp.png
+[n-queens example (35:00)]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-14T09:00:00.000_2021-09-14T10:55:00.000/classroom#sortDirection=desc
+[Gradient descent algorithm]: ./Diagrams/gradient-descent.png
+[Crossover Example]: ./Diagrams/crossover.png
+[Tree representation example]: ./Diagrams/tree-rep.png
+[2]: ./Diagrams/marginalization.png
+[Normalization trick example]: ./Diagrams/normalization-example.png
+[Example]: ./Diagrams/inference-enumeration-example.png
+[Conditional Independence: Example]: ./Diagrams/conditional-independence-example.png
+[3]: ./Diagrams/conditional-independence-example2.png
+[Example: Lecture (1:27:30)]: https://echo360.net.au/lesson/G_abdd116d-06db-42eb-a7c5-7574b3189d84_0603f480-010c-4863-abcd-d37c48fdb72f_2021-09-21T09:00:00.000_2021-09-21T10:55:00.000/classroom#sortDirection=desc

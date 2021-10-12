@@ -32,20 +32,23 @@ the process terminates and the program has concluded.
 
 ### Mapping to a design pattern and performance improvements
 
-The algorithm above is using the dispatcher/worker pattern, as we have shown above, the initial thread that is
-created by the user, acts as a dispatcher allocating tasks to a pool of worker threads, the method of
-allocation is assigning the work to the todo queue, where the worker threads get woken to perform the hard
-work of downloading the data.
+The algorithm above is using the dispatcher/worker pattern (mostly, this is explained below), as we have shown above,
+the initial thread that is created by the user, acts as a dispatcher allocating tasks to a pool of worker
+threads , the method of allocation is assigning the work to the `todo` queue, where the worker threads get
+woken to perform the work of downloading the data.
 
 One performance fault found in the program is where the dispatcher thread is writing the files, at this point
-in the program, the worker threads will remain idle as the dispatcher thread continues to work, this is a
-bottleneck
-
-> TODO: finish this section
+in the program, the worker threads will remain idle as the dispatcher thread continues to work, this will cause a
+bottleneck. It is also important to note that this does not match the dispatcher/worker method, as the dispatcher is
+responsible for completing work rather than specifically allocating the work to the pool of worker threads.
 
 ### Performance analysis
 
-Below is a comparison of the provided binary vs the assessment implementation were taken using the Lab computers and run a large download test and a small download test *(test files are included in `./report`)*. These were done using the provided script (`./analysis.py`) to run each test-case three times and take the average across a range of threads $T = \{1 < t < 20\}$, where $T$ is the set containing of test cases where $t$ is the number of threads used in that test case. The results can be seen in the figures below:
+Below is a comparison of the provided binary vs the assessment implementation were taken using the Lab
+computers and run a large download test and a small download test *(test files are included in `./report`)*.
+These were done using the provided script (`./analysis.py`) to run each test-case three times and take the
+average across a range of threads $T = \{1 < t < 20\}$, where $T$ is the set containing of test cases where
+$t$ is the number of threads used in that test case. The results can be seen in the figures below:
 
 | Assessment Implementation                                                             | Provided Implementation                                                               |
 | -------------------------                                                             | -----------------------                                                               |
@@ -57,6 +60,16 @@ The figures from the `provided implementation` and the `assessment implementatio
 
 #### Finding the optimal number of threads
 
-From the figures shown earlier it appears that the optimal number of threads before large falloff is between 3-4 threads. This is due to the fact that between 3-4 threads the gradient of the above graph is approaching $45$ degrees, meaning that in this range of threads, we are getting the maximum ratio of benefit for the least resources used, this could have something to do with the number of available cores the lab machines CPU's have,as a machine running in perfect conditions (meaning no external processes running) would have an optimum (non-blocking) thread count when the number of threads used is the same as the number of cores on the CPU, as our data seems to indicate that around 3-4 threads is where our optimum point appears to lie, this could be a contributing factor in our findings as the lab computers are quad core computers.
+From the figures shown earlier it appears that the optimal number of threads before large falloff is between
+3-4 threads. This is due to the fact that between 3-4 threads the gradient of the above graph is approaching
+$45$ degrees, meaning that in this range of threads, we are getting the maximum ratio of benefit for the
+least resources used, this could have something to do with the number of available cores the lab machines
+CPU's have,as a machine running in perfect conditions (meaning no external processes running) would have an
+optimum (non-blocking) thread count when the number of threads used is the same as the number of cores on the
+CPU, as our data seems to indicate that around 3-4 threads is where our optimum point appears to lie, this
+could be a contributing factor in our findings as the lab computers are quad core computers.
 
-It is important to note that while this may be the case from our data, this will not be the case on other machines. This is because different machines will have different number of CPU cores available. If the given CPU has more cores than than the lab computers, it is likely that its optimum thread count will be higher then that given by our data.
+It is important to note that while this may be the case from our data, this may not be the case on other
+machines. This is because different machines will have different number of CPU cores available. If the
+given CPU has more cores than than the lab computers, it is likely that its optimum thread count will be
+higher then that given by our data.
