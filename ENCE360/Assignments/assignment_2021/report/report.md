@@ -32,9 +32,14 @@ the process terminates and the program has concluded.
 
 ### Mapping to a design pattern and performance improvements
 
-The algorithm above is using the dispatcher/worker pattern, as we have shown above, the initial thread that is created by the user, acts as a dispatcher allocating tasks to a pool of worker threads, the method of allocation is assigning the work to the todo queue, where the worker threads get woken to perform the hard work of downloading the data.
+The algorithm above is using the dispatcher/worker pattern, as we have shown above, the initial thread that is
+created by the user, acts as a dispatcher allocating tasks to a pool of worker threads, the method of
+allocation is assigning the work to the todo queue, where the worker threads get woken to perform the hard
+work of downloading the data.
 
-One performance fault found in the program is where the dispatcher thread is writing the files, at this point in the program, the worker threads will remain idle as the worker thread continues to work, this is a bottleneck
+One performance fault found in the program is where the dispatcher thread is writing the files, at this point
+in the program, the worker threads will remain idle as the dispatcher thread continues to work, this is a
+bottleneck
 
 > TODO: finish this section
 
@@ -42,8 +47,8 @@ One performance fault found in the program is where the dispatcher thread is wri
 
 Below is a comparison of the provided binary vs the assessment implementation were taken using the Lab computers and run a large download test and a small download test *(test files are included in `./report`)*. These were done using the provided script (`./analysis.py`) to run each test-case three times and take the average across a range of threads $T = \{1 < t < 20\}$, where $T$ is the set containing of test cases where $t$ is the number of threads used in that test case. The results can be seen in the figures below:
 
-| Assessment Implementation | Provided Implementation |
-| ------------------------- | ----------------------- |
+| Assessment Implementation                                                             | Provided Implementation                                                               |
+| -------------------------                                                             | -----------------------                                                               |
 | ![Assessment Implementation: Threads Vs Times](./resources/ours_threads_vs_times.png) | ![Provided Implementation: Threads Vs Times](./resources/theirs_threads_vs_times.png) |
 
 As we can see from the figures above, both the `provided implementation` and the `assessment implementation` have an exponential fall off of execution times that appears to approaches an asymptote where the number of threads is no longer having a positive impact on speeding up the download times.

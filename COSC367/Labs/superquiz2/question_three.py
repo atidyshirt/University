@@ -1,13 +1,7 @@
 def evaluate(expression, bindings):
-    if type(expression) is int:
-        return expression
-    elif type(expression) is str:
-        return bindings[expression]
-    tmp = [bindings[n] if type(n) is str else n for n in expression]
-    if callable(tmp[0]):
-        return evaluate(expression[1:], bindings) # NOTE: I should be do something like this \\ + tmp[0](tmp[1], tmp[2])
-    else:
-        return sum(tmp) # FIXME: Not like this
+    if type(expression) is int: return expression
+    elif type(expression) is str: return bindings[expression]
+    else: return evaluate(expression[0], bindings)(evaluate(expression[1], bindings), evaluate(expression[2], bindings))
 
 
 
