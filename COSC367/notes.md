@@ -959,6 +959,204 @@ Solution: add a non-negative *pseudo-count* to the counts
 
 ![Classification after Smoothing](./Diagrams/classification-after-smoothing.png)
 
+### Lecture Eight: Artificial Neural Networks
+
+**Source of inspiration (Biological Neural Networks)**
+
+- Brain as a network of "neurons"
+- The interaction between them produces something interesting (mimicking intelligence)
+- The building blocks of neurons
+- Neuron:
+  * Receives a signal from multiple inputs
+  * Strength of the signal is affected by synaptic weights
+  * If the overall signal is above a threshold, the neuron fires (sends a signal to its outputs)
+  (Could be a neuron or an output)
+
+![Modeling a single neuron: Perceptron](./Diagrams/model-single-neuron.png)
+
+In the above model, $X_n$ represents previous nodes, $w_n$ represents the
+weights given from the previous nodes, the current node computes $a$ and then
+outputs $g(a)$ being the weight given from our particular node/neuron.
+
+**Application: Decision Making and Classification**
+
+- Perceptron can be seen as a predicate
+  * given a vector $x$
+  * $f(x) = 1$ if that predicate over $x$ is `true`
+  * $f(x) = 0$ if that predicate is `false`
+- Therefore it can be used for decision making and binary classification problems
+  * spam vs non-spam
+  * diseased vs healthy
+- In binary classification
+  * given input vector $x$
+  * $f(x) = 1$ if $x$ is in `positive class`
+  * $f(x) = 0$ if $x$ is in `negative class`
+
+**Geometric interpretation of weights and bias**
+
+Since the transition in output happens at $a = 0$, the equation of the descision
+boundary is:
+
+$$ a = w_0 + w_1x_1 + w_2x_2 + ... + w_nx_n = 0 $$
+
+This will give a linear decision boundary shown with **two dimensions** in the figure below:
+
+![linear decision boundary](./Diagrams/linear-decision-boundary.png)
+
+> NOTE: a decision boundary with three values will give a plane (three dimensions)
+
+**Notes on visualising the decision boundary**
+
+- An easy way of finding a linear decision boundary in 2D is to find two points that lie on it
+  - *worked example in the lecture: (24:00)*
+- The direction of a vector $w$ (without a bias) shows on which side of the hyper-plane patterns
+will be classified as positive (output will be 1).
+- If $w_a$ (bias) is positive then the origin is on the positive side of the discriminator (line), otherwise
+on the negative side.
+
+**Perceptron learning (for one neuron)**
+
+This is the process of finding the best weights to match our data
+
+- Given: a data set of training data
+- We want: a `perceptron` (line that fits curve) that models the data
+- Iterate through training examples, classify each example with current values
+of weights and bias. If the example is classified correctly then don't do anything.
+if the example is misclassified then change the weights and bias
+
+Where $x_j$ is the value feature of the input pattern $x$, $w_j$ is the weight
+$\eta$ is the learning rate (note this must be positive, and is usually small), $t$ is the target/desired value and $y$ is the perceptron
+output the following equations are used:
+
+$$ w_j \leftarrow w_j + \eta x_j(t-y) $$
+
+The output of this will return `-1` or `1` to determine which direction
+the error happened.
+
+$$ bias \leftarrow bias + \eta (t - y) $$
+
+This will tell us whether to increase the bias or to decrease the bias, we have
+to repeat these a number of iterations in order to get valid results.
+
+Below is a trace of this algorithm:
+
+```python
+weights = [1.0, 1.0]
+bias = -2.0
+eta = 0.5 # learning rate (usually far smaller)
+max_epochs = 500
+
+# this is in two space (size of input tuple)
+examples = [ 
+  ((0,4), 0),
+  ((-2,1), 1),
+  ((3,5), 1),
+  ((1,1), 1),
+]
+```
+
+![Example trace of this algorithm, given epoch, weights and inital bias](./Diagrams/algorithm-trace-neurons.png)
+
+We stop the algorithm when we get a correct output (or a close approximation
+to what we are looking for depending on dataset)
+
+**Weight Updates**
+
+If we have a misclassified value, (wrong side of the normal of the perceptron),
+we calculate a new vector by taking the sum of the current vector + $\eta \underline{x} (t - y)$
+
+**Limitations of single perceptron**
+
+The XOR problem:
+
+- Having both a single perceptron cannot solve cases where there are four
+  nodes and two of these nodes are miss-classified, (you cannot draw a single
+  perceptron that satisfies all the nodes).
+- The solution is to use Multilayer Perceptrons (MLP's)
+
+**Multi Layer Perceptrons (MLP's)**
+
+- Instead of using a single perceptron, use a whole network of them
+- The output of a node becomes the input for another node
+- The network is usually arranged in layers, the data flows through layers, one
+layer at a time.
+- As a whole the network acts like a function taking a vector of input data and outputting
+a scalar (or vector).
+- Can be used for regression or classification
+- The network function is computed layer by layer
+- The first layer of the network is called the input layer
+- The number of units in the input layer is equal to the number of features in
+the problem domain. For each input vectorm the *i*-th input unit returns the value
+of the *i*-th feature (no weight or function is applied).
+- The last layer is called the output layer
+- The number of output nodes depends on how we have encoded the output
+called **hidden layers**
+- All nodes (units) in all layers except the input layer are Perceptrons
+- A network with only one layer (acting as input and output is an **identity function**)
+- Adjacent layers are fully connected
+- There is no backward connection
+- THere is not shortcut to the right layers (layers cannot skip)
+- Each perceptron has many weight parameters as the number of its inputs
+- In designing neural networks. The number of hidden layers and the number of nodes in
+the hidden layers depends on the complexity of the problem>
+
+**How MLP's solve the XOR problem**
+
+![Using a three layer MLP for the XOR problem](./Diagrams/xor-problem-mlp.png)
+
+Written explanation of the solution (reference the xor problem above):
+
+Note in the first perceptron (P1), the blue node to the left of the perceptron is
+labelled as 0, the other three nodes are labelled as 1, in the second perceptron (P2),
+vice versa is applied. This results in the given perceptron where we have two distinctions
+between $(1,1)$ which is inside the two perceptron's and $(0,1)$ on the outside of the perceptrons.
+
+> NOTE: We want to have an algorithm to define this for us, this is not in the scope of this course ( unfortunately :( ), however this would be a sick thing to go over in my own time, below is a little explanation of this idea
+
+**Using a Sigmoid Function (don't think this is assessed, but its cool as fuck)**
+
+![](./Diagrams/sigmoid-function.png)
+
+- It is differentiable at all points
+- It handles uncertainty (e.g. an input example could be positive with different degrees of certainty
+from 0.5 to 1).
+- Have to define an error function (generally called a loss function)
+  * $E = \sum_{i=1}^{n}(t_i - y_i)^2$
+- Then we have to compute the gradient and evaluate the following:
+  * $W \leftarrow W - \eta \delta E(W)$
+  * The gradient is a vector of partial derivatives
+  * The learning rate (step size) determines how much is made in each iteration
+
+Here is a visual representation of this process:
+
+The bottom left represents the error function dispersion, (the further away from the
+epicenter, the more errors it has, the closer to the epicenter, the more optimised the
+result will be):
+
+The bottom right, shows some training data assessment, as you can see it gets stuck on some
+cases, as the gradient approaches 0 (top left of the graph).
+
+![](./Diagrams/sigmoid-function2.png)
+
+**Network architecture for a typical classification task**
+
+- The number of inputs and outputs is determined by the problem
+- One hidden layer is enough for many classification tasks. Therefore,
+there will be a layer of input nodes, a hidden later of neurons and an
+output layer, given the below state:
+
+![Single hidden layer network](./Diagrams/three-layer.png)
+
+**A rough guideline for network size**
+
+- Best is to have as few hidden layers as possible
+  * Fouces better generalization
+  * Fewer weights to be found
+  * Less flexibility and less likely to overfit
+- Number of nodes in the hidden layer:
+  * Make the best guess you can
+  * If training is unsuccessful try more hidden nodes
+  * If training is successful try fewer hidden nodes
 
 
 [State space example one]: ./Diagrams/state-space.png
