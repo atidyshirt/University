@@ -1135,39 +1135,95 @@ Problems:
     -   multiple wires for high speed bi-directional data transfers
     -   disk drives, graphics cards
 
-  [Computer Model]: ./Diagrams/computer-model.png
-  [Storage hierarchy]: ./Diagrams/storage-hierarchy.png
-  [System Calls]: ./Diagrams/system-calls.png
-  [Process switching - Interruption]: ./Diagrams/process-switching.png
-  [Create Process]: ./Diagrams/create-process.png
-  [DIY Concurrency]: ./Diagrams/DIY-concurreny.png
-  [Threads vs Processes - code example]: ./Diagrams/thread-vs-process-code.png
-  [User-level vs Kernal implementation]: ./Diagrams/kernel-vs-user-level.png
-  [futher info found here]: http://www.cs.fredonia.edu/zubairi/s2k2/csit431/pipes.html
-  [Phone Example: socket streams]: ./Diagrams/phone-example.png
-  [Datagram Example: socket streams]: ./Diagrams/datagram.png
-  [Sockets and ports]: ./Diagrams/sockets-ports.png
-  [Socket descriptor and data structure]: ./Diagrams/socket-descriptor.png
-  [1]: ./Diagrams/client-server-model.png
-  [Client, Server model]: ./Diagrams/client-server-model-2.png
-  [Simple socket client]: ./Diagrams/simple-socket-example.png
-  [Simple socket server]: ./Diagrams/simple-socket-server.png
-  [Real time scheduling]: ./Diagrams/real-time-scheduling.png
-  [Deadlocked Philosophers]: ./Diagrams/deadlock-philosophers
-  [Tracing a deadlock]: ./tracing-deadlocks
-  [Deadlock Detection]: ./Diagrams/deadlock-detection
-  [How deadlock detection works (finding cycles)]: ./Diagrams/how-dd-works
-  [Detection: multiple resources]: ./Diagrams/detection-multiple-resources
-  [Example: Deadlock detection with multiple resources]: ./Diagrams/detection-example
-  [Resource state trajectories (2D)]: ./Diagrams/resource-state-trajectories
-  [Safe and unsafe states]: ./Diagrams/safe-unsafe-states
-  [Internal file struture]: ./Diagrams/internal-file-structure.png
-  [How these are implemented]: ./Diagrams/allocation-tables.png
-  [How this is implemented]: ./Diagrams/i-nodes.png
-  [Shared files (Linking)]: ./Diagrams/linking-files.png
-  [File system performance]: ./Diagrams/disk-drive-performance.png
-  [Minimising disk seeks]: ./Diagrams/disk-seeks.png
-  [MS-DOS file system]: ./Diagrams/msdos-filesystem.png
-  [UNIX file system]: ./Diagrams/unix-filesystem.png
-  [Kernal I/O Structure]: ./Diagrams/kernal-io.png
-  [Pentium architecture]: ./Diagrams/pentium-architecture.png
+### Lecture Thirteen: Optimisation
+
+**Sector Interleaving**
+
+- Allows for time taken to flush buffer, types:
+  * No interleave
+  * Single interleave
+  * Double Interleave
+
+**Optimisation: disk arm scheduling**
+
+- Read time:
+  * Seek time (move arm to cylinder)
+  * Rotational delay (time for sector to rotate under head)
+  * Transfer time (time to read bits off of disk)
+- Seek time dominates
+- How does disk arm scheduling affect seek time?
+  + With no optimisation: reads are done in sequence
+  + We can optimise by caching data passing under the head(s)
+- Algorithms to optimise seek time:
+  * Shortest seek first
+    - Stays in the middle
+    - Can suffer from starvation
+  * Elevator (SCAN)
+    + Usually a little worse average seek time than SSF
+      * But it is generally more fair and avoids starvation
+    + C-SCAN has less variance (Circular scan)
+    + Note: seek getting faster, rotational is not
+  + RAID: Redundant array of independent disks
+    + Typical layout: SCSI controller and disk pack
+    + For Speed: read/write data from multiple drives in parallel
+
+![RAID configurations](./Diagrams/raid-configuration.png)
+
+**Performance**
+
+- I/O is a major factor in system performance
+  - Demands CPU to execute device driver
+  - Context switches due to interrupts
+  - Data copying
+  - Network traffic especially stressful
+
+**Improving performance**
+
+- Minimsie:
+  * Context switches
+  * Data copying (multiple buffering)
+  * Interrupts
+- Use DMA
+- Balance CPU, memory, bus, I/O performance for highest throughput
+
+**Sample Exam Questions**
+
+![Exam Question One](./Diagrams/exam-question-1.png)
+![Exam Question Two](./Diagrams/exam-question-2.png)
+
+[Computer Model]: ./Diagrams/computer-model.png
+[Storage hierarchy]: ./Diagrams/storage-hierarchy.png
+[System Calls]: ./Diagrams/system-calls.png
+[Process switching - Interruption]: ./Diagrams/process-switching.png
+[Create Process]: ./Diagrams/create-process.png
+[DIY Concurrency]: ./Diagrams/DIY-concurreny.png
+[Threads vs Processes - code example]: ./Diagrams/thread-vs-process-code.png
+[User-level vs Kernal implementation]: ./Diagrams/kernel-vs-user-level.png
+[futher info found here]: http://www.cs.fredonia.edu/zubairi/s2k2/csit431/pipes.html
+[Phone Example: socket streams]: ./Diagrams/phone-example.png
+[Datagram Example: socket streams]: ./Diagrams/datagram.png
+[Sockets and ports]: ./Diagrams/sockets-ports.png
+[Socket descriptor and data structure]: ./Diagrams/socket-descriptor.png
+[1]: ./Diagrams/client-server-model.png
+[Client, Server model]: ./Diagrams/client-server-model-2.png
+[Simple socket client]: ./Diagrams/simple-socket-example.png
+[Simple socket server]: ./Diagrams/simple-socket-server.png
+[Real time scheduling]: ./Diagrams/real-time-scheduling.png
+[Deadlocked Philosophers]: ./Diagrams/deadlock-philosophers
+[Tracing a deadlock]: ./tracing-deadlocks
+[Deadlock Detection]: ./Diagrams/deadlock-detection
+[How deadlock detection works (finding cycles)]: ./Diagrams/how-dd-works
+[Detection: multiple resources]: ./Diagrams/detection-multiple-resources
+[Example: Deadlock detection with multiple resources]: ./Diagrams/detection-example
+[Resource state trajectories (2D)]: ./Diagrams/resource-state-trajectories
+[Safe and unsafe states]: ./Diagrams/safe-unsafe-states
+[Internal file struture]: ./Diagrams/internal-file-structure.png
+[How these are implemented]: ./Diagrams/allocation-tables.png
+[How this is implemented]: ./Diagrams/i-nodes.png
+[Shared files (Linking)]: ./Diagrams/linking-files.png
+[File system performance]: ./Diagrams/disk-drive-performance.png
+[Minimising disk seeks]: ./Diagrams/disk-seeks.png
+[MS-DOS file system]: ./Diagrams/msdos-filesystem.png
+[UNIX file system]: ./Diagrams/unix-filesystem.png
+[Kernal I/O Structure]: ./Diagrams/kernal-io.png
+[Pentium architecture]: ./Diagrams/pentium-architecture.png
