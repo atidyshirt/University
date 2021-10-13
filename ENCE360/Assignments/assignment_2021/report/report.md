@@ -44,9 +44,9 @@ responsible for completing work rather than specifically allocating the work to 
 
 ### Performance analysis
 
-Below is a comparison of the provided binary vs the assessment implementation were taken using the Lab
-computers and run a large download test and a small download test *(test files are included in `./report`)*.
-These were done using the provided script (`./analysis.py`) to run each test-case three times and take the
+Below is a comparison of the provided binary vs the assessment implementation, these were analysed using the Lab
+computers. The comparison was run using a large download test and a small download test *(test files are included in `./report`)*.
+These were done using the provided python script (`./analysis.py`) to run each test-case three times and take the
 average across a range of threads $T = \{1 < t < 20\}$, where $T$ is the set containing test cases where
 $t$ is the number of threads used in that test case. The results can be seen in the figures below:
 
@@ -54,19 +54,20 @@ $t$ is the number of threads used in that test case. The results can be seen in 
 | -------------------------                                                             | -----------------------                                                               |
 | ![Assessment Implementation: Threads Vs Times](./resources/ours_threads_vs_times.png) | ![Provided Implementation: Threads Vs Times](./resources/theirs_threads_vs_times.png) |
 
-As we can see from the figures above, both the `provided implementation` and the `assessment implementation` have an exponential fall-off of execution times that appears to approaches an asymptote where the number of threads is no longer having a positive impact on speeding up the download times.
+As we can see from the figures above, both the `provided implementation` and the `assessment implementation` have an exponential fall-off of execution times that appears to approach an asymptote where the number of threads is no longer having a positive impact on speeding up the download times.
 
 The figures from the `provided implementation` and the `assessment implementation` have almost identical curves, and we see slightly more variation in the provided implementation, however, it is important to note that these results are subject to change due to a number of factors, including connection speed and reliability, the available resources of the machine in use at the current time and the computer's specifications, this is likely to be the cause of slightly different run times.
 
 #### Finding the optimal number of threads
 
+
 From the figures shown earlier, it appears that the optimal number of threads before significant falloff is between
 3-4 threads. This is due to the fact that between 3-4 threads, the gradient of the above graph is approaching
-$45$ degrees, meaning that in this range of threads, we are getting the maximum ratio of benefit for the
-least resources used, this could have something to do with the number of available cores the lab machines
-CPU's have, as a machine running in perfect conditions (meaning no external processes running) would have an
+$45$ degrees. The optimal point is in this range of threads because we are getting the maximum ratio of benefit for the
+least resources used. One possible reason for this could be to do with the number of available cores the lab machines
+CPU's have. A machine running in perfect conditions (meaning no external processes running) would have an
 optimum (non-blocking) thread count when the number of threads used is the same as the number of cores on the
-CPU, as our data seems to indicate that around 3-4 threads is where our optimum point appears to lie, this
+CPU. As our data seems to indicate that around 3-4 threads is where our optimum point lies. This
 could be a contributing factor in our findings as the lab computers are quad-core computers.
 
 While this may be the case from our data, it is important to note that this may not be the case on other
