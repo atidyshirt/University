@@ -1191,6 +1191,51 @@ Problems:
 ![Exam Question One](./Diagrams/exam-question-1.png)
 ![Exam Question Two](./Diagrams/exam-question-2.png)
 
+### Lecture Fourteen: Caching for Faster Memory
+
+**Caching**
+
+- Memory *much* slower than processor
+- Put faster `cache` close to CPU
+- Assumes *locality of reference*
+
+**Cache Entries**
+
+- Cache line: fixed length (4-64 bytes)
+- Valid bit
+- Cache tag: Identifies address range
+- Line contents:
+  + `| Valid? | Dirty? | Tag | Data 1 | Data2 | Data3 | Data4 |`
+- Address (bits):
+  + `| Tag | (Line) | Byte offset |`
+
+**Cache Flavours**
+
+- Direct mapping
+  * Address indicates where it is (fast)
+  * Tag determines which memory block occupies the cache entry
+  * Tag = lefthand bits of address
+  * Line = next bits
+  * Hit: cache tag field = tag bits of address
+  * Miss: tag field $\neq$ tag bits of address
+  * Is very fast to access, simple. However can be a poor use of space and has potential
+  for thrashing
+- Associative
+  * Any cache line for any address
+  * Address identified by tag
+  * Cache entry is associated with address by the tag
+    + Search all entries, OR
+    + Comparator circuit for each cache line
+    + Because of this, it is usually small and expensive
+- Set associative
+  * Combination of the two above
+  * Direct-mapped set of smaller associative caches
+  * $N-way$ cache: n associative entries per direct address map
+    + Typically 2 way, 4 way or 8 way.
+
+
+
+
 [Computer Model]: ./Diagrams/computer-model.png
 [Storage hierarchy]: ./Diagrams/storage-hierarchy.png
 [System Calls]: ./Diagrams/system-calls.png
