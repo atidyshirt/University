@@ -1233,8 +1233,257 @@ Problems:
   * $N-way$ cache: n associative entries per direct address map
     + Typically 2 way, 4 way or 8 way.
 
+**Complication: Virtual memory**
 
+![Virtual Memory](./Diagrams/virtual-memory.png)
 
+- Programmer access *virtual addresses*
+- Hardware translates to physical addresses
+  * Memory management unit (MMU)
+- Bus recieves the data from physical memory
+- Bus transaction moves one or more bytes of data in from memory
+
+**Cache Position**
+
+- Physical vs Virtual addressing
+  * Physical:
+    + Address translated first (slower)
+    + Context not required (unique)
+  * Virtual:
+    + In parallel with address translation
+    + But: Context required (non-unique)
+  * Hybrid:
+    + Entries fetched from cache using virtual address
+    + Later checked for hit (once address translated)
+
+**Replacement policy**
+
+- Cache miss  `evicts` an old entry
+- Which cache entry to evict?
+  * Direct mapping: no issue
+  * Associative/set associative
+    + RANDOM
+    + FIFO
+    + Least recently used
+    + Least *frequently* used
+
+**Write policies**
+
+- Writing data in cache:
+  * Write-through: always write  to memory (and cache)
+  * Copy back/write back:
+    + Write to memory when evicting (even if unchanged)
+  * Write-deferred:
+    + Mark updated cache entry as `dirty` (if unchanged)
+    + Write out dirty entry on eviction
+- Writing data not read:
+  * Write allocation (assuming write done before read)
+    * Bring missed entry into cache (vs just write in memory)
+
+**Prefetching**
+
+- Load next *n* lines of memory into cache
+  * e.g. Video
+- May write over needed data
+- Memory traffic increases
+- Processor may be idle during fetch
+- Clever hardware can make worthwhile
+  * Specialist caches e.g. Instruction trace cache
+    + Instructions get decoded into micro instructions, if the same instruction
+    is processed, they will fetch the micro instructions in the cache
+    rather than re-computing.
+
+**Optimising cache hits**
+
+- Maximise cache hits by keeping data accesses contiguous
+- Try to keep data within one line of cache
+- Organise data to fit on a cache line
+  * Maximises cache hit rate
+- Organising data access `span` to fit in cache, this is called `loop blocking`
+
+**Example exam question**
+
+![Example Exam question: Caching](./Diagrams/example_exam_question3.png)
+
+**Solution**
+
+- 16 byte line/block size = 4 bits to address each byte
+- 2-way associative means 32 bytes per set ($2 \times 16$)
+- 16KB cache @ 32 bytes per set = 512 sets $(9 \ bits)$
+  - $16KB/32B = \frac{2^{14}}{2^5} = 2^9 \ sets = 512 \ sets$
+- 9 bits to represent set number leaves $3$ bits for tag
+- Low $4$ bits = `offset` (to address each byte in a line/block)
+- Next $9$ bits = `set number` (cache entry number)
+- High $3$ bits = `tag` (block number in memory)
+
+> Therefore the answer is A, as the tag is 3 bits, set number is 9 bits \
+> and the offset is 4 bits. \
+> a) WRITE[1010001011110100]
+
+### Lecture Fifteen: Memory Management and Virtual Memory
+
+**Problem One: Running multiple programs**
+
+- More than one process running at a time
+- Protection needed between address spaces
+- Protection from operating system
+- Address space small
+
+**Solution One: Monoprogramming**
+
+- OS fixed to low addresses
+- Programs compiled/loaded with *fixed* address space
+  * Per program/user
+- Poor solution:
+  * Only certain combinations of programs can be run
+  * External fragmentation (wasted memory)
+  * Operating systems *not protected*
+
+**Solution Two: Swapping**
+
+- We swap the user space memory between processes, therefore no program
+is being run at the same time.
+
+**Solution Three: Base-limit address**
+
+- Virtual address space $\in \{0, p_{limit} - 1\}$
+- Processor given $P_{base}$ and $P_{limit}$ when this process switched into context
+- Hardware (CPU converts)
+  * Address $A_p = A_V + P_{base}$
+  * Trap if $A_p \geq P_{limit}$
+
+**Base-limit Problems**
+
+- Wasteful:
+  * Entire process loaded
+  * External fragmentation
+- $P_{limit} dictates total address space size
+  * Write small programs, OR
+  * Manage memory yourself (write out intermediate results)
+
+**The Manchester Solution: Standard Today**
+
+- Divorce virtual address from physical memory
+- Allow arbitrary address contiguous space
+- Virtual address space *does not really exist anywhere*
+  * Physical memory mapped to currently used portion of address space
+  * The rest resides somewhere else
+
+![Essentially this treats the RAM as a cache:](./Diagrams/memory-heirarchy.png)
+
+**Virtual Memory Paging**
+
+- Divided into pages of $512-8192$ bytes
+- MMU: Virtual page mapped to physical using *page table*
+  * Specialised direct-mapped cache (no tag)
+  * Cache index is virtual page number
+  * Data in cache is physical page number
+  * Add page number to low bytes of virtual address to get physical address
+  * Treats physical memory as a fully-associative cache of the virtual address space
+
+![Linear Page Table](./Diagrams/linear-page-table.png)
+
+**Page table entry (PTE) contents**
+
+Table Entry design:
+
+```
+) 
+  Offset | 
+  caching disabled | 
+  Referenced | 
+  Modified | 
+  Protection | 
+  Present/absent | 
+  Page frame number 
+)
+```
+
+- Usually 32 bits
+- Looked up in hardware
+- OS records where other pages can be found
+
+**Address translation**
+
+- High order virtual address indexes page table (Virtual page number)
+- Page table entry contains physical page number
+- Substituted to give physical address
+- Problem: large address space
+  * Linear page table not feasible for big address spaces
+  * Use a *tree*:
+    + Most virtual pages are empty/not used
+    + Divide virtual space into page ranges
+    + Add `page table descriptor` nodes 
+      - Include nodes for resident pages only
+    + Locality of reference assumed
+
+![Tree structure Page Table](./Diagrams/heirarchy-page-table.png)
+
+**Translation Lookaside Buffer (TLB)**
+
+- Cache of translations, stored in CPU/MMU (often the same)
+- Look in TLB first, if failed, go to the page table
+- Needs to know context:
+  * Invalidate on context switch (common) OR
+  * Store context too (e.g. process id, other)
+  * Usually split instruction/data
+- Small (8-64 entries), fully associative (parallel search), hard wired
+  * Typically 99% hit rate
+
+![Paging with TLB](./Diagrams/paging-in-tlb.png)
+
+Note, the OS has to manage the TSB according to the CPU requirements. OS also
+has to manage page table however it sees fit, this is not CPU dependant.
+
+**Problem: Huge address spaces**
+
+Virtual addressing means programs can get very large
+- Hierarchical page table becomes too large
+
+Solution: Invert the page table
+
+- One page table for all processes
+  * One entry per physical page
+- If TLB misses, san inverted page table
+- If not there (so not in memory), page fault occurs
+- Decreases memory needed to store each page table, but increases time needed
+to search the table when a page reference occurs
+  * Solution: use a hash table (by virtual page number)
+
+**Physical address space division**
+
+- Some memory should not be cached (e.g. device registers)
+- Some memory should not be mapped to virtual addresses
+  * e.g. memory used by the kernal
+- This means we don't have all of the physical memory available
+
+**Page faults**
+
+- Only a subset of the virtual address space can fit in memory (working set)
+- Access to non-resident address (page) signals a `page fault` exception
+- Instruction is `rolled back`
+- Page fetched from disk, instruction executed again
+  * Other work (processes) done during the wait
+
+![How page faults are handled](./Diagrams/page-fault-handling.png)
+
+**Page replacement algorithms**
+
+- Page faults forces choice
+  * Make room for incoming page: which page must be removed
+  * Modified pages must first be saved
+  * Better not to choose an often used page
+- Optimal strategy: replace page needed at the farthest point in future
+  * Impossible!
+  * Use fast approximation
+- Each page has Reference bit, Modified bit
+  * Bits which set when the page is referenced or modified
+- Pages are classified as (Truth table):
+  1. not referenced, not modified
+  2. not referenced, modified
+  3. referenced, not modified
+  4. referenced, modified
+- NRU removes page at random from lowest class set
 
 [Computer Model]: ./Diagrams/computer-model.png
 [Storage hierarchy]: ./Diagrams/storage-hierarchy.png
