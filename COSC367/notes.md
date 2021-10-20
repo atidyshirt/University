@@ -1158,6 +1158,110 @@ output layer, given the below state:
   * If training is unsuccessful try more hidden nodes
   * If training is successful try fewer hidden nodes
 
+### Lecture Nine: Non-cooperative multi-agent systems and Games
+
+> Most games do not use AI, as they can cheat because they have complete knowledge \
+> of where other players are and can preform simple calculations in order to achieve \
+> the appearance of AI.
+
+Many problems can be modelled as games: multiple agents with (possibly competing) interests:
+
+- Chess
+- Go
+- Multiple agents competing for limited resources
+
+Games and agents acting in them can be described by:
+
+- **Actions** (moves) availible to each agent in various stages of a game
+- **Utility** (payoff) functions, one for each agent. They assign a real number
+to every possible outcome of the game (typically terminal states). [If the utility functions
+are the same as the agents become cooperative.]
+- **Strategy** functions, one for each agent. They determine what action must be taken in
+each state. [Typically the goal is to find a strategy that maximises utility for one agent
+or for a group of agents.]
+
+**Rock paper scissors example**
+
+Note, the example below does not have a strategy function as the best strategy
+is to play completely randomly (in order to get an expected value of 0)
+
+![](./Diagrams/rock-paper-scissors.png)
+
+**Game trees**
+
+In perfect information games (where agents can see which states they are in) a **game tree**
+is a finite tree where the nodes are states and the arcs correspond to actions. In particular:
+
+- Each internal node is labeled with an agent. The agent is said to control the node
+- Each arc out of a node labeled with agent $i$ corresponds to an action for agent $i$.
+- Each internal node labeled with **nature** has a probability distribution over its children
+- The leaves represent final outcomes and are labeled with a utility for each agent.
+
+**Perfect Information Zero-sum turn-based games**
+
+Properties:
+
+- They typically have two agents
+- They take turns to play
+- There is no chance involved
+- The state of the game is fully observable by all agents
+- Utility (payoff) values for each agent are the opposite of those of the other. Also called *zero sum*
+  * One player is maximising utility, the other is minimising utility
+- This creates adversary
+
+**An optimal strategy: Min-Max function**
+
+Designed to find the best move at each stage:
+
+1. Generate the whole game tree, down to the leaves
+2. Apply utility (payoff) function to each leaf
+3. Back up values from leaves through branch nodes:
+  * A Max node computes the max of its child values
+  * A Min node computes the min of its child values
+4. At root:
+  * If it's a **max node**, choose the action leading to the child with the highest value
+  * If it's a **min node**, choose the action leading to the child with the lowest value
+
+Here is an example of a game tree:
+
+> This game tree is for an abstract game where the agents are trying to min or max \
+> the end value
+
+![Two ply game tree](./Diagrams/two-ply-game-tree.png)
+
+- Two symbols (triangles):
+  * Max node pointing up
+  * min node pointing down
+- Leaf (terminal) nodes have a utility value
+- The utility of other nodes are determined by applying MinMax algorithm
+
+In the example above:
+
+- The best action for `MAX` is $A_1$.
+- If $A_1$ is played by `MAX`, then the best action for `MIN` is $A_{11}$
+
+**The Minimax Algorithm**
+
+Here is some psudeocode for the recursive min-max algorithm, note this assumes
+the root node is `MAX`'s turn
+
+```
+function Minimax-Decision(state) returns an_action
+  Inputs: state: current state of the game
+  Return the a in Actions(state) maximising Min-Value(Result(a, state))
+
+function Max-Value(state) returns a utility value
+  if Terminal-Test(state) then return Utility(state)
+  v <- -INF
+  for a, s in SUCCESSORS(state) do v <- Max(v, Min-Value(s))
+  return v
+
+function Min-Value(state) returns a utility value
+  if Terminal-Test(state) then return Utility(state)
+  v <- -INF
+  for a, s in SUCCESSORS(state) do v <- Min(v, Max-Value(s))
+  return v
+```
 
 [State space example one]: ./Diagrams/state-space.png
 [State space graph simplified]: ./Diagrams/state-space-graph.png
