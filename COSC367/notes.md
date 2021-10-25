@@ -37,8 +37,6 @@ Grading structure for course
 -   Poole, David L.1958, Mackworth, Alan K; Artificial intelligence : foundations of computational agents; Cambridge University Press, 2010.
 -   Russell, Stuart J, Norvig, Peter; Artificial intelligence : a modern approach; 3rd ed; Prentice Hall, 2010.
 
-## Readings
-
 ## Lectures
 
 ### Lecture One: Searching the State Space
@@ -1229,6 +1227,50 @@ function Min-Value(state, a, b) return a utility value
   if a <= b then return v
 return v
 ```
+
+### Lecture Nine: Concluding Remarks
+
+This lecture is the opportunity to explore a high-level overview of AI and
+machine learning algorithms. (Basically stuff that most likely won't be assessed.
+
+**So what is artificial intelligence?**
+
+- No universal definition as intelligence takes many forms
+- A broad definition for AI would be `the synthesis and analysis of computational agents that act intelligently`
+
+**Agent architecture**
+
+An agent is made up of a body and a controller:
+* The `Body` is made up of `sensors` that interpret stimuli and `actuators`
+that carry out actions.
+* The controller receives `percepts` from the body.
+* The controller sends `commands` to the body.
+* The body can also have reactions that are not controlled.
+
+- The controllers are basically the brains within an agent.
+- Agents are situated in time, they receive sensory data in time and do actions in time.
+
+**Major Concerns in AI**
+
+- Reliability
+- Fairness
+- Transparency and interpretability
+- Job opportunities
+- Distribution of wealth
+- Singularity: concern for some people
+
+**What fields to go to next?**
+
+- Advanced algorithms
+- Logic
+- Probability theory, Bayesian Interface
+- Linear algebra
+- Optimisation, functional analysis
+
+**Books to read to further from this course**
+
+- Artificial Intelligence: A modern approach
+- Artificial Intelligence: Foundations of computational agents
 
 [State space example one]: ./Diagrams/state-space.png
 [State space graph simplified]: ./Diagrams/state-space-graph.png

@@ -5,17 +5,6 @@
 
 These notes are designed to be used in conjunction with the slide sets provided in the course, the slides will be more helpful for use in the labs *due to including code examples*, these notes will provide a good outline for studying for the final exam.
 
-### Key
-
-`THIS IS MY QUESTIONS?`
-
-> NOTE: is a note to self
-
-This is ordinary notes
-
-> NOTE: remember to go over all questions outlined in the lectures that are \
-> posed as similar to exam questions
-
 ## Topics
 
 Lectures 1-8: Multiprocessing
@@ -1907,7 +1896,7 @@ How is it done?
 - Optimised function libraries (including SSE) for:
   * Vector/matrix mathematics, signal processing, computer vision, speech recognition and data compression, Video, audio decoding
 
-**Linux vs Windows**
+### Lecture Twenty: Linux vs Windows
 
 Linux Philosophy:
 
@@ -1987,7 +1976,7 @@ Linux Processes and Threads
 
 Windows processes and threads:
 
-- Processes dont have parents, resource collection
+- Processes don't have parents, resource collection
 - Job: arbitrary collection of processes
 - Thread: schedule-able object
 - Fiber: user-mode thread (many-to-many; rarely used)
@@ -2009,7 +1998,95 @@ Linux Scheduling:
   * Penalised on wakeup
   * Pre-emptied/expired, rewarded
 
+Windows Scheduling:
 
+- Threads individually scheduled 
+  * Round-robin by priority
+  * Thread runs scheduling code
+  * *Ideal processor* maintained
+- Dynamic:
+  * Boost I/O completion
+  * Boost on event
+  * Degrade on quantum completion
+  - Boost old waiting threads to 15 for 2 quanta (inversion prevention)
+- Fixed quantum
+  * Client: 20ms default
+  * Server: 180ms default
+
+**Lightweight synchronisation**
+
+- Linux: fitexes (fast user space mutex)
+  * Futex_var in user space
+  * wait queue in kernel space
+
+**Virtual memory**
+
+Linux:
+
+- Text, data and stack segments
+- Shared text segments
+- Shared memory-mapped files
+
+Windows:
+
+- Kernel address space shared accross processes
+- Top and bottom invalid
+  * Traps bad pointers
+- Three page states
+  * Invalid
+  * Committed
+  * Reserved
+
+**Page replacement**
+
+Linux:
+
+- Page frame reclamation algorithm (PFRA)
+  * Daemon maintains free page list
+- Page types:
+  * Unreclaimable
+  * Swappable
+  * Discardable
+- Clock algorithm:
+  * First pass: reset *referenced*
+  * Second pass: update state based on *referenced*
+  * If run out of inactive: refill from active pages
+  * Add to free list from (inactive, not referenced
+
+Windows:
+
+- Fundamental unit: process working set
+  * Minimum and maximum (soft) limits
+  * Memory normally allowed to grow unbounded
+  * Clock algorithm used to update working sets (bounded)
+- Working set manager runs every second:
+  * Lots of memory usage: scan and updating pages
+  - Memory getting low: stop growing working set
+  * Memory running out: trim working sets
+    + Remove oldest pages
+
+**Physical memory allocation**
+
+Linux:
+
+- Buddy algorithm allocates *contiguous* physical memory
+  * Divide by 2 until Minimum required size reached
+  * Merge adjacent halves to regain larger spaces
+  * Maintain lists of block addresses by size
+- Slab algorithm manages partial chunks
+- Object caches track kernel object slabs
+- `Vmalloc` allocates non-contiguous memory (large units only)
+
+Windows:
+
+- Far more complicated
+- Page frame number database
+  * Modified pages: waiting to be written out
+  * Standby pages: mapped but not used recently
+  * Free pages: no longer in use
+  * Zero'd pages: wiped pages (for stack)
+- Linux equivalent: *page cache*
+- Extensive prefetching (standby): reach ahead and *super-fetch*
 
 [Computer Model]: ./Diagrams/computer-model.png
 [Storage hierarchy]: ./Diagrams/storage-hierarchy.png
