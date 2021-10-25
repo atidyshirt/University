@@ -1160,6 +1160,76 @@ output layer, given the below state:
 
 
 
+**Problems in this algorithm**
+
+- Game tree size, as size of the game tree gets larger, the search across the decision tree becomes too large
+an example of this is chess, the decision tree is too large for straight minimax to be run on it.
+
+**How to reduce the search space?**
+
+- Pruning the game tree
+  * Generic algorithm, will work with all games
+- Heuristic evaluations of states
+- Tables lookup instead of search (*for opening and closing situations*), chess openings, checkmate patterns
+
+**Pruning: The Idea**
+
+If an option is bad compare to other options, there is no point in expending search time to find out how bad that option is.
+If the minimising agent finds a node that can only be more than the previous iteration, the min agent will discard this node
+(saving us computation time in the search space).
+
+To do this, we need a mechanism to know events higher up in the tree.
+
+It is important to note that this decision tree does not map to the decisions made in the game,
+these are some iterations that are being `considered`, the goal node is to find the best
+option to take at the depth we are considering (at the top of the tree that has not been
+evaluated).
+
+**Alpha-Beta Pruning: The Concept**
+
+If $m > n$ Max would chose the $m$-node to get a guaranteed utility of at least $m$
+
+The min node with utility $n$ (or less) would never be reached; stop further evaluation
+
+![Alpha-Beta Pruning](./Diagrams/alpha-beta.png)
+
+**Alpha-Beta Pruning: The Algorithm**
+
+Similar to MinMax algorithm, but Max-Value and Min-Value keep two local variables
+$\alpha$ and $\beta$.
+
+- $\alpha$ = highest-value choice found for `MAX` higher up in the tree (initially $\alpha$ = -INF)
+- $\beta$ = lowest-value choice found for `NIN` higher up in the tree (initially $\beta$ = INF)
+
+Pass current values of $\alpha$ and $\beta$ down to child calls (nodes) during the search.
+
+Update values of $\alpha$ and $\beta$ during search:
+
+- Max-Value updates $\alpha$ (at Max nodes)
+- Min-Value updates $\beta$ (at Max nodes)
+
+Prune remaining branches at a node when $\alpha \geq \beta$
+
+```
+function Alpha-Beta-Search(state) return an action
+  v <- Max-Value(state, -x, +x)
+return the action in ACTIONS(state) with value v
+
+function Max-Value(state, a, b) return a utility value
+  if Terminal-Test(state) then return Utility(state)
+  v <- Max(v, Min-Value(Result(s, a), a, b)
+  a <- Max(a, v)
+  if a >= b then return v
+return v
+
+function Min-Value(state, a, b) return a utility value
+  if Terminal-Test(state) then return Utility(state)
+  v <- Min(v, Max-Value(Result(s, a), a, b)
+  a <- Min(a, v)
+  if a <= b then return v
+return v
+```
+
 [State space example one]: ./Diagrams/state-space.png
 [State space graph simplified]: ./Diagrams/state-space-graph.png
 [search tree]: ./Diagrams/search-tree.png
