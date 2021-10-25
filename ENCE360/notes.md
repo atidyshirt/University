@@ -5,6 +5,17 @@
 
 These notes are designed to be used in conjunction with the slide sets provided in the course, the slides will be more helpful for use in the labs *due to including code examples*, these notes will provide a good outline for studying for the final exam.
 
+### Key
+
+`THIS IS MY QUESTIONS?`
+
+> NOTE: is a note to self
+
+This is ordinary notes
+
+> NOTE: remember to go over all questions outlined in the lectures that are \
+> posed as similar to exam questions
+
 ## Topics
 
 Lectures 1-8: Multiprocessing
@@ -1604,8 +1615,399 @@ Directory based CC-NUMA:
 
 ![Interconnected Topologies](./Diagrams/topology.png)
 
-### Lecture Seventeen: Multiprocessor Systems  (continued)
+**Message routing**
 
+- Store-and-forward: each switch buffers a packet, then forwards it on
+- Alternative: circuit switching:
+  * First switch establishes path to the destination
+  * Bits `pumped` to the destination; no buffering en route
+  * `wormhole` routing: start sending sub-packets before route completed
+
+### Lecture Seventeen: Multiprocessor Systems (continued)
+
+**Network Interface**
+
+- Network Processor:
+  * Dedicated RAM: buffer between synchronous/asynchronous data access
+  * Optional CPU: handles retries, multi-casting, compression, protection
+    + Requires sync with main CPU
+* Problem: multiple data copies - slows down transfer rate
+  * Map interface buffer to user space (one process, or partition the buffer)
+  * Separate network interface for kernel
+
+![Network Interface](./Diagrams/network-interface.png)
+
+**User level communication software**
+
+- Message passing: send and receive (MPI)
+- Remote procedure calls: execute code on remote CPU
+  - Stub hides marshalling/unmarshalling of messages
+    + `What is marshalling?`
+  - Limitations to data types (static data structures and strongly typed)
+- Distributed shared memory (DSM)
+  - Emulation of true shared memory
+
+**Distributed shared memory tuning**
+
+- DSM evaluates shared memory across a network
+  * Page not found locally triggers a fault, fetches from another node
+  * Problem: it is SLOW
+- Solution: minimise page transfers
+  * Replicate pages, invalidate other copies on write or journal the changes
+  * Increase the page size
+    + Problem: false sharing (unrelated variables thrash between nodes)
+    + Compiler optimises by grouping related variables
+
+`what is thrashing?`
+
+- Thrashing occurs when the system spends more time in `paging` instead of their execution
+  * Note that in this context, `paging` refers to switching pages as in blocks of memory.
+
+**Process scheduling**
+
+- Goals: minimise wasted CPU cycles/communication, fairness to users
+- Static scheduling
+  * Graph-theoretic approach
+  * Goal: minimise network traffic between nodes
+- Dynamic scheduling: hands off process from overworked to underworked nodes
+  a. Overlooked node asks for help
+  b. Underworked node asks for work
+
+**Distributed systems**
+
+- Loosely coupled multi-computer system
+  * Connected via internet
+  * Different operating systems
+  * Non-dedicated machines
+- Most of the previous techniques don't apply
+  * Computers cooperate via middleware (high-level communication abstraction)
+
+**Document-based: The World Wide Web**
+
+- Memory abstraction: web page
+  * In cache: read locally
+  * Not in cache/out of date: retrieve from another node
+- Location-dependent naming
+
+**File-based: global file system**
+
+- Files spread over multiple nodes
+- Two models of remote access
+  * Upload/download: download a copy from the remote node, upload if any changes
+    + Inefficient for random access
+    + Synchronisation issues hen multiple writers
+  * Remote access: reads and writes performed by remote node (RPC)
+    + Potentially slower if a lot of I/O operations
+
+**Distributed file system issues**
+
+- File sharing semantics
+  * Sequential consistency: propagate all writes immediately 
+  * Session consistency: propagate file on close
+    * Other readers see old copy
+    * Multiple writers compete for final copy
+  * Naming:
+    * Machine+path easy to implement
+    * Location-independent: allows load/space balancing
+  * Directory structures
+    * Remote mounting: different machines see different file systems
+    * Global view: harder to implement
+
+**Object-based: CORBA**
+
+![Object-based System](./Diagrams/object-based.png)
+
+- Object request broker (ORB) routes requests to servers
+- Interface definition (IDL) compiled into client stub
+- Objects generated on server, returning a reference
+- Communication details completely hidden
+  * Type, location of server
+  * Language of server code
+  * Compression
+  * Load balancing (object splitting, method forwarding)
+
+**Coordination-based middleware**
+
+- Process swap messages via a global pool (shared, virtual, associative memory)
+- Linda (1983): read and write to a shared tuple space
+  * Data objects are arbitrary tuples of values
+  * Retrieved by pattern matching
+- Publish/subscribe: publishers broadcast messages to subscribers on the network
+  * Network-centric model:
+    + Devices communicate via a `JavaSpace`
+    + Devices requests a lookup service, receives a registration code
+    + This supplies a proxy code for others to access it
+
+**Summary of Multiprocessor Systems**
+
+- Operating concept extended to inter-process communication
+- Concepts and approaches depend on level of coupling:
+  * Multiprocessor: shared memory
+  * Multicomputer: Message passing
+  * Distributed system: high level abstraction (files, objects, requests)
+- Tuning decisions dominated by cost of communication
+
+### Lecture Eighteen: Virtualisation
+
+**What is virtualisation?**
+
+- Multiple `virtual computers` on a physical machine
+- Each has own copy of the operating system
+  * May be different operating systems
+- Has the following benefits:
+  * Server consolidation
+  * Application consolidation
+  * Virtual hardware
+  * Sandboxing and debugging 
+  * Load balancing
+  * Redundancy and failover
+  * Software migration (mobility)
+  * Software as an appliance
+- Problems:
+  * CPU's control what user and kernel mode can do:
+    + Sensitive instructions can only be run in kernel mode
+    + Privileged instructions trap when executed in user mode
+    + Virtualisation requires all sensitive instructions to be privileged (not always the case)
+  - Virtual machines:
+    * Think they are running in kernel mode
+    * Are actually running in user mode
+  - Other resources also need to be shared
+    * Memory 
+    * I/O devices
+
+**Virtualisation requirements**
+
+Goal of Virtual Machines:
+
+- Theorem One: Properties for a virtual machine monitor
+  * Equivalence: A program running under the `VMM` should exhibit a behaviour identical to that
+  demonstrated when running on an equivalent machine directly
+  * Resource control: The `VMM` must be in complete control of virtualised resources
+- Theorem Two: Formal analysis described through two theorems
+  * A `VMM` may be constructed if the set of sensitive instructions for that computer is a subset of the set
+  of privileged instructions. Non-privileged instructions must instead be executed natively.
+  * A [computer] is recursively virtualisable if it is virtualisable and a `VMM` without
+  any timing dependencies can be constructed for it.
+
+**Hypervisors**
+
+- AKA a virtual machine monitor (VMM)
+- Type 1 hyper-visor: runs on bare machine (hardware assisted)
+  * Runs on hardware
+  * Requires VM extensions
+    + Runs in a container
+    + Hardware trap sensitive instructions and traps the hyper-visor
+    + Hyper-visor emulates actual calls
+- Type 2 hyper-visor: runs on another OS (Full virtualisation)
+  * Runs on top of host operating system
+    + Doesn't require hardware support (however *may* use it)
+  * Sensitive instructions: **binary translation**
+    + Scan binary for basic blocks (no branching)
+    + Replace all sensitive instructions with call to hyper-visor trap function
+    + Cached non-sensitive blocks run as fast as native code
+    + Can be faster than hardware assisted (fewer traps)
+
+> These days, most hyper-visors are going to be a combination of both type 1 and type 2 hyper-visors
+
+**Paravirtualisation**
+
+- Operating system modified (source code)
+  - All sensitive instrucitons calls are replaced with hyper-visor calls
+    + Essentially making hyper-visor a mini kernel
+  - Guest OS is VM-aware, can act accordingly
+  - Goal: OP-independent virtual machine interface (`VMI`)
+
+VMI Linux:
+
+- Hyper-visors supply a `VMI ROM`
+- `VMIL` libraries provide system interface
+  * If `VMI ROM` present, use it
+  * otherwise native calls to hardware
+- Almost zero performance overhead
+
+**Virtualised memory: Page table shadowing**
+
+- Naive solution: two translations performed for every memory address
+  * Guest OS virtual -> guest OS physical (`VMM` virtual)
+  * `VMM` virtual -> physical
+- Shadow page tables: `VMM` traps translations
+  * Guest OS translates virtaul address to (virtual) physical address
+  * Hyper-visor OS performs further translation
+    * Trap every reference or update to page tables
+    * Maintain shadow page tables (one per guest VM)
+    * Map guest OS virtual address to a real physical address and pass back to guest OS
+  * Significant overhead incurred
+
+**Loop unrolling**
+
+- Unroll loops until branching is less than 10% of execution time
+- Unroll hot (inner) loops to 16 or less iterations
+- Reduces the number of conditional branch/jump instructions
+- Maximises the user of branch target predictor (BTB)
+
+Loop before unrolling:
+
+```c
+int x;
+for (x = 0; x < 100; x++) {
+  delete(x);
+}
+```
+
+Loop after unrolling:
+
+```c
+int x;
+for (x = 0; x < 100; x+=5) {
+  delete(x);
+  delete(x + 1);
+  delete(x + 2);
+  delete(x + 3);
+  delete(x + 4);
+}
+```
+
+**Vectorisation: SIMD**
+
+- SIMD: Single instruction multiple data
+  * Added special registers that hold multiple data items in a single register
+  * Added instructions carry out a single operation in parallel
+
+![Example of SIMD](./Diagrams/simd-example.png)
+
+How is it done?
+
+- Automatic vectorisation
+  * Build statement dependency graph
+  * Cluster into strongly connected components
+  * Split strongly connected components and vecotrise where possible
+- Compiler hints `pragma vector always`
+- Write your own
+  * Intrinsics
+  * Assembler
+- Problems to watch for: code must be loop-independent, straight line code
+
+### Lecture Nineteen: Optimisation and Specific Operating Systems
+
+> This continues from last lecture as we touched on it with SIMD
+
+![Vectorisation](./Diagrams/vectorisation.png)
+
+**Optimisation Approach (Intel)**
+
+1. Measure baseline performance
+2. Determine hotspots
+3. Determine candidate hot loops
+4. Measure potential benefits (Intel Advisor)
+5. Implement recommendations
+  * Code reorganisation, vectorisation hints and threading
+
+**Intel Integrated Performance Primitives (IPP)**
+
+- Optimised function libraries (including SSE) for:
+  * Vector/matrix mathematics, signal processing, computer vision, speech recognition and data compression, Video, audio decoding
+
+**Linux vs Windows**
+
+Linux Philosophy:
+
+Layers:
+
+- User layer
+  * Talks to layer below via user interface
+  * handled in User Mode
+- Standards utility programs (shell, editors, compilers)
+  * talks to layer below via library interface
+  * handled in User Mode
+- Standard library (C standard lib)
+  * handled in User Mode
+  * talks to layer below via system calls
+- Linux OS (memory and process management, file system)
+  * handled in Kernel Mode
+- Hardware
+  * Handled by physical hardware and BIOS
+
+Design choices:
+
+- Monolithic
+- Clear separation between kernel and user space
+  * Standard library provides trap to kernel
+- Windowing via user-mode X system
+- Keep everything extremely small
+
+Windows Philosophy:
+
+- Higher functionality as part of OS
+- Monolithic, layered design
+  * Dynamic libraries access subsystem via API's
+  * Native API wraps system calls
+- Windows subsystem in kernel
+
+The idea that windows opted for is to slowly remove items from the kernel
+and implement them at the user level (however the user level is restricted,
+as if this was not the case, it would be easy for users to break stuff).
+
+As windows has tried to preserve backward compatibility, the `WIN32 API` has now
+gotten massive, as it is a primary concern of Microsoft to preserve this for as long
+as possible.
+
+Linux Kernel Structure:
+
+- Monolithic kernel sits on hardware
+- Divided into *components*
+- Generic abstract routines for common functions (e.g. I/O block handler)
+
+Windows Kernel Structure:
+
+- Much more structured and is layered.
+- NTOS kernel layer: handles the user system calls 
+- Has a library of named structures or classes, that are used as API objects
+- Hardware abstraction layer: hides hardware specifics from the kernel level
+
+Windows Subsystems:
+
+- Functionality provided by subsystem processes
+  * Started on loading of the program (if needed)
+- Communicate via local procedure calls (`LPC`)
+
+Linux Processes and Threads
+
+- Task: internal representation of a runnable entity
+- Process: created by forking another process
+  * Forked: process contains copy of parent address space
+  * Memory copy on write: pages shared until they differ
+- Thread (Kernel): Two or more processes that share resources
+- Clone mechanism allows control over sharing via `sharing_flags`:
+  * VM: same address space (thread) vs own (process)
+  * FS: share file system
+  * FILES: share vs copy file descriptors
+  * PID: old vs new process ID
+  * PARENT: same sibling vs child
+- Pthreads: user threads library
+
+Windows processes and threads:
+
+- Processes dont have parents, resource collection
+- Job: arbitrary collection of processes
+- Thread: schedule-able object
+- Fiber: user-mode thread (many-to-many; rarely used)
+
+Linux Scheduling:
+
+- Thread based
+- Three priority classes
+  * Real-time FIFO (Highest)
+  * Real-time round-robin
+  * Time sharing (lowest)
+- Active/expired
+  * Tasks initially active
+  * Move to expired when time expires
+  * Swap pointers when all expired
+    + This avoids starvation
+- Priority based quanta
+- Dynamic bonus
+  * Penalised on wakeup
+  * Pre-emptied/expired, rewarded
 
 
 
