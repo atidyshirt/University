@@ -1485,6 +1485,130 @@ to search the table when a page reference occurs
   4. referenced, modified
 - NRU removes page at random from lowest class set
 
+### Lecture Sixteen: Multiprocessor Systems
+
+**Why do we want multiprocessing?**
+
+- More speed
+  * 10 GHz clock: can travel 2cm between cycles
+  * 100 GHz clock: 2mm
+  * 1000 GHz clock: 0.2mm
+  * Solution to approaching Moores law; more CPU's
+- Rapid growth in high CPU parallelisable algorithms (deep learning)
+* Internet turns world's PC's into a giant cluster (virtual super-computer)
+* Sharing of resources (I/O devices and files)
+
+**Types of multiprocessors**
+
+- Multiprocessor: multiple CPU's or cores in a single machine, memory is shared between cores
+- Multicomputer: multiple nodes connected by interconnect hardware *note nodes can be multi CPU/cores*
+
+**Shared memory multiprocessors**
+
+- Memory sharing; Two flavours
+  * Uniform memory access (`UMA`): memory independent of CPU's
+  * Non-uniform (`NUMA`): CPU's share their local memory
+    + Single physical address space statically divided between processors
+    + Local memory addressed quickly
+    + Remote memory is more slow access via `STORE/LOAD` requests
+    + Caching is optional
+- Two methods of connecting `UMA` memory
+  * Bus-based
+  * Switched
+
+**Caching with NUMA**
+
+Directory based CC-NUMA: 
+
+- Cache and memory distributed over the processor nodes
+- Each node maintains a directory of where each cache line resides
+- Memory request routed to the node responsible for that address range
+  * Cached locally: return the value
+  * Not cached: read from memory, send to requester, record the owning node
+  * Cached elsewhere: record the new owning node, request old owner to pass on the value and invalidate cache
+
+> The above cache ensures that there will only ever be one instance of the value within the cache, the previous user \
+> of the cached value will be the current owner of said cached value
+
+**Private OS per CPU**
+
+- Statically divided memory
+  * Share static read only OS code
+  * Can reserve shared space for inter-process communication
+  * Can allocate unevenly
+- Very little resource sharing and communication
+  * User has all processes allocated to one CPU
+
+> This is not used anymore
+
+**Master/Slave System**
+
+- OS runs on master only
+  * Handles system calls for all CPU's
+- Solves most problems with previous model
+  * Centralised load balancing
+  * Dynamic memory allocation
+  * Single copy of I/O buffers etc
+
+**Symmetric multiprocessing (SMP)**
+
+- Symmetric multiprocessing (SMP): one OS, multiple CPU's
+  * OS data tables shared
+  * CPU's all run user processes and OS
+- OS resources locked by mutexes
+  * OS split into critical regions
+  * Care needed to avoid deadlocks
+
+**Multiprocessor synchronisation**
+
+- Atomicity fails: interrupts local to CPU
+  - Bus locking
+  - Peterson's protocol
+- Problem: CPU implements spin lock waiting for the bus
+  * Wastes CPU time spinning
+  * Polling places heavy load on bus (or memory)
+    + `NOT` fixed by caching (*cached line thrashes between two CPU's*)
+
+**Reducing thrashing**
+
+- Option 1: test the lock (read) first
+- Option 2: exponential backoff (delay between polls, double on each fail)
+- Option 3: Multiple lock copies (Requesting CPU creates new lock in linked list)
+- Option 4: Switch processes (depends on switch vs lock wait time)
+
+**Process (thread) time scheduling**
+
+- Scheduling thread bursts across multiple CPU's: Centralised process list
+  * Next thread of highest priority scheduled (same as single CPU)
+- Smart scheduling: thread holding spin locks flagged for more time
+- Affinity scheduling: allocate threads (not bursts) to CPU's to maximise cache use:
+  * CPU schedules its own allocated process (threads)
+  * Idle CPU can `steal` thread from another CPU
+
+**Space and time: Gang scheduling**
+
+- Reduce idle time: add time sharing to space scheduled processors
+  * Problem: inter-process communication requires same time schedule
+- Solution: *gang* scheduling:
+  * Statically (space) schedule threads every $t$ cycles
+  * I/O blocks until end of quantum only
+  * Synchronised scheduling of related threads "*gang*"
+
+**Multicomputers**
+
+- Tightly coupled independent CPU's (no shared memory)
+- Example: `National eScience Infrastructure (NeSI)`
+  + These are huuuge computers, one of the computers is used
+  to run the weather forecast for New Zealand.
+- Key issue: interprocessor communication
+
+![Interconnected Topologies](./Diagrams/topology.png)
+
+### Lecture Seventeen: Multiprocessor Systems  (continued)
+
+
+
+
 [Computer Model]: ./Diagrams/computer-model.png
 [Storage hierarchy]: ./Diagrams/storage-hierarchy.png
 [System Calls]: ./Diagrams/system-calls.png
