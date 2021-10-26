@@ -570,7 +570,7 @@ Watch out for when doing further mock ups:
 -   Walk-through with the user
     -   *Let them demo an interface idea or sketch*
 
-### Lecture Twelve: Heuristics
+### Lecture Twelve and Thirteen: Heuristics
 
 ![Design Process Lifecycle]
 
@@ -607,18 +607,255 @@ Types of Usability Heuristics:
 
 5.  Feedback
 
+* Consider feed-forward
+  - Show effect of action before active selection
+  - Offer choices based on partial task completion
+* Response times:
+  - < 0.1s: perceived as `instant`
+  - < 1s: delay noticed, but flow of thought uninterrupted
+  - 10s: Limit for keeping attention on the dialogue
+  - > 10s: user will want to perform other tasks
+* Consider feedback persistence
+* Provide feedback for delays
+  * Cursors for short delays
+  * Percentage done for longer delays
+  - Working dialogues for unknown delays
+
 6.  Clearly marked exits
+
+- Mark exits to allow users to know how to return where they came from
 
 7.  Shortcuts
 
+- Use shortcuts in order to raise the skill cap and efficiency of a power user
+
 8.  Good error messages
 
-9.  Prevent errors
+- Potential for confusion/error over gesture controlling
+- No scrollbars for cue (or minimal) or for control
+- Lack of feedback at terminus, confusing if crashing/broken
+
+9.  Prevent errors and avoid modes
+
+- People will make errors:
+  * Mistakes: conscious deliberation leads to incorrect actions
+  * Slips: unconscious behaviour that gets misdirected 
+- Prevent errors before they occur (make items non-clickable, MacOS toolbar as example)
 
 10. Help and documentation
 
-  [Course Schedule]: ./Diagrams/schedule.png
-  [Sensory Model]: ./Diagrams/sensory-model.png
-  [Human Memory: Simplified Model]: ./Diagrams/human-sensory-model.png
-  [Design Process]: ./Diagrams/design-process.png
-  [Design Process Lifecycle]: ./Diagrams/design-process-full.png
+- Documentation is no excuse for interface hacks
+- Write the manual before the system
+- Task-centred manuals, particularly for beginners and for introduction to new system parts
+- Quick reference cards for quick reference to ace to expert transition.
+
+### Lecture Fifteen (Fourteen skipped due to lack of relevance): Inspection Methods
+
+- Systematic inspection of a user interface
+- Goal is to find Usability problems
+- Inspections typically use inspectors, not real users
+- We use Heuristic evaluation in order to accomplish this
+
+**How to do a heuristic evaluation**
+
+- Each inspector works alone with the interface
+- Evaluator traverses the interface several times:
+  * Has a scenario/task in mind
+  * Inspects UI components and workflow
+  * Compares them with the heuristics
+  - Notes and rates each problem
+
+**Who should evaluate?**
+
+- Different perspectives will catch different problems
+
+**How many people should evaluate?**
+
+- Each inspector finds about 35% of problems
+  * But they usually don't find the same ones
+- Three inspectors find ~60% of the bugs, 5 find ~70%
+  * This is a diminishing returns relationship from here, therefore 3-5 evaluators.
+
+**PARC Principles for Graphical Screen**
+
+- Proximity:
+  * Group related elements
+  * Separate unrelated ones
+- Alignment:
+  * Visually connect elements
+  * Creates a visual flow
+- Repetition:
+  * Repeat designs through the interface
+  * Creates unity and consistency
+- Contrast:
+  * Make different things look different
+  * Bring out dominant elements, mute lesser ones.
+
+Cater to short attention spans, users don't want to scroll more than needed.
+
+### Lecture Sixteen: Evaluation
+
+- Designers are blind th their designs
+- They are uniquely unqualified to assess usability
+- **Problem:** how to detect mismatch between user's model and designer's model?
+- **Answer:** record realistic interaction
+- Requires structure: simple observation is insufficient
+
+**Think aloud evaluation**
+
+- Subjects continually prompted to verbalise their thoughts
+  * What they are trying to do
+  * why they took an action
+  * How they interpret feedback
+- One way communication from user
+- Gives insights into user's model
+- **Hard** to talk and concentrate; awkward
+- Often uncomfortable for subjects
+
+**Cooperative Evaluation**
+
+- Two subjects (sometimes one a confederate)
+- Natural two-way communication
+- More natural, more comfortable
+- Criticism more likely
+- Use Hawthorne effect to advantage
+
+**Interviews**
+
+- Good for probing particular issues
+- Often leads to constructive suggestions
+- Prone to post-hoc rantionalisation
+- Plan a central set of questions
+  * Focuses the interview; base consistency
+  * Be willing to follow interesting leads
+
+**Continuous Evaluation**
+
+- Monitoring actual system use
+  * Field studies
+  * Diary studies
+  * Logging and customer experience programs
+  * User feedback and gripe lines
+
+**Crowd-sourced experiments**
+
+- Crowdworkers complete HIT's for payment
+- Disseminated on the web
+- Pay at least US minimum wage
+- Problems with noisy data and criteria for exclusion
+- Include `attention check` questions
+- Workers have a HIT approval rating; used as filter
+
+### Lecture Seventeen: Formal Empirical Evaluation
+
+- Controlled experiments
+- Strict statistically testable hypothesis
+- Measure participants' response to manipulation of experimental conditions
+- Repeatable results through rigorous method
+- Time-consuming, low-level UI issues, expensive
+
+**Ethics**
+
+- Testing can be distressing
+  * Pressure to perform; errors inevitable
+  * Feeling of inadequacy
+  * Competition with other subjects
+- Golden rule:
+  * Subjects should be treated with respect!
+
+**Controlled experiments**
+
+- Characteristics
+  * Lucid and testable hypothesis
+  * Quantitative measurement
+  * Measure of confidence in results
+  
+**Internal vs External Validity**
+
+- External validity: findings are broad/real
+- Internal validity: findings are due to conditions
+- These are trade off
+- Often addressed with multiple experiments
+
+**Experimental Terminology**
+
+- independent variable
+  * Experimental controlled conditions
+  * Manipulated independent of behaviour
+- Dependent variable
+  * Thing to be measured
+- Within vs between subjects
+  * Within: Each participant tested on all levels
+  * Between: Each participant tested on one levels
+- Counterbalancing
+
+### Lecture Eighteen: Formal Empirical Evaluation (Continued)
+
+When doing this type of evaluation, we should always consider using `within subjects`,
+as participants can act as their own control, fewer participants to have useful data. However
+the downside is that we need to control for learning/fatigue effects.
+
+Sometimes however we will have to use between subjects (due to the nature of the interface
+we are testing), this means that we have unmoderated variability and we need to have
+more participants to conduct a useful experiment.
+
+**Counterbalancing**
+
+- Within-subjects factors need control for learning/fatigue effects
+- Participants divided into groups
+- Different order for each group
+- Group becomes a between subjects factor
+
+**Comparative experiments (most)**
+
+- Null hypothesis significance testing: widely used set of techniques for dichotomous testing
+- Test the null hypothesis $H_0$ of no difference: $H_0 : \mu_1 = \mu_2$
+- Reject $H_0$ when $p < \alpha$ ($\alpha$ is normally 0.05)
+  * $p$: Assuming the null hypothesis is true, how likely is it that we'd observe data
+  at least as extreme as our sample
+  * $P(D|H_0) < 0.05$
+
+**Regression: relating datasets**
+
+- Predicting one value from another
+  * calculating pointing time from target distance / width
+  * Line of best fit
+  * $R^2$:
+    + Coefficient of determination: (boolean)
+    + Proportion of the variability explained by the model
+    + > 0.8 is good for human performance
+- Fitts' Law: expect $R^2 > 0.95$
+- Easy with excels `Add Trendline`
+
+### Lecture Nineteen: Analysis
+
+**Analysis of Variance**
+
+- Independent variable with more than two levels
+- Can investigate more than one factor simultaneously
+- Compare all pairs with T-Tests?
+  * Number comparisons for $n$ levels $(n^2-n)/2$
+  * Increased likelihood of finding a difference by chance (Type 1 error)
+- ANOVA: are all conditions from the same population?
+  * $H_0 : \mu_1 = \mu_2 = ... = \mu_n \forall n \in \{1 < n < N\}$
+  * When using, independent variables are now called `factors`,
+  * If we have a single factor, then we have `one-way ANOVA`
+
+**Human Phenomena**
+
+- Homeostasis
+  * People maintain equilibrium
+  * If a system makes things easier, it'll be used to do more difficult things
+- Hawthorne Effect
+  * Using light between dark and bright to determine whether people get better productivity
+    + The result is that the light has no effect, people just like being involved in experiments
+- Negativity bias
+  * One coin toss: win $110 on heads; lose $100 on tails
+  * Expected value of this is positive, therefore you `SHOULD` take it, however negativity bias
+  stops most people making this decision.
+
+[Course Schedule]: ./Diagrams/schedule.png
+[Sensory Model]: ./Diagrams/sensory-model.png
+[Human Memory: Simplified Model]: ./Diagrams/human-sensory-model.png
+[Design Process]: ./Diagrams/design-process.png
+[Design Process Lifecycle]: ./Diagrams/design-process-full.png
