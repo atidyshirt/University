@@ -5,7 +5,6 @@ Student ID: 87433186
 
 ### Algorithm analysis
 
-
 The algorithm found in the main routine of the `downloader.c` file (lines 175 and onwards) initially takes in
 a URL, the number of worker threads and an output directory as parameters to the program. The program then
 creates a new directory with the name provided as an argument; the program then opens a file, spawns working

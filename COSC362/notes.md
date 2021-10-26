@@ -3,6 +3,12 @@
 ```
 ## Course Information
 
+**NOTES**
+
+Honestly for this course, these notes are not going to be as useful as the slides, there is too much
+information to condense in the lectures and due to the lecturer being difficult to understand sometimes, 
+some of the information in this set might be incomplete or incorrect.
+
 **Lecturers Details**
 
 -   Lecturer: Dr. Clementine Gritti
@@ -1216,32 +1222,98 @@ A protocol provides *(perfect) forward secrecy* if compromise of long term secre
 
 ![Repaired Protocol using Tickets]
 
-  [Timetable]: ./Diagrams/timetable.png
-  [Video to go back and watch]: https://www.youtube.com/watch?v=dELT2-Vgsr8
-  [Polyalphabetic example]: ./Diagrams/example-polyalphabetic.png
-  [Vigenere example]: ./Diagrams/example-vigenere.png
-  [tutorial: 27:00]: https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc
-  [encryption example]: ./Diagrams/hill-cipher-encryption.png
-  [Feistel graphic]: ./Diagrams/feist-cipher.png
-  [Encryption steps: 08:00]: https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc
-  [S-box Example]: ./Diagrams/s-box.png
-  [State matrix AES]: ./Diagrams/state-matrix.png
-  [AES vs DES]: ./Diagrams/aes-vs-des.png
-  [MAC Properties]: ./Diagrams/MAC.png
-  [CMAC]: ./Diagrams/CMAC.png
-  [Example Implementation: CTR_DRBG]: ./Diagrams/CTR.png
-  [Duel_EC_DRBG]: ./Diagrams/duel_ec.png
-  [Perfect Secrecy]: ./Diagrams/perfect-secrecy.png
-  [Visual Encryption]: ./Diagrams/visual-encryption.png
-  [Visual Decryption]: ./Diagrams/visual-decryption.png
-  [Diffie-Hellman Protocol]: ./Diagrams/diffie-hellman-example.png
-  [1]: ./Diagrams/auth-diffie-hellman.png
-  [Elgamal Encryption and Decryption]: ./Diagrams/elgamal-encryp.png
-  [Worked Elgamal Example]: ./Diagrams/example-elgamal.png
-  [certification paths]: ./Diagrams/cetification-paths.png
-  [Heirarchical PKI]: ./Diagrams/pki-example1.png
-  [Examples of session key distribution Timestamp (24:11)]: https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-09-27T10:00:00.000_2021-09-27T10:55:00.000/classroom#sortDirection=desc
-  [Needham Protocol]: ./Diagrams/protocol-needham.png
-  [Replay attack]: ./Diagrams/replay-attack.png
-  [Repaired Protocol using Random Challenges]: ./Diagrams/freshness.png
-  [Repaired Protocol using Tickets]: ./Diagrams/tickets.png
+### Lecture Seventeen: IPsec and VPN
+
+**Motivation**
+
+- IP security is a framework for ensuring secure communications over IP networks
+- Security services similar as TLS; but at a lower layer in the communication protocol stack
+- IPv4 and IPv6
+
+**IPSec Introduction**
+
+- Providing protection for any higher layer protocol, including arbitrary TCP and UDP sessions
+- Using encryption, authentication and key management
+
+Security services:
+
+- Message confidentiality: protecting against unauthorized data disclosure
+- Message Integrity: Determining if data has been changed
+- Message replay protection: Data not delivered multiple times, and not delivered badly out of order
+- Peer authentication: Ensuring network traffic to be sent from the expected host
+  * Each IPsec endpoint confirms its identity of the other IPsec endpoint with which it wishes to communicate
+
+**Gateway to gateway architecture**
+
+- Providing secure communications between 2 networks
+- Network traffic routed through IPsec connection
+- Only protecting data between two gateways
+- VPN gateway may either be a dedicated device or part of another network device
+- Often used when connecting hosts on unsecured networks to resources on secured networks
+
+**Host-to-host architecture**
+
+- Typically used for special purpose needs
+- Providing protection for data throughout it's transit (end-to-end)
+- Resource intensive to implement and maintain in terms of user and host management
+- All user systems and servers participating in VPNs' need to have VPN software installed or configured
+- Key management through a manual process
+
+**Types of security**
+
+- Encapsulating security payload (ESP): Providing confidentiality, authentication, integrity and replay
+protection
+- Authentication header (AH): Providing authentication, integrity and replay protection, but
+NOT confidentiality.
+  * Is now depreciated
+- Internet key exchange (IKE): Negotiating, creating and managing session keys in security associations (SA's).
+
+**IPSec connection setup**
+
+- Key exchange using IKEv2 protocol
+- IKEv2 uses Diffie-Hellman protocol authenticated using signatures with public keys in X.509 certificates
+- Uses stateless cookies, (when the server is under load the initial request is responded with a calculated stateless
+cookie:
+  * A value that can be re-calculated based on values in the initial request without storing responder-side state.
+
+**Security Associations for IPsec**
+
+- Containing information needed by an IPsec endpoint to support IPsec connection.
+- Possibly including cryptographic keys and algorithms, key lifetimes, security parameter index, security protocol identifier
+
+**Modes of ESP**
+
+![Tunnel Mode ESP](./Diagrams/tunnel-mode.png
+
+> Just going to watch the lecture and not take notes to get the most out of it tbh :/.
+
+
+[Timetable]: ./Diagrams/timetable.png
+[Video to go back and watch]: https://www.youtube.com/watch?v=dELT2-Vgsr8
+[Polyalphabetic example]: ./Diagrams/example-polyalphabetic.png
+[Vigenere example]: ./Diagrams/example-vigenere.png
+[tutorial: 27:00]: https://echo360.net.au/lesson/G_fa546c08-021e-4228-a773-3d8e47bbac7d_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-05T11:00:00.000_2021-08-05T11:55:00.000/classroom#sortDirection=desc
+[encryption example]: ./Diagrams/hill-cipher-encryption.png
+[Feistel graphic]: ./Diagrams/feist-cipher.png
+[Encryption steps: 08:00]: https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-08-09T10:00:00.000_2021-08-09T10:55:00.000/classroom#sortDirection=desc
+[S-box Example]: ./Diagrams/s-box.png
+[State matrix AES]: ./Diagrams/state-matrix.png
+[AES vs DES]: ./Diagrams/aes-vs-des.png
+[MAC Properties]: ./Diagrams/MAC.png
+[CMAC]: ./Diagrams/CMAC.png
+[Example Implementation: CTR_DRBG]: ./Diagrams/CTR.png
+[Duel_EC_DRBG]: ./Diagrams/duel_ec.png
+[Perfect Secrecy]: ./Diagrams/perfect-secrecy.png
+[Visual Encryption]: ./Diagrams/visual-encryption.png
+[Visual Decryption]: ./Diagrams/visual-decryption.png
+[Diffie-Hellman Protocol]: ./Diagrams/diffie-hellman-example.png
+[1]: ./Diagrams/auth-diffie-hellman.png
+[Elgamal Encryption and Decryption]: ./Diagrams/elgamal-encryp.png
+[Worked Elgamal Example]: ./Diagrams/example-elgamal.png
+[certification paths]: ./Diagrams/cetification-paths.png
+[Heirarchical PKI]: ./Diagrams/pki-example1.png
+[Examples of session key distribution Timestamp (24:11)]: https://echo360.net.au/lesson/G_07bf8bc4-e541-404a-9816-826195e79456_f2ab542e-5a86-4120-9080-57e4475971b4_2021-09-27T10:00:00.000_2021-09-27T10:55:00.000/classroom#sortDirection=desc
+[Needham Protocol]: ./Diagrams/protocol-needham.png
+[Replay attack]: ./Diagrams/replay-attack.png
+[Repaired Protocol using Random Challenges]: ./Diagrams/freshness.png
+[Repaired Protocol using Tickets]: ./Diagrams/tickets.png
