@@ -859,3 +859,13 @@ more participants to conduct a useful experiment.
 [Human Memory: Simplified Model]: ./Diagrams/human-sensory-model.png
 [Design Process]: ./Diagrams/design-process.png
 [Design Process Lifecycle]: ./Diagrams/design-process-full.png
+
+## Other Topics
+
+### User Interface Modes
+
+Definition: Modes are different interpretations of the user input by the system, depending on the
+state of which is active. Same input, different results.
+
+Modes become useful when we have too many different options that we want to make available to users and not
+enough available types of input to accommodate them all (at least in a useable, good way)
