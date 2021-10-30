@@ -74,6 +74,18 @@ The ability of an attacker to distinguish reliably between its output and a trul
 
 > Further information found in Lecture 9, Page 11-12
 
+### Freshness
+
+- To defend against replay attacks, established key must be fresh for each session
+- Mechanisms:
+  * Random challenges (nonces)
+  * Timestamps (string on current time)
+  * Counters (increased for each new message)
+* Repaired protocol uses random challenges:
+  * It can be adapted to use Timestamps and counters
+
+> See example on Lecture 16, Page 26
+
 ### Attacks
 
 - **Passive attacks**:
@@ -90,11 +102,26 @@ The ability of an attacker to distinguish reliably between its output and a trul
   * Obstruction: Disabling communication links and information links
   * Intrusion: Gaining unauthorized access to the system
 
+#### Replay Attack
+
+- Let an attacker $C$ get a session key $K'_{AB}$ previously established between $A$ and $B$
+- $C$ masquerades as $A$ and persuades $B$ to use the old key $K'_{AB}$
+
+> To defend against replay attacks, we must use a fresh key for each session, see freshness in the notes
+
 ### C.I.A
 
 - **Confidentiality**: Preventing of unauthorized disclosure of information
 - **Integrity**: Preventing unauthorized modifications of the system
 - **Availability**: Ensuring resources are available when required by authorized users
+
+### Mutual and Unilateral Authentication
+
+- If both parties achieve the authentication goal, then the protocol provides *mutual authentication*
+- If only one party achieves it, then the protocol provides *unilateral authentication*
+- Many real world key establishment protocols achieve only unilateral authentication
+  - Typically, clients can authenticate servers.
+  - Client authentication often happens later, protected with the establishment key
 
 ### Perfect Secrecy
 
@@ -173,6 +200,38 @@ A trapdoor one way function $f$ is a one way function s.t. $f^{-1}(y)$ is easily
 > See an example on Lecture 12, Page 6
 
 This is the basis of public key cryptosystems, using a trapdoor as the decryption key and designing the cryptosystem to be a trapdoor one-way function.
+
+### Elliptic Curves
+
+- Algebraic stuctures formed from cubic equations
+- Curves defined over any field
+- Add an identity element, and then define a binary operation on the points
+  * Form a group over the elliptic curve points, called *elliptic curve group*.
+
+**Choosing Elliptic Curves**
+
+- Generate a new elliptic curve at any time:
+- Standardised curves generated in a verifiable random way
+  - Difficult to generate curves with any hidden special properties 
+
+> Example Lecture 13, Page 22
+
+**Discrete Logarithm**
+
+- Discrete log defined on elliptic curve groups:
+  * if an elliptic curve operation is denoted as a multiplication, then definition same as in $\mathbb{Z}^*_p$
+- Best known algorithms for solving discrete log problems are *exponential* in length of parameters.
+- Elliptic curve implementations use smaller keys
+- Comparison with other cryptosystems (RSA/AES)
+  * Relative advantage of elliptic curve cryptography increases at higher security levels
+  * Brute force of 128-bit AES key takes same time as factorisation of 3072-bit RSA modulus or taking discrete logarithms in an elliptic curve with elements of size 256 bits.
+
+**Elliptic curve Cryptography**
+
+- Most cryptosystems based on discrete log constructed with elliptic curves as well as in $\mathbb{Z}^*_p$
+- Cryptosystems that run on elliptic curves:
+  * Diffie-Hellman key exchange
+  * Elgamal encryption
 
 ## Cryptographic Ciphers
 
@@ -634,4 +693,548 @@ A hash function $H$ is a public function s.t.
 
 ## Public Key Cryptosystems
 
+### Asymmetric Cryptography
 
+-   **Asymmetry**: encryption and decryption keys are different
+-   Encryption key is public
+-   Decryption key is private
+-   Advantage: Key management is simple, can share public key to anyone, secret key still needs to be handled with care
+
+### RSA
+
+- Public key cryptosystem and digital signature scheme
+    - Anyone can check if the signature is valid using public encryption key
+- Based on the `integer factorisation problem`
+- RSA patent expired in 2000
+
+**Applications of RSA**
+
+- Message encryption
+- Digital signature
+- Distribution of a shared key for symmetric key encryption
+- User authentication by proving knowledge of the private key corresponding to an authenticated public key
+
+**Key Generation:**
+
+- Randomly choose two distinct primes $p, q$ from the set of all primes of a certain size
+- Compute $n = pq$
+- Randomly choose $e$ s.t. $gcd(e, \phi(n)) = 1$
+    - Here, $\phi(n) = \phi(pq) = (p - 1)(q - 1)$
+- Compute $d = e^{-1} \mod \phi(n)$
+- Set the public key $K_E$ ad $(n,e)$
+- Set the private key $K_D$ as $(p,q,d)$
+
+Encryption:
+
+- Public encryption key $K_E = (n,e)$
+- Input is a value $M$ s.t. $0 \leq M \leq n$
+- Compute $C = Enc(M, K_E)$
+
+Decryption:
+
+- Private decryption key is $K_D = (p,q,d)$
+- Compute $Dec(C, K_D) = C^d \mod n$
+
+> Example of key generation and encryption/decryption in Lecture 12, Page 15
+
+#### Implementing RSA
+
+> Can be found in Lecture 12, slides 21-34
+
+#### Security of RSA
+
+**Attacks**
+
+Most of existing attacks avoided by using standardised padding mechanisms
+  * Factorisation of the modulus $n$:
+    + Factorisation is believed to be a hard problem (although not proven)
+    + Factorisation can be prevented by choosing $n$ large enough
+  * Finding $d$ from $n$ and $e$:
+    + Finding $d$ is as hard for the adversary as factorising the modulus $n$
+
+> More information on this in Lecture 12, slide 36
+
+**Problems with Key Generation**
+
+Implementation of OpenSSL in Debian based Linux massively reduced randomness for RSA key generation.
+
+### Diffie-Hellman Key Exchange
+
+-   Two users, Alice and bob, share a secret using only public communication.
+-   Public elements:
+    -   Large prime $p$
+    -   Generator $g \in \mathbb{Z}^{*}_p$
+-   Alice and bob each selects random values $a$ and $b$ respectively
+-   Alice and Bob both compute the secret key $Z = g^{ab}$
+
+![Diffie-Hellman Protocol](./resources/dh.png)
+
+**Security of Diffie-Hellman**
+
+- An attacker who finds discrete logarithms breaks the protocol:
+  * Intercepting $g^a \mod p$ and taking the discrete log to get $a$
+  * Computing $(g^b)^a$ in the same way as Bob
+- No better way known for a passive adversary than by taking discrete logs
+
+> Example explored and worked in Lecture 13, Page 7
+
+**Authenticated Diffie-Hellman**
+
+- In the basic protocol:
+  * Messages between Alice and Bob are not authenticated
+- In a network, Alice/Bob do not know how $Z$ is shared, unless messages are authenticated
+- MITM attack: the adversary sets up two keys, one with Alice and one with Bob, and relays the messages between the two
+- Authentication feature: authentication can be added by using `digital signatures`
+
+![Authenticated Diffie-Hellman Protocol](./resources/dh-auth.png)
+
+**Static and Ephemeral Diffie-Hellman**
+
+- The above protocol uses *ephemeral keys*
+  * Key used one and then discarded
+- In the *static* protocol:
+  * Alice chooses a long-term private key $X_A$ and public key $y_A = g^{X_B} \mod p$
+  * Bob chooses a long-term private key $X_B$ and a public key $Y_B = g^{X_B} \mod p$
+
+- Alice and Bob find a shared secret $S = g^{X_A X_B} \mod p$, that is static:
+  * $S$ stays the same until Alice and Bob change their public keys.
+
+### Elgamal Cryptosystem
+
+- Diffie-Hellman protocol turned into a cryptosystem
+- For encryption and for signature
+- Alice combines her ephemeral private key with Bob's long-term public key
+
+**Key generation:**
+
+- Select a prime $p$ and a generator $g \in \mathbb{Z}^{*}_p$
+- Select a long term private key $K_D = x$ where $1 < x < p$
+- Compute $y = g^x \mod p$
+- Set the long term public key as $K_E = (p,g,y)$
+
+> Encryption and Decryption found in Lecture 13, Page 15
+
+**Security:**
+
+- An attacker who solves the discrete log problem breaks Elgamal cryptosystem by determining the private key $x$ from $g^x \mod p$
+- Possible for many users to share the same $p$ and $g$
+- No need for any padding as in RSA
+  * Each ciphertext is already randomised, thanks to the ephemeral key $k$
+
+**Correctness:**
+
+- Alice knows the ephemeral private key $K$.
+- Bob knows the static/long term k=private key $K_0 = x$
+- Both Alice and Bob compute the `Diffie-Hellman` value for the two public keys:
+  * $C_1 = g^k \mod p$
+  * $y = g^x \mod p$
+- `Diffie-Hellman`: value $y^k \mod p = C^x_1 \mod p$  used as a mask for the message $M$
+
+? Example found in Lecture 13, Page 17
+
+## Digital Signatures  
+
+This is the main benefit of using public key encryption (see above chapter)
+
+### Properties of digital signatures
+
+- Message authentication codes (MACs) only allow an entity with shared secret to generate a valid tag:
+  * Providing data integrity and data authentication
+- Digital signatures use public key cryptography to provide properties of a MAC and more:
+  * Only the owner of the private signing key can generate a valid digital signature.
+
+**Algorithms used with digital signatures**
+
+- Key generation
+  * Outputs two keys A private key and a public key
+  * private key is used for signing, public for verification
+- Signature generation
+- Signature verification
+
+> This algorithm is outlined in Lecture 14, Pages 8-12
+
+### RSA Signatures
+
+RSA signature keys are generated the same way as encryption keys:
+
+- Public key: $n,e \forall n = pq$ for large primes $p, q$
+- Private key: $p,q,d \ s.t. \ ed \mod \phi(n) = 1$
+
+A hash function $h$ is also required, as a fixed public parameter, it can be a standard hash function.
+
+> Example Signature Generation and verification Lecture 14, Page 14
+
+### Discrete logarithm Signatures
+
+- Security relying on difficulty of discrete logarithm problem:
+- Three versions
+  1. Original Elgamal signatures in $\mathbb{Z}^*_p$
+  2. Digital signature algorithm (DSA)
+  3. DSA based on elliptic curves
+
+#### Elgamal
+
+**Signature generation:**
+
+1. Alice selects a random $k$ s.t. $gcd(k, p-1) = 1$ and computes
+
+$$ r = g^k \mod p $$
+
+2.  Alice solves $M = xr + ks \mod (p - 1)$ for $s$ by computing
+
+$$ s = k^{-1}(M - xr) \mod (p - 1) $$
+
+3. Alice outputs the tuple (M,r,s).
+
+**Signature verification:**
+
+- Bob checks if $g^M \equiv y^r r^s \mod p = ((g^x)^r(g^k)^s)$
+
+**Digital Signature Algorithm (DSA)**
+
+- Prime $p$ is chosen s.t. $p - 1$ has a prime divisor $q$ of much smaller size (\~256 bits)
+- A generator $g$ used in Elgamal signatures replaced by $g = h\frac{p-1}{q} \mod p$
+  -   $g$ has order $q$ since $g^q \mod p = 1$
+- Differences with Elgamal signatures:
+    - Message is hashed using SHA hash algorithm
+    - $g$ is chosen to be the order of $q$
+    - Verification equation becomes as seen below: 
+
+$$ (g^{H(M)})^{S^{-1}}(y^{-r})^{S^{-1}} \equiv r \mod p $$
+
+Both sides of the equation are then reduced modulo $q$
+
+> Parameters can be found in Lecture 14, Page 22
+> Key and signature generation found in Lecture 14, Page 23-24
+
+#### Comparison
+
+**Differences with Elgamal signatures**
+
+- Verification equation is the same, except that all components and final result are reduced modulo $q$
+- Signature generation mainly requires one exponentiation with a short exponent (224 or 256 bits)
+- Signature validation requires two short exponentiations
+- Signature size is only $2N$ bits:
+  * 448 bits when $N = 224$
+  * 512 bits when $N = 256$
+
+
+#### Elliptic Curve DSA (ECDSA)
+
+- Parameters chosen from NIST approved curves
+- Signature generation and verification are the same, except that:
+  - q becomes the order of the elliptic curve group
+  - multiplication mod $p$ is replaced by the elliptic curve group operation
+  - After operations on group elements, only the x coordinate is kept from the pair
+- Signatures are generally not shorter than DSA at the same security level
+  - Size varies with underlying curve
+
+## PKI and Certification
+
+### PKI
+
+**Motivation**
+
+- Public key infrastructure implies the use of public digital certificates
+- Digital signatures provide these certificates
+- X.509 certificates are standardized and used in most network security applications
+
+**What is a public key infrastructure (PKI)**
+
+- A public key infrastructure is the key management environment for public key information of a public key cryptosystem - `NIST`
+- Key management concerned with *life-cycle* of cryptographic keys
+    - Generation, distribution, storage and destruction of keys
+
+#### Hierarchical PKI
+
+![](./resources/hierarchical-pki.png)
+
+- A CA certifies the public key of the entity below
+- In a non-hierarchical PKI, certification is done between two CA's
+
+#### Browser PKI
+
+- Multiple hierarchies with preloaded public keys as root CA's
+- Intermediate CA's can be added
+- Users can also add their own certificates
+- Most servers send their public key and certificate to the browser at the start of a secure communication using TLS protocol
+
+#### OpenPGP PKI
+
+- Used in PGP email security
+- Certificate includes ID, Public key, validity period and *self-signature*
+- There is NO certification authorities
+- Various key servers store keys
+- Often known as *web of trust*
+
+### Digital Certificates
+
+- How to be confident of the correct binding between a public key and its owner?
+  - When using a public key to encrypt a message or to verify a digital signature
+- Achieved through the use of *digital certificates*
+  - They contain the public key and the owner identity
+  - There is other information such as signature algorithm and validity period
+- Certificate digitally signed by a certification authority (CA):
+  - CA should be trusted by the certificate verifier
+- Certificates play a central role in key management for PKI's
+
+**Using a certificate**
+
+-   Verifying a certificate
+    -   By checking that the CA's signature is valid
+    -   Check that any conditions set in the certificate are correct
+-   In order to verify the certificate:
+    -   The user of the certificate must have the correct public key of the CA
+-   It does not matter who obtains the certificate
+-   Public directories may store certificates
+
+> Walk through of certification path in Lecture 15, Page 13
+
+## Key Management 
+
+**Goals**
+
+- Distribution of cryptographic keys to protect subsequent communication sessions
+- Key establishment in TLS uses public keys to allow clients and servers to share a new communication key
+
+**How should key's be managed?**
+
+- Critical aspect of any cryptographic system
+- Phases:
+  - Key generation: keys should be generated such that they are equally likely to occur
+  - Key distribution: Keys should be distributed in a secure fashion
+  - Key protection: Keys should be accessible for use in relevant algorithms, but not accessible to unauthorised parties
+  - Key destruction: once a ley has performed its function, it should be destroyed s.t. It is of no value to an attacker
+
+**Key types**
+
+Keys are often organized in a hierarchy:
+
+-   **Long term keys**
+  - Also called static keys
+  - Intended to be used for a long time
+  - depending upon the application, from a few hours to a few years
+  - Used to protect distribution of session keys
+-   **Short term keys**
+  - Also called session keys
+  - Intended to be used for a short time
+  - depending upon the application, from a few seconds to a few hours
+  - Used to protect communications in a session
+
+**Key Distribution Security**
+
+- In practice, session keys are symmetric keys used with ciphers
+- Long term keys can be either symmetric or asymmetric keys depending on how they are used
+- How to establish secret session keys among communicating parties using the long term keys
+  - Common approaches:
+    - Key pre-distribution
+    - Using an online server with symmetric long term keys
+    - Using asymmetric long term keys
+- **Goals of key distribution**
+  - Authentication
+  - Confidentiality
+
+**A note on forward secrecy**
+
+What happens when a long term key is compromised?
+
+-   The attacker can now act as the owner of the long term key
+-   Previous session keys may also be compromised
+    -   This can be the case with key transport
+    -   This can be prevented with key agreement
+
+A protocol provides *(perfect) forward secrecy* if compromise of long term secret keys does not reveal session keys previously agreed using those long-term keys
+
+### Key Distribution using Symmetric Keys
+
+- Key distribution with an online server
+- The TA shares a long-term shared key with each user
+- An online TA generates and distributes session keys to users when requested
+- The TA is highly trusted and is a single point of attack
+- Scalability can be a problem
+
+> Lecture 16, Page 21-23 walks through an example of key distribution using symmetric keys \
+> Including Needham-Schroeder Protocol and Kerberos
+
+
+### Key Distribution using Asymmetric Keys
+
+- No online TA is required
+- Public keys used for authentication
+- Public keys managed by PKI (certificates and CAs)
+- Users are trusted to generate good sessiom key:
+  * A good pseudo-random number generator is required.
+- Types:
+  * *Key transport*
+    + TLS sometimes uses this
+    + User chooses key material and sends it encrypted to another party
+    + Not providing *forward secrecy*
+  * *Key agreement*
+    + Two parties each provide input to the key material
+    + Providing authentication with public keys (by signing the exchanged messages)
+    + TLS includes options for key agreement
+    + Provides *forward secrecy*
+
+> Lecture 16, Page 17-19 walks through an example of key distribution using asymmetric keys \> Using Diffie-Hellman
+
+### 3-Level Protocol
+
+- Level One: Client interacts with authentication server in order to obtain ticket granting
+- Level Two: Client interacts with ticket-granting server TGS in order to obtain a service-granting ticket
+- Level Three :Client interacts with application server V in order to obtain a service
+
+> More information on this found in Lecture 16, Pages 31-39
+
+## Transport Layer Security Protocol (TLS)
+
+**Motivation**
+
+- TLS is the most widely used security protocol
+- TLS is used to secure communications with banks, online shops, email providers
+- TLS uses most of the mainstream cryptographic algorithms
+- TLS is a very complex protocol
+- TLS has been subject to many attacks and has had many repairs
+
+**Applications of TLS**
+
+- Cryptographic services protocol based upon PKI and commonly used on the Internet.
+- Often used to allow browsers to establish secure sessions with Web servers.
+- Many other application areas.
+- TLS runs primarily over TCP:
+- Variant DTLS runs over datagram protocols
+
+**TLS Architecture**
+
+- Designed to secure reliable end-to-end services over TCP
+- Three higher level protocols
+  * *TLS handshake protocol* to set up sessions
+  * *TLS alert protocol* to signal events, such as failures
+  * *TLS change cipher spec protocol* to change the cryptographic algorithms
+
+![Protocol Stack](./resources/protocol-stack.png)
+
+### TLS Record Protocol
+
+- TLS connection services:
+  * Message confidentiality 
+  * Message integrity
+- Services possibly provided by a symmetric encryption algorithm and a MAC
+- From TLS > 1.2, services provided with authenticated encryption modes `CCM, GCM`
+- Handshake protocol establishes symmetric session keys to use with these mechanisms
+
+Format:
+
+```
+Header   | Content type | Major Version | Minor Version | Length |
+
+Packet   |            plaintext optionally compressed            |
+         |     MAC (unless authentication encryption is used     |
+```
+
+**Header Breakdown**
+
+- Content type
+  * Change cipher spec
+  * Alert
+  * Handshake
+  * Application data
+- Protocol version:
+  * Major version: 3 for TLS
+  * Minor version
+    + 1 for TLS 1.0
+    + 2 for TLS 1.1
+    + 3 for TLS 1.2
+    + 4 for TLS 1.3
+- Length: of the data, (in octets)
+
+**Operation**
+
+- `Fragmentation`: each application layer message is fragmented into blocks of $2^{14}$ bytes or less
+- `Compression`:
+  * Default compression algorithm is null in TLS 1.2 (thus is optionally applied)
+  * Removed in TLS 1.3
+- `Authenticated Data`: consisting of the compressed data, header and an implicit record sequence number
+- `Plaintext`: compressed data and MAC (if present)
+- `Session keys`: computed during handshake protocol, for either MAC and encryption algorithms or authenticated encryption algorithm
+- `Specification`: encryption and MAC algorithms are specified in the negotiated cipher suite
+
+**Other information**
+
+Hash function:
+
+- All TLS versions use negotiated hash function `HMAC`
+- `SHA-2` allowed only from TLS 1.2
+- `MD5` and `SHA-1` discarded from TLS 1.3
+
+Encryption Algorithm:
+
+- Either a negotiated block cipher in CBC mode or a stream cipher
+- Most common block cipher is AES
+- 3DES and RC4 discarded in TLS 1.3
+- For block ciphers, padding is applied after MAC to make a multiple of the cipher block size
+
+Authenticated Encryption Algorithm:
+
+- Allowed instead of encryption and MAC from TLS 1.2
+- Only AES with either `CCM` or `GCM` modes in TLS 1.3
+- Authenticated additional data in the header and implicit record sequence number
+
+### TLS Handshake Protocol
+
+**Purposes**
+
+- Negotiating the TLS version and cryptographic algorithms to be used
+- Establishing a shared session key for use in the record protocol
+- Authenticating the server, and optionally authenticating the client
+- Completing the session establishment
+- `Variations With:`
+  * RSA
+  * Diffie-Hellman
+  * Pre-shared keys
+  * Mutual authentication
+  * Server-only (unilateral) authentication
+- Simplified in TLS 1.3 (see later)
+
+**Phases**
+
+- Phase 1: initiating the logical connection and establishing its security capabilities
+- Phases 2,3: performing key exchange
+- Phase 4: completing the setting up of a secure connection
+
+> More information in the Lecture 17, Pages 19-35
+
+**Summary of handshake protocol**
+
+Process to start a communication session between a server and a client:
+
+- Specify which version of TLS they will use
+- Decide on which cipher suites they will use
+- Authenticate the identity of the server via the server's public key and the certificate authority's digital signature
+- Generate session keys in order to use symmetric encryption after the handshake is complete
+
+#### Variation for handshake protocol: Steps for RSA Key Exchange
+
+1. `Client hello message`: TLS version and cipher suites supported by the client + $N_C$
+2. `Server hello message`: certificate + chosen cipher suite + $N_S$
+3. `Authentication`: client checks certificate
+4. `Premaster secret using key transport`:
+  * Chosen by client and encrypted using server's public key
+  * Decrypted using server's private key
+5. `Session Keys`: Computed using PRF on each side
+6. `Client finished message`: encrypted with a session key
+7. `Server finished message`: encrypted with a session key
+
+> The handshake is now complete and communication continues using the session keys
+
+#### Variation for handshake protocol: Steps for Diffie-Hellman Key Exchange
+
+1. `Client hello message`: TLS version and cipher suites supported by the client + $N_C$
+2. `Server hello message`: certificate + chosen cipher suite + $N_S$
+3. `Server's signature`: on $N_C, N_S$ and server's Diffie-Hellman parameters using server's private key
+4. `Signature verification`: client checks signature and sends client's Diffie-Hellman parameters
+5. `Premaster secret usign key agreement`: using exchanged Diffie-Hellman parameters
+6. `Session Keys`: computed using PRF on each side
+7. `client finished message`: encrypted with a session key
+8. `Server finished message`: encrypted with a session key
+
+> The handshake is now complete and communication continues using the session keys
