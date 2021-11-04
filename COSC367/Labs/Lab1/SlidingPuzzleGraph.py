@@ -48,10 +48,10 @@ class SlidingPuzzleGraph(Graph):
         for i in range(n):
             for j in range(n):
                 if i == 0 and j == 0:
-                    if state[i][j] != BLANK:
+                    if state[i][j] != BLANK: # checks if the first tile is not blank
                         return False
                 else:
-                    if state[i][j] <= current:
+                    if state[i][j] <= current: # checks if the tiles are in order
                         return False
                     else:
                         current = state[i][j]
