@@ -2,6 +2,10 @@
 # Quiz 4 : swipl files
 #================================
 
+# writ a predicate all_distinct(L) that succeeds if all elements of L are distinct.
+all_distinct([]) :- !.
+all_distinct([H|T]) :- not(member(H,T)), all_distinct(T).
+
 # 1
 eats(X, Y) :- likes(X, Y); edible(Y), hungry(X).
 
@@ -475,6 +479,11 @@ test_answer :-
     max([], M),
     writeln("Max of an empty list is undefined!").
 
+append([], L, L).
+append([H|L1], L2, [H|L3]) :- append(L1, L2, L3).
+
+inorder(leaf(X), [X|[]]).
+inorder(tree(Root, Left, Right), Traversal) :- inorder(Left, LeftTraversal), append(LeftTraversal, [Root], LeftRootTraversal), inorder(Right, RightTraversal), append(LeftRootTraversal, RightTraversal, Traversal).
 
 # 7
 '''Write a predicate preorder(+Tree, Traversal) that determines the preorder traversal of a given binary tree.

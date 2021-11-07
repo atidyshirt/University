@@ -77,14 +77,14 @@ class LCFSFrontier(Frontier):
         total_cost = 0
         for arc in path:
             total_cost += arc.cost
-        if self.trace: print(f"+ {trace(path)}")
+        if self.trace: print(f"+ {trace(path, check=True)}")
         heapq.heappush(self.heap, (total_cost, path))
 
     def __next__(self):
         if len(self.heap) > 0:
             tmp = heapq.heappop(self.heap)[1]
-            if self.trace and self._prune_path(tmp[-1]): self.popped.append(f"- {trace(tmp)}"); print(f"- {trace(tmp)}! \t this is with pruning (ignore all expanded nodes from this path when pruned)")
-            elif self.trace: self.popped.append(f"- {trace(tmp)}"); print(f"- {trace(tmp)}")
+            if self.trace and self._prune_path(tmp[-1]): self.popped.append(f"- {trace(tmp, check=True)}"); print(f"- {trace(tmp, check=True)}! \t this is with pruning (ignore all expanded nodes from this path when pruned)")
+            elif self.trace: self.popped.append(f"- {trace(tmp, check=True)}"); print(f"- {trace(tmp, check=True)}")
             return tmp
         else:
             raise StopIteration
@@ -432,14 +432,14 @@ class Queue:
         self.size -= 1
         return data
 
-def trace(path):
+def trace(path, check=False):
         trace = ""
         cost = 0
         for arc in path:
             trace += str(arc[1])
         for arc in path:
             cost += arc[3]
-        return trace + ", " + str(cost)
+        return trace + ", " + str(cost) if check else trace
 
 def print_map(map_graph: RoutingGraph, frontier: AStarFrontier, solution):
     map = map_graph.map_graph
@@ -568,22 +568,23 @@ if __name__ == "__main__":
     """ Tracing graphs using frontiers """
 
     g = ExplicitGraph(
-        nodes={'A', 'B', 'C', 'D', 'G'},
-        estimates={'A':5, 'B':5, 'C':9, 'D':1, 'G':0},
-        edge_list=[('A','B',2), ('A','C',3), ('B','D',5), ('C','D',10), ('D','G',3)],
-        starting_nodes=['A'],
+        nodes={'A', 'B', 'C', 'G'},
+        edge_list=[('A', 'B'), ('A', 'G'), ('B', 'C'), ('C', 'A'), ('C', 'G')],
+        starting_nodes=['A', 'B'],
         goal_nodes={'G'},
     )
 
     print()
     print("-------------- Trace -------------")
     print()
-    solutions = generic_search(g, AStarFrontier(g, trace=True))
+    solutions = generic_search(g, DFSFrontier(trace=True))
     solution = next(solutions, None)
     print()
     print("------------- Result ------------")
     print()
     print_actions(solution)
+    print()
+    print("---------------------------------")
 
     """ Tracing perceptrons """
     # weights = [-0.5, 0.5]
