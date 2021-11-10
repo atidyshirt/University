@@ -57,11 +57,11 @@ class RoutingGraph(Graph):
 
 if __name__ == '__main__':
     map_str = """\
-    +-------+
-    |  9  XG|
-    |X XXX  |
-    | S  0FG|
-    +-------+
+    +----------+
+    |    X    G|
+    | A  X     |
+    |    X  G  |
+    +----------+
     """
 
     graph = RoutingGraph(map_str)

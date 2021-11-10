@@ -112,7 +112,7 @@ class AStarFrontier(Frontier):
             for arc in path:
                 cost += arc.cost
             cost += self.map_graph.estimates[str(path[-1].head)]
-            if self.trace: print(f"+ {trace(path)}")
+            if self.trace: print(f"+ {trace(path), cost}")
             heapq.heappush(self.container, (cost, self.counter, path))
             self.counter += 1
 
@@ -534,10 +534,8 @@ def learn_perceptron(weights, bias, training_examples, learning_rate,
             return perceptron
 
 """ Minimax """
-max_val = lambda tree: tree if type(tree) is int \
-    else max([min_val(tree[i]) for i in range(len(tree))])
-min_val = lambda tree: tree if type(tree) is int \
-    else min([max_val(tree[i]) for i in range(len(tree))])
+max_val = lambda tree: tree if type(tree) is int else max([min_val(tree[i]) for i in range(len(tree))])
+min_val = lambda tree: tree if type(tree) is int else min([max_val(tree[i]) for i in range(len(tree))])
 
 def min_action_value(tree):
     index = 0
@@ -565,26 +563,32 @@ def max_action_value(tree):
 
 if __name__ == "__main__":
 
+    game_tree = [[-2, [3 , -6], 4], [5, -5, 3]]
+
+    print(max_action_value(game_tree))
+    print(max_val(game_tree))
+
     """ Tracing graphs using frontiers """
 
     g = ExplicitGraph(
-        nodes={'A', 'B', 'C', 'G'},
-        edge_list=[('A', 'B'), ('A', 'G'), ('B', 'C'), ('C', 'A'), ('C', 'G')],
-        starting_nodes=['A', 'B'],
-        goal_nodes={'G'},
+        nodes={'F', 'D', 'C', 'H', 'A'},
+        estimates={'C':9, 'F':6, 'D':5, 'H':0, 'A':7},
+        edge_list=[('A','D',2), ('D','H',6), ('C','F',6), ('C','D',5), ('C','A',2), ('F','H',2)],
+        starting_nodes=['C'],
+        goal_nodes={'H'},
     )
 
-    print()
-    print("-------------- Trace -------------")
-    print()
-    solutions = generic_search(g, DFSFrontier(trace=True))
-    solution = next(solutions, None)
-    print()
-    print("------------- Result ------------")
-    print()
-    print_actions(solution)
-    print()
-    print("---------------------------------")
+    # print()
+    # print("-------------- Trace -------------")
+    # print()
+    # solutions = generic_search(g, AStarFrontier(g, trace=True))
+    # solution = next(solutions, None)
+    # print()
+    # print("------------- Result ------------")
+    # print()
+    # print_actions(solution)
+    # print()
+    # print("---------------------------------")
 
     """ Tracing perceptrons """
     # weights = [-0.5, 0.5]

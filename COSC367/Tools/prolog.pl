@@ -626,3 +626,10 @@ writeln(X).
 test_answer: - cartesian_product([a, b, c], [1, 2, 3], X),
 writeln(X).
 #Answer : [(a, 1), (a, 2), (a, 3), (b, 1), (b, 2), (b, 3), (c, 1), (c, 2), (c, 3)]
+
+
+# write a predicate to check that every second value n in an even sized list is the same as n+2
+
+same_evens([]).
+same_evens([_, _]).
+same_evens([H, H|T]) :- same_evens(T).
