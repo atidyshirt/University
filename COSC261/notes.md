@@ -45,3 +45,26 @@ No textbooks are required, but see the following book for additional information
 \newpage
 
 # Lectures
+
+## Lecture One - Introduction
+
+**Topic overview of the course**
+
+- pattern matching
+  * Regular expressions describe patterns
+  * Search using REGEX is supported in many programs
+  * Can all patterns be described by regular expressions? 
+  * One to one with state diagrams and automata
+- Compilers
+  * Progreams can be run by an interpreter or by compiling them first 
+  * Interpreting may be slow
+  * Compiling to machine code avoids much of the overhead
+  * Compiler performs analysis, code generation and optimisation
+  * How can these tasks be automated for different programming languages?
+- Syntax analysis
+  * Analyses code to determine if the syntax is correct for compiling, this is done by using
+  context free grammers *there are other methods of doing this however this is the main one we
+  will look at in this course*
+  * *does the syntax conform to the languages grammar?*
+  * Ideally we want to generate the parser for our language, we will look into how to manually like are
+  parser and how regular expressions and pattern matching can be used to evaluate this behaviour.

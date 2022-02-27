@@ -313,8 +313,7 @@ The role of IP in the internet protocol Stack
   - End hosts usually have only one IP address (as we use the one with widest scope)
 - The IP address not only identifies the host but also helps the network find the path to this host
 - Humans normally do not work with IP directly but with host names such as www.canterbury.ac.nz
-- There exists a special service/protocol called the domain name service (`DNS`) which translates to human-readable host names to IPv4 addresses, the internet itself only works
-  with IPv4 addresses
+- There exists a special service/protocol called the domain name service (`DNS`) which translates to human readable host names to IPv4 addresses, the internet itself only works with IPv4 addresses
 - Suppost to be worldwide unique (not really true anymore)
 - unacknowledged (post service does not send back feedback)
 - no guaranteed order of packets recieved with IPv4 protocol
@@ -718,14 +717,11 @@ _Layer's_
 
 **Transmission of Digital Data**
 
-The transmitter has a stream of bits that it wants to stream to the receiver, the physical layer makes changes in order to transmit this through air (convert it to analog), the
-signal will lose power as it is sent, the receiver will receive a distorted version of the original data. The goal of digital data is to have the same data at the start and end,
-this will be contained with the bit error rate.
+The transmitter has a stream of bits that it wants to stream to the receiver, the physical layer makes changes in order to transmit this through air (convert it to analog), the signal will lose power as it is sent, the receiver will receive a distorted version of the original data. The goal of digital data is to have the same data at the start and end, this will be contained with the bit error rate.
 
 **Transmission of Analog Data**
 
-The goal of this is not to get a perfect replica of the transmitted signal to the received data. This means that we are trying to just create as accurate of an image as possible,
-we are not trying to create an exact replica unlike that of digital data.
+The goal of this is not to get a perfect replica of the transmitted signal to the received data. This means that we are trying to just create as accurate of an image as possible, we are not trying to create an exact replica unlike that of digital data.
 
 ##### The Link Layer
 
@@ -804,7 +800,7 @@ we are not trying to create an exact replica unlike that of digital data.
 - Provides end-to-end communications
 - Offers its services through socket interfaces
 - standard transport layer protocols
-- - SAPs are called _ports_ used for application multiplexing
+  - SAPs are called _ports_ used for application multiplexing
     - several applications can use a transport services
     - a port is bound to an application
     - ports are identified by numbers
@@ -858,11 +854,11 @@ There are four types of orthogonal schemes:
 
 ##### Frequency Division Multiple Access (FDMA)
 
-A channel's bandwidth is sumdivided into _N sub-channels_
+A channel's bandwidth is subdivided into _N sub-channels_
 
 Between the sub-channels and at the fringe of the channel there are _guard bands_:
 
-- Reduction of adjecent-channel interference, robustness against imperfect frequency synchronization
+- Reduction of adjacent-channel interference, robustness against imperfect frequency synchronization
 
 A sub-channel is _exclusively_ assigned to a station _i_ on a longer-term basis for
 transmission of data, **no other station is allowed to transmit on this channel**.

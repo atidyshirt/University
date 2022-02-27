@@ -44,12 +44,6 @@ def generate_rest(initial_sequence, expression, length):
         initial_sequence.append(val)
     return initial_sequence[initial_size:]
 
-
-
-
-
-
-
 # Test cases
 initial_sequence = [0, 1, 2]
 expression = 'i'
@@ -64,6 +58,3 @@ length_to_generate = 5
 print(generate_rest(initial_sequence,
                     expression,
                     length_to_generate))
-
-
-
