@@ -68,3 +68,73 @@ No textbooks are required, but see the following book for additional information
   * *does the syntax conform to the languages grammar?*
   * Ideally we want to generate the parser for our language, we will look into how to manually like are
   parser and how regular expressions and pattern matching can be used to evaluate this behaviour.
+- Code generation
+  * There are formalisms that exist to generate code in order to create compilers via code generation.
+
+## Lecture Two - Finite Automata and Regular Languages: Symbols, Strings and Languages
+
+**Languages**
+
+- An alphabet $\Sigma$ is non-empty finite set of *symbols*/
+- A string over $\Sigma$ is a finite sequence of symbols from $\Sigma$
+- The length of $|\sigma|$ of a string $\sigma$ is the number of symbols in $\sigma$
+- The empty string $\epsilon$ is the unique set of length 0
+- $\Sigma^{\cdot}$ is the set of all strings over $\Sigma$
+- A language $L$ over $\Sigma$ is a set of strings $L \subseteq \Sigma^{\cdot}$
+
+![Example](./Diagrams/languages.png)
+
+- Note that with a finite alphabet we can have an infinite size for $\Sigma^{\cdot}$
+  * This is because we have not specified a size for our length of elements within $\Sigma^{\cdot}$
+
+> An example of a set that we might use is the unicode set as Sigma.
+
+For example:
+
+- $python \subset UNICODE$
+- $english \subset UNICODE$
+
+Because of this relationship, we can use filtering, searching and `REGEX` in order to
+manipulate and set rules around this relationship (or syntax in the case of programming
+languages by using comparisons and combination of formalisms.
+
+Let $a, b \in \Sigma$ be symbols and let $x, y, z \in \Sigma^{\*}$ be strings.
+- Symbols and strings can be concatenated by writing one after the other
+- $xy$ is the concatenated version of $x$ and $y$.
+  - Note that concatenation is accociative
+- $\epsilon$ is an identity for concatenation $\epsilon x = x = x \epsilon$
+- $|xy| = |x| + |y|$
+
+**Lifting to a set**
+
+$Let A,B \subseteq \Sigma^{cdot}$ be languages:
+
+- concatenate languages $A$ and $B$ by conciliating each string from $A$ with each from $B$
+- $AB = \{xy | x \in A, y \in B\}$
+- Language concatenation is associative
+- $\{\epsilon\}$ is the identity of language concatenation
+
+![Lifting Example](./Diagrams/lifting.png)
+
+**Concatenation can be iterated**
+
+- $a^n$ is the string comprising $n$ copies of the symbol $a \in \Sigma$
+- $x^n$ is the string that concatinates $n$ copies of the string $x \in \Sigma^{\*}$
+- These operations are defined *inductively*
+- The base case is $x^0 = \epsilon$ 
+- The *inductive case* is $x^{n+1} = x^n x$
+
+Example: $a^5 = aaaaa$
+
+![Powers of Language](./Diagrams/powers_of_language.png)
+
+> Take aways, the * symbol means that we have zero or more of something, + means that we have
+> one or more of something (this is how we use this notation practically in regex expressions
+
+**Key notation and definitions**
+
+- Sets are languages
+- variables are strings
+- variables with index are symbols
+
+
