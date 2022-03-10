@@ -46,7 +46,7 @@ No textbooks are required, but see the following book for additional information
 
 # Lectures
 
-## Lecture One - Introduction
+## Introduction
 
 **Topic overview of the course**
 
@@ -73,7 +73,9 @@ No textbooks are required, but see the following book for additional information
 
 \newpage
 
-## Lecture Two - Finite Automata and Regular Languages: Symbols, Strings and Languages
+## Finite Automata and Regular Languages
+
+### Symbols, Strings and Languages
 
 **Languages**
 
@@ -142,7 +144,7 @@ Example: $a^5 = aaaaa$
 
 \newpage
 
-## Lecture Three - Finite Automata and Regular Languages: Introduction to Deterministic Finite Automata
+### Deterministic Finite Automata
 
 A *deterministic finite automaton (DFA)* is a structure $M = (Q, \Sigma, \delta, q_0, F)$ where:
 
@@ -156,7 +158,7 @@ This can be shown in a *transition diagram* for a visual indication of how this 
 
 > see lecture 3, 14:00 minutes for information on how to construct these transition diagrams
 
-### Deterministic Finite Automata Example
+#### Deterministic Finite Automata Example
 
 Ex 1: The following DFA accepts strings over $\{a,b\}$.
 
@@ -174,9 +176,7 @@ Ex 2: DFA accepting all strings over $\{a,b\}$ with a number of $a$-symbols that
 ![Modulo four example](./Diagrams/modulo_four_example.png){width=50%}
 
 
-\newpage
-
-## Lecture Four - Finite Automata and Regular Languages: Closure of properties of Deterministic Finite Automata
+#### Closure of properties of Deterministic Finite Automata
 
 **Exptended transition function**
 
@@ -208,7 +208,7 @@ that is more complicated? We can use a combination of DFA's in order to define m
 
 \newpage
 
-## Lecture Five - Finite Automata and Regular Languages: Non-Deterministic Finite Automata
+### Non-Deterministic Finite Automata
 
 The following automaton accepts strings with a symbol 1 in the third position from the end.
 It is not a DFA because there are two 1-transitions in state $q_0$ and no transitions in state 
@@ -234,4 +234,59 @@ Here is an example of the above transition relation:
 
 ![Possible transition states of this non-deterministic finite automata](./Diagrams/possible_transition_states.png)
 
+The extended transition relation $\hat{\delta} : Q \times \Sigma^{*} \rightarrow P(Q)$ is
 
+- $\hat{\delta}(q, \epsilon) = \{q\}$
+- $\hat{\delta}(q, ax) = \bigcup_{p \in \delta(q,a) \hat{\delta}(p, x)}$ where $a \in \Sigma$ and $x \in \Sigma^{*}$
+
+Example of evaluating this extention can be found in `Friday March 4th Lecture: 8:00`
+
+> The result of this will tell you what states are avalible from the current state (in a recursive nature)  \
+> If we check the acceptance criteria for the automaton, we can do this by using this method to get to the last state.
+
+#### The Subset Construction
+
+![Consider this Automaton](./Diagrams/automaton_subset_construction.png)
+
+We need to consider all the possible nodes that we can reach from the current state. Below is an
+example of how we might do such a traverse on the above automaton. Note that we don't know what 
+state we are going to be in, we are considering all possible options at a point in time.
+
+In the following example, the numbers in each node are shorthand notation for the set containing
+all possible nodes that we can reach from that value, hence $q_{012} \rightarrow \{q_0, q_1, q_2\}$.
+
+![Subset Construction](./Diagrams/subset-construction.png)
+
+The above construction considers all possibilities of the `non-deterministic automaton`, this allows us to
+construct a `deterministic finite automata`, the only change we need to make is to add accpetance states to this construction.
+
+Every language accepted by an `NFA` is accepted by a `DFA`
+
+![Proof for relative DFA for NFA](./Diagrams/DFA-NFA-proof.png)
+![](./Diagrams/DFA-NFA-proof2.png)
+
+> Through this lecture, we have found an equivilence relation between DFA's and NFA's, meaning that
+> we can convert DFA's to NFA's, therefore NFA's accept exactly regular languages. The number of states may grow
+> exponentially in the subset construction.
+
+#### Non-Deterministic Finite Automata with $\epsilon$-Transitions
+
+THe following automaton accepts the union of two regular languages. It is not a DFA becuase 
+of the $\epsilon$-transitions in state $r_0$.
+
+![Epsilon transitions](./Diagrams/epsilon-transitions.png)
+
+An *NFA* with $\epsilon$ transitions is a structure $M = (Q, \Sigma, \delta, q_0, F)$ where:
+
+- $Q, \Sigma, q_0$ and $F$ are as in a *DFA*,
+- $\epsilon$ is a special symbol with $\epsilon \not\in \Sigma$ ,
+- $\delta : Q \times (\Sigma \cup \{\epsilon\}) \to P(Q)$ is the transition relation
+- $\delta$ may have $\epsilon$-transitions and yields a set of successor states
+
+This is a way to decouple and clarify a set of states and a choice of two transitions in
+an automaton, this allows us to clearly identify and mark unions in the automaton.
+
+Here is an example of a *NFA* that is designed in order to check validity of different types of
+numbers for a programming language. *Hexadecimal, decimal, octal and binary*.
+
+![numerical automaton](./Diagrams/example-automaton.png)
