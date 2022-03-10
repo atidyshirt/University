@@ -290,3 +290,27 @@ Here is an example of a *NFA* that is designed in order to check validity of dif
 numbers for a programming language. *Hexadecimal, decimal, octal and binary*.
 
 ![numerical automaton](./Diagrams/example-automaton.png)
+
+### Regular Expressions
+
+These are partterns that can be used to match substrings in a given string:
+
+- `ls *201?.*` lists files whose name without extension ends in 201 followed by some character
+- `ls *a*a*a*` lists any file whose name contains three `a` charaters
+- `rm *.log` deletes all log files
+- `grep '[A-Z][a-z]\\{3,7\\}'` finds lines with a capital followed by 3-7 lower case letters
+
+Atomic patterns are:
+
+- $a \forall a \in \Sigma$ is matched by the symbol $a$
+- $\epsilon$ is matched by the empty string
+- $\theta$ is matched by nothing
+- $?$ is matched by any symbol in $\Sigma$
+
+Compound patterns are formed from patterns *p* and *q* as follows:
+
+- $p|q$ is matched by string $w$ if $w$ matches $p$ or $q$.
+- $p&q$ is matched by $w$ if $w$ matches both $p$ and $q$.
+- $pq$ is matched by $w$ if $w = xy$ and $x$ matches $p$ and $y$ matches $q$.
+- $\not{p}$ matches by $w$ if if $w$ does not match $p$.
+- $\[p\]$ is matched by $w$ if $w$ is empty or matches $p$.
