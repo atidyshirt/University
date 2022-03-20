@@ -305,12 +305,172 @@ Atomic patterns are:
 - $a \forall a \in \Sigma$ is matched by the symbol $a$
 - $\epsilon$ is matched by the empty string
 - $\theta$ is matched by nothing
-- $?$ is matched by any symbol in $\Sigma$
+- `?` is matched by any symbol in $\Sigma$
 
 Compound patterns are formed from patterns *p* and *q* as follows:
 
 - $p|q$ is matched by string $w$ if $w$ matches $p$ or $q$.
-- $p&q$ is matched by $w$ if $w$ matches both $p$ and $q$.
 - $pq$ is matched by $w$ if $w = xy$ and $x$ matches $p$ and $y$ matches $q$.
 - $\not{p}$ matches by $w$ if if $w$ does not match $p$.
-- $\[p\]$ is matched by $w$ if $w$ is empty or matches $p$.
+- $[p]$ is matched by $w$ if $w$ is empty or matches $p$.
+
+Here are some examples of a compound expression that can be evaluated in order to get its
+set of mapped values.
+
+$$L((a | b)) = L(a) \cup L(b) = \{a\} \cup \{b\} = \{a,b\}$$
+$$L((a | b)(c | a)) = L(a) \cup L(b) L(c) \cup L(a) = \{a,b\} \cup \{c,a\} = \{ac,aa,bc,ba\}$$
+
+In order to preserve readability, we can ommit parentheses in order to simplify the
+expressions. Here is an example: $p|qr* = (p | (q(r)*))$
+
+It is important to realise that we can construct `ANY` regular expression, and all such
+expressions will be accepted by a corresponding NFA.
+
+**Creating Automata to only accept single constructs**
+
+For $\epsilon$ construct:
+
+```
+    --   E    --
+-->|  | ---> |  |
+    --        --
+```
+
+For $\emptyset$ construct:
+
+```
+    --        --
+-->|  |      |  |
+    --        --
+```
+
+More examples can be found in `Lecture 8: 30:00`
+
+> NOTE: include all standard constructs for automatons that are commonly used
+
+The above automatons can be used for formulation of more complicated regular expressions, we simplify
+these **at your own risk** as we may be able to save some states (making program more efficent)
+however we may find that we are leaving out cases that should be covered by our automaton.
+
+#### Using Regular Expressions as Symbols within Automata
+
+- Transitions may be labelled with regular expressions instead of just symbols from $\Sigma$ or $\epsilon$
+- There is just one accept state
+- There is at most one transition between any two states
+- There are no transtions into the start state or out of the acept state
+
+![Regex Transitions Example](./Diagrams/regex-transitions.png)
+
+We will see how we can translate any automaton into a regular expression.
+The main idea behind how we achieve this is to try to eliminate states from the diagram.
+
+![Converting automaton to regex](./Diagrams/automaton-to-regex.png)
+
+> The hard part of the above process is that we must apply this algorithm to all possible nodes
+> and edges, this means that we must apply the same pattern to all possible ways (this is unusual
+> and some times difficult).
+
+**Minimisation of Deterministic Finite Automata**
+
+A method to minimise the number of states in a DFA is:
+
+1. Eliminate states which cannot be reached from the start state
+2. Find equivalent states
+3. Collapse equivilent ststes
+
+The two states are *equivilant* if:
+
+- $\hat{\delta}(p,w) \in F \Longleftrightarrow \hat{\delta}(p,w) \in F \forall w \in \Sigma^{*}$
+- The automation accepts the same strings when started in *p* or in *q*.
+- Collapsing *p* and *q* does not change the accepted language
+- *p* and *q* are *distinguishable* if they are not equivalent
+
+Distringuishable states can be obtained as follows:
+
+- Any $p \in F$ and $q \not\in F$ are distinguishable by $w = \epsilon$
+- Let $\delta(p, a) = r$ and $\delta(q,a) = s$ for $a \in \Sigma$
+  * If $r$ and $s$ are distinguishable by ($w = x$) then $p$ and $q$ are distinguishable by ($w = ax$)
+
+**Equivilence in finite automata**
+
+We use the notation `p ~ q` if states `p` and `q` are equivilant, the relation `~` has:
+
+- is reflexive: $p \sim p \quad \forall \quad p \in Q$
+- is symmetric: $p \sim q$ implies $q \sim p$ for all $p,q \in Q$
+- is transitive $p \sim q$ and $q \sim r$ implies $p \sim r$ for each $p,q,r \in Q$
+
+An *equivilence relation* is a relation $\sim \subseteq A \times A$ that is reflexive, symmetric and transitive.
+
+* $[a] = \{b \in A | a \sim b\}$ is the equivalence class of $a \in A$
+* $a$ is representative of its equivilence class `[a]`
+* $A/\sim = \{[a] | a \in A \}$ is the *quotent* of $A$ by $\sim$
+  * This is the set of all equivialence classes
+
+Automaton can start from any nodes that are found in the equivilence class that starting node
+$s_0$ is in.
+
+Note that we minimal DFA's are unique up to isomprphism
+
+#### Minimisation algorithm Quotient construction
+
+![Algorithm to minimise quotient](./Diagrams/min-quotient-construction.png)
+
+#### Decision Problems for Regular Languages
+
+Simple yes or no problems about the properties of a given set
+
+> See Lecture 10, 24:00 minutes to see how these are done
+> Note, Go through these examples and actually implement them for end of year exams [ ]
+
+### Non-Regular Languages
+
+The language $A = {a^n b^n | n \in \mathbb{N}}$ is a non-regular language.
+
+The idea behind this proof is that we can construct a cycle where some iterations of the
+cycle are not included in the acceptance state.
+
+* Assume that $A$ is regular, we can prove this by applying contradiction
+  * $A = L(M)$ for DFA $M = (Q, \Sigma, \delta, q_0, F)$ with $k$ states
+* The transition sequence for input $a^k$ contains $k + 1$ states
+* By the pigeonhole principle, a state $q$ is visited twice
+
+![](./Diagrams/non-regular.png)
+
+* There are $i, j$ with $- \leq i \leq j \leq k$ and $\hat{\delta}(q_0, a^i) = \hat{\delta}(q_0, a^j)$
+* Hence \hat{\delta}(q_0, a^ib^i) = \hat{\delta}(q_0, a^jb^i)$
+* But $a^ib^i \in A$ and $a^jb^i \not\in A$, so $a^ib^i \in F$ and $a^jb^i \not\in F$
+* This is a contradiction, so the assumption does not hold
+
+#### The Pumping Lemma
+
+The pumping lemma can be used to identify a contradiction to be used in a proof.
+
+![](./Diagrams/pumping-lemma.png)
+
+The pumping lemma is an exchange of information between a set of agents, we are able to obtain
+certain values from this lemma in order to obtain more information about the problem we are
+trying to prove.
+
+![Sorting a list example](./Diagrams/sorting-list-example.png)
+
+The above figure is displaying how we might solve a programming problem using mathematics and
+the pumping lemma, the take away of this is that when we are solving problems in computer science,
+we are essentailly proving a mathematical statement. If we can prove the method from this construction,
+we do not need to test the output, as we can guarentee that if the proof holds and is the same as the
+problem construction, then the program has to work with 100% consistancy.
+
+The pumping lemma shows us that a few languages are non-regular, and if we can map other languages
+to the pumping lemma's non-regular languages, then we can determine that that language is also non-
+regular
+
+### Modelling Independent Processes
+
+This is a model of concurrency within a program. The *shuffle* operation describes two independent processes:
+
+- The shuffle `x || y` if two strings $x, y \in \Sigma^{*}$ contains all possible interleavings of their symbols 
+- For example, `ab||cd = {abcd, acbd, acdb, cabd, cadb, cdab}`
+- Shuffle of strings is defined inductively:
+
+![Shuffle of strings](./Diagrams/shuffle.png)
+
+
