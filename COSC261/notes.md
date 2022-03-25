@@ -422,7 +422,7 @@ Simple yes or no problems about the properties of a given set
 > See Lecture 10, 24:00 minutes to see how these are done
 > Note, Go through these examples and actually implement them for end of year exams [ ]
 
-### Non-Regular Languages
+## Non-Regular Languages
 
 The language $A = {a^n b^n | n \in \mathbb{N}}$ is a non-regular language.
 
@@ -437,7 +437,7 @@ cycle are not included in the acceptance state.
 ![](./Diagrams/non-regular.png)
 
 * There are $i, j$ with $- \leq i \leq j \leq k$ and $\hat{\delta}(q_0, a^i) = \hat{\delta}(q_0, a^j)$
-* Hence \hat{\delta}(q_0, a^ib^i) = \hat{\delta}(q_0, a^jb^i)$
+* Hence $\hat{\delta}(q_0, a^ib^i) = \hat{\delta}(q_0, a^jb^i)$
 * But $a^ib^i \in A$ and $a^jb^i \not\in A$, so $a^ib^i \in F$ and $a^jb^i \not\in F$
 * This is a contradiction, so the assumption does not hold
 
@@ -472,5 +472,49 @@ This is a model of concurrency within a program. The *shuffle* operation describ
 - Shuffle of strings is defined inductively:
 
 ![Shuffle of strings](./Diagrams/shuffle.png)
+
+### Context-Free Languages
+
+### Context-Free Grammars
+
+A *context-free grammar (CFG)* is a structure $G = (N, \Sigma, P, S)$ where
+
+* $N$ is a finite set, the *non-terminals*
+* $\Sigma$ is a finite set disjoint from $N$, the *terminals*
+* $P \subseteq N \times (N \cup \Sigma)^{*}$ is a finite set of *Productions*
+* $S \in N$ is the *start symbol*
+
+Productions are denoted as follows:
+
+* A production $(A,w) \in P$ is written $A \rightarrow w$
+* Several productions are written as $A \rightarrow w_1 | ... | w_n$
+* THe right-hand side may be empty: an $\epsilon$-production is written $A \rightarrow \epsilon$
+
+Here is an example of $G$ that matches with arithmetic expressions:
+
+$$ \Sigma = \{+,*,(,),n\} $$
+$$ N = \{E,T,F\} $$
+$$ S = E $$
+$$ P = E \rightarrow T | E + T $$
+$$ T \rightarrow F | T * F $$
+$$ F \rightarrow (E) | n $$
+
+Note that the production notation can be expressed as a piecewise
+
+$$ 
+E = \left\{
+\begin{array}{ll}
+      E \rightarrow T \\
+      E \rightarrow E + T \\
+\end{array} 
+\right.  
+$$
+
+This is the same expression as shown above in the example
+
+Using the previous example, we will see how we can compare strings using these `CFG`'s,
+see Lecture: `Tue Mar 22 : 16 Minutes`.
+
+
 
 
