@@ -15,6 +15,12 @@ titlepage-rule-height: 2
 
 # Course Information
 
+## Information about these notes
+
+These notes are meant to be used in conjunction to lecture material provided from COSC261
+at the University of Canterbury, there are references and links to particular lectures and
+videos about processes that will not be avalible to those reading this later
+
 ## Course Staff
 
 - Coordinator/Lecturer
@@ -515,6 +521,29 @@ This is the same expression as shown above in the example
 Using the previous example, we will see how we can compare strings using these `CFG`'s,
 see Lecture: `Tue Mar 22 : 16 Minutes`.
 
+#### Chomsky Normal Form
 
+A CFG $G = (N, \Sigma, P, S)$ is in chomsky normal form if every produciton has the form:
+
+- $A \rightarrow BC$ where $B,C \in N$ or,
+- $A \rightarrow a$ where $a \in \Sigma$
+- The right hand side of each production is either two non-terminals or a terminal
+
+![Steps for converting to Chomsky Normal Form](./Diagrams/chomsky.png)
+
+An example of how to convert to Chomsky Normal Form is run through in `Fri Mar 25 Lecture: 20 Minutes`
+
+#### The Cocke-Younger-Kasami Algorithm
+
+This is a recursive algorithm to solve the membership problem $w \in L(G)$, we start by
+assuming that $G$ is in chomsky normal form, then we let $n$ be the length of $w$. Mark the
+indicies for the symbols in $w$ and then computer between positions *i,j* until we generate
+$w_{ij}$. The end result is calculating $N_{ij} = \{A \in N | A \longrightarrow^{*} w_{ij}\}$.
+
+![](./Diagrams/cocke-younger.png)
+
+This is a technique to improve running time, it is a specific use of *dynamic programming*
+(bottom up approach). It works by creating smaller problems in order to solve bigger problems
+and avoids repeating calculation of previous smaller problems.
 
 
