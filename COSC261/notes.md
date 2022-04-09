@@ -546,4 +546,39 @@ This is a technique to improve running time, it is a specific use of *dynamic pr
 (bottom up approach). It works by creating smaller problems in order to solve bigger problems
 and avoids repeating calculation of previous smaller problems.
 
+### Pushdown automata (Stack automaton)
 
+A pushdown automaton is an extension of a finite automaton
+
+- A stach is added in which stack symbols can be storied
+- Transitions may depend on symbols at the top of the stack
+- Transitions may change the symbols at the top of the stack
+- The stack size is unlimited
+
+**PDA definition**
+
+- A PDA is some structure: $M = Q, \Sigma, \Gamma, q_0, F$
+- $\Gamma$ is a finite set, the stack *alphabet*
+- $\delta : Q \times (\Sigma \cup \{\epsilon\}) \times \Gamma^{*} \rightarrow P(Q \times \Gamma^{*})$ is the transition relation
+
+The transition relation has the following properties:
+
+- As in NFA's with $\epsilon$ transitions, there are two sorces of non-deterministic_finite_automata
+- $\delta$ may have $\epsilon$ transitions
+- $\delta$ yields a set of successor statesboy
+- Extending NFA's the transitions refer to the top symbol of the stack
+
+**The goal of PDA's Acceptance**
+
+This is a little bit different to NFA's and DFA's, the goal of a PDA is that
+the stack must be empty at the end of a string in order to be accepted. this
+means that anything that is added must be removed in order for the automaton
+to accept.
+
+![PDA Acceptance criteria](./Diagrams/pda-acceptance.png)
+
+> For this type of automaton, it is worthy to note that the states are not
+> as important as the transitions, we often can reduce data to very few states
+> with this type of automaton.
+
+**NEXT LECTURE 1st APRIL**
