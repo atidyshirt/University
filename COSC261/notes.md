@@ -479,7 +479,7 @@ This is a model of concurrency within a program. The *shuffle* operation describ
 
 ![Shuffle of strings](./Diagrams/shuffle.png)
 
-### Context-Free Languages
+## Context-Free Languages
 
 ### Context-Free Grammars
 
@@ -543,8 +543,36 @@ $w_{ij}$. The end result is calculating $N_{ij} = \{A \in N | A \longrightarrow^
 ![](./Diagrams/cocke-younger.png)
 
 This is a technique to improve running time, it is a specific use of *dynamic programming*
-(bottom up approach). It works by creating smaller problems in order to solve bigger problems
-and avoids repeating calculation of previous smaller problems.
+(bottom up approach). It works by creating smaller problems in order to solve bigger problems and avoids repeating calculation of previous smaller problems.
+
+#### Decision Problems For Context-Free Languages
+
+- Membership $x \in \Sigma^{*}$
+	* Convert $G$ into chomsky normal form and apply CYK
+- Emptiness $L(G) = \emptyset$
+	* Check if the start symbol is non-generating
+- Finiteness $|L(G)| \in \mathbb{N}$
+	* Convert G into Chomsky normal form
+	* Construct a graph with:
+		+ Nodes: non-terminals
+		+ edges: for every $A \rightarrow BC$ add an edge $(A,B)$ and an edge $(A,C)$
+- Universality $L(G) = \Sigma^{*}$ and intersection emptiness $L(G) \cap L(G^{'}) = \emptyset$:
+	* There are no algorithms to solve this problem
+- Equivalence $L(G) = L(G^')$
+	* There is no algorithm to solve this problem
+- Inclusion $L(G) \subseteq L(G')$
+	* There is no algorithm to solve this problem
+
+#### Closure properties of Context-Free Languages
+
+CFL's are closed under union:
+
+- Let $L_1 = L(G_1)$ and $L_2 = L(G_2)$
+- Assume that $N_1 \cap N_2 = \emptyset$ and let $S \not\in N_1 \cup N_2$.
+- Construct $G = (N_1 \cup N_2 \cup \{S\}, \Sigma, P_1 \cup P_2 \cup \{S \rightarrow S_1, S \rightarrow S_2\}, S)$
+- Then $L(G) = L_1 \cup L_2$
+
+Similar constructions show that CFL's are closed under concatenation and star. The intersection of a CFL and a regular language is a context free languages. CFL's are **not** closed under intersection.
 
 ### Pushdown automata (Stack automaton)
 
@@ -581,4 +609,93 @@ to accept.
 > as important as the transitions, we often can reduce data to very few states
 > with this type of automaton.
 
-**NEXT LECTURE 1st APRIL**
+**Notes about PDA's**
+
+- We cannot take an abitory PDA and execute an algorithm to get a deterministic PDA that accepts the same language. *This is impossible*.
+- We can generate a equivilent context free language for every given PDA.
+
+## Compilers
+
+Interpreters and compilers:
+
+* Assume a high level program $P$ takes input $I$ and produces output $O$.
+* An interpreter takes $P$ and $I$ and producese $O$.
+* Compiling breaks this process into two parts.
+* The compiler takes $P$ and produces low-level machine code $M$.
+* The processor takes $M$ and $I$ and produces $O$.
+* Matched syntax or strings within a language are called `Token's`
+
+Languages like Java have both an interpreter and a compiler. There is no reason why you cannot do this for any given language, it is mearly a matter of work. Typically compilers go right down to machine code. An example of this is the C language, it does this by using two steps. One to convert C code to assembily and then a second compiling step in order to convert assembily to raw machine code.
+
+### How does a compiler convert these instructions?
+
+We can use expression/syntax trees in order to model the parser. This allows us to see what is happening in the design under the hood.
+
+![Here is a small overview of how this works](./Diagrams/compiler-steps.png)
+
+These trees can be optimised in order to speed up the process. Most of these optimisations can be performed before it is taken down to the target language. The general way this is translated is as follows:
+
+- The machine holds the valuese of variables in a small number of *registers*
+- Calculations take place on the *stack*
+- The contents of regirsters are pushed and popped from the stack
+- The processor executes the code step by step unless instructed to jump
+
+### Lexical Analysis
+
+**The first step of compiling is performed by the scanner:**
+
+* It reads the source code character by character
+* It produces a sequence of tokens to be fed to the parser
+* White-space and comments are discarded
+
+**There are several kinds of tokens:**
+
+- reserved words
+- symbols
+- identifiers (such as variable names)
+- number constants
+- string constants
+- Identifiers and constants that have concrete values attached
+
+Each of theses are are described or defined by a regular expression, for reserved words and symbols this might be just a simple string. For other kinds, a sequence of definitions might be used.
+
+When defining these tokens, it is important to follow the following rules:
+
+- Such a sequence of definitions must not be cyclic
+- It can be converted into a flat regular expression by repeated substitution
+- Character classses abbreviate choices
+- The resulting regular expression is converted to a DFA that is used for matching
+
+**Use of the scanner:**
+
+- The scanner will not convert the entire source code at once.
+- Typically it is called by the parser to deliver the next token in the source.
+- The parser needs *lookahead* that shows the next token without consuming it.
+
+### Scanners and Automata
+
+The scanner recognises several kinds of tokens at the same time. This allows us to group identifiers, symbols and reserve words into groups. To design this, we can construct an NFA in order to easily combine the given automata (using epsilon transitions connecting to each of the converted NFA's for each of the rules).
+
+Once we have our big automaton, we can convert it to a DFA and then minimise in order to get an automaton that we can use.
+
+In order to take the complement of an regex, we can construct a regex, convert it to a DFA and take the complement for a given automaton.
+
+In the lectures `Wed Apr 6` there is an example on how to build a DFA for a C-style comment for a programming language. This can be found at `19:00`.
+
+**Notes**
+
+Terminals used in context free grammars are defined as the tokens found in a programming lagnuage. The non-terminals associated with this context are `Expressions, Statements, Comparisons` as these are the generators of tokens.
+
+### Syntax Trees
+
+The parser constructs a syntax tree from a sequence of tokens
+
+* Every leaf of the syntax tree is labelled with a terminal
+* Every inner node of the syntax tree corresponds with the application of a rule
+* The inner node is labelled with a non-terminal on the left hand side
+* The tree is ordered: the sequence of children matters
+
+![Syntax tree exaple](./Diagrams/syntax-tree.png)
+
+We can see how to construct these syntax trees in the `Fri Apr 8` lecture at time `24:00`.
+There are two different methods to do this construction. We can use the Top down approach or the bottom up approach (both of these approaches are outlined in this section of the lectures).
