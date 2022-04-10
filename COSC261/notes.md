@@ -558,7 +558,7 @@ This is a technique to improve running time, it is a specific use of *dynamic pr
 		+ edges: for every $A \rightarrow BC$ add an edge $(A,B)$ and an edge $(A,C)$
 - Universality $L(G) = \Sigma^{*}$ and intersection emptiness $L(G) \cap L(G^{'}) = \emptyset$:
 	* There are no algorithms to solve this problem
-- Equivalence $L(G) = L(G^')$
+- Equivalence $L(G) = L(G^{'})$
 	* There is no algorithm to solve this problem
 - Inclusion $L(G) \subseteq L(G')$
 	* There is no algorithm to solve this problem
@@ -694,8 +694,6 @@ The parser constructs a syntax tree from a sequence of tokens
 * Every inner node of the syntax tree corresponds with the application of a rule
 * The inner node is labelled with a non-terminal on the left hand side
 * The tree is ordered: the sequence of children matters
-
-![Syntax tree exaple](./Diagrams/syntax-tree.png)
 
 We can see how to construct these syntax trees in the `Fri Apr 8` lecture at time `24:00`.
 There are two different methods to do this construction. We can use the Top down approach or the bottom up approach (both of these approaches are outlined in this section of the lectures).
