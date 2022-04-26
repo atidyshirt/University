@@ -39,8 +39,8 @@ videos about processes that will not be avalible to those reading this later
 
 - Quizzes (15%)
 - Assignment Superquiz (10%)
-- Lab Test (15%)
-- Final Exam (60%)
+- Lab Test (35%)
+- Final Exam (40%)
 
 ## Textbooks/Resources
 
