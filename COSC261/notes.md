@@ -697,3 +697,54 @@ The parser constructs a syntax tree from a sequence of tokens
 
 We can see how to construct these syntax trees in the `Fri Apr 8` lecture at time `24:00`.
 There are two different methods to do this construction. We can use the Top down approach or the bottom up approach (both of these approaches are outlined in this section of the lectures).
+
+### Parsers
+
+#### BNF
+
+Extended BNF has regular expressions as on the right-hand side.
+
+Tese rules for epxressions and terms can be written as:
+
+$$ Expression \quad = \quad (\epsilon | Expression \quad Additive) \quad Term $$
+$$ Term \quad = \quad (\epsilon | Term \quad Multiplicitve) \quad Factor $$
+
+Using `[P]` for optional `p`, this is:
+
+$$ Expression \quad = \quad [Expression \quad Additive] \quad Term $$
+$$ Term \quad = \quad [Term \quad Multiplicitve] \quad Factor $$
+
+An alternative extended `BNF` is:
+
+$$ Expression \quad = \quad (Additive Term)* $$
+$$ Factor \quad = \quad (Multiplicitve Factor)* $$
+
+We can use dynamic programming to create `parsers`, we will be using a top down parser for the assignment, as it is easier to understand than the bottom up `parsers`.
+
+A parser can be implemented as a set of mutually recursive functions, meaning that the set of funcitions is recursive.
+
+For the above, we might have definitions that look like the following:
+
+```python
+def expression():
+
+def term():
+
+def factor():
+```
+
+> This is explored in full in the `Tues May 3rd Lecture (05:30)`
+
+If elements received from the right hand side of these definitions outlined above, it will be computed and called in the nessacary manner. If the element is not found in the right side, then it is an unknown token and will raise an exception.
+
+`factor()`:
+
+- Will contain conditionals for all types of tokens
+- Will call respective functions baised on valid syntax
+	- will also find pairings of parentheses for things like expressions
+
+It is important to note that sometimes factors, expressions and symbols may not be all strictly distinguishable. Meaning that there may be some cross over or context might apply.
+
+To deal with this we can use an *abstract symbol tree* allowing us to store the structure of the code. This is an alternative to a *concrete symbol tree* which does not have the context of the symbols.
+
+
