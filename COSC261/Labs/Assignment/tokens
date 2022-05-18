@@ -1,0 +1,31 @@
+WHILE
+ID n
+GRTR
+NUM 0
+DO
+ID sum
+SUB
+ID n
+SEM
+ID n
+BEC
+ID n
+SUB
+NUM 1
+ID x
+BEC
+ID sumn
+SUB
+NUM 1
+ID z
+BEC
+ID n
+SUB
+NUM 1
+ID y
+BEC
+ID n
+SUB
+NUM 1
+END
+SEM

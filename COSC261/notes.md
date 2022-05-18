@@ -747,4 +747,98 @@ It is important to note that sometimes factors, expressions and symbols may not 
 
 To deal with this we can use an *abstract symbol tree* allowing us to store the structure of the code. This is an alternative to a *concrete symbol tree* which does not have the context of the symbols.
 
+**Dangling Else Problem**
+
+This describes the issue with defining multiple if statements and then we have to ask what `if` the else is resolving, which one is it being matched to? How can we define this in a programming langauge.
+
+![Example if problematic syntax tree](./Diagrams/danging-else-problem.png)
+
+How can we handle this problem?
+
+- We can force the user to use brackets in order to define a range within the codebase.
+- We can use indentation rules in order to deal with this.
+
+#### Semantic Analysis
+
+Examples of semantic analyses:
+
+- type checking
+- type inference: what type of an expression?
+- declaration
+- define assignment
+- binding: which variable is assigned to what?
+
+##### Type Systems
+
+Many functions are partial, that is they cannot be applied to all arguements
+
+- Add two numbers but not two lists
+- Access the first element of a list, but not of a set
+- Compare two integers for <=, but not two complex numbers
+- Find the shortest path in a graph
+- Sort a list of integers but not a list that mixes integers and strings
+- Convert an integer to a string
+
+The type of a variable or expressions is the set of possible variables it can take
+
+- A function might declare the type of its parameters and the type of its result
+- Search a function can only be applied to expressions with matching type
+- Its result can only be used in context with matching type
+
+We can choose two different types of typing, static type checking and run time checking:
+
+- static type: check for types at runtime
+- dynamc type: check types at compile time
+
+How does a type system actually work within a compiler?
+
+**Implementing a type for numbers (floats and ints)**
+
+```
+typeof(t1, t2) --> int | float
+	if t1 and t2 is int --> return int
+	else --> return float
+op in {+,-,*,/} with A, M
+
+then we construct a gramamr that evaluates types and operands
+```
+
+Here is an abstracted example of how this might be used in practice
+
+```
+grammar:
+	A = '+'
+	E = T -> ensuring same type for caclulation
+	E = E A T -> including operand
+
+typeof(A.op, E.type, T.type) -> caclulating resulting type
+```
+
+It is important to understand the expression type as this can be used later for certain types of optimisation.
+
+#### Machine-Independent optimisation
+
+The fourth step of compiling is to perform optimisation, this is done by the *machine-independent optimiser*
+
+- Optimisation takes place on the syntax tree or another intermediate form
+- It does not need to know the target processor
+
+The following example shows constant propagation, constant folding and dead code elimination
+
+- Constants assigned to a variable can be propagated to uses of the variable and substituted
+- Constant expressions can be eevaluated and the result substituted (folded)
+- Code that does not affect the result can be removed
+
+```
+x := 11;
+y := 4;
+z := 8 * x; --> at compile time becomes z := 8 * 11
+				and removed first declaration
+```
+
+Note, its not always this simple, as later the variable could be changed or reassigned (we have clever algorithms in order to deal with this). This is the type of optimisation
+that makes a large difference to the run time and typically slows down the compile time. We cannot call functions independently as when we make one fold, propagation or other optimisation,
+it affects the new code, maybe things can be further optimised after the changes. This means that we need to run them and then rerun in order to get the best results. (This could potentially
+be very slow).
+
 
