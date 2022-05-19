@@ -11,6 +11,7 @@ This requires Internet access to download the package.
 """
 
 import ply.lex as lex
+import ply.yacc as yacc
 import sys
 
 """
@@ -150,6 +151,20 @@ class If_AST:
                self.condition.indented(level+1) + \
                self.then.indented(level+1)
 
+class If_Else_AST:
+    def __init__(self, condition, then, _else):
+        self.condition = condition
+        self.then = then
+        self._else = _else
+    def __repr__(self):
+        return 'if ' + repr(self.condition) + ' then ' + \
+                       repr(self.then) + ' else ' + repr(self._else) + ' end'
+    def indented(self, level):
+        return indent('If-Else', level) + \
+               self.condition.indented(level+1) + \
+               self.then.indented(level+1) + \
+               self._else.indented(level+1)
+
 class While_AST:
     def __init__(self, condition, body):
         self.condition = condition
@@ -280,13 +295,20 @@ def p_statements_statements(p):
 
 def p_statement(p):
     '''Statement : If
+                 | If-Else
                  | While
+                 | Write
+                 | Read
                  | Assignment'''
     p[0] = p[1]
 
 def p_if(p):
     'If : IF Comparison THEN Statements END'
     p[0] = If_AST(p[2], p[4])
+
+def p_if_else(p):
+    'If-Else : IF Comparison THEN Statements ELSE Statements END'
+    p[0] = If_Else_AST(p[2], p[4], p[6])
 
 def p_while(p):
     'While : WHILE Comparison DO Statements END'
@@ -331,6 +353,14 @@ def p_expression_id(p):
 def p_id(p):
     'Id : ID'
     p[0] = Identifier_AST(p[1])
+
+def p_read(p):
+    'Read : READ Id'
+    p[0] = Read_AST(p[2])
+
+def p_write(p):
+    'Write : WRITE Expression'
+    p[0] = Write_AST(p[2])
 
 def p_error(p):
     print("syntax error")
