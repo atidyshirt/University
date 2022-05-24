@@ -1,6 +1,12 @@
 import re
 import sys
 
+# Restrictions:
+# Integer constants must be short.
+# Stack size must not exceed 1024.
+# Integer is the only type.
+# Logical operators cannot be nested.
+
 class Scanner:
     '''The interface comprises the methods lookahead and consume.
        Other methods should not be called from outside of this class.'''
@@ -134,11 +140,39 @@ class Token:
         (ID,    '[a-z]+'),
     ]
 
+class Symbol_Table:
+    '''A symbol table maps identifiers to locations.'''
+    def __init__(self):
+        self.symbol_table = {}
+    def size(self):
+        '''Returns the number of entries in the symbol table.'''
+        return len(self.symbol_table)
+    def location(self, identifier):
+        '''Returns the location of an identifier. If the identifier is not in
+           the symbol table, it is entered with a new location. Locations are
+           numbered sequentially starting with 0.'''
+        if identifier in self.symbol_table:
+            return self.symbol_table[identifier]
+        index = len(self.symbol_table)
+        self.symbol_table[identifier] = index
+        return index
+
+class Label:
+    def __init__(self):
+        self.current_label = 0
+    def next(self):
+        '''Returns a new, unique label.'''
+        self.current_label += 1
+        return 'l' + str(self.current_label)
+
 def indent(s, level):
     return '    '*level + s + '\n'
 
 # Each of the following classes is a kind of node in the abstract syntax tree.
 # indented(level) returns a string that shows the tree levels by indentation.
+# code() returns a string with JVM bytecode implementing the tree fragment.
+# true_code/false_code(label) jumps to label if the condition is/is not true.
+# Execution of the generated code leaves the value of expressions on the stack.
 
 class Program_AST:
     def __init__(self, program):
@@ -147,6 +181,28 @@ class Program_AST:
         return repr(self.program)
     def indented(self, level):
         return self.program.indented(level)
+    def code(self):
+        program = self.program.code()
+        local = symbol_table.size()
+        java_scanner = symbol_table.location('Java Scanner')
+        return '.class public Program\n' + \
+               '.super java/lang/Object\n' + \
+               '.method public <init>()V\n' + \
+               'aload_0\n' + \
+               'invokenonvirtual java/lang/Object/<init>()V\n' + \
+               'return\n' + \
+               '.end method\n' + \
+               '.method public static main([Ljava/lang/String;)V\n' + \
+               '.limit locals ' + str(local) + '\n' + \
+               '.limit stack 1024\n' + \
+               'new java/util/Scanner\n' + \
+               'dup\n' + \
+               'getstatic java/lang/System.in Ljava/io/InputStream;\n' + \
+               'invokespecial java/util/Scanner.<init>(Ljava/io/InputStream;)V\n' + \
+               'astore ' + str(java_scanner) + '\n' + \
+               program + \
+               'return\n' + \
+               '.end method\n'
 
 class Statements_AST:
     def __init__(self, statements):
@@ -161,6 +217,11 @@ class Statements_AST:
         for st in self.statements:
             result += st.indented(level+1)
         return result
+    def code(self):
+        result = ''
+        for st in self.statements:
+            result += st.code()
+        return result
 
 class If_AST:
     def __init__(self, condition, then):
@@ -173,6 +234,13 @@ class If_AST:
         return indent('If', level) + \
                self.condition.indented(level+1) + \
                self.then.indented(level+1)
+    def code(self):
+        l1 = label_generator.next()
+        return self.condition.false_code(l1) + \
+               self.then.code() + \
+               l1 + ':\n'
+
+# TODO: include boolean logic AST's
 
 class If_Else_AST:
     def __init__(self, condition, then, _else):
@@ -187,6 +255,14 @@ class If_Else_AST:
                self.condition.indented(level+1) + \
                self.then.indented(level+1) + \
                self._else.indented(level+1)
+    def code(self):
+        l1 = label_generator.next()
+        l2 = label_generator.next()
+        return self.condition.false_code(l1) + \
+               self.then.code() + 'goto ' + l2 + '\n' + \
+               l1 + ':\n' + \
+               self._else.code() + \
+               l2 + ':\n'
 
 class While_AST:
     def __init__(self, condition, body):
@@ -199,6 +275,14 @@ class While_AST:
         return indent('While', level) + \
                self.condition.indented(level+1) + \
                self.body.indented(level+1)
+    def code(self):
+        l1 = label_generator.next()
+        l2 = label_generator.next()
+        return l1 + ':\n' + \
+               self.condition.false_code(l2) + \
+               self.body.code() + \
+               'goto ' + l1 + '\n' + \
+               l2 + ':\n'
 
 class Assign_AST:
     def __init__(self, identifier, expression):
@@ -210,6 +294,10 @@ class Assign_AST:
         return indent('Assign', level) + \
                self.identifier.indented(level+1) + \
                self.expression.indented(level+1)
+    def code(self):
+        loc = symbol_table.location(self.identifier.identifier)
+        return self.expression.code() + \
+               'istore ' + str(loc) + '\n'
 
 class Write_AST:
     def __init__(self, expression):
@@ -218,6 +306,11 @@ class Write_AST:
         return 'write ' + repr(self.expression)
     def indented(self, level):
         return indent('Write', level) + self.expression.indented(level+1)
+    def code(self):
+        return 'getstatic java/lang/System/out Ljava/io/PrintStream;\n' + \
+               self.expression.code() + \
+               'invokestatic java/lang/String/valueOf(I)Ljava/lang/String;\n' + \
+               'invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n'
 
 class Read_AST:
     def __init__(self, identifier):
@@ -226,6 +319,12 @@ class Read_AST:
         return 'read ' + repr(self.identifier)
     def indented(self, level):
         return indent('Read', level) + self.identifier.indented(level+1)
+    def code(self):
+        java_scanner = symbol_table.location('Java Scanner')
+        loc = symbol_table.location(self.identifier.identifier)
+        return 'aload ' + str(java_scanner) + '\n' + \
+               'invokevirtual java/util/Scanner.nextInt()I\n' + \
+               'istore ' + str(loc) + '\n'
 
 class Comparison_AST:
     def __init__(self, left, op, right):
@@ -238,6 +337,19 @@ class Comparison_AST:
         return indent(self.op, level) + \
                self.left.indented(level+1) + \
                self.right.indented(level+1)
+    def true_code(self, label):
+        op = { '<':'if_icmplt', '=':'if_icmpeq', '>':'if_icmpgt',
+               '<=':'if_icmple', '!=':'if_icmpne', '>=':'if_icmpge' }
+        return self.left.code() + \
+               self.right.code() + \
+               op[self.op] + ' ' + label + '\n'
+    def false_code(self, label):
+        # Negate each comparison because of jump to "false" label.
+        op = { '<':'if_icmpge', '=':'if_icmpne', '>':'if_icmple',
+               '<=':'if_icmpgt', '!=':'if_icmpeq', '>=':'if_icmplt' }
+        return self.left.code() + \
+               self.right.code() + \
+               op[self.op] + ' ' + label + '\n'
 
 class Expression_AST:
     def __init__(self, left, op, right):
@@ -250,6 +362,11 @@ class Expression_AST:
         return indent(self.op, level) + \
                self.left.indented(level+1) + \
                self.right.indented(level+1)
+    def code(self):
+        op = { '+':'iadd', '-':'isub', '*':'imul', '/':'idiv' }
+        return self.left.code() + \
+               self.right.code() + \
+               op[self.op] + '\n'
 
 class Number_AST:
     def __init__(self, number):
@@ -258,6 +375,8 @@ class Number_AST:
         return self.number
     def indented(self, level):
         return indent(self.number, level)
+    def code(self): # works only for short numbers
+        return 'sipush ' + self.number + '\n'
 
 class Identifier_AST:
     def __init__(self, identifier):
@@ -266,6 +385,9 @@ class Identifier_AST:
         return self.identifier
     def indented(self, level):
         return indent(self.identifier, level)
+    def code(self):
+        loc = symbol_table.location(self.identifier)
+        return 'iload ' + str(loc) + '\n'
 
 # The following methods comprise the recursive-descent parser.
 
@@ -293,19 +415,15 @@ def statement():
     elif scanner.lookahead() == Token.WRITE:
         return write()
     else: # error
-        return scanner.consume(Token.IF, Token.WHILE, Token.ID)
+        return scanner.consume(Token.IF, Token.WHILE, Token.ID, Token.READ, Token.WRITE)
 
 def if_statement():
-    token = None;
     scanner.consume(Token.IF)
     condition = comparison()
     scanner.consume(Token.THEN)
     then = statements()
-    if scanner.lookahead() == Token.ELSE:
-        scanner.consume(Token.ELSE)
-        token = statements()
     scanner.consume(Token.END)
-    return If_Else_AST(condition, then, token) if token else If_AST(condition, then)
+    return If_AST(condition, then)
 
 def write():
     scanner.consume(Token.WRITE)
@@ -376,13 +494,16 @@ def identifier():
     value = scanner.consume(Token.ID)[1]
     return Identifier_AST(value)
 
-# Initialise scanner.
+# Initialise scanner, symbol table and label generator.
 
 scanner = Scanner(sys.stdin)
+symbol_table = Symbol_Table()
+symbol_table.location('Java Scanner') # fix a location for the Java Scanner
+label_generator = Label()
 
-# # Uncomment the following to test the scanner without the parser.
-# # Show all tokens in the input.
-# #
+# Uncomment the following to test the scanner without the parser.
+# Show all tokens in the input.
+
 # token = scanner.lookahead()
 # while token != None:
 #     if token in [Token.NUM, Token.ID]:
@@ -401,7 +522,16 @@ if scanner.lookahead() != None:
           repr(scanner.lookahead()) + ' found')
     sys.exit()
 
+# Uncomment the following to test the parser without the code generator.
 # Show the syntax tree with levels indicated by indentation.
 
-print(ast.indented(0), end='')
+# print(ast.indented(0), end='')
+# sys.exit()
+
+# Call the code generator.
+
+# Translate the abstract syntax tree to JVM bytecode.
+# It can be assembled to a class file by Jasmin: http://jasmin.sourceforge.net/
+
+print(ast.code(), end='')
 
