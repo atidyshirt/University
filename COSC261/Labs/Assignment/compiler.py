@@ -90,6 +90,9 @@ class Token:
     IF    = 'IF'
     THEN  = 'THEN'
     WHILE = 'WHILE'
+    OR    = 'OR'
+    AND   = 'AND'
+    NOT   = 'NOT'
     READ  = 'READ'
     WRITE = 'WRITE'
     SEM   = 'SEM'
@@ -120,6 +123,9 @@ class Token:
         (IF,    'if'),
         (THEN,  'then'),
         (WHILE, 'while'),
+        (OR,    'or'),
+        (AND,   'and'),
+        (NOT,   'not'),
         (READ,  'read'),
         (WRITE, 'write'),
         (SEM,   ';'),
@@ -240,8 +246,6 @@ class If_AST:
                self.then.code() + \
                l1 + ':\n'
 
-# TODO: include boolean logic AST's
-
 class If_Else_AST:
     def __init__(self, condition, then, _else):
         self.condition = condition
@@ -259,11 +263,47 @@ class If_Else_AST:
         l1 = label_generator.next()
         l2 = label_generator.next()
         return self.condition.false_code(l1) + \
-               self.then.code() + 'goto ' + l2 + '\n' + \
+               self.then.code() + \
                l1 + ':\n' + \
                self._else.code() + \
                l2 + ':\n'
 
+class BooleanExpression_AST:
+    def __init__(self, expression):
+        self.expression = expression 
+        self.string = ""
+    def true_code(self, label):
+        for comparison in self.expression:
+            self.string += comparison.true_code(label)
+        return self.string
+    def false_code(self,label):
+        l1 = label_generator.next()
+        for comparison in self.expression:
+            self.string += comparison.true_code(l1)
+        return self.string + 'goto ' + label + '\n' + l1 + ':\n'
+
+class BooleanTerm_AST:
+    def __init__(self,term):
+        self.term = term
+        self.string = ""
+    def true_code(self,label):
+        l1 = label_generator.next()
+        for comparison in self.term:
+            self.string += comparison.false_code(l1)
+        return self.string + 'goto ' + label + '\n' + l1 + ':\n'
+    def false_code(self,label):
+        for comparison in self.term:
+            self.string += comparison.false_code(label)
+        return self.string
+
+class BooleanFactor_AST:
+    def __init__(self,factor):
+        self.factor = factor
+    def false_code(self,label):
+        return self.factor.true_code(label)
+    def true_code(self,label):
+        return self.factor.false_code(label)
+    
 class While_AST:
     def __init__(self, condition, body):
         self.condition = condition
@@ -415,15 +455,43 @@ def statement():
     elif scanner.lookahead() == Token.WRITE:
         return write()
     else: # error
-        return scanner.consume(Token.IF, Token.WHILE, Token.ID, Token.READ, Token.WRITE)
+        return scanner.consume(Token.IF, Token.WHILE, Token.ID)
 
 def if_statement():
+    token = None;
     scanner.consume(Token.IF)
-    condition = comparison()
+    condition = boolean_expression()
     scanner.consume(Token.THEN)
     then = statements()
+    if scanner.lookahead() == Token.ELSE:
+        scanner.consume(Token.ELSE)
+        token = statements()
     scanner.consume(Token.END)
-    return If_AST(condition, then)
+    return If_Else_AST(condition, then, token) if token else If_AST(condition, then)
+
+def boolean_expression():
+    res = [boolean_term()]
+    while scanner.lookahead() == Token.OR:
+        scanner.consume(Token.OR)
+        term = boolean_term()
+        res.append(term)
+    return BooleanExpression_AST(res)
+        
+
+def boolean_term():
+    factors = [boolean_factor()]
+    while scanner.lookahead() == Token.AND:
+        scanner.consume(Token.AND)
+        factor = boolean_factor()
+        factors.append(factor)
+    return BooleanTerm_AST(factors)
+
+def boolean_factor():
+    if scanner.lookahead() == Token.NOT:
+        scanner.consume(Token.NOT)
+        factor = boolean_factor()
+        return BooleanFactor_AST(factor)
+    return comparison()
 
 def write():
     scanner.consume(Token.WRITE)
@@ -437,7 +505,7 @@ def read():
 
 def while_statement():
     scanner.consume(Token.WHILE)
-    condition = comparison()
+    condition = boolean_expression()
     scanner.consume(Token.DO)
     body = statements()
     scanner.consume(Token.END)
@@ -534,4 +602,3 @@ if scanner.lookahead() != None:
 # It can be assembled to a class file by Jasmin: http://jasmin.sourceforge.net/
 
 print(ast.code(), end='')
-

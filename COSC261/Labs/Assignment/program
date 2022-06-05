@@ -1,7 +1,20 @@
 read n;
+write n;
 sum := 0;
-while n > 0 do
-  sum := sum + n;
-  n := n - 1
+z := 0;
+while n >= 0 and n <= 10 do
+  if n < 10 then
+	  if n = 8 then
+		  write 1
+	  else
+		  sum := sum + n
+	  end
+  end;
+  n := n + 1
 end;
-write sum
+x := sum;
+if x < 25 then
+	z := x
+end;
+write x;
+write z
