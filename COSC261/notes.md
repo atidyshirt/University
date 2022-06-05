@@ -41,6 +41,9 @@ videos about processes that will not be avalible to those reading this later
 - Assignment Superquiz (10%)
 - Lab Test (35%)
 - Final Exam (40%)
+    * Held online
+    * Covers entire course
+    * open book exam
 
 ## Textbooks/Resources
 
@@ -841,4 +844,119 @@ that makes a large difference to the run time and typically slows down the compi
 it affects the new code, maybe things can be further optimised after the changes. This means that we need to run them and then rerun in order to get the best results. (This could potentially
 be very slow).
 
+#### Computation Models
 
+There are many different computation models:
+
+- TM with multiple tapes
+- pushdown automata with two stacks
+- Post systems
+- Markov algorithms
+- Type-0 grammars
+- $\lambda$ expressions, prevalent in functional programming languages
+- Combinatory logic
+- While-programs, a subset of most programming languages
+
+All of these models can acceept the same languages and compute the same functions.
+
+**Church-Turing thesis:**
+
+*The intuitively computable functions are those that are partially computable by a turing machine.* And therefore can be computed by any of these other formalisms.
+
+> There is a mathematical notation that defines this definition, it is a thesis as it does not have a formal definition of what this means to be 'intuatively computable'
+
+We cannot go into all of these topics in the scope of this course, however we will delve further into *typed grammars*
+
+### The Compsky Heirarchy
+
+**Type-0 Grammars**
+
+A *type-0* grammar is a structure $G = (N, \Sigma, P, S)$ where:
+
+- $N$ is a finite set, the *non-terminals*
+- $\Sigma$ is a finite set disjoint from $N$, the *terminals*
+- $P \subseteq (N \cup \Sigma)^{+} \times (N \cup \Sigma)^{*}$ is a *finite set of productions*
+- $S \in N$ is the *start symbol*
+
+Different types of grammars are obtained by restricting the form each production $x \rightarrow y$:
+
+- Type-0 (general): $1 \leq |x|$
+- Type-1 (context-sensitive): $1 \leq |x| \leq |y|$
+- Type-2 (context-free): $x \in N$
+- Type-3 (regular): $x \in N \quad and \quad y \in \Sigma \times N \cup \{\epsilon\}$
+
+These above exclusions are the parameters that define whether or not it is included in the type heirarchy.
+
+**Examples of these grammars**
+
+```
+Type-0: AB ->  B
+Type-1: AB ->  Bc
+Type-2: A ->  BcB
+Type-3: A ->  cB
+```
+
+Note that the restrictions are increasing the further we go down the heirarchy. This means that each generic are a subset of each other, such that:
+
+$$ Type-3 \subset Type-2 \subset Type-1 \subset Type-0 $$
+
+The following table shows the corespondence between grammars, languages and automata:
+
+| grammar | language | automata |
+| type-0 | recuresively enummeral | TM/NTM |
+| type-1 | context-sensitive | LBA (memory bounded NFA) |
+| type-2 | context-free | PDA |
+| type-3 | regular | DFA/NFA |
+
+Why is context-sensitive grammars contained and map directly to the set of `LBA's`?
+    * This is considered a very important open problem in the realm of computer science.
+
+#### Undecidable Problems: The Halting Problem
+
+The special halting problem `SHP` is defined as the following:
+
+$$ SHP = \{\langle M \rangle | M \ halts \ on \ input \langle M \rangle\} $$
+
+The above problem is undecidable, `PROOF`:
+
+- Assume to the contrary that SHP is decidable
+- Then $SHP = L(M_{SHP})$ for a total $TM$ $M_{SHP}$
+- Construct a $TM M^{'}$ that behaves like $M_{SHP}$, but goes into an endless loop if $M_{SHP}$ accepts.
+- Then:
+
+Consider the following turing machine $M^{'}$:
+
+```
+        -------
+       |       | ---> accepts: ---> endless loop
+-----> | M SHP |
+       |       | ---> rejects:
+        -------
+```
+
+$M^{'}$ halts on input $\langle M^{} \rangle$ if and only if $M_{SHP} \rightarrow rejects$
+
+by $L(M_{SHP})$, then, $\langle M^{'} \rangle \not\in SHP$
+
+by $SHP$, therefore, $M^{'}$ does not halt on input $\langle M^{'} \rangle$
+
+The statement holds only for its negation, therefore we have a proof by contradiction. Therefore the special halting problem is undecidable.
+
+> This problem is used in the proof to solve the general halting problem
+
+#### Complexity Classes
+
+The running time of programs can be measured using `TM's`:
+
+- Let $t(M,x)$ be the number of steps the `TM` $M$ takes on input $x$ until it halts.
+- For a function $f: N\rightarrow N$, the set of languages $T(f)$ is defined by:
+
+$$ T(f) = \{ A \subseteq \Sigma^{\*} | A = L(M) \exists M \ and \ t(M, x) \leq f(|x|) \forall x \in \Sigma^{\*} \} $$
+
+- $f$ is an upper bound on the running time it takes to decide a language in $T(f)$
+- This measuers *worse-case* running time
+- $f$ gives the bound in terms of the length of the input
+- This is similar to running time $O(n log n)$ for sorting a list of length $n$
+- $M$ must halt for all inputs
+
+A problem can be solved *efficiently* if it can be solved in *polynomial time*
